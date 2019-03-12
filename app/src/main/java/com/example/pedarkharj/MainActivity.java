@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.pedarkharj.profile.ProfileActivity;
+import com.example.pedarkharj.profile.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,11 +32,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
         MenuItem m2 = menu.add("Test Connection");
-        m2.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        m2.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         m2.setOnMenuItemClickListener(item -> {
             startActivity(new Intent(MainActivity.this, TestActivity.class));
             return false;
         });
+
+//        MenuItem m3 = menu.add("Register");
+//        m3.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        m3.setOnMenuItemClickListener(item -> {
+//            startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+//            return false;
+//        });
 
         return super.onCreateOptionsMenu(menu);
     }

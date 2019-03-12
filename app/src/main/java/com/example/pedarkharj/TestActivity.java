@@ -64,7 +64,6 @@ public class TestActivity extends AppCompatActivity{
        m1.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
        m1.setOnMenuItemClickListener(item -> {
            loginTest();
-
            return false;
        });
 
@@ -72,7 +71,8 @@ public class TestActivity extends AppCompatActivity{
         MenuItem m2 =  menu.add("sing up");
         m2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         m2.setOnMenuItemClickListener(item -> {
-            String url = "http://192.168.43.54:8080/pedarKharj/registrationapi.php?apicall=signup";
+//            String url = "http://192.168.43.54:8080/pedarKharj/registrationapi.php?apicall=signup";
+            String url = URLs.URL_REGISTER;
             StringRequest stringRequest = new StringRequest(
                     Request.Method.GET,
                     url,
@@ -90,29 +90,10 @@ public class TestActivity extends AppCompatActivity{
     }
 
     private void getPageContent() {
-//        // Instantiate the cache
-//        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
-//
-//        // Set up the network to use HttpURLConnection as the HTTP client.
-//        Network network = new BasicNetwork(new HurlStack());
-//
-//        // Instantiate the RequestQueue with the cache and network.
-//        requestQueue = new RequestQueue(cache, network);
-
-//        String url = "http://192.168.43.54:8080/pedarKharj/connection.php";
-//        StringRequest stringRequest = new StringRequest(
-//                Request.Method.GET,
-//                url,
-//                 response -> {
-//                     tvTest.append("\nResponse is: "+ response+ "\n");
-//                 },
-//                error -> {
-//            tvTest.setText(error.getMessage());
-////                    Toast.makeText(this, error.getMessage(), Toast.LENGTH_LONG).show();
-//                });
 //        requestQueue.add(stringRequest);
         //
-        String url2 = "http://192.168.43.54:8080/pedarKharj/registrationapi.php?WRONGapicall=wrongAPI";
+//        String url2 = "http://192.168.43.54:8080/pedarKharj/registrationapi.php?WRONGapicall=wrongAPI";
+        String url2 = URLs.ROOT_URL+ "wrongAPI";
         StringRequest stringRequest2 = new StringRequest(
                 Request.Method.GET,
                 url2,
@@ -125,22 +106,9 @@ public class TestActivity extends AppCompatActivity{
         requestQueue.add(stringRequest2);
     }
 
-
-
-
-
     private void loginTest() {
-        String url = "http://192.168.43.54:8080/pedarKharj/registrationapi.php?apicall=login";
-//        StringRequest stringRequest = new StringRequest(
-//                Request.Method.POST,
-//                url,
-//                response -> {
-//                    tvTest.append("\nResponse is: "+ response+ "\n");
-//                },
-//                error -> {
-//                    tvTest.setText(error.getMessage());
-//                });
-
+//        String url = "http://192.168.43.54:8080/pedarKharj/registrationapi.php?apicall=login";
+        String url = URLs.URL_LOGIN;
         ///
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 response -> {
@@ -154,22 +122,6 @@ public class TestActivity extends AppCompatActivity{
 //                if (obj.getBoolean("message")) tvTest.append(obj.getString("message")); //getBoolean("message") can't be converted into boolean
                 if (!obj.getString("message").isEmpty()) tvTest.append(obj.getString("message"));
 
-//                //getting the user from the response
-//                JSONObject userJson = obj.getJSONObject("user");
-//
-//                //creating a new user object
-//                User user = new User(
-//                        userJson.getInt("id"),
-//                        userJson.getString("username"),
-//                        userJson.getString("email"),
-//                        userJson.getString("gender")
-//                );
-//
-//                //storing the user in shared preferences
-//                SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-//                //starting the profile activity
-//                finish();
-//                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
             } else {
                 //if error = true, give us the message
                 Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
@@ -193,14 +145,14 @@ public class TestActivity extends AppCompatActivity{
         Log.i("ERRROR_volleyConnect: ", "\n"+error+ "");
         Toast.makeText(getApplicationContext(), "ERROR:\n"+ error, Toast.LENGTH_SHORT).show();
     })
-    {
-        @Override
-        protected Map<String, String> getParams() throws AuthFailureError {
-        Map<String, String> params = new HashMap<>();
-        params.put("username", "Blue-Dragon");
-        params.put("password", "123321");
-        return params;
-    }
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+            Map<String, String> params = new HashMap<>();
+            params.put("username", "Blue-Dragon");
+            params.put("password", "123321");
+            return params;
+        }
     };
         ///
 
