@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.pedarkharj.R;
@@ -57,12 +60,9 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //if user presses on textview not register calling RegisterActivity
-        findViewById(R.id.tvRegister).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
-            }
+        findViewById(R.id.tvRegister).setOnClickListener(view -> {
+            finish();
+            startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
         });
     }
 
@@ -85,49 +85,64 @@ public class LoginActivity extends AppCompatActivity {
 
         //if everything is fine
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_LOGIN,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        progressBar.setVisibility(View.GONE);
+                response -> {
+                    progressBar.setVisibility(View.GONE);
 
-                        try {
-                            //converting response to json object
-                            JSONObject obj = new JSONObject(response);
 
-                            //if no error in response
-                            if (!obj.getBoolean("error")) {
+                    try {
+                        //converting response to json object
+                        JSONObject obj = new JSONObject(response);
+
+                        //if no error in response (if error=false in php code)
+                        if (!obj.getBoolean("error")) {
+
+                            /*
+                             * Problem fixed
+                             * getBoolean("message") can't be converted into boolean:
+                             */
+//                if (obj.getBoolean("message")) tvTest.append(obj.getString("message"));
+                            if (!obj.getString("message").isEmpty())
                                 Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
 
-                                //getting the user from the response
-                                JSONObject userJson = obj.getJSONObject("user");
 
-                                //creating a new user object
-                                User user = new User(
-                                        userJson.getInt("id"),
-                                        userJson.getString("username"),
-                                        userJson.getString("email"),
-                                        userJson.getString("gender")
-                                );
 
-                                //storing the user in shared preferences
-                                SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-                                //starting the profile activity
-                                finish();
-                                startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                            } else {
-                                Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            //getting the user from the response
+                            JSONObject userJson = obj.getJSONObject("user");
+
+                            //creating a new user object
+                            User user = new User(
+                                    userJson.getInt("id"),
+                                    userJson.getString("username"),
+                                    userJson.getString("email"),
+                                    userJson.getString("gender")
+                            );
+
+                            //storing the user in shared preferences
+                            SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+                            //starting the profile activity
+                            finish();
+                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
+                        } else {
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), obj.getString("error"), Toast.LENGTH_SHORT).show();
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-
+                //errorListener
+                error -> {
+                    if (error.networkResponse == null) {
+                        if (error.getClass().equals(TimeoutError.class)) {
+                            // Show timeout error message
+                            Toast.makeText(getApplicationContext(),
+                                    "Oops. Timeout error!",
+                                    Toast.LENGTH_LONG).show();
+                        }
                     }
+
+                    Log.i("ERRROR_volleyConnect: ", "\n"+error+ "");
+                    Toast.makeText(getApplicationContext(), "ERROR:\n"+ error, Toast.LENGTH_SHORT).show();
                 })
         {
             @Override
@@ -138,6 +153,16 @@ public class LoginActivity extends AppCompatActivity {
                 return params;
             }
         };
+
+        //add from stackoverflow
+//        stringRequest.setRetryPolicy(new RetryPolicy() {
+//            @Override
+//            public int getCurrentTimeout() {return 50000;}
+//            @Override
+//            public int getCurrentRetryCount() {return 50000;}
+//            @Override
+//            public void retry(VolleyError error) throws VolleyError {}
+//        });
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }

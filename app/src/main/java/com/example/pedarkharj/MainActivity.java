@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         MenuItem m2 = menu.add("Test Connection");
+        m2.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         m2.setOnMenuItemClickListener(item -> {
             startActivity(new Intent(MainActivity.this, TestActivity.class));
             return false;
