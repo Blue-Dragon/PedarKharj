@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.pedarkharj">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".profile.ProfileActivity"></activity>
+        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".profile.RegisterActivity" />
         <activity android:name=".profile.LoginActivity" />
         <activity android:name=".MainActivity">
