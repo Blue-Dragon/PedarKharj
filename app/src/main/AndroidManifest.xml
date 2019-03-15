@@ -4,7 +4,7 @@
     package="com.example.pedarkharj">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".mainpage.MainPageActivity"></activity>
+        <activity android:name=".TestActivity" />
         <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".profile.RegisterActivity" />
         <activity android:name=".profile.LoginActivity" />
