@@ -2,36 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:gravity="center_horizontal"
-    android:background="#C8E6C9"
-    android:layoutDirection="ltr"
+    android:layout_height="176dp"
+    android:background="#E91E63"
+    android:gravity="bottom"
     android:orientation="vertical"
-    android:padding = "10dp"
+    android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher_round" />
+
     <TextView
         android:id="@+id/textView"
-        android:layout_marginTop="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#b100be"
-        android:textSize="21dp"
-        android:text="راهکار های پیشگیری از خشونت" />
+        android:paddingTop="8dp"
+        android:text="راهکار های پیشگیری از خشونت"
+        android:textColor="#FFEB3B"
+        android:textSize="21dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="دبیرستان شاهد نور دزفول"
         android:textColor="#0800f1"
-        android:textSize="14dp"
-        android:text="دبیرستان شاهد نور دزفول" />
+        android:textSize="14dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="پایه هشتم"
         android:textColor="#0800f1"
-        android:textSize="10dp"
-        android:text="پایه هشتم" />
+        android:textSize="10dp" />
 
 </LinearLayout>
