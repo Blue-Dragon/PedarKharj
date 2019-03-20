@@ -1,5 +1,6 @@
 package com.example.pedarkharj.mainpage;
 
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,12 +25,18 @@ public class MainPageActivity extends AppCompatActivity {
         //drawerLayout
         drawerLayout = findViewById(R.id.drawer_layout);
 
-        //toggle (what does it do?)
+        //toggle (it takes care of drawable methods)
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_drawer_open, R.string.nav_drawer_close);
         drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        toggle.syncState(); //rotating the icon
 
-        
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START); //if drawable open, onBackPressed should close it
+        else
+            super.onBackPressed(); //else, close the activity as usual
     }
 }
