@@ -10,13 +10,15 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pedarkharj.R;
-
-import java.util.Objects;
+import com.example.pedarkharj.profile.SharedPrefManager;
+import com.example.pedarkharj.profile.User;
 
 public class MyDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,6 +26,9 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
+
+    String username, email;
+    TextView usernameTV, emailTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +39,34 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
         mToolbar = findViewById(R.id.m_toolbar);
         setSupportActionBar(mToolbar);
 
+        /**********          profile            **********/
+        //view
+//        final View view =  getLayoutInflater().inflate(R.layout.drawer_header, null);
+        navigationView = findViewById(R.id.m_navigation_view); //Nav view needs to be initiated here
+        final View view = navigationView.getHeaderView(0);
+        //init
+        emailTV = view.findViewById(R.id.user_email);
+        usernameTV = view.findViewById(R.id.username_txt);
+
+        if(SharedPrefManager.getInstance(this).isLoggedIn()){
+            User user = SharedPrefManager.getInstance(this).getUser();
+            username = user.getName();
+            email = user.getEmail();
+            
+            if (username != null)
+                usernameTV.setText(username);
+            if (email != null)
+                emailTV.setText(email);
+        }
+        /**********          profile />           **********/
+
+
         /*****************          Drawer          ******************/
         //drawerLayout
         drawerLayout = findViewById(R.id.m_drawer);
 
         //Nav View
-        navigationView = findViewById(R.id.m_navigation_view);
+//        navigationView = findViewById(R.id.m_navigation_view); //already initiated
         navigationView.setNavigationItemSelectedListener(this); //onNavigationItemSelected() metod
 
         //showing nav button
@@ -91,7 +118,9 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
                 Toast.makeText(this, "send", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_exit:
-                Toast.makeText(this, "exit", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "exit", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, usernameTV.getText(), Toast.LENGTH_SHORT).show();
+                usernameTV.setText("text");
                 break;
         }
 

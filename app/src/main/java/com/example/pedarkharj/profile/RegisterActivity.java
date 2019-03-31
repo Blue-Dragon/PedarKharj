@@ -87,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        //check email validation
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmail.setError("Enter a valid email");
             editTextEmail.requestFocus();
