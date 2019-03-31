@@ -3,11 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-    android:background="@color/colorAccent"
-    android:gravity="bottom"
+    android:background="@drawable/bk1"
     android:orientation="vertical"
-    android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        android:background="#61000000">
 
 
     <ImageView
@@ -20,22 +26,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="راهکار های پیشگیری از خشونت"
-        android:textColor="#FFEB3B"
+        android:text="Blue-Dragon"
+        android:textColor="#FFFFFF"
         android:textSize="21dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="دبیرستان شاهد نور دزفول"
-        android:textColor="#0800f1"
+        android:text="hamedganjeali@gmail.com"
+        android:textColor="#E9ECBD"
         android:textSize="14dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="پایه هشتم"
-        android:textColor="#0800f1"
-        android:textSize="10dp" />
+    </LinearLayout>
 
 </LinearLayout>

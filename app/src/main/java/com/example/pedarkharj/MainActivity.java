@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.pedarkharj.mainpage.MainPageActivity;
+import com.example.pedarkharj.mainpage.MyDrawerActivity;
 import com.example.pedarkharj.profile.ProfileActivity;
 import com.example.pedarkharj.profile.RegisterActivity;
 
@@ -46,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
 //            return false;
 //        });
 
-        MenuItem m4 = menu.add("Main Page");
+        MenuItem m4 = menu.add("drawer");
         m4.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         m4.setOnMenuItemClickListener(item -> {
-            startActivity(new Intent(MainActivity.this, MainPageActivity.class));
+            startActivity(new Intent(MainActivity.this, MyDrawerActivity.class));
             return false;
         });
         return super.onCreateOptionsMenu(menu);
