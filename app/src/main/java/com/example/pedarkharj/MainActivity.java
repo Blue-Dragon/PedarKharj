@@ -7,10 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.example.pedarkharj.mainpage.MainPageActivity;
 import com.example.pedarkharj.mainpage.MyDrawerActivity;
 import com.example.pedarkharj.profile.ProfileActivity;
-import com.example.pedarkharj.profile.RegisterActivity;
 
 public class MainActivity extends AppCompatActivity {
 

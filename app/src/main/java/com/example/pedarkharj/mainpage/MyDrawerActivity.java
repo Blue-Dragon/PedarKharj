@@ -1,5 +1,6 @@
 package com.example.pedarkharj.mainpage;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,7 +10,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.pedarkharj.R;
 
@@ -50,6 +53,19 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_drawer_open, R.string.nav_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState(); //rotating the icon
+
+
+        //choose a default frag
+
+        /**
+         * create this fragment once: when we rotate the device,  the activity is called again.
+         * so we want the onCreate method to be executed once, even in this situation.
+         * It will be handled in NavigationView, but here we should implement it manually.
+         */
+//        if (savedInstanceState == null){
+//            getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag1()).commit();
+//            navigationView.setCheckedItem(R.id.frag1);
+//        }
         /*****************          Drawer />          ******************/
 
     }
@@ -57,7 +73,32 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
     /*****************          Drawer          ******************/
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+
+        switch (item.getItemId()) {
+            case R.id.frag1:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag1()).commit();
+                break;
+            case R.id.frag2:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag2()).commit();
+                break;
+            case R.id.frag3:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag3()).commit();
+                break;
+            case R.id.nav_share:
+                Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_send:
+                Toast.makeText(this, "send", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_exit:
+                Toast.makeText(this, "exit", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        //now we close the drawer
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true; //so when each item is selected, mark it as selected
     }
 
     @Override
@@ -71,6 +112,32 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
     }
 
     /*****************          Drawer />          ******************/
+
+    // double back pressed
+    boolean alreadyPressed = false;
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START); //if drawable open, onBackPressed should close it
+        else {
+            if (alreadyPressed) {
+                super.onBackPressed(); //else, close the activity as usual
+            }
+
+            alreadyPressed = true;
+            Toast.makeText(this, "press back again to exit!", Toast.LENGTH_SHORT).show();
+            //give 2 seconds to press back again, or make the boolean false
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    alreadyPressed=false;
+                }
+            }, 2000);
+        }
+
+    }
 
 
 }

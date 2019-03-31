@@ -16,7 +16,6 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name=".mainpage.MyDrawerActivity" android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".mainpage.MainPageActivity" android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TestActivity" />
         <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".profile.RegisterActivity" />
