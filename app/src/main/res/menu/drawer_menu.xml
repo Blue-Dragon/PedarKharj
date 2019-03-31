@@ -5,27 +5,33 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/barcode"
+            android:id="@+id/frag1"
             android:icon="@drawable/ic_email"
-            android:title="title 1" >
-        </item>
+            android:title="frag 1" />
 
         <item
-            android:id="@+id/game"
+            android:id="@+id/frag2"
             android:icon="@android:drawable/alert_dark_frame"
-            android:title="title 2" />
+            android:title="frag 2" />
+
+        <item
+            android:id="@+id/frag3"
+            android:icon="@android:drawable/alert_dark_frame"
+            android:title="frag 3" />
     </group>
 
     <item
         android:id="@+id/about_heading"
         android:title="Communicate">
         <menu>
-            <item android:id="@+id/nav_share"
+            <item
+                android:id="@+id/nav_share"
                 android:icon="@android:drawable/ic_menu_share"
-                android:title="SHARE"/>
-            <item android:id="@+id/nav_send"
+                android:title="SHARE" />
+            <item
+                android:id="@+id/nav_send"
                 android:icon="@android:drawable/ic_menu_send"
-                android:title="SEND"/>
+                android:title="SEND" />
         </menu>
 
     </item>
@@ -35,9 +41,10 @@
         android:icon="@android:drawable/sym_call_outgoing"
         android:title="exit">
         <menu>
-            <item android:id="@+id/nav_exit"
+            <item
+                android:id="@+id/nav_exit"
                 android:icon="@android:drawable/sym_call_outgoing"
-                android:title="SHARE"/>
+                android:title="SHARE" />
         </menu>
     </item>
 
