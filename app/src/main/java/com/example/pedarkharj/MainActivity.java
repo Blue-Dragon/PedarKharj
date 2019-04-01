@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.pedarkharj.mainpage.MyDrawerActivity;
+import com.example.pedarkharj.profile.PicProfile;
 import com.example.pedarkharj.profile.ProfileActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,11 +47,19 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         MenuItem m4 = menu.add("drawer");
-        m4.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        m4.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         m4.setOnMenuItemClickListener(item -> {
             startActivity(new Intent(MainActivity.this, MyDrawerActivity.class));
             return false;
         });
+
+            MenuItem m5 = menu.add("pic profile");
+        m5.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        m5.setOnMenuItemClickListener(item -> {
+            startActivity(new Intent(MainActivity.this, PicProfile.class));
+            return false;
+        });
+
         return super.onCreateOptionsMenu(menu);
     }
 }

@@ -52,7 +52,7 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
             User user = SharedPrefManager.getInstance(this).getUser();
             username = user.getName();
             email = user.getEmail();
-            
+
             if (username != null)
                 usernameTV.setText(username);
             if (email != null)
