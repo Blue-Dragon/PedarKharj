@@ -1,36 +1,22 @@
 package com.example.pedarkharj;
 
-import android.app.VoiceInteractor;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Cache;
-import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.pedarkharj.profile.ProfileActivity;
-import com.example.pedarkharj.profile.SharedPrefManager;
 import com.example.pedarkharj.profile.URLs;
-import com.example.pedarkharj.profile.User;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -93,7 +79,7 @@ public class TestActivity extends AppCompatActivity{
 //        requestQueue.add(stringRequest);
         //
 //        String url2 = "http://192.168.43.54:8080/pedarKharj/registrationapi.php?WRONGapicall=wrongAPI";
-        String url2 = URLs.ROOT_URL+ "wrongAPI";
+        String url2 = URLs.LOGIN_OR_OUT + "wrongAPI";
         StringRequest stringRequest2 = new StringRequest(
                 Request.Method.GET,
                 url2,

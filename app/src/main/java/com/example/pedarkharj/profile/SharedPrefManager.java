@@ -41,11 +41,13 @@ public class SharedPrefManager {
     public void userLogin(User user) {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(KEY_ID, user.getId());
-        editor.putString(KEY_USERNAME, user.getName());
-        editor.putString(KEY_EMAIL, user.getEmail());
-        editor.putString(KEY_GENDER, user.getGender());
-        editor.apply();
+        if (user.getId() > -1) {
+            editor.putInt(KEY_ID, user.getId());
+            editor.putString(KEY_USERNAME, user.getName());
+            editor.putString(KEY_EMAIL, user.getEmail());
+            editor.putString(KEY_GENDER, user.getGender());
+            editor.apply();
+        }
     }
 
     //this method will check whether user is already logged in or not
