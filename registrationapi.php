@@ -110,12 +110,6 @@ if(isset($_GET['apicall'])){
 //                    $stmt->execute();
 //                    $stmt->store_result();
 
-                    //get profile pic
-//                    $profile_pic = $_POST['profilePic'];
-//                    if ( isset($profile_pic) ){
-//                        $profilePic_path = "JavaTPoint/profile_pics/$username.jpg";
-//                        file_put_contents($profilePic_path, base64_decode($profile_pic));
-//                    }
 
                     //now send user info back to client
                     if($stmt->execute()){
@@ -135,17 +129,24 @@ if(isset($_GET['apicall'])){
 
                         $stmt->close();
 
+
                         $response['error'] = false;
                         $response['message'] = 'User info updated successfully';
                         $response['user'] = $user;
 
+                        //get profile pic
+                        $profile_pic = $_POST['profilePic'];
+                        if ( isset($profile_pic) ){
+                            $profilePic_path = "profile_pics/$username.jpg";
+                            file_put_contents($profilePic_path, base64_decode($profile_pic));
+                        }
+
                     }
-                } else{
+                }
+            } else{
                     //this id doesn't exist
                     $response['error'] = true;
                     $response['message'] = 'Invalid ID';
-                }
-
             }
 
             break;
