@@ -19,7 +19,7 @@ if(isset($_GET['apicall'])){
                 $stmt->execute();
                 $stmt->store_result();
 
-                //if id!=0 i.e. user exists
+                //if id != 0 i.e. user exists
                 if($stmt->num_rows > 0){
                     $response['error'] = true;
                     $response['message'] = 'User already registered';
@@ -53,7 +53,7 @@ if(isset($_GET['apicall'])){
                 }
 
             }
-            else{
+            else{ //if parameters are not given
                 $response['error'] = true;
                 $response['message'] = 'required parameters are not available';
             }
@@ -92,6 +92,62 @@ if(isset($_GET['apicall'])){
                     $response['message'] = 'Invalid username or password';
                 }
             }
+            break;
+
+        //if clicked on update
+        case 'update':
+            if(isTheseParametersAvailable(array('id','username','email','password','gender'))){
+                $id = $_POST['id'];
+                $username = $_POST['username'];
+                $email = $_POST['email'];
+                $password = md5($_POST['password']);
+                $gender = $_POST['gender'];
+
+                //if this id exists
+                if ($id > 0){
+                    $stmt = $conn->prepare("UPDATE users SET username=?, email=?, password=?, gender=? WHERE id = '$id'");
+                    $stmt->bind_param("ssss", $username, $email, $password, $gender);
+//                    $stmt->execute();
+//                    $stmt->store_result();
+
+                    //get profile pic
+//                    $profile_pic = $_POST['profilePic'];
+//                    if ( isset($profile_pic) ){
+//                        $profilePic_path = "JavaTPoint/profile_pics/$username.jpg";
+//                        file_put_contents($profilePic_path, base64_decode($profile_pic));
+//                    }
+
+                    //now send user info back to client
+                    if($stmt->execute()){
+                        $stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE username = ?");
+                        $stmt->bind_param("s",$username);
+                        $stmt->execute();
+                        //get info
+                        $stmt->bind_result($id, $username, $email, $gender);
+                        $stmt->fetch();
+
+                        $user = array(
+                            'id'=>$id,
+                            'username'=>$username,
+                            'email'=>$email,
+                            'gender'=>$gender
+                        );
+
+                        $stmt->close();
+
+                        $response['error'] = false;
+                        $response['message'] = 'User info updated successfully';
+                        $response['user'] = $user;
+
+                    }
+                } else{
+                    //this id doesn't exist
+                    $response['error'] = true;
+                    $response['message'] = 'Invalid ID';
+                }
+
+            }
+
             break;
 
         //if clicked on something else
