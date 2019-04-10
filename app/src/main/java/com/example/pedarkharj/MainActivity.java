@@ -10,8 +10,21 @@ import android.widget.TextView;
 import com.example.pedarkharj.mainpage.MyDrawerActivity;
 import com.example.pedarkharj.profile.PicProfile;
 import com.example.pedarkharj.profile.ProfileActivity;
+import com.example.pedarkharj.profile.SharedPrefManager;
+import com.example.pedarkharj.profile.User;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    @Override
+    protected void onResume() {
+        //get user info from server
+        if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+            User user = SharedPrefManager.getInstance(this).getUser();
+            SharedPrefManager.getInstance(getApplicationContext()).getOtherParamsOnline(user);
+        }
+        super.onResume();
+    }
 
     TextView tv1;
     @Override

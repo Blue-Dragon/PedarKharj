@@ -87,8 +87,14 @@ public class PicProfile extends AppCompatActivity{
         maleRB.setChecked(true);
 
         if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()){
-            //init
+
             user = SharedPrefManager.getInstance(this).getUser();
+            //TODO
+            //sync user info
+            if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+                SharedPrefManager.getInstance(getApplicationContext()).syncUserInfo(user);
+            }
+            //init
             usernameEdt.setHint(user.getName());
             emailEdt.setHint(user.getEmail());
 //            passwordEdt.setText("123321");
@@ -106,13 +112,11 @@ public class PicProfile extends AppCompatActivity{
 
             //change profile pic
             profilePicLT.setOnClickListener(item -> {
-                if (Build.VERSION.SDK_INT >= 23) {
-                    if (!checkpermission())
+                Toast.makeText(activity, "clicked", Toast.LENGTH_SHORT).show();
+                if (Build.VERSION.SDK_INT >= 23 && !checkpermission())
                         requestpermissions();
-                    else
-                        chooseCameraGallery();
-                }
-
+                else
+                    chooseCameraGallery();
             });
 
         } else {
@@ -129,7 +133,7 @@ public class PicProfile extends AppCompatActivity{
         final int id = user.getId();
         String username = usernameEdt.getText().toString().trim();
         String email = emailEdt.getText().toString().trim();
-        final String password = passwordEdt.getHint().toString().trim();
+        final String password = passwordEdt.getText().toString().trim();
         final String gender = ((RadioButton) findViewById(radioGroupGender.getCheckedRadioButtonId())).getText().toString();
 
         //check the validations
