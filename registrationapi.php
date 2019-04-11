@@ -113,22 +113,22 @@ if(isset($_GET['apicall'])){
 
                     //now send user info back to client
                     if($stmt->execute()){
-                        $stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE username = ?");
-                        $stmt->bind_param("s",$username);
-                        $stmt->execute();
-                        //get info
-                        $stmt->bind_result($id, $username, $email, $gender);
-                        $stmt->fetch();
+                        // getUserInfoByID($id)
+							$stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE id = ?");
+							$stmt->bind_param("s",$id);
+							$stmt->execute();
+							//get info
+							$stmt->bind_result($id, $username, $email, $gender);
+							$stmt->fetch();
 
-                        $user = array(
-                            'id'=>$id,
-                            'username'=>$username,
-                            'email'=>$email,
-                            'gender'=>$gender
-                        );
+							$user = array(
+								'id'=>$id,
+								'username'=>$username,
+								'email'=>$email,
+								'gender'=>$gender
+							);
 
-                        $stmt->close();
-
+							$stmt->close();
 
                         $response['error'] = false;
                         $response['message'] = 'User info updated successfully';
@@ -150,6 +150,52 @@ if(isset($_GET['apicall'])){
             }
 
             break;
+			
+		case 'get_info':
+			$id = $_POST['id'];
+			$username;
+			$email;
+			$gender;
+			if(isset($id) && $id > 0){
+			//if this id exists
+
+				//now send user info back to client
+				$stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE id = ?");
+				$stmt->bind_param("s",$id);
+				$stmt->execute();
+				//get info
+				$stmt->bind_result($id, $username, $email, $gender);
+				$stmt->fetch();
+
+				$user = array(
+					'id'=>$id,
+					'username'=>$username,
+					'email'=>$email,
+					'gender'=>$gender
+				);
+
+				$stmt->close();
+
+				$response['error'] = false;
+				$response['message'] = 'User info have been gotten successfully';
+				$response['user'] = $user;
+
+				/*
+				//get profile pic
+				$profile_pic = $_POST['profilePic'];
+				if ( isset($profile_pic) ){
+					$profilePic_path = "profile_pics/$username.jpg";
+					file_put_contents($profilePic_path, base64_decode($profile_pic));
+				*/
+            } else{
+                    //this id doesn't exist
+                    $response['error'] = true;
+                    $response['message'] = 'Invalid ID';
+            }
+		
+		
+			break;
+			
 
         //if clicked on something else
         default:
@@ -168,6 +214,26 @@ else{
 
 //give out result in format of JSON
 echo json_encode($response);
+
+/*
+function getUserInfoByID($id) {
+	$stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE id = ?");
+	$stmt->bind_param("s",$id);
+	$stmt->execute();
+	//get info
+	$stmt->bind_result($id, $username, $email, $gender);
+	$stmt->fetch();
+
+	$user = array(
+		'id'=>$id,
+		'username'=>$username,
+		'email'=>$email,
+		'gender'=>$gender
+	);
+
+	$stmt->close();
+}
+*/
 
 //our boolean function
 function isTheseParametersAvailable($params){
