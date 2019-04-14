@@ -102,6 +102,7 @@ if(isset($_GET['apicall'])){
                 $email = $_POST['email'];
                 $password = md5($_POST['password']);
                 $gender = $_POST['gender'];
+//                $profilePic = $_POST['profilePic'];
 
                 //if this id exists
                 if ($id > 0){
@@ -134,9 +135,16 @@ if(isset($_GET['apicall'])){
                         $response['message'] = 'User info updated successfully';
                         $response['user'] = $user;
 
+
                         //get profile pic
-                        $profile_pic = $_POST['profilePic'];
-                        if ( isset($profile_pic) ){
+                        if ( isTheseParametersAvailable(array('profilePic')) ){
+                            $profile_pic = $_POST['profilePic'];
+                            $savedPicName = $_POST['savedPicName'];
+
+                            //delete former
+                            $base_directory = "profile_pics/";
+                            unlink($base_directory.$savedPicName);
+                            //add new
                             $profilePic_path = "profile_pics/$username.jpg";
                             file_put_contents($profilePic_path, base64_decode($profile_pic));
                         }
