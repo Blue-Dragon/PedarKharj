@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pedarkharj.MainActivity;
 import com.example.pedarkharj.R;
@@ -20,6 +21,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     TextView id,userName,userEmail,gender;
     Button btnLogout;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +30,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         if(SharedPrefManager.getInstance(this).isLoggedIn()){
 
-            User user = SharedPrefManager.getInstance(this).getUser();
-            //sync user info
+            user = SharedPrefManager.getInstance(this).getUser();
+            //sync user info from server
             if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
-                SharedPrefManager.getInstance(getApplicationContext()).syncUserInfo(user);
+//                Toast.makeText(this, "before sync", Toast.LENGTH_SHORT).show();
+//                SharedPrefManager.getInstance(getApplicationContext()).getOtherParamsOnline(user);
+//                Toast.makeText(this, "After sync", Toast.LENGTH_SHORT).show();
+                doit();
+
             }
 
             id = findViewById(R.id.textViewId);
@@ -63,5 +69,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+
+    synchronized void doit() {
+        Toast.makeText(this, "before sync", Toast.LENGTH_SHORT).show();
+        SharedPrefManager.getInstance(getApplicationContext()).getOtherParamsOnline(user);
+        Toast.makeText(this, "After sync", Toast.LENGTH_SHORT).show();
     }
 }

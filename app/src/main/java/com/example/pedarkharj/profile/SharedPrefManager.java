@@ -35,7 +35,6 @@ public class SharedPrefManager {
     private static SharedPrefManager mInstance;
     private static Context ctx;
 
-    private String username, email, gender;
     private SharedPrefManager(Context context) {
         ctx = context;
     }
@@ -95,24 +94,8 @@ public class SharedPrefManager {
 
 
     //get user info every time this method is called(ex. when they open the app)
-
-    public void syncUserInfo(User user) {
-//        getOtherParamsOnline(user);
-        if (user.getId() > -1 && username!=null && email!=null && gender!=null)   {
-            //update User info
-           user.setName(username);
-           user.setEmail(email);
-           user.setGender(gender);
-           //update sharedPreferences
-           userLogin(user);
-        } else {
-            Toast.makeText(ctx, "oops! they're null!", Toast.LENGTH_SHORT).show();
-            Toast.makeText(ctx, "info: " + username + " "+ email + " " + gender, Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
     public void getOtherParamsOnline(User user) {
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_USER_INFO,
                 response -> {
 
@@ -126,14 +109,16 @@ public class SharedPrefManager {
                             //getting the user from the response
                             JSONObject userJson = obj.getJSONObject("user");
 
+                            Toast.makeText(ctx, "on sync", Toast.LENGTH_SHORT).show();
                             //getting user params reom server
-                            username =  userJson.getString("username");
-                            email = userJson.getString("email");
-                            gender = userJson.getString("gender");
-
+                            user.setName( userJson.getString("username"));
+                            user.setEmail(userJson.getString("email"));
+                            user.setGender(userJson.getString("gender"));
+                            userLogin(user); //to store them in sharedPreferences
                         } else {
                             Toast.makeText(ctx, obj.getString("message"), Toast.LENGTH_SHORT).show();
                         }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -147,8 +132,18 @@ public class SharedPrefManager {
                 params.put("id", String.valueOf(user.getId()));
                 return params;
             }
-        };
 
+//            @Override
+//            public Priority getPriority() {
+//                return Priority.IMMEDIATE;
+////                return super.getPriority();
+//            }
+
+        };
         VolleySingleton.getInstance(ctx).addToRequestQueue(stringRequest);
+        Toast.makeText(ctx, "syncing done", Toast.LENGTH_SHORT).show();
+
     }
+
+
 }

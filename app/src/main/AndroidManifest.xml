@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".retrofitStuff.RetroMainActivity"></activity>
         <activity android:name=".profile.PicProfile" />
         <activity
             android:name=".mainpage.MyDrawerActivity"

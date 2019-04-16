@@ -10,21 +10,22 @@ import android.widget.TextView;
 import com.example.pedarkharj.mainpage.MyDrawerActivity;
 import com.example.pedarkharj.profile.PicProfile;
 import com.example.pedarkharj.profile.ProfileActivity;
-import com.example.pedarkharj.profile.SharedPrefManager;
-import com.example.pedarkharj.profile.User;
+
+import com.example.pedarkharj.retrofitStuff.RetroMainActivity;
+
 
 public class MainActivity extends AppCompatActivity {
 
 
-    @Override
-    protected void onResume() {
-        //get user info from server
-        if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
-            User user = SharedPrefManager.getInstance(this).getUser();
-            SharedPrefManager.getInstance(getApplicationContext()).getOtherParamsOnline(user);
-        }
-        super.onResume();
-    }
+//    @Override
+//    protected void onResume() {
+//        //get user info from server
+//        if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+//            User user = SharedPrefManager.getInstance(this).getUser();
+//            SharedPrefManager.getInstance(getApplicationContext()).getOtherParamsOnline(user);
+//        }
+//        super.onResume();
+//    }
 
     TextView tv1;
     @Override
@@ -67,9 +68,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
             MenuItem m5 = menu.add("pic profile");
-        m5.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        m5.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         m5.setOnMenuItemClickListener(item -> {
             startActivity(new Intent(MainActivity.this, PicProfile.class));
+            return false;
+        });
+
+        MenuItem m6 = menu.add("retro");
+        m6.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        m6.setOnMenuItemClickListener(item -> {
+            startActivity(new Intent(MainActivity.this, RetroMainActivity.class));
             return false;
         });
 

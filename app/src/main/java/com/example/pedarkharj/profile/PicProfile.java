@@ -62,6 +62,9 @@ public class PicProfile extends AppCompatActivity{
     private Activity activity;
     private User user;
 
+    String savedUsername;
+    String savedPicUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,21 +82,25 @@ public class PicProfile extends AppCompatActivity{
         femaleRB = findViewById(R.id.radioButtonFemale_picProfile);
         pDialog = new ProgressDialog(this);
 
-        //default profile pic
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bk1);
-        profPicCircle.setImageBitmap(bitmap);
-
         //male by default
         maleRB.setChecked(true);
 
         if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()){
 
             user = SharedPrefManager.getInstance(this).getUser();
-            //TODO
-            //sync user info
+            //sync user info from server
             if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
-                SharedPrefManager.getInstance(getApplicationContext()).syncUserInfo(user);
+                SharedPrefManager.getInstance(getApplicationContext()).getOtherParamsOnline(user);
             }
+
+            // get saved items
+            savedUsername = user.getName();
+            savedPicUrl = URLs.URL_PIC_FOLDER+ savedUsername+ ".jpg";
+
+            //default profile pic
+            bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bk1);
+            profPicCircle.setImageBitmap(bitmap);
+
             //init
             usernameEdt.setHint(user.getName());
             emailEdt.setHint(user.getEmail());
@@ -124,7 +131,7 @@ public class PicProfile extends AppCompatActivity{
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
 
-    } // onCreate />
+    } /***********************      onCreate />     **************************/
 
 
     private void updateProfile() {
@@ -215,16 +222,15 @@ public class PicProfile extends AppCompatActivity{
                 params.put("email", finalEmail);
                 params.put("password", password);
                 params.put("gender", gender);
-                params.put("profilePic", imageToString(bitmap));
                 //send image to server
-                if (bitmap != BitmapFactory.decodeResource(getResources(), R.drawable.profile)) {
-                }
+                params.put("savedPicName", savedUsername+".jpg"); //to delete the former pic
+                params.put("profilePic", imageToString(bitmap)); //save pic file to db
+                params.put("newProfilePicName", finalUsername+".jpg"); //save name to tables
                 return params;
             }
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-//        Toast.makeText(activity, "changes saved successfully", Toast.LENGTH_SHORT).show();  //no need: message comes from server
     }
 
 
