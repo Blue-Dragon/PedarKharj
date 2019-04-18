@@ -1,5 +1,6 @@
 package com.example.pedarkharj.profile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,17 +37,28 @@ public class SharedPrefManager {
     private static final String KEY_ID = "keyid";
     private static SharedPrefManager mInstance;
     private static Context ctx;
-
+    private static Class aClass;
     private String username, email, gender;
+
+
     private SharedPrefManager(Context context) {
         ctx = context;
     }
-
     //creating an instance of our Constructor (not able to call constructor directly from out of this class)
-    //-> this method calls the constructor if it is not called before
-    public static synchronized SharedPrefManager getInstance(Context context) {
+    //-> this method calls the constructor if it is not called before.
+    public static synchronized SharedPrefManager getInstance(Context context) { //its return type is SharedPrefManager, like String, int, void, ... Classes.
         if (mInstance == null) {
             mInstance = new SharedPrefManager(context);
+        }
+        return mInstance;
+    }
+
+    public static synchronized SharedPrefManager getInstance(Context context, Class mClass) {
+        if (mInstance == null) {
+            mInstance = new SharedPrefManager(context);
+        }
+        if (mClass != null){
+            aClass = mClass;
         }
         return mInstance;
     }
@@ -113,7 +125,6 @@ public class SharedPrefManager {
 
 
 
-
     public class mSyncUser extends AsyncTask <User, String, String> {
 
         @Override
@@ -144,8 +155,12 @@ public class SharedPrefManager {
                                 gender = userJson.getString("gender");
 
                                 //TODO: do your after-result task here
-                                ctx.startActivity(new Intent(ctx, ProfileActivity.class));
-                                
+                                if (aClass != null){
+                                    Intent intent = (new Intent(ctx, aClass));
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //sdk <= 23 needs this
+                                    ctx.startActivity(intent);
+                                }
+
                             } else {
                                 publishProgress(obj.getString("message"));
 //                                Toast.makeText(ctx, obj.getString("message"), Toast.LENGTH_SHORT).show();

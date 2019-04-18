@@ -314,7 +314,7 @@ public class PicProfile extends AppCompatActivity{
 
 //    @Override
 //    protected void onDestroy() {
-//        new MainActivity().getUserInfoFromServer(getApplicationContext());
+//        new MainActivity().getUserInfoFromServerAndGoTo(getApplicationContext());
 //        super.onDestroy();
 //    }
 }

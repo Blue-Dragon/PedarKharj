@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-//        getUserInfoFromServer(this);
+//        getUserInfoFromServerAndGoTo(this);
         super.onResume();
     }
 
@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         tv1 = findViewById(R.id.tv1);
 
     }
@@ -38,9 +37,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem m1 = menu.add("go to profile");
         m1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         m1.setOnMenuItemClickListener(item -> {
-            getUserInfoFromServer(getApplicationContext());
-
-//            startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            getUserInfoFromServerAndGoTo(getApplicationContext(), ProfileActivity.class);
             return false;
         });
 
@@ -61,18 +58,18 @@ public class MainActivity extends AppCompatActivity {
             MenuItem m5 = menu.add("pic profile");
         m5.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         m5.setOnMenuItemClickListener(item -> {
-            startActivity(new Intent(MainActivity.this, PicProfile.class));
+            getUserInfoFromServerAndGoTo(getApplicationContext(), PicProfile.class);
             return false;
         });
 
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void getUserInfoFromServer(Context context) {
+    public void getUserInfoFromServerAndGoTo(Context context, Class mClass) {
         //get user info from server
         if (SharedPrefManager.getInstance(context).isLoggedIn()) {
             User user = SharedPrefManager.getInstance(context).getUser();
-            SharedPrefManager.getInstance(context).new mSyncUser().execute(user);
+            SharedPrefManager.getInstance(context, mClass).new mSyncUser().execute(user);
 
         }
     }
