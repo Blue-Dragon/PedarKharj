@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.example.pedarkharj.MainActivity;
 import com.example.pedarkharj.R;
 
 import org.json.JSONException;
@@ -61,6 +62,7 @@ public class PicProfile extends AppCompatActivity{
     ProgressDialog pDialog;
     private Activity activity;
     private User user;
+    private String savedUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +89,14 @@ public class PicProfile extends AppCompatActivity{
         maleRB.setChecked(true);
 
         if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()){
-            //init
+
             user = SharedPrefManager.getInstance(this).getUser();
+            //sync user info
+            if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+                SharedPrefManager.getInstance(getApplicationContext()).syncUserInfo(user);
+            }
+            //init
+            savedUsername = user.getName();
             usernameEdt.setHint(user.getName());
             emailEdt.setHint(user.getEmail());
 //            passwordEdt.setText("123321");
@@ -106,13 +114,11 @@ public class PicProfile extends AppCompatActivity{
 
             //change profile pic
             profilePicLT.setOnClickListener(item -> {
-                if (Build.VERSION.SDK_INT >= 23) {
-                    if (!checkpermission())
+                Toast.makeText(activity, "clicked", Toast.LENGTH_SHORT).show();
+                if (Build.VERSION.SDK_INT >= 23 && !checkpermission())
                         requestpermissions();
-                    else
-                        chooseCameraGallery();
-                }
-
+                else
+                    chooseCameraGallery();
             });
 
         } else {
@@ -129,7 +135,7 @@ public class PicProfile extends AppCompatActivity{
         final int id = user.getId();
         String username = usernameEdt.getText().toString().trim();
         String email = emailEdt.getText().toString().trim();
-        final String password = passwordEdt.getHint().toString().trim();
+        final String password = passwordEdt.getText().toString().trim();
         final String gender = ((RadioButton) findViewById(radioGroupGender.getCheckedRadioButtonId())).getText().toString();
 
         //check the validations
@@ -187,6 +193,9 @@ public class PicProfile extends AppCompatActivity{
                             user.setName(userJson.getString("username"));
                             user.setEmail(userJson.getString("email"));
                             user.setGender(userJson.getString("gender"));
+                            // re-initiate
+                            savedUsername = userJson.getString("username");
+                            usernameEdt.setHint(savedUsername);
 
                             //storing the user in shared preferences
                             SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
@@ -211,10 +220,9 @@ public class PicProfile extends AppCompatActivity{
                 params.put("email", finalEmail);
                 params.put("password", password);
                 params.put("gender", gender);
-                params.put("profilePic", imageToString(bitmap));
                 //send image to server
-                if (bitmap != BitmapFactory.decodeResource(getResources(), R.drawable.profile)) {
-                }
+                params.put("profilePic", imageToString(bitmap));
+                params.put("savedPicName", savedUsername+".jpg");
                 return params;
             }
         };
@@ -304,4 +312,9 @@ public class PicProfile extends AppCompatActivity{
         return profPicString;
     }
 
+//    @Override
+//    protected void onDestroy() {
+//        new MainActivity().getUserInfoFromServer(getApplicationContext());
+//        super.onDestroy();
+//    }
 }

@@ -3,6 +3,19 @@ package com.example.pedarkharj.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SharedPrefManager {
 
@@ -24,6 +37,7 @@ public class SharedPrefManager {
     private static SharedPrefManager mInstance;
     private static Context ctx;
 
+    private String username, email, gender;
     private SharedPrefManager(Context context) {
         ctx = context;
     }
@@ -39,6 +53,7 @@ public class SharedPrefManager {
 
     //this method will store the user data in shared preferences
     public void userLogin(User user) {
+
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         if (user.getId() > -1) {
@@ -49,6 +64,8 @@ public class SharedPrefManager {
             editor.apply();
         }
     }
+
+
 
     //this method will check whether user is already logged in or not
     public boolean isLoggedIn() {
@@ -73,6 +90,101 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        ctx.startActivity(new Intent(ctx, LoginActivity.class));
+        Intent intent = new Intent(ctx, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ctx.startActivity(intent);
+    }
+
+
+    //get user info every time this method is called(ex. when they open the app)
+
+    public void syncUserInfo(User user) {
+        if (user.getId() > -1 && username!=null && email!=null && gender!=null)   {
+            //update User info
+           user.setName(username);
+           user.setEmail(email);
+           user.setGender(gender);
+           //update sharedPreferences
+           userLogin(user);
+        } else {
+            Toast.makeText(ctx, "oops! Null info happened.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+
+    public class mSyncUser extends AsyncTask <User, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            Toast.makeText(ctx, "onPreExecute", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected String doInBackground(User... users) {
+            User user = users[0];
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_USER_INFO,
+                    response -> {
+                        try {
+                            //converting response to json object
+                            JSONObject obj = new JSONObject(response);
+                            //if no error in response
+                            if (!obj.getBoolean("error")) {
+                                publishProgress(obj.getString("message"));
+//                                Toast.makeText(ctx, obj.getString("message"), Toast.LENGTH_SHORT).show();
+
+                                //getting the user from the response
+                                JSONObject userJson = obj.getJSONObject("user");
+
+                                //getting user params reom server
+                                username =  userJson.getString("username");
+                                email = userJson.getString("email");
+                                gender = userJson.getString("gender");
+
+                                //TODO: do your after-result task here
+                                ctx.startActivity(new Intent(ctx, ProfileActivity.class));
+                                
+                            } else {
+                                publishProgress(obj.getString("message"));
+//                                Toast.makeText(ctx, obj.getString("message"), Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    },
+                    error -> {
+                        publishProgress(error.getMessage());
+//                        Toast.makeText(ctx, error.getMessage(), Toast.LENGTH_SHORT).show()
+                    })
+            {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("id", String.valueOf(user.getId()));
+                    return params;
+                }
+            };
+
+            VolleySingleton.getInstance(ctx).addToRequestQueue(stringRequest);
+//            publishProgress("Syncing...");
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            for (String s:values){
+                Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+//            Toast.makeText(ctx, "onPostExecute", Toast.LENGTH_SHORT).show();
+        }
     }
 }
