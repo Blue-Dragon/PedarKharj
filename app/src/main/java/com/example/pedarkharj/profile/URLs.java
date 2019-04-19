@@ -19,5 +19,7 @@ public class URLs {
     public static final String URL_UPDATE = LOGIN_OR_OUT + "update";
     public static final String URL_GET_USER_INFO = LOGIN_OR_OUT + "get_info";
 
+    public static final String URL_IMAGE_DIR = ROOT_URL+ "profile_pics/";
+
 
 }

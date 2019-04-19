@@ -15,10 +15,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.ImageRequest;
 import com.example.pedarkharj.R;
+import com.example.pedarkharj.profile.URLs;
+import com.example.pedarkharj.profile.VolleySingleton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,7 +35,8 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class SaveImgActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int PERMISSION_CODE = 101;
-    Button saveBtn;
+    Button saveBtn, dlBtn;
+    ImageView iv1;
     Activity activity;
     Drawable drawable;
     Bitmap bitmap;
@@ -46,18 +51,38 @@ public class SaveImgActivity extends AppCompatActivity implements View.OnClickLi
         drawable = getResources().getDrawable(R.drawable.bk1);
         bitmap = ((BitmapDrawable) drawable).getBitmap();
         tv1 = findViewById(R.id.tv1);
+        iv1 = findViewById(R.id.iv_1);
         saveBtn = findViewById(R.id.save_to_storage_btn);
+        dlBtn = findViewById(R.id.dl_btn);
+
+        dlBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
 
-        if (Build.VERSION.SDK_INT >= 23 && !checkPermission())
-            requestPermissions();
-        else
-            saveToInternalStorage(bitmap);
+        switch (v.getId()){
+            case R.id.save_to_storage_btn:
+                if (Build.VERSION.SDK_INT >= 23 && !checkPermission()) requestPermissions();
+                else saveToInternalStorage(bitmap);
+            break;
 
+            case R.id.dl_btn:
+                ImageRequest imageRequest = new ImageRequest(URLs.URL_IMAGE_DIR+ "ss - Copy.jpg",
+                        response -> {
+                            iv1.setImageBitmap(response);
+                        },
+                        0,
+                        0,
+                        ImageView.ScaleType.CENTER_CROP,
+                        Bitmap.Config.ARGB_8888,
+                        Throwable::printStackTrace //method reference instead of lambda
+                );
+
+                VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(imageRequest);
+            break;
+        }
     }
 
 
