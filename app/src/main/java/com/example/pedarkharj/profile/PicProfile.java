@@ -114,7 +114,7 @@ public class PicProfile extends AppCompatActivity{
 
             //change profile pic
             profilePicLT.setOnClickListener(item -> {
-                Toast.makeText(activity, "clicked", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, "clicked", Toast.LENGTH_SHORT).show();
                 if (Build.VERSION.SDK_INT >= 23 && !checkpermission())
                         requestpermissions();
                 else
@@ -234,7 +234,7 @@ public class PicProfile extends AppCompatActivity{
 
     //change profile pic methods
     private Boolean checkpermission() {
-        int chkcamera = ContextCompat.checkSelfPermission(activity, CAMERA);
+        int chkcamera = ContextCompat.checkSelfPermission(getApplicationContext(), CAMERA);
         int chkgallery = ContextCompat.checkSelfPermission(activity, READ_EXTERNAL_STORAGE);
         return chkcamera == PackageManager.PERMISSION_GRANTED && chkgallery == PackageManager.PERMISSION_GRANTED;
     }

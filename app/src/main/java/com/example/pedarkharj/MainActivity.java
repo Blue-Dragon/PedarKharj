@@ -13,6 +13,7 @@ import com.example.pedarkharj.profile.PicProfile;
 import com.example.pedarkharj.profile.ProfileActivity;
 import com.example.pedarkharj.profile.SharedPrefManager;
 import com.example.pedarkharj.profile.User;
+import com.example.pedarkharj.storageTasks.SaveImgActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem m1 = menu.add("go to profile");
-        m1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+//        m1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         m1.setOnMenuItemClickListener(item -> {
             getUserInfoFromServerAndGoTo(getApplicationContext(), ProfileActivity.class);
             return false;
@@ -56,9 +57,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
             MenuItem m5 = menu.add("pic profile");
-        m5.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        m5.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         m5.setOnMenuItemClickListener(item -> {
             getUserInfoFromServerAndGoTo(getApplicationContext(), PicProfile.class);
+            return false;
+        });
+
+        MenuItem m6 = menu.add("Save img");
+        m6.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        m6.setOnMenuItemClickListener(item -> {
+            startActivity(new Intent(getApplicationContext(),  SaveImgActivity.class));
             return false;
         });
 
