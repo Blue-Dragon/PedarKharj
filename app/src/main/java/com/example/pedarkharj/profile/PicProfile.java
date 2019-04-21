@@ -52,6 +52,7 @@ public class PicProfile extends AppCompatActivity{
     private static final int CAMERA_INTENT = 11;
 
     Bitmap bitmap;
+    Bitmap resizedBitmap;
 
     CircleImageView profPicCircle;
     LinearLayout profilePicLT;
@@ -63,6 +64,7 @@ public class PicProfile extends AppCompatActivity{
     private Activity activity;
     private User user;
     private String savedUsername;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +85,8 @@ public class PicProfile extends AppCompatActivity{
 
         //default profile pic
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bk1);
-        profPicCircle.setImageBitmap(bitmap);
+        resizedBitmap = resizeBitmap(bitmap);
+        profPicCircle.setImageBitmap(resizedBitmap);
 
         //male by default
         maleRB.setChecked(true);
@@ -221,7 +224,7 @@ public class PicProfile extends AppCompatActivity{
                 params.put("password", password);
                 params.put("gender", gender);
                 //send image to server
-                params.put("profilePic", imageToString(bitmap));
+                params.put("profilePic", imageToString(resizedBitmap));
                 params.put("savedPicName", savedUsername+".jpg");
                 return params;
             }
@@ -277,18 +280,19 @@ public class PicProfile extends AppCompatActivity{
                 })
                 .show();
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         //gallery image
         if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
             Uri uri = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                if (bitmap != null)
-                    profPicCircle.setImageBitmap(bitmap);
+                if (bitmap != null){
+                    //TODO: resize image
+                    resizedBitmap = resizeBitmap(bitmap);
+                    profPicCircle.setImageBitmap(resizedBitmap);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -296,11 +300,23 @@ public class PicProfile extends AppCompatActivity{
             //camera image
             if (data != null) {
                 bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-                if (bitmap != null)
-                    profPicCircle.setImageBitmap(bitmap);
+                if (bitmap != null) {
+                    //TODO: resize image
+                    resizedBitmap = resizeBitmap(bitmap);
+                    profPicCircle.setImageBitmap(resizedBitmap);
+                }
             }
         }
     }
+
+    private Bitmap resizeBitmap(Bitmap bitmap) {
+
+        while (bitmap.getHeight() * bitmap.getWidth() > 90000){
+            bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*0.8), (int) (bitmap.getHeight()*0.8), true);
+        }
+        return bitmap;
+    }
+
 
     //upload image methods
     private String imageToString(Bitmap bitmap) {

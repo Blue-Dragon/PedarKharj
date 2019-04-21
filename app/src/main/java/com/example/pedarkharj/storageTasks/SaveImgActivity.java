@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -13,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,6 +26,8 @@ import com.example.pedarkharj.R;
 import com.example.pedarkharj.profile.URLs;
 import com.example.pedarkharj.profile.VolleySingleton;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,7 +39,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class SaveImgActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int PERMISSION_CODE = 101;
-    Button saveBtn, dlBtn;
+    Button saveBtn, dlBtn, sizeBtn;
     ImageView iv1;
     Activity activity;
     Drawable drawable;
@@ -49,18 +53,24 @@ public class SaveImgActivity extends AppCompatActivity implements View.OnClickLi
 
         activity = this;
         drawable = getResources().getDrawable(R.drawable.bk1);
-        bitmap = ((BitmapDrawable) drawable).getBitmap();
+//        bitmap = ((BitmapDrawable) drawable).getBitmap();
         tv1 = findViewById(R.id.tv1);
         iv1 = findViewById(R.id.iv_1);
         saveBtn = findViewById(R.id.save_to_storage_btn);
         dlBtn = findViewById(R.id.dl_btn);
+        sizeBtn = findViewById(R.id.show_size_btn);
 
         dlBtn.setOnClickListener(this);
         saveBtn.setOnClickListener(this);
+        sizeBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
+        int size;
+        int rounds = 0;
+        int height=0;
+        int width=0;
 
         switch (v.getId()){
             case R.id.save_to_storage_btn:
@@ -68,9 +78,36 @@ public class SaveImgActivity extends AppCompatActivity implements View.OnClickLi
                 else saveToInternalStorage(bitmap);
             break;
 
+            case R.id.show_size_btn:
+                if (bitmap != null){
+
+                    height = bitmap.getHeight();
+                    width = bitmap.getWidth();
+                    tv1.append("\nheight: "+ height+ "\nwidth: "+ width);
+
+                    tv1.append("\n.......................................................................\ngetByteCount: "+bitmap.getByteCount()/1024+" KB\ngetAllocationByteCount: "+bitmap.getRowBytes()+"\n"+bitmap.getRowBytes());
+//                    setStandardSize(bitmap),;
+                    rounds = 0;
+                    while (bitmap.getHeight() * bitmap.getWidth() > 90000){
+                        bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*0.8), (int) (bitmap.getHeight()*0.8), true);
+                        rounds++;
+                    }
+
+                    height = bitmap.getHeight();
+                    width = bitmap.getWidth();
+                    tv1.append("\n\nheight: "+ height+ "\nwidth: "+ width+"\nrounds: "+rounds);
+
+                    tv1.append("\n.......................................................................\ngetByteCount: "+bitmap.getByteCount()/1024+" KB\ngetAllocationByteCount: "+bitmap.getRowBytes()+"\n"+bitmap.getRowBytes());
+
+                }else {
+                    tv1.setText("0");
+                }
+                break;
+
             case R.id.dl_btn:
-                ImageRequest imageRequest = new ImageRequest(URLs.URL_IMAGE_DIR+ "ss - Copy.jpg",
+                ImageRequest imageRequest = new ImageRequest(URLs.URL_IMAGE_DIR+ "one.jpg",
                         response -> {
+                            bitmap = response;
                             iv1.setImageBitmap(response);
                         },
                         0,
@@ -136,5 +173,20 @@ public class SaveImgActivity extends AppCompatActivity implements View.OnClickLi
         //close fos
         } finally { try { if (fos != null) {fos.close();}} catch (IOException e) {e.printStackTrace(); tv1.setText(e+"");} }
         tv1.setText(myPath.getAbsolutePath());
+    }
+
+    public void setStandardSize (Bitmap bitmap, int reqHeight, int reqWidth){
+        int reqSize = reqHeight*reqWidth;
+        if (bitmap != null){
+            int height = bitmap.getHeight();
+            int width = bitmap.getWidth();
+            tv1.append("\nbefore:\nwidth: "+ width+"\nheight: "+ height+"\n"+height*width);
+            while (height*width > reqSize){
+                height /= 2;
+                width /= 2;
+            }
+
+            tv1.append("\n\nDone\nwidth: "+ width+"\nheight: "+ height+"\n"+height*width);
+        }
     }
 }

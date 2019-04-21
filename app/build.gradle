@@ -37,8 +37,11 @@ dependencies {
     implementation 'com.android.volley:volley:1.1.1'
     implementation 'com.android.support:design:27.1.1' //needed for NavigationView
     implementation 'com.android.support:recyclerview-v7:27.1.1'
-
     implementation 'de.hdodenhof:circleimageview:3.0.0' //circular picture
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
 
     //this is for fading actionBar
 
