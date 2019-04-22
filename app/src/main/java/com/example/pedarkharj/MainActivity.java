@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+//        if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
+//            SharedPrefManager.getInstance(getApplicationContext()).getNsetProfPic();
+//        }
 //        getUserInfoFromServerAndGoTo(this);
         super.onResume();
     }
@@ -57,14 +60,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
             MenuItem m5 = menu.add("pic profile");
-//        m5.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        m5.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         m5.setOnMenuItemClickListener(item -> {
             getUserInfoFromServerAndGoTo(getApplicationContext(), PicProfile.class);
             return false;
         });
 
         MenuItem m6 = menu.add("Save img");
-        m6.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        m6.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         m6.setOnMenuItemClickListener(item -> {
             startActivity(new Intent(getApplicationContext(),  SaveImgActivity.class));
             return false;
@@ -77,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
         //get user info from server
         if (SharedPrefManager.getInstance(context).isLoggedIn()) {
             User user = SharedPrefManager.getInstance(context).getUser();
+            SharedPrefManager.getInstance(getApplicationContext()).getNsetProfPic();
             SharedPrefManager.getInstance(context, mClass).new mSyncUser().execute(user);
-
-        }
+        } else startActivity(new Intent(context, mClass));
     }
 }

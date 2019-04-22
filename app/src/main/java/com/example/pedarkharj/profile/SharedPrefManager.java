@@ -1,22 +1,27 @@
 package com.example.pedarkharj.profile;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Base64;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.pedarkharj.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SharedPrefManager {
 
@@ -34,6 +39,7 @@ public class SharedPrefManager {
     private static final String KEY_USERNAME = "keyusername";
     private static final String KEY_EMAIL = "keyemail";
     private static final String KEY_GENDER = "keygender";
+    private static final String KEY_BITMAP_STRING = "bitmapstring";
     private static final String KEY_ID = "keyid";
     private static SharedPrefManager mInstance;
     private static Context ctx;
@@ -73,10 +79,23 @@ public class SharedPrefManager {
             editor.putString(KEY_USERNAME, user.getName());
             editor.putString(KEY_EMAIL, user.getEmail());
             editor.putString(KEY_GENDER, user.getGender());
+            //TODO: save pic bitmap here
+            editor.putString(KEY_BITMAP_STRING, encodeToBase64(user));
             editor.apply();
         }
     }
 
+    //profPic Bitmap to string
+    private String encodeToBase64(User user) {
+        Bitmap bitmap = user.getBitmap();
+        if (bitmap == null) bitmap = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.image);
+        String profPicString;
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] picBytes = byteArrayOutputStream.toByteArray();
+        profPicString = Base64.encodeToString(picBytes, Base64.DEFAULT);
+        return profPicString;
+    }
 
 
     //this method will check whether user is already logged in or not
@@ -92,8 +111,15 @@ public class SharedPrefManager {
                 sharedPreferences.getInt(KEY_ID, -1),
                 sharedPreferences.getString(KEY_USERNAME, null),
                 sharedPreferences.getString(KEY_EMAIL, null),
-                sharedPreferences.getString(KEY_GENDER, null)
+                sharedPreferences.getString(KEY_GENDER, null),
+                decodeBase64(sharedPreferences.getString(KEY_BITMAP_STRING, null)) //TODO
         );
+    }
+
+    private Bitmap decodeBase64(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory
+                .decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     //this method will logout the user
@@ -109,7 +135,6 @@ public class SharedPrefManager {
 
 
     //get user info every time this method is called(ex. when they open the app)
-
     public void syncUserInfo(User user) {
         if (user.getId() > -1 && username!=null && email!=null && gender!=null)   {
             //update User info
@@ -153,6 +178,7 @@ public class SharedPrefManager {
                                 username =  userJson.getString("username");
                                 email = userJson.getString("email");
                                 gender = userJson.getString("gender");
+//                                getNsetProfPic();
 
                                 //TODO: do your after-result task here
                                 if (aClass != null){
@@ -185,6 +211,7 @@ public class SharedPrefManager {
 
             VolleySingleton.getInstance(ctx).addToRequestQueue(stringRequest);
 //            publishProgress("Syncing...");
+
             return null;
         }
 
@@ -202,4 +229,29 @@ public class SharedPrefManager {
 //            Toast.makeText(ctx, "onPostExecute", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void getNsetProfPic() {
+        final Bitmap[] bmp = new Bitmap[1];
+        User user = getUser();
+        ImageRequest imageRequest = new ImageRequest(URLs.URL_IMAGE_DIR+ user.getName()+ ".jpg",
+                response -> {
+                    if (response != null){
+                        bmp[0] = response;
+                        Toast.makeText(ctx, "bitmap has been gotten from\n"+URLs.URL_IMAGE_DIR+ user.getName()+ ".jpg", Toast.LENGTH_LONG).show();
+
+                    }else{
+                        bmp[0] =BitmapFactory.decodeResource(ctx.getResources(), R.drawable.image);
+                        Toast.makeText(ctx, "response is null", Toast.LENGTH_SHORT).show();
+                    }
+                    user.setBitmap(bmp[0]);
+                    userLogin(user); //to store changes in shp
+                },
+                0,0,
+                ImageView.ScaleType.CENTER_CROP,
+                Bitmap.Config.ARGB_8888,
+                Throwable::printStackTrace
+        );
+        VolleySingleton.getInstance(ctx).addToRequestQueue(imageRequest);
+    }
+
 }

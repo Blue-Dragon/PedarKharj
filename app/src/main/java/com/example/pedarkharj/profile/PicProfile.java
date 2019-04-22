@@ -17,8 +17,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.pedarkharj.MainActivity;
 import com.example.pedarkharj.R;
@@ -83,21 +87,25 @@ public class PicProfile extends AppCompatActivity{
         femaleRB = findViewById(R.id.radioButtonFemale_picProfile);
         pDialog = new ProgressDialog(this);
 
-        //default profile pic
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bk1);
-        resizedBitmap = resizeBitmap(bitmap);
-        profPicCircle.setImageBitmap(resizedBitmap);
-
         //male by default
         maleRB.setChecked(true);
 
         if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()){
+
 
             user = SharedPrefManager.getInstance(this).getUser();
             //sync user info
             if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
                 SharedPrefManager.getInstance(getApplicationContext()).syncUserInfo(user);
             }
+
+            //default profile pic
+            bitmap = user.getBitmap();
+//            getNsetProfPic();
+            if (bitmap == null )bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bk1);
+            resizedBitmap = resizeBitmap(bitmap);
+            profPicCircle.setImageBitmap(resizedBitmap);
+
             //init
             savedUsername = user.getName();
             usernameEdt.setHint(user.getName());
@@ -333,4 +341,36 @@ public class PicProfile extends AppCompatActivity{
 //        new MainActivity().getUserInfoFromServerAndGoTo(getApplicationContext());
 //        super.onDestroy();
 //    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem m1 = menu.add("get n set pic");
+        m1.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        m1.setOnMenuItemClickListener(item -> {
+
+            getNsetProfPic();
+            return false;
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    private void getNsetProfPic() {
+        ImageRequest imageRequest = new ImageRequest(URLs.URL_IMAGE_DIR+savedUsername+".jpg",
+                response -> {
+                    if (response != null){
+                        bitmap = response;
+                        resizedBitmap = resizeBitmap(bitmap);
+                        profPicCircle.setImageBitmap(resizedBitmap);
+                    }else
+                        Toast.makeText(activity, "response is null", Toast.LENGTH_SHORT).show();
+                },
+                0,0,
+                ImageView.ScaleType.CENTER_CROP,
+                Bitmap.Config.ARGB_8888,
+                Throwable::printStackTrace
+                );
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(imageRequest);
+    }
 }

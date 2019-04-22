@@ -120,6 +120,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     userJson.getString("username"),
                                     userJson.getString("email"),
                                     userJson.getString("gender")
+                                    ,null //TODO
                             );
 
                             //storing the user in shared preferences
