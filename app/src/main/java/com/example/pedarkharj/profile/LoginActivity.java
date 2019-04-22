@@ -115,7 +115,8 @@ public class LoginActivity extends AppCompatActivity {
                                     userJson.getString("username"),
                                     userJson.getString("email"),
                                     userJson.getString("gender"),
-                                    null //TODO
+                                    null, //retrieve no image  from db
+                                    userJson.getInt("picUpdateNum")
                             );
 
                             //storing the user in shared preferences

@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -65,6 +66,7 @@ public class PicProfile extends AppCompatActivity{
     RadioButton maleRB, femaleRB;
     Button saveBtn;
     ProgressDialog pDialog;
+    TextView tvName;
     private Activity activity;
     private User user;
     private String savedUsername;
@@ -85,6 +87,7 @@ public class PicProfile extends AppCompatActivity{
         radioGroupGender = findViewById(R.id.radioGender_picProfile);
         maleRB = findViewById(R.id.radioButtonMale_picProfile);
         femaleRB = findViewById(R.id.radioButtonFemale_picProfile);
+        tvName = findViewById(R.id.user_profile_name);
         pDialog = new ProgressDialog(this);
 
         //male by default
@@ -107,6 +110,7 @@ public class PicProfile extends AppCompatActivity{
             profPicCircle.setImageBitmap(resizedBitmap);
 
             //init
+            tvName.setText(user.getPicUpdateNum()+"");
             savedUsername = user.getName();
             usernameEdt.setHint(user.getName());
             emailEdt.setHint(user.getEmail());
@@ -306,8 +310,8 @@ public class PicProfile extends AppCompatActivity{
             }
         } else {
             //camera image
-            if (data != null) {
-                bitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+            if (data!=null && data.getExtras()!=null) {
+                bitmap = (Bitmap) data.getExtras().get("data") ;
                 if (bitmap != null) {
                     //TODO: resize image
                     resizedBitmap = resizeBitmap(bitmap);

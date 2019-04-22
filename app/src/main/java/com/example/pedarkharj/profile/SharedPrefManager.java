@@ -40,11 +40,13 @@ public class SharedPrefManager {
     private static final String KEY_EMAIL = "keyemail";
     private static final String KEY_GENDER = "keygender";
     private static final String KEY_BITMAP_STRING = "bitmapstring";
+    private static final String KEY_PIC_UPDATE_NUM = "picupdatenum";
     private static final String KEY_ID = "keyid";
     private static SharedPrefManager mInstance;
     private static Context ctx;
     private static Class aClass;
     private String username, email, gender;
+    private int  picUpdateNum;
 
 
     private SharedPrefManager(Context context) {
@@ -81,6 +83,7 @@ public class SharedPrefManager {
             editor.putString(KEY_GENDER, user.getGender());
             //TODO: save pic bitmap here
             editor.putString(KEY_BITMAP_STRING, encodeToBase64(user));
+            editor.putInt(KEY_PIC_UPDATE_NUM, user.getPicUpdateNum());
             editor.apply();
         }
     }
@@ -112,7 +115,8 @@ public class SharedPrefManager {
                 sharedPreferences.getString(KEY_USERNAME, null),
                 sharedPreferences.getString(KEY_EMAIL, null),
                 sharedPreferences.getString(KEY_GENDER, null),
-                decodeBase64(sharedPreferences.getString(KEY_BITMAP_STRING, null)) //TODO
+                decodeBase64(sharedPreferences.getString(KEY_BITMAP_STRING, null)), //TODO
+                sharedPreferences.getInt(KEY_PIC_UPDATE_NUM, 0)
         );
     }
 
@@ -136,11 +140,12 @@ public class SharedPrefManager {
 
     //get user info every time this method is called(ex. when they open the app)
     public void syncUserInfo(User user) {
-        if (user.getId() > -1 && username!=null && email!=null && gender!=null)   {
+        if (user.getId() > -1 && username!=null && email!=null && gender!=null && picUpdateNum>-1)   {
             //update User info
            user.setName(username);
            user.setEmail(email);
            user.setGender(gender);
+           user.setPicUpdateNum(picUpdateNum);
            //update sharedPreferences
            userLogin(user);
         } else {
@@ -178,6 +183,7 @@ public class SharedPrefManager {
                                 username =  userJson.getString("username");
                                 email = userJson.getString("email");
                                 gender = userJson.getString("gender");
+                                picUpdateNum = userJson.getInt("picUpdateNum");
 //                                getNsetProfPic();
 
                                 //TODO: do your after-result task here
