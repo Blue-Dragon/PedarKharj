@@ -30,18 +30,19 @@ if(isset($_GET['apicall'])){
                     $stmt->bind_param("ssss", $username, $email, $password, $gender);
 
                     if($stmt->execute()){
-                        $stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE username = ?");
+                        $stmt = $conn->prepare("SELECT id, username, email, gender, picUpdateNum  FROM users WHERE username = ?");
                         $stmt->bind_param("s",$username);
                         $stmt->execute();
                         //get info
-                        $stmt->bind_result($id, $username, $email, $gender);
+                        $stmt->bind_result($id, $username, $email, $gender, $picUpdateNum);
                         $stmt->fetch();
 
                         $user = array(
                             'id'=>$id,
                             'username'=>$username,
                             'email'=>$email,
-                            'gender'=>$gender
+                            'gender'=>$gender,
+                            'picUpdateNum' => $picUpdateNum
                         );
 
                         $stmt->close();
@@ -65,7 +66,7 @@ if(isset($_GET['apicall'])){
                 $username = $_POST['username'];
                 $password = md5($_POST['password']);
 
-                $stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE username = ? AND password = ?");
+                $stmt = $conn->prepare("SELECT id, username, email, gender, picUpdateNum FROM users WHERE username = ? AND password = ?");
                 $stmt->bind_param("ss",$username, $password);
                 $stmt->execute();
                 $stmt->store_result();
@@ -73,14 +74,15 @@ if(isset($_GET['apicall'])){
                 //if user exists
                 if($stmt->num_rows > 0){
                     //get info
-                    $stmt->bind_result($id, $username, $email, $gender);
+                    $stmt->bind_result($id, $username, $email, $gender, $picUpdateNum);
                     $stmt->fetch();
 
                     $user = array(
                         'id'=>$id,
                         'username'=>$username,
                         'email'=>$email,
-                        'gender'=>$gender
+                        'gender'=>$gender,
+                        'picUpdateNum' => $picUpdateNum
                     );
 
                     $response['error'] = false;
@@ -96,16 +98,43 @@ if(isset($_GET['apicall'])){
 
         //if clicked on update
         case 'update':
-            if(isTheseParametersAvailable(array('id','username','email','password','gender'))){
+            if(isTheseParametersAvailable(array('id','username','email','password','gender',))){
                 $id = $_POST['id'];
                 $username = $_POST['username'];
                 $email = $_POST['email'];
                 $password = md5($_POST['password']);
                 $gender = $_POST['gender'];
+                $picUpdateNum = 0; //TODO: get it directly from db
 //                $profilePic = $_POST['profilePic'];
+
 
                 //if this id exists
                 if ($id > 0){
+
+                    //get profile pic
+                    if ( isTheseParametersAvailable(array('profilePic')) ){
+                        $profile_pic = $_POST['profilePic'];
+                        $savedPicName = $_POST['savedPicName'];
+
+
+                        $newPicUpdateNum = $picUpdateNum + 1;
+
+                        //delete former
+                        $base_directory = "profile_pics/";
+                        unlink($base_directory.$savedPicName);
+                        //add new
+                        $profilePic_path = "profile_pics/$username.jpg";
+                        file_put_contents($profilePic_path, base64_decode($profile_pic));
+
+                        //change picUpdateNum
+                        //TODO: should be fixed
+                        $stmt = $conn->prepare("UPDATE users SET picUpdateNum=$newPicUpdateNum WHERE id = '$id'");
+                        $stmt-> execute();
+                        $stmt->bind_result($picUpdateNum);
+                        $stmt-> fetch();
+                    }
+
+
                     $stmt = $conn->prepare("UPDATE users SET username=?, email=?, password=?, gender=? WHERE id = '$id'");
                     $stmt->bind_param("ssss", $username, $email, $password, $gender);
 //                    $stmt->execute();
@@ -115,18 +144,19 @@ if(isset($_GET['apicall'])){
                     //now send user info back to client
                     if($stmt->execute()){
                         // getUserInfoByID($id)
-							$stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE id = ?");
+							$stmt = $conn->prepare("SELECT id, username, email, gender, picUpdateNum FROM users WHERE id = ?");
 							$stmt->bind_param("s",$id);
 							$stmt->execute();
 							//get info
-							$stmt->bind_result($id, $username, $email, $gender);
+							$stmt->bind_result($id, $username, $email, $gender, $picUpdateNum);
 							$stmt->fetch();
 
 							$user = array(
 								'id'=>$id,
 								'username'=>$username,
 								'email'=>$email,
-								'gender'=>$gender
+								'gender'=>$gender,
+                                'picUpdateNum' => $picUpdateNum
 							);
 
 							$stmt->close();
@@ -135,26 +165,12 @@ if(isset($_GET['apicall'])){
                         $response['message'] = 'User info updated successfully';
                         $response['user'] = $user;
 
-
-                        //get profile pic
-                        if ( isTheseParametersAvailable(array('profilePic')) ){
-                            $profile_pic = $_POST['profilePic'];
-                            $savedPicName = $_POST['savedPicName'];
-
-                            //delete former
-                            $base_directory = "profile_pics/";
-                            unlink($base_directory.$savedPicName);
-                            //add new
-                            $profilePic_path = "profile_pics/$username.jpg";
-                            file_put_contents($profilePic_path, base64_decode($profile_pic));
-                        }
-
                     }
                 }
             } else{
                     //this id doesn't exist
                     $response['error'] = true;
-                    $response['message'] = 'Invalid ID';
+                    $response['message'] = "Invalid ID: " .$_POST['id'];
             }
 
             break;
@@ -168,18 +184,19 @@ if(isset($_GET['apicall'])){
 			//if this id exists
 
 				//now send user info back to client
-				$stmt = $conn->prepare("SELECT id, username, email, gender FROM users WHERE id = ?");
+				$stmt = $conn->prepare("SELECT id, username, email, gender, picUpdateNum FROM users WHERE id = ?");
 				$stmt->bind_param("s",$id);
 				$stmt->execute();
 				//get info
-				$stmt->bind_result($id, $username, $email, $gender);
+				$stmt->bind_result($id, $username, $email, $gender, $picUpdateNum);
 				$stmt->fetch();
 
 				$user = array(
 					'id'=>$id,
 					'username'=>$username,
 					'email'=>$email,
-					'gender'=>$gender
+					'gender'=>$gender,
+                    'picUpdateNum' => $picUpdateNum
 				);
 
 				$stmt->close();
