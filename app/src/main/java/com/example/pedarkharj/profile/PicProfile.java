@@ -129,7 +129,6 @@ public class PicProfile extends AppCompatActivity{
 
             //change profile pic
             profilePicLT.setOnClickListener(item -> {
-//                Toast.makeText(activity, "clicked", Toast.LENGTH_SHORT).show();
                 if (Build.VERSION.SDK_INT >= 23 && !checkpermission())
                         requestpermissions();
                 else
@@ -243,7 +242,6 @@ public class PicProfile extends AppCompatActivity{
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
-//        Toast.makeText(activity, "changes saved successfully", Toast.LENGTH_SHORT).show();  //no need: message comes from server
     }
 
 
@@ -342,7 +340,7 @@ public class PicProfile extends AppCompatActivity{
 
 //    @Override
 //    protected void onDestroy() {
-//        new MainActivity().getUserInfoFromServerAndGoTo(getApplicationContext());
+//        new MainActivity().updateUserPicIfNeededAndGoTo(getApplicationContext());
 //        super.onDestroy();
 //    }
 

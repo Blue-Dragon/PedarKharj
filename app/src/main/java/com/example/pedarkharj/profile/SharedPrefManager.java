@@ -179,7 +179,6 @@ public class SharedPrefManager {
                             //if no error in response
                             if (!obj.getBoolean("error")) {
                                 publishProgress(obj.getString("message"));
-//                                Toast.makeText(ctx, obj.getString("message"), Toast.LENGTH_SHORT).show();
 
                                 //getting the user from the response
                                 JSONObject userJson = obj.getJSONObject("user");
@@ -190,6 +189,7 @@ public class SharedPrefManager {
                                 gender = userJson.getString("gender");
                                 picUpdateNum = userJson.getInt("picUpdateNum");
 //                                getNsetProfPic();
+//                                syncUserInfo(user); //if u use it, pic will not be updated
 
                                 //TODO: do your after-result task here
                                 if (aClass != null){
@@ -200,7 +200,6 @@ public class SharedPrefManager {
 
                             } else {
                                 publishProgress(obj.getString("message"));
-//                                Toast.makeText(ctx, obj.getString("message"), Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -209,7 +208,6 @@ public class SharedPrefManager {
                     },
                     error -> {
                         publishProgress(error.getMessage());
-//                        Toast.makeText(ctx, error.getMessage(), Toast.LENGTH_SHORT).show()
                     })
             {
                 @Override
@@ -237,7 +235,6 @@ public class SharedPrefManager {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-//            Toast.makeText(ctx, "onPostExecute", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -248,7 +245,6 @@ public class SharedPrefManager {
                 response -> {
                     if (response != null){
                         bmp[0] = response;
-                        Toast.makeText(ctx, "bitmap has been gotten from\n"+URLs.URL_IMAGE_DIR+ user.getName()+ ".jpg", Toast.LENGTH_LONG).show();
 
                     }else{
                         bmp[0] =BitmapFactory.decodeResource(ctx.getResources(), R.drawable.image);
@@ -256,6 +252,7 @@ public class SharedPrefManager {
                     }
                     user.setBitmap(bmp[0]);
                     userLogin(user); //to store changes in shp
+                    Toast.makeText(ctx, "new pic downloaded", Toast.LENGTH_SHORT).show();
                 },
                 0,0,
                 ImageView.ScaleType.CENTER_CROP,

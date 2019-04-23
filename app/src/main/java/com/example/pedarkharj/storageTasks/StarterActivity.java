@@ -16,6 +16,7 @@ import com.example.pedarkharj.profile.User;
 public class StarterActivity extends AppCompatActivity {
 
     ProgressBar progressBar;
+    public static int formerPicNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class StarterActivity extends AppCompatActivity {
 
         if (SharedPrefManager.getInstance(this).isLoggedIn()){
             User user = SharedPrefManager.getInstance(this).getUser();
+            formerPicNum = user.getPicUpdateNum();
             SharedPrefManager.getInstance(this, MainActivity.class).new mSyncUser().execute(user);
 //            progressBar.setVisibility(View.GONE);
 //            finish();

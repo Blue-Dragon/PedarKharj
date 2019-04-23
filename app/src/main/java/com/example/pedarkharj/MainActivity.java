@@ -7,13 +7,26 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
 import com.example.pedarkharj.mainpage.MyDrawerActivity;
 import com.example.pedarkharj.profile.PicProfile;
 import com.example.pedarkharj.profile.ProfileActivity;
 import com.example.pedarkharj.profile.SharedPrefManager;
+import com.example.pedarkharj.profile.URLs;
 import com.example.pedarkharj.profile.User;
+import com.example.pedarkharj.profile.VolleySingleton;
 import com.example.pedarkharj.storageTasks.SaveImgActivity;
+import com.example.pedarkharj.storageTasks.StarterActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 //        if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
 //            SharedPrefManager.getInstance(getApplicationContext()).getNsetProfPic();
 //        }
-//        getUserInfoFromServerAndGoTo(this);
+//        updateUserPicIfNeededAndGoTo(this);
         super.onResume();
     }
 
@@ -41,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem m1 = menu.add("go to profile");
 //        m1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         m1.setOnMenuItemClickListener(item -> {
-            getUserInfoFromServerAndGoTo(getApplicationContext(), ProfileActivity.class);
+            updateUserPicIfNeededAndGoTo(getApplicationContext(), ProfileActivity.class);
             return false;
         });
 
@@ -62,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             MenuItem m5 = menu.add("pic profile");
         m5.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         m5.setOnMenuItemClickListener(item -> {
-            getUserInfoFromServerAndGoTo(getApplicationContext(), PicProfile.class);
+            updateUserPicIfNeededAndGoTo(getApplicationContext(), PicProfile.class);
             return false;
         });
 
@@ -76,11 +89,55 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void getUserInfoFromServerAndGoTo(Context context, Class mClass) {
+    public void updateUserPicIfNeededAndGoTo(Context context, Class mClass) {
         //get user info from server
         if (SharedPrefManager.getInstance(context).isLoggedIn()) {
             User user = SharedPrefManager.getInstance(context).getUser();
-            SharedPrefManager.getInstance(getApplicationContext()).getNsetProfPic();
+
+            int exPicUpdateNum = user.getPicUpdateNum();
+            final int[] curPicUpdateNum = {user.getPicUpdateNum()};
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_USER_INFO,
+                    response -> {
+                        try {
+                            //converting response to json object
+                            JSONObject obj = new JSONObject(response);
+                            //if no error in response
+                            if (!obj.getBoolean("error")) {
+                                //getting the user from the response
+                                JSONObject userJson = obj.getJSONObject("user");
+
+                                //getting user params reom server
+                                int cur = curPicUpdateNum[0] = userJson.getInt("picUpdateNum");
+
+//                                Toast.makeText(context,
+//                                        "\nex: "+ exPicUpdateNum+
+//                                        "\ncurrant: "+ cur, Toast.LENGTH_LONG).show();
+
+                                //update pic if needed
+                                if (exPicUpdateNum != cur)
+                                    SharedPrefManager.getInstance(getApplicationContext()).getNsetProfPic();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    },
+                    Throwable::printStackTrace
+                    )
+            {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("id", String.valueOf(user.getId()));
+                    return params;
+                }
+            };
+            VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+
+
+//            startActivity(new Intent(context, mClass));
             SharedPrefManager.getInstance(context, mClass).new mSyncUser().execute(user);
         } else startActivity(new Intent(context, mClass));
     }
