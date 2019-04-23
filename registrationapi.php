@@ -104,8 +104,17 @@ if(isset($_GET['apicall'])){
                 $email = $_POST['email'];
                 $password = md5($_POST['password']);
                 $gender = $_POST['gender'];
-                $picUpdateNum = 0; //TODO: get it directly from db
-//                $profilePic = $_POST['profilePic'];
+
+
+                //get picUpdateNum from DB
+                $picUpdateNum = 0;
+                $stmt = $conn->prepare("SELECT  picUpdateNum FROM users WHERE id = ?");
+                $stmt->bind_param("s",$id);
+                $stmt->execute();
+                //get info
+                $stmt->bind_result($picUpdateNum);
+                $stmt->fetch();
+                $stmt->close();
 
 
                 //if this id exists
@@ -130,8 +139,9 @@ if(isset($_GET['apicall'])){
                         //TODO: should be fixed
                         $stmt = $conn->prepare("UPDATE users SET picUpdateNum=$newPicUpdateNum WHERE id = '$id'");
                         $stmt-> execute();
-                        $stmt->bind_result($picUpdateNum);
-                        $stmt-> fetch();
+                        $stmt->close();
+//                        $stmt->bind_result($picUpdateNum);
+//                        $stmt-> fetch();
                     }
 
 
