@@ -11,13 +11,21 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".storageTasks.SaveImgActivity"></activity>
+
+        <activity android:name=".storageTasks.StarterActivity" android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".storageTasks.SaveImgActivity" />
         <activity android:name=".profile.PicProfile" />
         <activity
             android:name=".mainpage.MyDrawerActivity"
@@ -26,13 +34,8 @@
         <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".profile.RegisterActivity" />
         <activity android:name=".profile.LoginActivity" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".MainActivity" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

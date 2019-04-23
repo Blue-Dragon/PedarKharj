@@ -165,6 +165,11 @@ public class SharedPrefManager {
 
         @Override
         protected String doInBackground(User... users) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             User user = users[0];
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_USER_INFO,
                     response -> {
