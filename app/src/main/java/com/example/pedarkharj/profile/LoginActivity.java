@@ -17,6 +17,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.pedarkharj.R;
+import com.example.pedarkharj.mainpage.MyDrawerActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -167,5 +168,12 @@ public class LoginActivity extends AppCompatActivity {
 //        });
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), MyDrawerActivity.class));
     }
 }

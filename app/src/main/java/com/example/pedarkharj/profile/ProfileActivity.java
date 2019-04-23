@@ -8,8 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.pedarkharj.MainActivity;
 import com.example.pedarkharj.R;
+import com.example.pedarkharj.mainpage.MyDrawerActivity;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     /**
@@ -62,6 +62,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        startActivity(new Intent(getApplicationContext(), MyDrawerActivity.class));
     }
 }

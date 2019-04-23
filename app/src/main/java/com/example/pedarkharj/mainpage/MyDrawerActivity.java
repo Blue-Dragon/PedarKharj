@@ -1,5 +1,7 @@
 package com.example.pedarkharj.mainpage;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,15 +12,30 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
 import com.example.pedarkharj.R;
+import com.example.pedarkharj.TestActivity;
+import com.example.pedarkharj.profile.PicProfile;
+import com.example.pedarkharj.profile.ProfileActivity;
 import com.example.pedarkharj.profile.SharedPrefManager;
+import com.example.pedarkharj.profile.URLs;
 import com.example.pedarkharj.profile.User;
+import com.example.pedarkharj.profile.VolleySingleton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -26,6 +43,7 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
+    CircleImageView profPic;
 
     String username, email;
     TextView usernameTV, emailTV;
@@ -47,18 +65,23 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
         //init
         emailTV = view.findViewById(R.id.user_email);
         usernameTV = view.findViewById(R.id.username_txt);
+        profPic = view.findViewById(R.id.nav_profile_pic);
 
         if(SharedPrefManager.getInstance(this).isLoggedIn()){
             User user = SharedPrefManager.getInstance(this).getUser();
             username = user.getName();
             email = user.getEmail();
+            profPic.setImageBitmap(user.getBitmap());
+
 
             if (username != null)
                 usernameTV.setText(username);
             if (email != null)
                 emailTV.setText(email);
+        }else {
+
         }
-        /**********          profile />           **********/
+
 
 
         /*****************          Drawer          ******************/
@@ -93,7 +116,7 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
 //            getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag1()).commit();
 //            navigationView.setCheckedItem(R.id.frag1);
 //        }
-        /*****************          Drawer />          ******************/
+
 
     }
 
@@ -102,25 +125,28 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.frag1:
+            case R.id.nav_frag1:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag1()).commit();
                 break;
-            case R.id.frag2:
+            case R.id.nav_frag2:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag2()).commit();
                 break;
-            case R.id.frag3:
+            case R.id.nav_frag3:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag3()).commit();
                 break;
-            case R.id.nav_share:
-                Toast.makeText(this, "share", Toast.LENGTH_SHORT).show();
+            case R.id.nav_profile:
+                updateUserInfoAndPicIfNeededAndGoTo(getApplicationContext(), ProfileActivity.class);
                 break;
-            case R.id.nav_send:
-                Toast.makeText(this, "send", Toast.LENGTH_SHORT).show();
+            case R.id.nav_pic_profile:
+                updateUserInfoAndPicIfNeededAndGoTo(getApplicationContext(), PicProfile.class);
                 break;
-            case R.id.nav_exit:
-//                Toast.makeText(this, "exit", Toast.LENGTH_SHORT).show();
-                Toast.makeText(this, usernameTV.getText(), Toast.LENGTH_SHORT).show();
-                usernameTV.setText("text");
+            case R.id.nav_logout:
+                if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()){
+                    SharedPrefManager.getInstance(getApplicationContext()).logout();
+                }
+                break;
+            case R.id.nav_test_connection:
+                startActivity(new Intent(getApplicationContext(), TestActivity.class));
                 break;
         }
 
@@ -138,9 +164,7 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /*****************          Drawer />          ******************/
+    }/*****************          Drawer />          ******************/
 
     // double back pressed
     boolean alreadyPressed = false;
@@ -166,6 +190,60 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
             }, 2000);
         }
 
+    }
+
+    //sync user and pic if needed and go to the other page (if activity is set)
+    public void updateUserInfoAndPicIfNeededAndGoTo(Context context, Class mClass) {
+        //get user info from server
+        if (SharedPrefManager.getInstance(context).isLoggedIn()) {
+            User user = SharedPrefManager.getInstance(context).getUser();
+
+            int exPicUpdateNum = user.getPicUpdateNum();
+            final int[] curPicUpdateNum = {user.getPicUpdateNum()};
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_USER_INFO,
+                    response -> {
+                        try {
+                            //converting response to json object
+                            JSONObject obj = new JSONObject(response);
+                            //if no error in response
+                            if (!obj.getBoolean("error")) {
+                                //getting the user from the response
+                                JSONObject userJson = obj.getJSONObject("user");
+
+                                //getting user params reom server
+                                int cur = curPicUpdateNum[0] = userJson.getInt("picUpdateNum");
+
+//                                Toast.makeText(context,
+//                                        "\nex: "+ exPicUpdateNum+
+//                                        "\ncurrant: "+ cur, Toast.LENGTH_LONG).show();
+
+                                //update pic if needed
+                                if (exPicUpdateNum != cur)
+                                    SharedPrefManager.getInstance(getApplicationContext()).getNsetProfPic();
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    },
+                    Throwable::printStackTrace
+            )
+            {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("id", String.valueOf(user.getId()));
+                    return params;
+                }
+            };
+            VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+
+
+//            startActivity(new Intent(context, mClass));
+            SharedPrefManager.getInstance(context, mClass).new mSyncUser().execute(user);
+        } else startActivity(new Intent(context, mClass));
     }
 
 

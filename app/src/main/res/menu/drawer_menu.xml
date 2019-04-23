@@ -5,46 +5,50 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/frag1"
+            android:id="@+id/nav_frag1"
             android:icon="@drawable/ic_email"
             android:title="frag 1" />
 
         <item
-            android:id="@+id/frag2"
+            android:id="@+id/nav_frag2"
             android:icon="@android:drawable/alert_dark_frame"
             android:title="frag 2" />
 
         <item
-            android:id="@+id/frag3"
+            android:id="@+id/nav_frag3"
             android:icon="@android:drawable/alert_dark_frame"
             android:title="frag 3" />
     </group>
 
     <item
-        android:id="@+id/about_heading"
+        android:id="@+id/nav_about_heading"
         android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_profile"
                 android:icon="@android:drawable/ic_menu_share"
-                android:title="SHARE" />
+                android:title="Profile" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_pic_profile"
                 android:icon="@android:drawable/ic_menu_send"
-                android:title="SEND" />
+                android:title="Pic Profile" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@android:drawable/ic_menu_send"
+                android:title="Log out" />
         </menu>
 
     </item>
 
     <item
-        android:id="@+id/exit"
+        android:id="@+id/tests"
         android:icon="@android:drawable/sym_call_outgoing"
-        android:title="exit">
+        android:title="Tests">
         <menu>
             <item
-                android:id="@+id/nav_exit"
+                android:id="@+id/nav_test_connection"
                 android:icon="@android:drawable/sym_call_outgoing"
-                android:title="SHARE" />
+                android:title="Test Connection" />
         </menu>
     </item>
 

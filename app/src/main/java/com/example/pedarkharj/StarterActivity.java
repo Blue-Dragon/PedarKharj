@@ -4,23 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.example.pedarkharj.R;
 import com.example.pedarkharj.mainpage.MyDrawerActivity;
-import com.example.pedarkharj.profile.PicProfile;
-import com.example.pedarkharj.profile.ProfileActivity;
+import com.example.pedarkharj.profile.LoginActivity;
 import com.example.pedarkharj.profile.SharedPrefManager;
 import com.example.pedarkharj.profile.URLs;
 import com.example.pedarkharj.profile.User;
 import com.example.pedarkharj.profile.VolleySingleton;
-import com.example.pedarkharj.storageTasks.SaveImgActivity;
-import com.example.pedarkharj.storageTasks.StarterActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,68 +24,33 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class StarterActivity extends AppCompatActivity {
 
+    ProgressBar progressBar;
+    public static int formerPicNum;
 
-    @Override
-    protected void onResume() {
-//        if (SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn()) {
-//            SharedPrefManager.getInstance(getApplicationContext()).getNsetProfPic();
-//        }
-//        updateUserPicIfNeededAndGoTo(this);
-        super.onResume();
-    }
-
-    TextView tv1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        tv1 = findViewById(R.id.tv1);
+        setContentView(R.layout.activity_starter);
+
+        progressBar = findViewById(R.id.progressBar2);
+        progressBar.setVisibility(View.VISIBLE);
+
+        if (SharedPrefManager.getInstance(this).isLoggedIn()){
+            User user = SharedPrefManager.getInstance(this).getUser();
+            formerPicNum = user.getPicUpdateNum();
+            //sync user and pic if needed and go to the other page
+            updateUserInfoAndPicIfNeededAndGoTo(getApplicationContext(), MyDrawerActivity.class);
+//            SharedPrefManager.getInstance(this, MyDrawerActivity.class).new mSyncUser().execute(user);
+//            progressBar.setVisibility(View.GONE);
+//            finish();
+        } else startActivity(new Intent(this, LoginActivity.class));
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem m1 = menu.add("go to profile");
-//        m1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        m1.setOnMenuItemClickListener(item -> {
-            updateUserPicIfNeededAndGoTo(getApplicationContext(), ProfileActivity.class);
-            return false;
-        });
 
-        MenuItem m2 = menu.add("Test Connection");
-//        m2.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        m2.setOnMenuItemClickListener(item -> {
-            startActivity(new Intent(MainActivity.this, TestActivity.class));
-            return false;
-        });
-
-        MenuItem m4 = menu.add("drawer");
-//        m4.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        m4.setOnMenuItemClickListener(item -> {
-            startActivity(new Intent(MainActivity.this, MyDrawerActivity.class));
-            return false;
-        });
-
-            MenuItem m5 = menu.add("pic profile");
-        m5.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        m5.setOnMenuItemClickListener(item -> {
-            updateUserPicIfNeededAndGoTo(getApplicationContext(), PicProfile.class);
-            return false;
-        });
-
-        MenuItem m6 = menu.add("Save img");
-        m6.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        m6.setOnMenuItemClickListener(item -> {
-            startActivity(new Intent(getApplicationContext(),  SaveImgActivity.class));
-            return false;
-        });
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    public void updateUserPicIfNeededAndGoTo(Context context, Class mClass) {
+    public void updateUserInfoAndPicIfNeededAndGoTo(Context context, Class mClass) {
         //get user info from server
         if (SharedPrefManager.getInstance(context).isLoggedIn()) {
             User user = SharedPrefManager.getInstance(context).getUser();
@@ -125,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
                     },
                     Throwable::printStackTrace
-                    )
+            )
             {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -141,4 +102,6 @@ public class MainActivity extends AppCompatActivity {
             SharedPrefManager.getInstance(context, mClass).new mSyncUser().execute(user);
         } else startActivity(new Intent(context, mClass));
     }
+
+
 }

@@ -18,14 +18,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".storageTasks.StarterActivity" android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".StarterActivity" android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".storageTasks.SaveImgActivity" />
         <activity android:name=".profile.PicProfile" />
         <activity
             android:name=".mainpage.MyDrawerActivity"
@@ -34,7 +33,6 @@
         <activity android:name=".profile.ProfileActivity" />
         <activity android:name=".profile.RegisterActivity" />
         <activity android:name=".profile.LoginActivity" />
-        <activity android:name=".MainActivity" />
 
     </application>
 

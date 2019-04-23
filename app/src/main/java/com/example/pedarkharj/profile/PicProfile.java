@@ -32,8 +32,8 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.pedarkharj.MainActivity;
 import com.example.pedarkharj.R;
+import com.example.pedarkharj.mainpage.MyDrawerActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +42,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -340,7 +339,7 @@ public class PicProfile extends AppCompatActivity{
 
 //    @Override
 //    protected void onDestroy() {
-//        new MainActivity().updateUserPicIfNeededAndGoTo(getApplicationContext());
+//        new MainActivity().updateUserInfoAndPicIfNeededAndGoTo(getApplicationContext());
 //        super.onDestroy();
 //    }
 
@@ -374,5 +373,11 @@ public class PicProfile extends AppCompatActivity{
                 Throwable::printStackTrace
                 );
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(imageRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getApplicationContext(), MyDrawerActivity.class));
     }
 }
