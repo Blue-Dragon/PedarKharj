@@ -2,6 +2,7 @@ package com.example.pedarkharj;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -41,7 +42,7 @@ public class StarterActivity extends AppCompatActivity {
             User user = SharedPrefManager.getInstance(this).getUser();
             formerPicNum = user.getPicUpdateNum();
             //sync user and pic if needed and go to the other page
-            updateUserInfoAndPicIfNeededAndGoTo(getApplicationContext(), MyDrawerActivity.class);
+            new delayTask().execute();
 //            SharedPrefManager.getInstance(this, MyDrawerActivity.class).new mSyncUser().execute(user);
 //            progressBar.setVisibility(View.GONE);
 //            finish();
@@ -50,58 +51,23 @@ public class StarterActivity extends AppCompatActivity {
     }
 
 
-    public void updateUserInfoAndPicIfNeededAndGoTo(Context context, Class mClass) {
-        //get user info from server
-        if (SharedPrefManager.getInstance(context).isLoggedIn()) {
-            User user = SharedPrefManager.getInstance(context).getUser();
 
-            int exPicUpdateNum = user.getPicUpdateNum();
-            final int[] curPicUpdateNum = {user.getPicUpdateNum()};
+    private class delayTask extends AsyncTask <Void, Void, Void>{
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                Thread.sleep(700);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
 
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_USER_INFO,
-                    response -> {
-                        try {
-                            //converting response to json object
-                            JSONObject obj = new JSONObject(response);
-                            //if no error in response
-                            if (!obj.getBoolean("error")) {
-                                //getting the user from the response
-                                JSONObject userJson = obj.getJSONObject("user");
-
-                                //getting user params reom server
-                                int cur = curPicUpdateNum[0] = userJson.getInt("picUpdateNum");
-
-//                                Toast.makeText(context,
-//                                        "\nex: "+ exPicUpdateNum+
-//                                        "\ncurrant: "+ cur, Toast.LENGTH_LONG).show();
-
-                                //update pic if needed
-                                if (exPicUpdateNum != cur)
-                                    SharedPrefManager.getInstance(getApplicationContext()).getNsetProfPic();
-
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    },
-                    Throwable::printStackTrace
-            )
-            {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("id", String.valueOf(user.getId()));
-                    return params;
-                }
-            };
-            VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
-
-
-//            startActivity(new Intent(context, mClass));
-            SharedPrefManager.getInstance(context, mClass).new mSyncUser().execute(user);
-        } else startActivity(new Intent(context, mClass));
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            new MyDrawerActivity().updateUserInfoAndPicIfNeededAndGoTo(getApplicationContext(), MyDrawerActivity.class);
+        }
     }
-
 
 }

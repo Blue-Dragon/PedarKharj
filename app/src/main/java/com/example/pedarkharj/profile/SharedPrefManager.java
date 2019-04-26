@@ -238,10 +238,10 @@ public class SharedPrefManager {
         }
     }
 
-    public void getNsetProfPic() {
+    public void getNsetProfPic(String profilePicName) {
         final Bitmap[] bmp = new Bitmap[1];
         User user = getUser();
-        ImageRequest imageRequest = new ImageRequest(URLs.URL_IMAGE_DIR+ user.getName()+ ".jpg",
+        ImageRequest imageRequest = new ImageRequest(URLs.URL_IMAGE_DIR+ profilePicName,
                 response -> {
                     if (response != null){
                         bmp[0] = response;

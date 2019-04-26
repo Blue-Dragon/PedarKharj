@@ -68,7 +68,7 @@ public class PicProfile extends AppCompatActivity{
     TextView tvName;
     private Activity activity;
     private User user;
-    private String savedUsername;
+    private String savedUsername, profilePic;
 
 
     @Override
@@ -208,6 +208,8 @@ public class PicProfile extends AppCompatActivity{
                             user.setGender(userJson.getString("gender"));
                             // re-initiate
                             savedUsername = userJson.getString("username");
+                            profilePic = userJson.getString("profilePic");
+
                             usernameEdt.setHint(savedUsername);
 
                             //storing the user in shared preferences
@@ -263,10 +265,10 @@ public class PicProfile extends AppCompatActivity{
                 boolean permissioncamera = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 boolean permissiongallery = grantResults[1] == PackageManager.PERMISSION_GRANTED;
                 if (grantResults.length > 0 && permissioncamera && permissiongallery) {
-                    Toast.makeText(activity, "مجوز دسترسی داده شد", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Permission Granted", Toast.LENGTH_SHORT).show();
                     chooseCameraGallery();
                 } else {
-                    Toast.makeText(activity, "مجوز دسترسی داده نشد", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, "Permission NOT Granted", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -377,7 +379,8 @@ public class PicProfile extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(getApplicationContext(), MyDrawerActivity.class));
+//        super.onBackPressed();
+        new MyDrawerActivity().updateUserInfoAndPicIfNeededAndGoTo(getApplicationContext(), MyDrawerActivity.class);
+//        startActivity(new Intent(getApplicationContext(), MyDrawerActivity.class));
     }
 }

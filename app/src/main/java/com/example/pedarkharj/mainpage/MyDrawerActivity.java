@@ -45,7 +45,7 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
     ActionBarDrawerToggle toggle;
     CircleImageView profPic;
 
-    String username, email;
+    String username, email, profilePicName;
     TextView usernameTV, emailTV;
 
     @Override
@@ -166,31 +166,6 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
         return super.onOptionsItemSelected(item);
     }/*****************          Drawer />          ******************/
 
-    // double back pressed
-    boolean alreadyPressed = false;
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START))
-            drawerLayout.closeDrawer(GravityCompat.START); //if drawable open, onBackPressed should close it
-        else {
-            if (alreadyPressed) {
-                super.onBackPressed(); //else, close the activity as usual
-            }
-
-            alreadyPressed = true;
-            Toast.makeText(this, "press back again to exit!", Toast.LENGTH_SHORT).show();
-            //give 2 seconds to press back again, or make the boolean false
-            new Handler().postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-                    alreadyPressed=false;
-                }
-            }, 2000);
-        }
-
-    }
 
     //sync user and pic if needed and go to the other page (if activity is set)
     public void updateUserInfoAndPicIfNeededAndGoTo(Context context, Class mClass) {
@@ -201,11 +176,14 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
             int exPicUpdateNum = user.getPicUpdateNum();
             final int[] curPicUpdateNum = {user.getPicUpdateNum()};
 
+            Toast.makeText(context, "Before", Toast.LENGTH_SHORT).show();
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_USER_INFO,
                     response -> {
+                        Toast.makeText(context, "After", Toast.LENGTH_SHORT).show();
                         try {
                             //converting response to json object
                             JSONObject obj = new JSONObject(response);
+
                             //if no error in response
                             if (!obj.getBoolean("error")) {
                                 //getting the user from the response
@@ -213,14 +191,21 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
 
                                 //getting user params reom server
                                 int cur = curPicUpdateNum[0] = userJson.getInt("picUpdateNum");
+                                profilePicName = userJson.getString("profilePicName");
 
-//                                Toast.makeText(context,
-//                                        "\nex: "+ exPicUpdateNum+
-//                                        "\ncurrant: "+ cur, Toast.LENGTH_LONG).show();
+                                Toast.makeText(context,
+                                        "\nex: "+ exPicUpdateNum+
+                                        "\ncurrant: "+ cur, Toast.LENGTH_LONG).show();
 
                                 //update pic if needed
-                                if (exPicUpdateNum != cur)
-                                    SharedPrefManager.getInstance(getApplicationContext()).getNsetProfPic();
+//                                if (exPicUpdateNum != cur)
+                                    SharedPrefManager.getInstance(context).getNsetProfPic(profilePicName);
+                                Toast.makeText(context, "After2", Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                Toast.makeText(context,
+                                        "\nError: \n"+ obj.getString("message"), Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "After3", Toast.LENGTH_SHORT).show();
 
                             }
                         } catch (JSONException e) {
@@ -228,8 +213,11 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
                         }
 
                     },
-                    Throwable::printStackTrace
+                    error -> {
+                        Toast.makeText(context, "error: " + error.toString(), Toast.LENGTH_SHORT).show();
+                    }
             )
+
             {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
@@ -238,7 +226,9 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
                     return params;
                 }
             };
-            VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+            VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
+            Toast.makeText(context, "After4", Toast.LENGTH_SHORT).show();
+
 
 
 //            startActivity(new Intent(context, mClass));
@@ -246,5 +236,32 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
         } else startActivity(new Intent(context, mClass));
     }
 
+    // double back pressed
+    boolean alreadyPressed = false;
 
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START); //if drawable open, onBackPressed should close it
+        else {
+            if (alreadyPressed) {
+//                super.onBackPressed(); //else, close the activity as usual
+                Intent a = new Intent(Intent.ACTION_MAIN);
+                a.addCategory(Intent.CATEGORY_HOME);
+                a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(a);
+            }
+
+            alreadyPressed = true;
+            Toast.makeText(this, "press back again to exit!", Toast.LENGTH_SHORT).show();
+            //give 2 seconds to press back again, or make the boolean false
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    alreadyPressed=false;
+                }
+            }, 2000);
+        }
+
+    }
 }
