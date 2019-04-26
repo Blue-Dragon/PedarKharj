@@ -124,7 +124,7 @@ if(isset($_GET['apicall'])){
                     if ( isTheseParametersAvailable(array('profilePic')) ){
                         $profile_pic = $_POST['profilePic'];
                         $savedPicName = $_POST['savedPicName'];
-
+                        $newPicName = $_POST['username'] . ".jpg";
 
                         $newPicUpdateNum = $picUpdateNum + 1;
 
@@ -132,8 +132,12 @@ if(isset($_GET['apicall'])){
                         $base_directory = "profile_pics/";
                         unlink($base_directory.$savedPicName);
                         //add new
-                        $profilePic_path = "profile_pics/$username.jpg";
+                        $profilePic_path = "profile_pics/$newPicName";
                         file_put_contents($profilePic_path, base64_decode($profile_pic));
+                       //update profile_pic table
+                        $stmt0 = $conn->prepare("UPDATE users SET profile_pic='$newPicName' WHERE id = '$id'");
+                        $stmt0-> execute();
+                        $stmt0->close();
 
                         //change picUpdateNum
                         //TODO: should be fixed
@@ -168,8 +172,14 @@ if(isset($_GET['apicall'])){
 								'gender'=>$gender,
                                 'picUpdateNum' => $picUpdateNum
 							);
-
 							$stmt->close();
+
+                        //update profile_pic table
+//                        if ( isTheseParametersAvailable(array('profilePic')) ){
+//                            $stmt = $conn->prepare("UPDATE users SET profile_pic='$username.jpg'  WHERE id = '$id'");
+//                            $stmt-> execute();
+//                            $stmt->close();
+//                        }
 
                         $response['error'] = false;
                         $response['message'] = 'User info updated successfully';
