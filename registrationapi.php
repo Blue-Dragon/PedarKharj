@@ -158,11 +158,11 @@ if(isset($_GET['apicall'])){
                     //now send user info back to client
                     if($stmt->execute()){
                         // getUserInfoByID($id)
-							$stmt = $conn->prepare("SELECT id, username, email, gender, picUpdateNum FROM users WHERE id = ?");
+							$stmt = $conn->prepare("SELECT id, username, email, gender, picUpdateNum, profile_pic FROM users WHERE id = ?");
 							$stmt->bind_param("s",$id);
 							$stmt->execute();
 							//get info
-							$stmt->bind_result($id, $username, $email, $gender, $picUpdateNum);
+							$stmt->bind_result($id, $username, $email, $gender, $picUpdateNum, $profile_pic);
 							$stmt->fetch();
 
 							$user = array(
@@ -170,16 +170,11 @@ if(isset($_GET['apicall'])){
 								'username'=>$username,
 								'email'=>$email,
 								'gender'=>$gender,
-                                'picUpdateNum' => $picUpdateNum
+                                'picUpdateNum' => $picUpdateNum,
+                                'profilePic' => $profile_pic
 							);
 							$stmt->close();
 
-                        //update profile_pic table
-//                        if ( isTheseParametersAvailable(array('profilePic')) ){
-//                            $stmt = $conn->prepare("UPDATE users SET profile_pic='$username.jpg'  WHERE id = '$id'");
-//                            $stmt-> execute();
-//                            $stmt->close();
-//                        }
 
                         $response['error'] = false;
                         $response['message'] = 'User info updated successfully';
@@ -204,11 +199,11 @@ if(isset($_GET['apicall'])){
 			//if this id exists
 
 				//now send user info back to client
-				$stmt = $conn->prepare("SELECT id, username, email, gender, picUpdateNum FROM users WHERE id = ?");
+				$stmt = $conn->prepare("SELECT id, username, email, gender, picUpdateNum, profile_pic FROM users WHERE id = ?");
 				$stmt->bind_param("s",$id);
 				$stmt->execute();
 				//get info
-				$stmt->bind_result($id, $username, $email, $gender, $picUpdateNum);
+				$stmt->bind_result($id, $username, $email, $gender, $picUpdateNum, $profile_pic);
 				$stmt->fetch();
 
 				$user = array(
@@ -216,7 +211,8 @@ if(isset($_GET['apicall'])){
 					'username'=>$username,
 					'email'=>$email,
 					'gender'=>$gender,
-                    'picUpdateNum' => $picUpdateNum
+                    'picUpdateNum' => $picUpdateNum,
+                    'profilePic' => $profile_pic
 				);
 
 				$stmt->close();
