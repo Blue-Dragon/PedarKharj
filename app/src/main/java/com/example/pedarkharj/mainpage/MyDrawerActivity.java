@@ -47,6 +47,7 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
 
     String username, email, profilePicName;
     TextView usernameTV, emailTV;
+    int curPicUpdateNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,39 +175,41 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
             User user = SharedPrefManager.getInstance(context).getUser();
 
             int exPicUpdateNum = user.getPicUpdateNum();
-            final int[] curPicUpdateNum = {user.getPicUpdateNum()};
+//            curPicUpdateNum = user.getPicUpdateNum();
 
-            Toast.makeText(context, "Before", Toast.LENGTH_SHORT).show();
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_GET_USER_INFO,
                     response -> {
-                        Toast.makeText(context, "After", Toast.LENGTH_SHORT).show();
                         try {
                             //converting response to json object
                             JSONObject obj = new JSONObject(response);
 
                             //if no error in response
                             if (!obj.getBoolean("error")) {
-                                //getting the user from the response
-                                JSONObject userJson = obj.getJSONObject("user");
+                                JSONObject userJson = obj.getJSONObject("user");  //getting the user from the response
 
                                 //getting user params reom server
-                                int cur = curPicUpdateNum[0] = userJson.getInt("picUpdateNum");
-                                profilePicName = userJson.getString("profilePicName");
+                                curPicUpdateNum = userJson.getInt("picUpdateNum");
+                                profilePicName = userJson.getString("profilePic");
+
 
                                 Toast.makeText(context,
                                         "\nex: "+ exPicUpdateNum+
-                                        "\ncurrant: "+ cur, Toast.LENGTH_LONG).show();
+                                        "\ncurrant: "+ curPicUpdateNum, Toast.LENGTH_LONG).show();
 
                                 //update pic if needed
-//                                if (exPicUpdateNum != cur)
+                                if (exPicUpdateNum != curPicUpdateNum)
                                     SharedPrefManager.getInstance(context).getNsetProfPic(profilePicName);
-                                Toast.makeText(context, "After2", Toast.LENGTH_SHORT).show();
+
+//                                SharedPrefManager.getInstance(context).userLogin(user);
+//                                startActivity(new Intent(context, mClass));
+                                SharedPrefManager.getInstance(context, mClass).new mSyncUser().execute(user); //here's the part where we sync other user info
+                                user.setPicUpdateNum(curPicUpdateNum); //TODO: picUpdateNum has bugs
+                                SharedPrefManager.getInstance(context).userLogin(user);
+                                Toast.makeText(context, "picUpdate num updated", Toast.LENGTH_SHORT).show();
 
                             } else {
                                 Toast.makeText(context,
                                         "\nError: \n"+ obj.getString("message"), Toast.LENGTH_LONG).show();
-                                Toast.makeText(context, "After3", Toast.LENGTH_SHORT).show();
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -227,12 +230,10 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
                 }
             };
             VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
-            Toast.makeText(context, "After4", Toast.LENGTH_SHORT).show();
 
 
 
 //            startActivity(new Intent(context, mClass));
-            SharedPrefManager.getInstance(context, mClass).new mSyncUser().execute(user);
         } else startActivity(new Intent(context, mClass));
     }
 

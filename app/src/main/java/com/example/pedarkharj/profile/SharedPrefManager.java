@@ -86,6 +86,7 @@ public class SharedPrefManager {
             editor.putInt(KEY_PIC_UPDATE_NUM, user.getPicUpdateNum());
             editor.apply();
         }
+
     }
 
     //profPic Bitmap to string
