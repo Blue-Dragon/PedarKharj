@@ -1,0 +1,143 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:view="http://schemas.android.com/tools"
+    android:id="@+id/card_layout"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_marginRight="2dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginTop="7dp"
+    android:layout_marginBottom="12dp"
+    android:background="#CCFF90"
+    android:elevation="8dp"
+    card_view:cardCornerRadius="2dp">
+
+
+
+    <RelativeLayout
+        android:id="@+id/rl_color"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@color/colorWhite">
+
+
+        <ImageView
+            android:id="@+id/sep1"
+            android:layout_width="70dp"
+            android:layout_height="44dp"
+            android:layout_marginTop="9dp"
+            android:layout_toLeftOf="@+id/rv_my_result"
+            android:layout_centerVertical="true"
+            android:rotation="90"
+            android:scaleY="0.2"
+            card_view:srcCompat="@drawable/ic_remove_black_24dp" />
+
+        <RelativeLayout
+            android:id="@+id/rv_my_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:layout_centerVertical="true">
+            <TextView
+                android:id="@+id/tv_my_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/b_koodak"
+                android:layout_alignParentBottom="true"
+                android:text="214.8"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+            <TextView
+                android:id="@+id/tv_title_my_result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/b_koodak"
+                android:layout_above="@id/tv_my_result"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:text="حساب شما"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rv_my_dong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/sep1"
+            android:gravity="center"
+            android:layout_centerVertical="true">
+            <TextView
+                android:id="@+id/tv_my_dong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/b_koodak"
+                android:layout_alignParentBottom="true"
+                android:text="224"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+            <TextView
+                android:id="@+id/tv_title_my_dong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/b_koodak"
+                android:layout_above="@id/tv_my_dong"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:text="دنگ ها"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rv_my_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/sep2"
+            android:gravity="center"
+            android:layout_centerVertical="true">
+            <TextView
+                android:id="@+id/tv_my_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/b_koodak"
+                android:layout_alignParentBottom="true"
+                android:text="438"
+                android:textColor="#000000"
+                android:textSize="24sp" />
+            <TextView
+                android:id="@+id/tv_title_my_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/b_koodak"
+                android:layout_above="@id/tv_my_expense"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:text="خرج ها"
+                android:textColor="#000000"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+
+
+        <ImageView
+            android:id="@+id/sep2"
+            android:layout_width="70dp"
+            android:layout_height="44dp"
+            android:layout_toLeftOf="@id/rv_my_dong"
+            android:layout_centerVertical="true"
+            android:rotation="90"
+            android:scaleY="0.2"
+            card_view:srcCompat="@drawable/ic_remove_black_24dp" />
+
+    </RelativeLayout>
+
+
+
+</android.support.v7.widget.CardView>
