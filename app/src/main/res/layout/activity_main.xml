@@ -53,7 +53,7 @@ android:layout_gravity="center_horizontal">
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="15dp"
+    android:paddingBottom="5dp"
     android:paddingTop="15dp"
     android:foregroundGravity="center_horizontal"
     android:layout_centerInParent="true">
@@ -62,18 +62,76 @@ android:layout_gravity="center_horizontal">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginBottom="?attr/actionBarSize"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="?attr/actionBarSize">
+        android:layout_gravity="center_horizontal">
 
         <RelativeLayout
             android:id="@+id/rl_myresult"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
         <include layout="@layout/sample_my_result"/>
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/a1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rv_expenses">
+            <include layout="@layout/sample_participant"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/a2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/a1">
+            <include layout="@layout/sample_participant"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/a3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/a2">
+            <include layout="@layout/sample_participant"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/a11"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/a3">
+            <include layout="@layout/sample_participant"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/a21"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/a11">
+            <include layout="@layout/sample_participant"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/a31"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/a21">
+            <include layout="@layout/sample_participant"/>
+        </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/a4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/a31">
+                <include layout="@layout/sample_participant"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/a5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/a4"
+                android:layout_marginBottom="50dp">
+                <include layout="@layout/sample_participant"/>
+        </RelativeLayout>
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_expenses"
@@ -96,8 +154,8 @@ android:layout_gravity="center_horizontal">
         android:layout_gravity="bottom|end"
         android:layout_marginRight="27dp"
         android:layout_marginBottom="27dp"
-        android:backgroundTint="#64DD17"
-        app:srcCompat="@drawable/back" />
+        android:backgroundTint="#DCEDC8"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 
 </RelativeLayout>

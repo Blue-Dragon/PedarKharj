@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:background="@color/colorWhite">
+        android:background="#E8F5E9">
 
 
         <ImageView
@@ -46,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/b_koodak"
                 android:layout_alignParentBottom="true"
-                android:text="214.8"
+                android:layout_centerHorizontal="true"
+                android:text="91"
                 android:textColor="#000000"
                 android:textSize="24sp" />
             <TextView
@@ -77,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/b_koodak"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:text="224"
                 android:textColor="#000000"
                 android:textSize="24sp" />
@@ -106,6 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/b_koodak"
+                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:text="438"
                 android:textColor="#000000"
