@@ -1,20 +1,46 @@
 package com.example.pedarkharj_edit2.classes;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.pedarkharj_edit2.R;
+
+import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ParticipantAdaptor extends RecyclerView.Adapter<ParticipantAdaptor.ViewHolder> {
+    ArrayList<Participant> participants;
+    Context mContext;
+    Class mClass;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView profImv;
+    public ParticipantAdaptor(Context mContext, ArrayList<Participant> participants) {
+        this.mContext = mContext;
+        this.participants = participants;
+    }
+
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        CircleImageView profImv;
         TextView nameTv, resultTv;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            profImv = itemView.findViewById(R.id.prof_pic);
+            nameTv = itemView.findViewById(R.id.partic_name);
+            resultTv = itemView.findViewById(R.id.partic_result_tv);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(mContext, (Integer.valueOf(view.getId())+1) + " clicked", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -22,17 +48,23 @@ public class ParticipantAdaptor extends RecyclerView.Adapter<ParticipantAdaptor.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_participant, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Participant participant = participants.get(position);
 
+        holder.resultTv.setText(String.valueOf(participant.getResult()));
+        holder.nameTv.setText(participant.getName());
+        if (participant.getProfBitmap() !=null)
+            holder.profImv.setImageBitmap(participant.getProfBitmap());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return participants.size();
     }
 
 

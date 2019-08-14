@@ -3,14 +3,14 @@ package com.example.pedarkharj_edit2.classes;
 import android.graphics.Bitmap;
 
 public class Participant {
-    private Bitmap profPic;
-    private String name;
-    private int expense, dong, result= expense-dong;
+    private Bitmap bitmap;
+    private String name, result;
+    private int expense, dong;
 
 
     //with pic
-    public Participant(Bitmap profPic, String name, int expense, int dong) {
-        this.profPic = profPic;
+    public Participant(Bitmap bitmap, String name, int expense, int dong) {
+        this.bitmap = bitmap;
         this.name = name;
         this.expense = expense;
         this.dong = dong;
@@ -23,11 +23,11 @@ public class Participant {
     }
 
 
-    public Bitmap getProfPic() {
-        return profPic;
+    public Bitmap getProfBitmap() {
+        return bitmap;
     }
-    public void setProfPic(Bitmap profPic) {
-        this.profPic = profPic;
+    public void setProfBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
     public String getName() {
         return name;
@@ -47,8 +47,11 @@ public class Participant {
     public void setDong(int dong) {
         this.dong = dong;
     }
-    public int getResult() {
-        return result;
+
+    public String getResult() {
+        if (expense-dong > 0)
+            return "+ "+ (expense-dong);
+        else  return String.valueOf(expense-dong);
     }
 
 }
