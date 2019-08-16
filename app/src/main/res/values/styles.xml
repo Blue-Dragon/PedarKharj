@@ -17,4 +17,22 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- calculator -->
+    <style name="calcAction">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">#f7f8fa</item>
+    </style>
+
+    <style name="calcHorizLayout">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="orientation">horizontal</item>
+    </style>
+
+    <style name="calcNumber">
+        <item name="android:background">#fafbfd</item>
+    </style>
+
 </resources>

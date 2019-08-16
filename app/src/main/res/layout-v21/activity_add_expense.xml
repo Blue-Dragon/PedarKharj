@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".pages.AddExpenseActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_add_expense"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorWhite"
+        android:elevation="2dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="0dp"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:foregroundGravity="center"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:text="Add expenses"
+                android:textColor="#000"
+                android:textSize="24dp" />
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?attr/actionBarSize">
+
+            <RelativeLayout
+                android:id="@+id/upperPage_addExpense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EDE7F6">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/downerPage_addExpense"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#EDE7F6">
+
+                <RelativeLayout
+                    android:id="@+id/addDigit_addExpense"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_above="@+id/calculator"
+                    android:background="@color/colorPrimaryDark">
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/calculator"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        style="@style/calcHorizLayout">
+                        <!-- Row 1 -->
+                        <Button
+                            android:text="7"
+                            style="@style/calcAction"
+                            android:textStyle="bold" />
+                        <Button
+                            android:text="8"
+                            style="@style/calcAction"/>
+                        <Button
+                            android:text="9"
+                            style="@style/calcAction" />
+                        <Button
+                            android:text="Today\n8/16"
+                            style="@style/calcAction" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/calcHorizLayout">
+                        <!-- Row 2 -->
+                        <Button
+                            android:text="4"
+                            style="@style/calcAction"
+                            android:textStyle="bold" />
+                        <Button
+                            android:text="5"
+                            style="@style/calcAction"
+                            app:layout_row="1"
+                            app:layout_column="2"/>
+                        <Button
+                            android:text="6"
+                            style="@style/calcAction" />
+                        <Button
+                            android:text="+"
+                            style="@style/calcAction" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/calcHorizLayout">
+                        <!-- Row 3 -->
+                        <Button
+                            android:text="1"
+                            style="@style/calcAction"
+                            android:textStyle="bold" />
+                        <Button
+                            android:text="2"
+                            style="@style/calcAction"/>
+                        <Button
+                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:text="3"
+                            style="@style/calcAction" />
+                        <Button
+                            android:text="-"
+                            style="@style/calcAction" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/calcHorizLayout">
+                        <!-- Row 4 -->
+                        <Button
+                            android:text="."
+                            style="@style/calcAction"
+                            android:textStyle="bold" />
+                        <Button
+                            android:text="0"
+                            style="@style/calcAction"/>
+                        <Button
+                            android:text="del"
+                            style="@style/calcAction" />
+                        <Button
+                            android:text="Done"
+                            style="@style/calcAction"
+                            android:background="#FFEA00" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+
+</RelativeLayout>
