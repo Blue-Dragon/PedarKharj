@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdaptor;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Participant> participants;
     ParticipantAdaptor adaptor;
     Context mContext = this;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //Floating Btn
-        FloatingActionButton fab = findViewById(R.id.fab);
+        fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             startActivity(new Intent(mContext, AddExpenseActivity.class));
@@ -45,6 +47,22 @@ public class MainActivity extends AppCompatActivity {
 
         //recyclerView
         recyclerView = findViewById(R.id.rv_partice_expenses);
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                if (fab.getVisibility() != View.VISIBLE) fab.show();
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//
+//                while (dy == 0 && fab.getVisibility() == View.VISIBLE) fab.hide();
+//
+//
+//            }
+//        });
         //
         participants = new ArrayList<Participant>();
         participants.add(new Participant(drawableToBitmap(R.drawable.q), "Ali", 1000, 2050));
@@ -65,11 +83,16 @@ public class MainActivity extends AppCompatActivity {
         adaptor = new ParticipantAdaptor(mContext, participants);
         recyclerView.setAdapter(adaptor);
 
+
     }
 
     Bitmap drawableToBitmap(int drawable){
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawable);
         return bitmap;
     }
+
+
+
+
 
 }

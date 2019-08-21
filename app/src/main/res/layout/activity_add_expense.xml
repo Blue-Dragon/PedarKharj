@@ -45,22 +45,12 @@
 
     </android.support.v7.widget.Toolbar>
 
-
-
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="?attr/actionBarSize">
 
-            <RelativeLayout
-                android:id="@+id/upperPage_addExpense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#EDE7F6">
-
-            </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/downerPage_addExpense"
@@ -68,6 +58,26 @@
                 android:layout_height="wrap_content"
                 android:background="#EDE7F6">
 
+                <!-- categories -->
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignBottom="@id/addDigit_addExpense"
+                    android:layout_marginBottom="50dp">
+
+                    <RelativeLayout
+                        android:id="@+id/upperPage_addExpense"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="#809EF5">
+
+                    </RelativeLayout>
+
+                </HorizontalScrollView>
+
+
+
+                <!-- result of calc -->
                 <RelativeLayout
                     android:id="@+id/addDigit_addExpense"
                     android:layout_width="match_parent"
@@ -77,6 +87,7 @@
 
                 </RelativeLayout>
 
+                <!-- calculator -->
                 <LinearLayout
                     android:id="@+id/calculator"
                     android:layout_alignParentBottom="true"
