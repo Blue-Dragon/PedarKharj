@@ -1,7 +1,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:view="http://schemas.android.com/tools"
-    android:id="@+id/card_layout"
+    android:id="@+id/card_layout_participant"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:layout_marginRight="2dp"
@@ -33,7 +33,7 @@
                 android:id="@+id/prof_pic"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                card_view:srcCompat="@drawable/ic_launcher_background"/>
+               android:src="@drawable/ic_launcher_background"/>
         </RelativeLayout>
 
         <RelativeLayout

@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/rl_fuck"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="100dp"
+    android:layout_height="150dp">
 
     <RelativeLayout
+        android:id="@+id/addContact_Rlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="26dp"
         android:layout_marginTop="20dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="#D88686"
+        android:background="#00FFFFFF"
         android:gravity="center_horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -20,7 +22,7 @@
             android:layout_height="60dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/ic_launcher_background" />
+            android:src="@drawable/q" />
 
         <TextView
             android:id="@+id/contact_add_tv"
@@ -41,3 +43,6 @@
 
 
 </RelativeLayout>
+
+
+

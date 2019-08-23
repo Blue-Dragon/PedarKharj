@@ -2,22 +2,17 @@ package com.example.pedarkharj_edit2;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.classes.Participant;
-import com.example.pedarkharj_edit2.classes.ParticipantAdaptor;
+import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.pages.AddExpenseActivity;
 
 import java.util.ArrayList;
@@ -25,7 +20,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Participant> participants;
-    ParticipantAdaptor adaptor;
+    ParticipantAdapter adaptor;
     Context mContext = this;
     FloatingActionButton fab;
 
@@ -66,13 +61,13 @@ public class MainActivity extends AppCompatActivity {
         //
         participants = new ArrayList<Participant>();
         participants.add(new Participant(drawableToBitmap(R.drawable.q), "Ali", 1000, 2050));
-        participants.add(new Participant(drawableToBitmap(R.drawable.w), "Reza", 15000, 2050));
+        participants.add(new Participant( "Reza", 15000, 2050));
         participants.add(new Participant(drawableToBitmap(R.drawable.r), "Mamad", 1000, 500));
-        participants.add(new Participant(drawableToBitmap(R.drawable.w), "Hami", 5000, 2050));
+        participants.add(new Participant( "Hami", 5000, 2050));
         participants.add(new Participant(drawableToBitmap(R.drawable.q), "sadi", 1000, 2500));
         participants.add(new Participant(drawableToBitmap(R.drawable.r), "dad", 0, 2000));
-        participants.add(new Participant(drawableToBitmap(R.drawable.q), "mom", 0, 6000));
-        participants.add(new Participant(drawableToBitmap(R.drawable.w), "Ali", 1000, 2050));
+        participants.add(new Participant( "mom", 0, 6000));
+        participants.add(new Participant( "Ali", 1000, 2050));
         participants.add(new Participant(drawableToBitmap(R.drawable.r), "Reza", 15000, 2050));
         participants.add(new Participant(drawableToBitmap(R.drawable.w), "Mamad", 1000, 500));
         //
@@ -80,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         //
-        adaptor = new ParticipantAdaptor(mContext, participants);
+        adaptor = new ParticipantAdapter(mContext, participants);
         recyclerView.setAdapter(adaptor);
 
 

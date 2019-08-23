@@ -16,12 +16,12 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ParticipantAdaptor extends RecyclerView.Adapter<ParticipantAdaptor.ViewHolder> {
+public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.ViewHolder> {
     ArrayList<Participant> participants;
     Context mContext;
     Class mClass;
 
-    public ParticipantAdaptor(Context mContext, ArrayList<Participant> participants) {
+    public ParticipantAdapter(Context mContext, ArrayList<Participant> participants) {
         this.mContext = mContext;
         this.participants = participants;
     }
@@ -38,7 +38,7 @@ public class ParticipantAdaptor extends RecyclerView.Adapter<ParticipantAdaptor.
             profImv = itemView.findViewById(R.id.prof_pic);
             nameTv = itemView.findViewById(R.id.partic_name);
             resultTv = itemView.findViewById(R.id.partic_result_tv);
-            cardView = itemView.findViewById(R.id.card_layout);
+            cardView = itemView.findViewById(R.id.card_layout_participant);
         }
 
         @Override
@@ -75,10 +75,4 @@ public class ParticipantAdaptor extends RecyclerView.Adapter<ParticipantAdaptor.
     public int getItemCount() {
         return participants.size();
     }
-
-
-
-
-
-
 }
