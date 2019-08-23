@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -38,10 +39,31 @@ public class AddExpenseActivity extends AppCompatActivity {
         contacts.add(new Contact("محمد صیدالی"));
         contacts.add(new Contact("مری"));
         contacts.add(new Contact("پیمان"));
+        contacts.add(new Contact("reza"));
+        contacts.add(new Contact("غلوم"));
+        contacts.add(new Contact("حسین عbnnnnnnnnnnnnnnnnnnnباس پور"));
+        contacts.add(new Contact("حامد گنجعلی"));
+        contacts.add(new Contact("محمد صیدالی"));
+        contacts.add(new Contact("مری"));
+        contacts.add(new Contact("پیمان"));
+        contacts.add(new Contact("reza"));
+        contacts.add(new Contact("غلوم"));
+        contacts.add(new Contact("حسین عباس پور"));
+        contacts.add(new Contact("حامد گنجعلی"));
+        contacts.add(new Contact("محمد صیدالی"));
+        contacts.add(new Contact("مری"));
+        contacts.add(new Contact("پیمان"));
+        contacts.add(new Contact("reza"));
+        contacts.add(new Contact("غلوم"));
+        contacts.add(new Contact("حسین عباس پور"));
+        contacts.add(new Contact("حامد گنجعلی"));
+        contacts.add(new Contact("محمد صیدالی"));
+        contacts.add(new Contact("مری"));
+        contacts.add(new Contact("پیمان"));
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 4, GridLayoutManager.HORIZONTAL, false);
+//        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
+        recyclerView.setLayoutManager(gridLayoutManager);
         //
         adapter = new ContactsAddAdapter(mContext, contacts);
         recyclerView.setAdapter(adapter);

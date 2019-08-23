@@ -56,7 +56,7 @@
                 android:id="@+id/downerPage_addExpense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#EDE7F6">
+                android:background="#00FFFFFF">
 
                 <!-- categories -->
                 <HorizontalScrollView
@@ -69,7 +69,7 @@
                         android:id="@+id/upperPage_addExpense"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="#809EF5">
+                        android:background="#00FFFFFF">
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/chooseContact_RecView"
@@ -90,7 +90,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_above="@+id/calculator"
-                    android:background="@color/colorPrimaryDark">
+                    android:background="@color/colorPrimaryDark"
+                    android:visibility="visible">
 
                 </RelativeLayout>
 
@@ -100,7 +101,8 @@
                     android:layout_alignParentBottom="true"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
 
 
                     <LinearLayout
