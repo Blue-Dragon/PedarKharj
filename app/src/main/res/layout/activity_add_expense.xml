@@ -90,8 +90,60 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_above="@+id/calculator"
-                    android:background="@color/colorPrimaryDark"
+                    android:background="@drawable/field_bkg"
+                    android:gravity="center_vertical"
                     android:visibility="visible">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/selected_contact"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/w"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_centerVertical="true"
+                        />
+
+                    <ImageView
+                        android:id="@+id/write_img"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_toLeftOf="@+id/selected_contact"
+                        android:layout_marginRight="10dp"
+                        android:paddingTop="1dp"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/write" />
+
+                    <TextView
+                        android:id="@+id/resltNum_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="#000"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/editText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/large_koodak"
+                       android:maxLines="1"
+                        android:ems="500"
+                        android:inputType="textPersonName"
+                        android:layout_toLeftOf= "@+id/write_img"
+                        android:layout_toRightOf="@+id/resltNum_txt"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingBottom="6dp"
+                        android:hint="چی خریده؟"
+                        android:backgroundTint="#00FFFFFF"/>
+
 
                 </RelativeLayout>
 
@@ -110,8 +162,7 @@
                         <!-- Row 1 -->
                         <Button
                             android:text="7"
-                            style="@style/calcAction"
-                            android:textStyle="bold" />
+                            style="@style/calcAction"/>
                         <Button
                             android:text="8"
                             style="@style/calcAction"/>
@@ -120,6 +171,7 @@
                             style="@style/calcAction" />
                         <Button
                             android:text="Today\n8/16"
+                            android:textSize="14dp"
                             style="@style/calcAction" />
                     </LinearLayout>
 
@@ -128,13 +180,10 @@
                         <!-- Row 2 -->
                         <Button
                             android:text="4"
-                            style="@style/calcAction"
-                            android:textStyle="bold" />
+                            style="@style/calcAction" />
                         <Button
                             android:text="5"
-                            style="@style/calcAction"
-                            app:layout_row="1"
-                            app:layout_column="2"/>
+                            style="@style/calcAction"/>
                         <Button
                             android:text="6"
                             style="@style/calcAction" />
@@ -148,15 +197,11 @@
                         <!-- Row 3 -->
                         <Button
                             android:text="1"
-                            style="@style/calcAction"
-                            android:textStyle="bold" />
+                            style="@style/calcAction" />
                         <Button
                             android:text="2"
                             style="@style/calcAction"/>
                         <Button
-                            android:layout_height="wrap_content"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
                             android:text="3"
                             style="@style/calcAction" />
                         <Button
@@ -169,8 +214,7 @@
                         <!-- Row 4 -->
                         <Button
                             android:text="."
-                            style="@style/calcAction"
-                            android:textStyle="bold" />
+                            style="@style/calcAction" />
                         <Button
                             android:text="0"
                             style="@style/calcAction"/>
@@ -179,8 +223,7 @@
                             style="@style/calcAction" />
                         <Button
                             android:text="Done"
-                            style="@style/calcAction"
-                            android:background="#FFEA00" />
+                            style="@style/calcDoneBtn" />
                     </LinearLayout>
                 </LinearLayout>
 
