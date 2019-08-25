@@ -13,6 +13,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="@color/colorWhite"
+        android:elevation="2dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -37,7 +38,7 @@
                 android:layout_marginRight="10dp"
                 android:gravity="center"
                 android:text="Add expenses"
-                android:textColor="#000"
+                android:textColor="#868686"
                 android:textSize="24dp" />
 
         </RelativeLayout>
@@ -59,7 +60,7 @@
                 android:background="#00FFFFFF">
 
                 <!-- categories -->
-                <HorizontalScrollView
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignBottom="@id/addDigit_addExpense"
@@ -72,7 +73,7 @@
                         android:background="#00FFFFFF">
 
                         <android.support.v7.widget.RecyclerView
-                            android:id="@+id/chooseContact_RecView"
+                            android:id="@+id/chooseBuyer_RecView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
@@ -80,7 +81,7 @@
 
                     </RelativeLayout>
 
-                </HorizontalScrollView>
+                </ScrollView>
 
 
 
@@ -170,6 +171,7 @@
                             android:text="9"
                             style="@style/calcAction" />
                         <Button
+                            android:id="@+id/date_btn"
                             android:text="Today\n8/16"
                             android:textSize="14dp"
                             style="@style/calcAction" />
@@ -189,7 +191,7 @@
                             style="@style/calcAction" />
                         <Button
                             android:text="+"
-                            style="@style/calcAction" />
+                            style="@style/calcAction"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -205,8 +207,10 @@
                             android:text="3"
                             style="@style/calcAction" />
                         <Button
-                            android:text="-"
-                            style="@style/calcAction" />
+                            android:id="@+id/partic_btn"
+                            android:text="Partic:\nall"
+                            style="@style/calcAction"
+                            android:textSize="14dp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -220,8 +224,10 @@
                             style="@style/calcAction"/>
                         <Button
                             android:text="del"
+                            android:id="@+id/del_btn"
                             style="@style/calcAction" />
                         <Button
+                            android:id="@+id/done_btn"
                             android:text="Done"
                             style="@style/calcDoneBtn" />
                     </LinearLayout>

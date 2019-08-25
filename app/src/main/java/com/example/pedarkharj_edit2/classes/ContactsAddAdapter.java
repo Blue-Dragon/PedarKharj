@@ -20,14 +20,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ContactsAddAdapter extends RecyclerView.Adapter<ContactsAddAdapter.ViewHolder>  {
     ArrayList<Contact> contacts;
     Context mContext;
+    int mLayout;
     Class mClass;
 
     public ContactsAddAdapter(Context mContext, ArrayList<Contact> contacts) {
         this.mContext = mContext;
         this.contacts = contacts;
+        this.mLayout = R.layout.sample_contact;
     }
 
-
+    public ContactsAddAdapter(Context mContext, int mLayout, ArrayList<Contact> contacts) {
+        this.mContext = mContext;
+        this.contacts = contacts;
+        this.mLayout = mLayout;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CircleImageView profImv;
@@ -50,7 +56,7 @@ public class ContactsAddAdapter extends RecyclerView.Adapter<ContactsAddAdapter.
     @NonNull
     @Override
     public ContactsAddAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sample_contact, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(mLayout, parent, false);
         return new ContactsAddAdapter.ViewHolder(view);
     }
 
