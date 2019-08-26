@@ -10,6 +10,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.Contact;
@@ -23,6 +25,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     RecyclerView recyclerView;
     Context mContext;
     Button removeBtn, dateBtn, particBtn;
+    RelativeLayout buyerBtn;
 
 
     @Override
@@ -32,6 +35,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         mContext = this;
         particBtn = findViewById(R.id.partic_btn); particBtn.setOnClickListener(this);
+        buyerBtn = findViewById(R.id.buyer_btn); buyerBtn.setOnClickListener(this);
 
 
 
@@ -92,6 +96,10 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         switch (id){
             case R.id.partic_btn:
                 startActivity(new Intent(mContext,  ParticipantsActivity.class));
+                break;
+            case R.id.buyer_btn:
+                Toast.makeText(mContext, "Hi", Toast.LENGTH_SHORT).show();
+                break;
         }
 
 

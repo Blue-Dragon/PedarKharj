@@ -60,7 +60,7 @@
                 android:background="#00FFFFFF">
 
                 <!-- categories -->
-                <ScrollView
+                <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignBottom="@id/addDigit_addExpense"
@@ -81,7 +81,7 @@
 
                     </RelativeLayout>
 
-                </ScrollView>
+                </HorizontalScrollView>
 
 
 
@@ -143,7 +143,8 @@
                         android:layout_marginRight="10dp"
                         android:paddingBottom="6dp"
                         android:hint="چی خریده؟"
-                        android:backgroundTint="#00FFFFFF"/>
+                        android:backgroundTint="#00FFFFFF"
+                        />
 
 
                 </RelativeLayout>
@@ -189,9 +190,35 @@
                         <Button
                             android:text="6"
                             style="@style/calcAction" />
-                        <Button
-                            android:text="+"
-                            style="@style/calcAction"/>
+                        <RelativeLayout
+                            android:id="@+id/buyer_btn"
+                            style="@style/calcAction"
+                            android:clickable="true"
+                            android:focusable="true">
+
+                            <ImageView
+                                android:id="@+id/shoping_cart_img"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerVertical="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="15dp"
+                                android:src="@drawable/ic_shopping_cart"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toLeftOf="@id/shoping_cart_img"
+                                android:layout_marginRight="7dp"
+                                android:layout_marginLeft="7dp"
+                                android:layout_centerVertical="true"
+                                android:text="من"
+                                android:gravity="center"
+                                style="@style/medium_koodak"/>
+
+                        </RelativeLayout>
+
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -208,9 +235,11 @@
                             style="@style/calcAction" />
                         <Button
                             android:id="@+id/partic_btn"
-                            android:text="Partic:\nall"
+                            android:padding="5dp"
+                            android:text="دنگ های متفاوت؟"
                             style="@style/calcAction"
-                            android:textSize="14dp"/>
+                            android:textColor="#CC0707"
+                            android:textSize="12dp"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -222,10 +251,17 @@
                         <Button
                             android:text="0"
                             style="@style/calcAction"/>
-                        <Button
-                            android:text="del"
-                            android:id="@+id/del_btn"
-                            style="@style/calcAction" />
+                        <RelativeLayout
+                            android:clickable="true"
+                            android:focusable="true"
+                            style="@style/calcAction">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_centerInParent="true"
+                                android:src="@drawable/ic_keyback"/>
+                        </RelativeLayout>
                         <Button
                             android:id="@+id/done_btn"
                             android:text="Done"

@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             startActivity(new Intent(mContext, AddExpenseActivity.class));
+            showBuyerDialog();
         });
 
 
@@ -78,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         adaptor = new ParticipantAdapter(mContext, participants);
         recyclerView.setAdapter(adaptor);
 
+
+    }
+
+    private void showBuyerDialog() {
 
     }
 

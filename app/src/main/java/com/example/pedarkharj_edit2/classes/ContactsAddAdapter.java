@@ -36,12 +36,13 @@ public class ContactsAddAdapter extends RecyclerView.Adapter<ContactsAddAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        CircleImageView profImv;
+        CircleImageView profImv, checkImg;
         TextView nameTv;
         RelativeLayout relativeLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            checkImg = itemView.findViewById(R.id.check_img);
             profImv = itemView.findViewById(R.id.contact_add_img);
             nameTv = itemView.findViewById(R.id.contact_add_tv);
             relativeLayout = itemView.findViewById(R.id.rl_fuck);
@@ -68,10 +69,8 @@ public class ContactsAddAdapter extends RecyclerView.Adapter<ContactsAddAdapter.
         if (contact.getBitmap() !=null)
             holder.profImv.setImageBitmap(contact.getBitmap());
 
-        holder.relativeLayout.setOnClickListener(item -> {
-            Toast.makeText(mContext, (position +1) + " clicked", Toast.LENGTH_SHORT).show();
-
-        });
+        holder.relativeLayout.setOnClickListener(item -> holder.checkImg.setVisibility(View.VISIBLE));
+        holder.profImv.setOnClickListener(item -> holder.checkImg.setVisibility(View.VISIBLE));
 
 
     }
