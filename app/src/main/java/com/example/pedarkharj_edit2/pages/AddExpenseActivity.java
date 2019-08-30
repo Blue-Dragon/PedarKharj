@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,11 +14,16 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.alirezaafkar.sundatepicker.DatePicker;
+import com.alirezaafkar.sundatepicker.components.DateItem;
+import com.alirezaafkar.sundatepicker.interfaces.DateSetListener;
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.Contact;
 import com.example.pedarkharj_edit2.classes.ContactsAddAdapter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
     ArrayList<Contact> contacts;
@@ -26,6 +32,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     Context mContext;
     Button removeBtn, dateBtn, particBtn;
     RelativeLayout buyerBtn;
+    Date mDate;
 
 
     @Override
@@ -36,6 +43,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         mContext = this;
         particBtn = findViewById(R.id.partic_btn); particBtn.setOnClickListener(this);
         buyerBtn = findViewById(R.id.buyer_btn); buyerBtn.setOnClickListener(this);
+        dateBtn = findViewById(R.id.date_btn); dateBtn.setOnClickListener(this);
 
 
 
@@ -83,7 +91,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
 
 
-
+    /********************************************       Methods     ****************************************************/
 
     Bitmap drawableToBitmap(int drawable){
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawable);
@@ -94,14 +102,42 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         int id = view.getId();
         switch (id){
+
             case R.id.partic_btn:
                 startActivity(new Intent(mContext,  ParticipantsActivity.class));
                 break;
+
             case R.id.buyer_btn:
                 Toast.makeText(mContext, "Hi", Toast.LENGTH_SHORT).show();
                 break;
+
+            case R.id.date_btn:
+                DatePicker.Builder builder = new DatePicker
+                        .Builder()
+                        .theme(R.style.DialogTheme);
+                mDate = new Date();
+                builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
+                builder.build((id1, calendar, day, month, year) -> {
+                    mDate.setDate(day, month, year);
+
+                    //dateBtn
+                    dateBtn.setText(mDate.getDate());
+
+                }).show(getSupportFragmentManager(), "");
+                break;
         }
-
-
     }
+
+    //Persian Calender
+    class Date extends DateItem {
+        String getDate() {
+            Calendar calendar = getCalendar();
+            return String.format(Locale.US,
+                    "%d/%d/%d",
+                    getYear(), getMonth(), getDay(),
+                    calendar.get(Calendar.YEAR),
+                    +calendar.get(Calendar.MONTH) + 1,
+                    +calendar.get(Calendar.DAY_OF_MONTH));
+        }}
+
 }

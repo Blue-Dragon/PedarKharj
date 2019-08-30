@@ -1,5 +1,6 @@
 package com.example.pedarkharj_edit2;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
@@ -37,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             startActivity(new Intent(mContext, AddExpenseActivity.class));
-            showBuyerDialog();
+//            showBuyerDialog();
         });
 
 
@@ -83,7 +85,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showBuyerDialog() {
-
+        Dialog dialog = new Dialog(mContext);
+        dialog.setContentView(R.layout.activity_add_expense);
+        dialog.show();
     }
 
     Bitmap drawableToBitmap(int drawable){
