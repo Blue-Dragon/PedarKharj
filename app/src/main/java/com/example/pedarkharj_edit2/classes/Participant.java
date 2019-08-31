@@ -3,11 +3,11 @@ package com.example.pedarkharj_edit2.classes;
 import android.graphics.Bitmap;
 
 public class Participant {
-    private Bitmap bitmap;
+    private Bitmap bitmap, subImg;
     private String name, result;
     private int expense, dong;
 
-
+/*      Main Page     */
     //with pic
     public Participant(Bitmap bitmap, String name, int expense, int dong) {
         this.bitmap = bitmap;
@@ -21,6 +21,16 @@ public class Participant {
         this.expense = expense;
         this.dong = dong;
     }
+/*      Expenses Page     */
+    //NO pic
+    public Participant(String name) {
+        this.name = name;
+    }
+    //with pic
+    public Participant(Bitmap bitmap, String name) {
+        this.bitmap = bitmap;
+        this.name = name;
+    }
 
 
     public Bitmap getProfBitmap() {
@@ -28,6 +38,12 @@ public class Participant {
     }
     public void setProfBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
+    }
+    public Bitmap getSubImg() {
+        return subImg;
+    }
+    public void setSubImg(Bitmap subImg) {
+        this.subImg = subImg;
     }
     public String getName() {
         return name;

@@ -3,6 +3,7 @@ package com.example.pedarkharj_edit2.classes;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.Window;
 import android.widget.Button;
 
 import com.example.pedarkharj_edit2.R;
+import com.example.pedarkharj_edit2.pages.AddExpenseActivity;
 
 public class BuyerDialog extends Dialog implements View.OnClickListener {
     private Activity mActivity;
@@ -42,6 +44,7 @@ public class BuyerDialog extends Dialog implements View.OnClickListener {
         switch (v.getId()) {
 
             case R.id.btn_yes:
+                mActivity.startActivity(new Intent(mActivity, AddExpenseActivity.class));
                 mActivity.finish();
                 break;
 

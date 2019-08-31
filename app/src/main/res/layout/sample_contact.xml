@@ -8,7 +8,7 @@
     android:layout_height="120dp">
 
     <RelativeLayout
-        android:id="@+id/addContact_Rlayout"
+        android:id="@+id/base_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
@@ -22,7 +22,7 @@
         android:gravity="center_horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/contact_add_img"
+            android:id="@+id/prof_pic"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
@@ -32,23 +32,23 @@
             android:src="@drawable/q" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/check_img"
+            android:id="@+id/sub_img"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_below="@+id/contact_add_img"
-            android:layout_toRightOf="@id/contact_add_img"
+            android:layout_below="@+id/prof_pic"
+            android:layout_toRightOf="@id/prof_pic"
             android:layout_marginLeft="-44dp"
             android:layout_marginTop="-14dp"
             android:src="@drawable/ic_check"
             android:visibility="invisible"/>
 
         <TextView
-            android:id="@+id/contact_add_tv"
+            android:id="@+id/partic_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxWidth="50dp"
             android:maxLines="1"
-            android:layout_below="@+id/contact_add_img"
+            android:layout_below="@+id/prof_pic"
             android:fontFamily="@font/b_koodak"
             android:text="حامد گنجعلی"
             android:layout_centerHorizontal="true"

@@ -16,16 +16,16 @@ import android.widget.Toast;
 import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.example.pedarkharj_edit2.R;
-import com.example.pedarkharj_edit2.classes.Contact;
-import com.example.pedarkharj_edit2.classes.ContactsAddAdapter;
+import com.example.pedarkharj_edit2.classes.Participant;
+import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
-    ArrayList<Contact> contacts;
-    ContactsAddAdapter adapter;
+    ArrayList<Participant> participants;
+    ParticipantAdapter adapter;
     RecyclerView recyclerView;
     Context mContext;
     Button removeBtn, dateBtn, particBtn;
@@ -90,42 +90,42 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     private void doRecyclerView() {
 
-        contacts = new ArrayList<Contact>();
-        contacts.add(new Contact(drawableToBitmap(R.drawable.w), "hamed"));
-        contacts.add(new Contact("reza dasdf dadas dasd"));
-        contacts.add(new Contact(drawableToBitmap(R.drawable.r),"غلوم"));
-        contacts.add(new Contact("حسین عباس پور"));
-        contacts.add(new Contact("محمد صیدالی"));
-        contacts.add(new Contact("پیمان"));
-        contacts.add(new Contact("reza"));
-        contacts.add(new Contact(drawableToBitmap(R.drawable.r),"مری"));
-        contacts.add(new Contact("غلوم"));
-        contacts.add(new Contact(drawableToBitmap(R.drawable.w),"حامد گنجعلی"));
-        contacts.add(new Contact("حسین حسی حشسیح حظسز شسزبح پور"));
-        contacts.add(new Contact("حامد گنجعلی"));
-        contacts.add(new Contact("محمد صیدالی"));
-        contacts.add(new Contact("مری"));
-        contacts.add(new Contact("پیمان"));
-        contacts.add(new Contact("reza"));
-        contacts.add(new Contact("غلوم"));
-        contacts.add(new Contact("حسین عباس پور"));
-        contacts.add(new Contact("حامد گنجعلی"));
-        contacts.add(new Contact("محمد صیدالی"));
-        contacts.add(new Contact("مری"));
-        contacts.add(new Contact("پیمان"));
-        contacts.add(new Contact("reza"));
-        contacts.add(new Contact("غلوم"));
-        contacts.add(new Contact("حسین عباس پور"));
-        contacts.add(new Contact("حامد گنجعلی"));
-        contacts.add(new Contact("محمد صیدالی"));
-        contacts.add(new Contact("مری"));
-        contacts.add(new Contact("پیمان"));
+        participants = new ArrayList<Participant>();
+        participants.add(new Participant(drawableToBitmap(R.drawable.w), "hamed"));
+        participants.add(new Participant("reza dasdf dadas dasd"));
+        participants.add(new Participant(drawableToBitmap(R.drawable.r),"غلوم"));
+        participants.add(new Participant("حسین عباس پور"));
+        participants.add(new Participant("محمد صیدالی"));
+        participants.add(new Participant("پیمان"));
+        participants.add(new Participant("reza"));
+        participants.add(new Participant(drawableToBitmap(R.drawable.r),"مری"));
+        participants.add(new Participant("غلوم"));
+        participants.add(new Participant(drawableToBitmap(R.drawable.w),"حامد گنجعلی"));
+        participants.add(new Participant("حسین حسی حشسیح حظسز شسزبح پور"));
+        participants.add(new Participant("حامد گنجعلی"));
+        participants.add(new Participant("محمد صیدالی"));
+        participants.add(new Participant("مری"));
+        participants.add(new Participant("پیمان"));
+        participants.add(new Participant("reza"));
+        participants.add(new Participant("غلوم"));
+        participants.add(new Participant("حسین عباس پور"));
+        participants.add(new Participant("حامد گنجعلی"));
+        participants.add(new Participant("محمد صیدالی"));
+        participants.add(new Participant("مری"));
+        participants.add(new Participant("پیمان"));
+        participants.add(new Participant("reza"));
+        participants.add(new Participant("غلوم"));
+        participants.add(new Participant("حسین عباس پور"));
+        participants.add(new Participant("حامد گنجعلی"));
+        participants.add(new Participant("محمد صیدالی"));
+        participants.add(new Participant("مری"));
+        participants.add(new Participant("پیمان"));
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 4, GridLayoutManager.HORIZONTAL, false);
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adapter = new ContactsAddAdapter(mContext, contacts);
+        adapter = new ParticipantAdapter(mContext, R.layout.sample_contact, participants);
         recyclerView.setAdapter(adapter);
     }
 
