@@ -12,7 +12,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.pedarkharj_edit2.classes.BuyerDialog;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.pages.AddExpenseActivity;
@@ -38,13 +41,14 @@ public class MainActivity extends AppCompatActivity {
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            startActivity(new Intent(mContext, AddExpenseActivity.class));
-//            showBuyerDialog();
+//            startActivity(new Intent(mContext, AddExpenseActivity.class));
+            showBuyerDialog();
         });
 
 
         //recyclerView
         recyclerView = findViewById(R.id.rv_partice_expenses);
+        doRecyclerView();
 //        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override
 //            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -62,6 +66,24 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
         //
+
+    }
+
+    
+    
+    
+    /********************************************       Methods     ****************************************************/
+
+    private void showBuyerDialog() {
+        new BuyerDialog(this).show();
+    }
+
+    Bitmap drawableToBitmap(int drawable){
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawable);
+        return bitmap;
+    }
+
+    private void doRecyclerView() {
         participants = new ArrayList<Participant>();
         participants.add(new Participant(drawableToBitmap(R.drawable.q), "Ali", 1000, 2050));
         participants.add(new Participant( "Reza", 15000, 2050));
@@ -80,23 +102,6 @@ public class MainActivity extends AppCompatActivity {
         //
         adaptor = new ParticipantAdapter(mContext, participants);
         recyclerView.setAdapter(adaptor);
-
-
     }
-
-    private void showBuyerDialog() {
-        Dialog dialog = new Dialog(mContext);
-        dialog.setContentView(R.layout.activity_add_expense);
-        dialog.show();
-    }
-
-    Bitmap drawableToBitmap(int drawable){
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawable);
-        return bitmap;
-    }
-
-
-
-
-
+    
 }

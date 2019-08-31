@@ -73,7 +73,7 @@
                         android:background="#00FFFFFF">
 
                         <android.support.v7.widget.RecyclerView
-                            android:id="@+id/chooseBuyer_RecView"
+                            android:id="@+id/participants_RecView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
@@ -234,7 +234,7 @@
                             android:text="3"
                             style="@style/calcAction" />
                         <Button
-                            android:id="@+id/partic_btn"
+                            android:id="@+id/custom_dong_btn"
                             android:padding="5dp"
                             android:text="دنگ های متفاوت؟"
                             style="@style/calcAction"

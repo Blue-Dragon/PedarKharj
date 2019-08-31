@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 
 import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
-import com.alirezaafkar.sundatepicker.interfaces.DateSetListener;
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.Contact;
 import com.example.pedarkharj_edit2.classes.ContactsAddAdapter;
@@ -41,14 +39,56 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_add_expense);
 
         mContext = this;
-        particBtn = findViewById(R.id.partic_btn); particBtn.setOnClickListener(this);
+        particBtn = findViewById(R.id.custom_dong_btn); particBtn.setOnClickListener(this);
         buyerBtn = findViewById(R.id.buyer_btn); buyerBtn.setOnClickListener(this);
         dateBtn = findViewById(R.id.date_btn); dateBtn.setOnClickListener(this);
+        recyclerView = findViewById(R.id.participants_RecView);
+        //
+        doRecyclerView();
+
+
+    }
 
 
 
+    /********************************************       Methods     ****************************************************/
 
-        recyclerView = findViewById(R.id.chooseBuyer_RecView);
+    Bitmap drawableToBitmap(int drawable){
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawable);
+        return bitmap;
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id){
+
+            case R.id.custom_dong_btn:
+                startActivity(new Intent(mContext,  ParticipantsActivity.class));
+                break;
+
+            case R.id.buyer_btn:
+                Toast.makeText(mContext, "Hi", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.date_btn:
+                DatePicker.Builder builder = new DatePicker
+                        .Builder()
+                        .theme(R.style.DialogTheme);
+                mDate = new Date();
+                builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
+                builder.build((id1, calendar, day, month, year) -> {
+                    mDate.setDate(day, month, year);
+
+                    //dateBtn
+                    dateBtn.setText(mDate.getDate());
+
+                }).show(getSupportFragmentManager(), "");
+                break;
+        }
+    }
+
+    private void doRecyclerView() {
 
         contacts = new ArrayList<Contact>();
         contacts.add(new Contact(drawableToBitmap(R.drawable.w), "hamed"));
@@ -89,44 +129,6 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         recyclerView.setAdapter(adapter);
     }
 
-
-
-    /********************************************       Methods     ****************************************************/
-
-    Bitmap drawableToBitmap(int drawable){
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawable);
-        return bitmap;
-    }
-
-    @Override
-    public void onClick(View view) {
-        int id = view.getId();
-        switch (id){
-
-            case R.id.partic_btn:
-                startActivity(new Intent(mContext,  ParticipantsActivity.class));
-                break;
-
-            case R.id.buyer_btn:
-                Toast.makeText(mContext, "Hi", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.date_btn:
-                DatePicker.Builder builder = new DatePicker
-                        .Builder()
-                        .theme(R.style.DialogTheme);
-                mDate = new Date();
-                builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
-                builder.build((id1, calendar, day, month, year) -> {
-                    mDate.setDate(day, month, year);
-
-                    //dateBtn
-                    dateBtn.setText(mDate.getDate());
-
-                }).show(getSupportFragmentManager(), "");
-                break;
-        }
-    }
 
     //Persian Calender
     class Date extends DateItem {

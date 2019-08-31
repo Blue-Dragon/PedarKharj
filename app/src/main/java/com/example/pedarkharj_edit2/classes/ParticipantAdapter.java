@@ -58,10 +58,9 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Participant participant = participants.get(position);
 
-        holder.resultTv.setText(String.valueOf(participant.getResult()));
         holder.nameTv.setText(participant.getName());
-        if (participant.getProfBitmap() !=null)
-            holder.profImv.setImageBitmap(participant.getProfBitmap());
+        if (participant.getProfBitmap() !=null)      holder.resultTv.setText(String.valueOf(participant.getResult()));
+        if (participant.getProfBitmap() !=null)     holder.profImv.setImageBitmap(participant.getProfBitmap());
 
         holder.cardView.setOnClickListener(item -> {
             Toast.makeText(mContext, (position +1) + " clicked", Toast.LENGTH_SHORT).show();
