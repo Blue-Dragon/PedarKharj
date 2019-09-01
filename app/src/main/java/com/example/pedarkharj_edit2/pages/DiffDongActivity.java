@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.example.pedarkharj_edit2.R;
 
-public class ParticipantsActivity extends AppCompatActivity {
+public class DiffDongActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_participants);
+        setContentView(R.layout.activity_diff_dong);
     }
 }

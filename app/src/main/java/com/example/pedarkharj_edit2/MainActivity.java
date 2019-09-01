@@ -19,6 +19,7 @@ import com.example.pedarkharj_edit2.classes.BuyerDialog;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.pages.AddExpenseActivity;
+import com.example.pedarkharj_edit2.pages.ContactsActivity;
 
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Participant> participants;
     ParticipantAdapter adaptor;
+
     Context mContext = this;
     FloatingActionButton fab;
 
@@ -42,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 //            startActivity(new Intent(mContext, AddExpenseActivity.class));
-            showBuyerDialog();
+//            showBuyerDialog();
+            startActivity(new Intent(mContext, ContactsActivity.class));
         });
 
 

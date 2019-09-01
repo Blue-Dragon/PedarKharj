@@ -64,7 +64,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         switch (id){
 
             case R.id.custom_dong_btn:
-                startActivity(new Intent(mContext,  ParticipantsActivity.class));
+                startActivity(new Intent(mContext,  DiffDongActivity.class));
                 break;
 
             case R.id.buyer_btn:

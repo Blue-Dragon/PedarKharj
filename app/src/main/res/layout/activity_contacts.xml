@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".pages.ParticipantsActivity">
+    tools:context=".pages.ContactsActivity">
 
 
     <android.support.v7.widget.Toolbar
@@ -36,55 +36,57 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/imageView3"
-                android:layout_marginLeft="30dp"
+                android:layout_centerInParent="true"
                 android:foregroundGravity="center"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:text="افراد"
+                android:text="مخاطبین"
                 android:textColor="#868686"
                 android:textSize="24dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20sp"
-                android:layout_centerVertical="true"
-                android:gravity="center"
-                android:background="@color/colorTransparent"
-                android:text="دنگ های متفاوت؟"
-                style="@style/large_koodak"
-                android:textColor="#D60B0B" />
 
         </RelativeLayout>
 
 
     </android.support.v7.widget.Toolbar>
 
-    <!-- participants -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignBottom="@id/addDigit_addExpense"
-        android:layout_marginBottom="50dp">
+        android:layout_below="@id/m_toolbar"
+        android:layout_marginTop="1dp"
+        android:foregroundGravity="center_horizontal"
+        android:layout_centerInParent="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="?attr/actionBarSize"
-            android:padding="15dp"
-            android:background="#00FFFFFF">
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center_horizontal">
+
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/choosePartic_RecView"
+                android:id="@+id/contacts_recView"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent" />
 
         </RelativeLayout>
-
     </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginLeft="14dp"
+        android:layout_marginBottom="14dp"
+        app:backgroundTint="#DCEDC8"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </RelativeLayout>

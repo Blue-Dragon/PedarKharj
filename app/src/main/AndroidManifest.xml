@@ -11,13 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".classes.BuyerDialog"></activity>
-        <activity
-            android:name=".pages.ParticipantsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".pages.AddExpenseActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".pages.ContactsActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".classes.BuyerDialog" />
+        <activity android:name=".pages.DiffDongActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".pages.AddExpenseActivity" android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

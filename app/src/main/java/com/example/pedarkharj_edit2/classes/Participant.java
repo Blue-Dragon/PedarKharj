@@ -21,7 +21,7 @@ public class Participant {
         this.expense = expense;
         this.dong = dong;
     }
-/*      Expenses Page     */
+/*      Expenses/Contacts Page   */
     //NO pic
     public Participant(String name) {
         this.name = name;
