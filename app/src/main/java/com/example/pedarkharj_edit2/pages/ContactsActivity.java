@@ -1,6 +1,7 @@
 package com.example.pedarkharj_edit2.pages;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.design.widget.FloatingActionButton;
@@ -21,7 +22,6 @@ public class ContactsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Participant> participants;
     ParticipantAdapter adaptor;
-
     Context mContext = this;
     FloatingActionButton fab;
 
@@ -35,9 +35,7 @@ public class ContactsActivity extends AppCompatActivity {
 
         //Floating Btn
         fab = this.findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            //todo
-        });
+        fab.setOnClickListener(view -> startActivity(new Intent(mContext, AddContactActivity.class)));
 
 
         //recyclerView
