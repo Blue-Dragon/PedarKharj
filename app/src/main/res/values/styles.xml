@@ -26,7 +26,7 @@
         <item name="android:textColor">#000</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/buttom_selector</item>
+        <item name="android:background">@drawable/selector_buttom</item>
     </style>
     <style name="calcDoneBtn">
         <item name="android:layout_height">match_parent</item>
@@ -35,7 +35,7 @@
         <item name="android:textColor">#000</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:background">@drawable/button_done_bkg</item>
+        <item name="android:background">@drawable/bkg_button_done</item>
     </style>
 
     <style name="calcHorizLayout">

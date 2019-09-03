@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_above="@+id/calculator"
-                    android:background="@drawable/field_bkg"
+                    android:background="@drawable/bkg_field"
                     android:gravity="center_vertical"
                     android:visibility="visible">
 

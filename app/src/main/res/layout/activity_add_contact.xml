@@ -55,4 +55,62 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/prof_pic"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/m_toolbar"
+        android:layout_alignParentRight="true"
+        android:layout_margin="15dp"
+        android:src="@drawable/w" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/prof_pic"
+        android:layout_marginTop="74dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        style="@style/medium_koodak"
+        android:text="نام" />
+
+    <EditText
+        android:id="@+id/editText3"
+        style="@style/medium_koodak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText2"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_toLeftOf="@+id/prof_pic"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="نام خانوادگی" />
+
+    <RelativeLayout
+        android:id="@+id/addFromContacts_btn"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_below="@id/editText3"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/selector_button_addcontact">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            style="@style/medium_koodak"
+            android:textColor="#2962FF"
+            android:text="افزودن از مخاطبین گوشی"
+            android:gravity="center"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
 </RelativeLayout>
