@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.pedarkharj_edit2.classes.BuyerDialog;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit2.classes.Routines;
 import com.example.pedarkharj_edit2.pages.AddExpenseActivity;
 import com.example.pedarkharj_edit2.pages.ContactsActivity;
 
@@ -81,23 +82,19 @@ public class MainActivity extends AppCompatActivity {
         new BuyerDialog(this).show();
     }
 
-    Bitmap drawableToBitmap(int drawable){
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawable);
-        return bitmap;
-    }
 
     private void doRecyclerView() {
         participants = new ArrayList<Participant>();
-        participants.add(new Participant(drawableToBitmap(R.drawable.q), "Ali", 1000, 2050));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali", 1000, 2050));
         participants.add(new Participant( "Reza", 15000, 2050));
-        participants.add(new Participant(drawableToBitmap(R.drawable.r), "Mamad", 1000, 500));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Mamad", 1000, 500));
         participants.add(new Participant( "Hami", 5000, 2050));
-        participants.add(new Participant(drawableToBitmap(R.drawable.q), "sadi", 1000, 2500));
-        participants.add(new Participant(drawableToBitmap(R.drawable.r), "dad", 0, 2000));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "sadi", 1000, 2500));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "dad", 0, 2000));
         participants.add(new Participant( "mom", 0, 6000));
         participants.add(new Participant( "Ali", 1000, 2050));
-        participants.add(new Participant(drawableToBitmap(R.drawable.r), "Reza", 15000, 2050));
-        participants.add(new Participant(drawableToBitmap(R.drawable.w), "Mamad", 1000, 500));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Reza", 15000, 2050));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.w), "Mamad", 1000, 500));
         //
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
