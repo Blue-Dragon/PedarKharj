@@ -1,5 +1,6 @@
 package com.example.pedarkharj_edit2.pages;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,6 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit2.classes.Routines;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,8 +29,11 @@ import java.util.Locale;
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
     ArrayList<Participant> participants;
     ParticipantAdapter adapter;
+    LinearLayout calcLT;
+
     RecyclerView recyclerView;
     Context mContext;
+    Activity mActivity;
     Button removeBtn, dateBtn, particBtn;
     RelativeLayout buyerBtn;
     Date mDate;
@@ -39,9 +45,11 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_add_expense);
 
         mContext = this;
-        particBtn = findViewById(R.id.custom_dong_btn); particBtn.setOnClickListener(this);
-        buyerBtn = findViewById(R.id.buyer_btn); buyerBtn.setOnClickListener(this);
-        dateBtn = findViewById(R.id.date_btn); dateBtn.setOnClickListener(this);
+        mActivity = this;
+        particBtn = findViewById(R.id.custom_dong_btn);              particBtn.setOnClickListener(this);
+        buyerBtn = findViewById(R.id.buyer_btn);                         buyerBtn.setOnClickListener(this);
+        dateBtn = findViewById(R.id.date_btn);                             dateBtn.setOnClickListener(this);
+        calcLT = findViewById(R.id.calculator);
         recyclerView = findViewById(R.id.participants_RecView);
         //
         doRecyclerView();
@@ -53,10 +61,6 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     /********************************************       Methods     ****************************************************/
 
-    Bitmap drawableToBitmap(int drawable){
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), drawable);
-        return bitmap;
-    }
 
     @Override
     public void onClick(View view) {
@@ -85,22 +89,23 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
                 }).show(getSupportFragmentManager(), "");
                 break;
+
         }
     }
 
     private void doRecyclerView() {
 
         participants = new ArrayList<Participant>();
-        participants.add(new Participant(drawableToBitmap(R.drawable.w), "hamed"));
+        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.w), "hamed"));
         participants.add(new Participant("reza dasdf dadas dasd"));
-        participants.add(new Participant(drawableToBitmap(R.drawable.r),"غلوم"));
+        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.r),"غلوم"));
         participants.add(new Participant("حسین عباس پور"));
         participants.add(new Participant("محمد صیدالی"));
         participants.add(new Participant("پیمان"));
         participants.add(new Participant("reza"));
-        participants.add(new Participant(drawableToBitmap(R.drawable.r),"مری"));
+        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.r),"مری"));
         participants.add(new Participant("غلوم"));
-        participants.add(new Participant(drawableToBitmap(R.drawable.w),"حامد گنجعلی"));
+        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.w),"حامد گنجعلی"));
         participants.add(new Participant("حسین حسی حشسیح حظسز شسزبح پور"));
         participants.add(new Participant("حامد گنجعلی"));
         participants.add(new Participant("محمد صیدالی"));

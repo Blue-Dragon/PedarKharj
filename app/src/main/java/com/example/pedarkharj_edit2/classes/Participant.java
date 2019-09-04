@@ -1,13 +1,16 @@
 package com.example.pedarkharj_edit2.classes;
 
 import android.graphics.Bitmap;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class Participant {
-    private Bitmap bitmap, subImg;
+    private Bitmap bitmap, chkImg;
     private String name, result;
-    private int expense, dong;
+    private int expense, dong, dongNumber;
 
-/*      Main Page     */
+
+/********      Main Page     ********/
     //with pic
     public Participant(Bitmap bitmap, String name, int expense, int dong) {
         this.bitmap = bitmap;
@@ -21,7 +24,8 @@ public class Participant {
         this.expense = expense;
         this.dong = dong;
     }
-/*      Expenses/Contacts Page   */
+
+/********      Expenses/Contacts Page   ********/
     //NO pic
     public Participant(String name) {
         this.name = name;
@@ -32,18 +36,31 @@ public class Participant {
         this.name = name;
     }
 
+    /********      DiffDong Page   ********/
+    public Participant(String name, int dongNumber) {
+        this.name = name;
+        this.dongNumber = dongNumber;
+    }
+    //with pic
+    public Participant(Bitmap bitmap, String name, int dongNumber) {
+        this.bitmap = bitmap;
+        this.name = name;
+        this.dongNumber = dongNumber;
+    }
 
+
+    /**********************************************************************************************/
     public Bitmap getProfBitmap() {
         return bitmap;
     }
     public void setProfBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
     }
-    public Bitmap getSubImg() {
-        return subImg;
+    public Bitmap getChkImg() {
+        return chkImg;
     }
-    public void setSubImg(Bitmap subImg) {
-        this.subImg = subImg;
+    public void setChkImg(Bitmap chkImg) {
+        this.chkImg = chkImg;
     }
     public String getName() {
         return name;
@@ -62,6 +79,12 @@ public class Participant {
     }
     public void setDong(int dong) {
         this.dong = dong;
+    }
+    public int getDongNumber() {
+        return dongNumber;
+    }
+    public void setDongNumber(int dongNumber) {
+        this.dongNumber = dongNumber;
     }
 
     public String getResult() {

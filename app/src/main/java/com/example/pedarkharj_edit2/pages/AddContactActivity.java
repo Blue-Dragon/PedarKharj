@@ -27,6 +27,7 @@ import java.io.IOException;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class AddContactActivity extends AppCompatActivity implements View.OnClickListener {
@@ -55,11 +56,10 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         fromContactsBtn = findViewById(R.id.addFromContacts_btn);    fromContactsBtn.setOnClickListener(this);
 
         //def pic
-        if (bitmap == null )bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.w);
-        resizedBitmap = Routines.resizeBitmap(bitmap);
-        profPic.setImageBitmap(resizedBitmap);
+        setDefPic();
 
     }
+
 
 
 
@@ -68,22 +68,36 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+
             case R.id.prof_pic:
                 if (Build.VERSION.SDK_INT >= 23)
                     Routines.requestPermissions(mActivity, new String[]{CAMERA, READ_EXTERNAL_STORAGE}, Routines.PER_CODE_CAMERA_READexSTG);
                 else
                     Routines.chooseCameraGallery(mActivity);
                 break;
+
+            case R.id.addFromContacts_btn:
+                if (Build.VERSION.SDK_INT >= 23)
+                    Routines.requestPermissions(mActivity, new String[]{READ_CONTACTS}, Routines.PER_CODE_READ_CONTACTS);
+                else
+//                    Routines.chooseCameraGallery(mActivity);
+                break;
         }
     }
 
-
+    private void setDefPic() {
+        if (bitmap == null )bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.w);
+        resizedBitmap = Routines.resizeBitmap(bitmap);
+        profPic.setImageBitmap(resizedBitmap);
+    }
 
     /*       permission stuff        */
+    // Routines.requestPermissions...
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
+
             case Routines.PER_CODE_CAMERA_READexSTG:
                 boolean permissioncamera = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 boolean permissiongallery = grantResults[1] == PackageManager.PERMISSION_GRANTED;
@@ -94,11 +108,21 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                     Toast.makeText(mActivity, "مجوز دسترسی داده نشد", Toast.LENGTH_SHORT).show();
                 }
                 break;
+
+            case Routines.PER_CODE_READ_CONTACTS:
+                boolean permissionContact = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                if (grantResults.length > 0 && permissionContact) {
+                    Toast.makeText(mActivity, "مجوز دسترسی contacts داده شد", Toast.LENGTH_SHORT).show();
+//                    Routines.chooseCameraGallery(mActivity);
+                } else {
+                    Toast.makeText(mActivity, "مجوز دسترسی contacts داده نشد", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 
-    //get pic options
-    //Routines.chooseCameraGallery(mActivity);
+    //get pic options (camera or gallery)
+    //Routines.chooseCameraGallery...
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

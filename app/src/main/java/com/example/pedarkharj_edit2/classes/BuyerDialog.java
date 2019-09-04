@@ -17,6 +17,7 @@ import android.widget.Button;
 
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.pages.AddExpenseActivity;
+import com.example.pedarkharj_edit2.pages.ContactsActivity;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,6 @@ public class BuyerDialog extends Dialog implements View.OnClickListener {
 
     public BuyerDialog(Activity mActivity) {
         super(mActivity);
-        // TODO Auto-generated constructor stub
         this.mActivity = mActivity;
     }
 
@@ -56,11 +56,12 @@ public class BuyerDialog extends Dialog implements View.OnClickListener {
 
             case R.id.btn_yes:
                 mActivity.startActivity(new Intent(mActivity, AddExpenseActivity.class));
-                mActivity.finish();
+//                mActivity.finish();
                 break;
 
             case R.id.btn_no:
-                dismiss();
+                mActivity.startActivity(new Intent(mActivity, ContactsActivity.class));
+//                mActivity.finish();
                 break;
 
             default:

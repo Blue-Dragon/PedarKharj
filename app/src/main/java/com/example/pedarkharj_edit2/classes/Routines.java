@@ -12,7 +12,7 @@ import android.support.v7.app.AlertDialog;
 
 public class Routines {
     public static final int PER_CODE_CAMERA_READexSTG = 1;
-    public static final int PER_FROM_CONTACTS = 2;
+    public static final int PER_CODE_READ_CONTACTS = 2;
     public static final int GALLERY_INTENT = 3;
     public static final int CAMERA_INTENT = 4;
 

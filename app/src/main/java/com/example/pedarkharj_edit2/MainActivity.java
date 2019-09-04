@@ -1,5 +1,6 @@
 package com.example.pedarkharj_edit2;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.Routines;
 import com.example.pedarkharj_edit2.pages.AddExpenseActivity;
 import com.example.pedarkharj_edit2.pages.ContactsActivity;
+import com.example.pedarkharj_edit2.pages.DiffDongActivity;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     ParticipantAdapter adaptor;
 
     Context mContext = this;
+    Activity mActivity = this;
     FloatingActionButton fab;
 
     @Override
@@ -40,19 +43,22 @@ public class MainActivity extends AppCompatActivity {
        Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
+        //todo
+//        startActivity(new Intent(mActivity, DiffDongActivity.class));
+
         //Floating Btn
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 //            startActivity(new Intent(mContext, AddExpenseActivity.class));
-//            showBuyerDialog();
-            startActivity(new Intent(mContext, ContactsActivity.class));
+            showBuyerDialog();
         });
 
 
         //recyclerView
         recyclerView = findViewById(R.id.rv_partice_expenses);
         doRecyclerView();
+        //TODO: hide the fucking fab while scrolling
 //        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override
 //            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
