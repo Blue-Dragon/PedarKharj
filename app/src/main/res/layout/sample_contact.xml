@@ -38,7 +38,7 @@
             android:layout_toRightOf="@id/prof_pic"
             android:layout_marginLeft="-44dp"
             android:layout_marginTop="-14dp"
-            android:src="@drawable/ic_check"
+            android:src="@drawable/ic_check_2"
             android:visibility="invisible"/>
 
         <TextView

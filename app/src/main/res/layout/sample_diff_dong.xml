@@ -76,7 +76,7 @@
                 android:layout_alignParentLeft="true"/>
 
             <EditText
-                android:id="@+id/dong_Etxt"
+                android:id="@+id/dong_Etxt2"
                 style="@style/large_koodak"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -94,7 +94,7 @@
                 android:id="@+id/plus_btn"
                 android:layout_height="40dp"
                 android:layout_width="40dp"
-                android:layout_toRightOf="@id/dong_Etxt"
+                android:layout_toRightOf="@id/dong_Etxt2"
                 android:text="+"
                 android:layout_centerVertical="true"
                 android:gravity="center"/>

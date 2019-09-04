@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         //todo
-//        startActivity(new Intent(mActivity, DiffDongActivity.class));
+        startActivity(new Intent(mActivity, DiffDongActivity.class));
 
         //Floating Btn
         fab = this.findViewById(R.id.fab);

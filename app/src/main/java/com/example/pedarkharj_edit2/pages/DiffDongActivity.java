@@ -52,22 +52,22 @@ public class DiffDongActivity extends AppCompatActivity {
     /********************************************       Methods     ****************************************************/
     private void doRecyclerView() {
         participants = new ArrayList<Participant>();
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali"));
-        participants.add(new Participant( "Reza"));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Mamad"));
-        participants.add(new Participant( "Hami"));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "sadi"));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "dad"));
-        participants.add(new Participant( "mom"));
-        participants.add(new Participant( "Ali"));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Reza"));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.w), "Mamad"));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali", 1));
+        participants.add(new Participant( "Reza",2));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Mamad",6));
+        participants.add(new Participant( "Hami",1));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "sadi", 2));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "dad",1));
+        participants.add(new Participant( "mom",2));
+        participants.add(new Participant( "Ali",4));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Reza",3));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.w), "Mamad",0));
         //
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext, participants);
+        adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong, participants);
         recyclerView.setAdapter(adaptor);
     }
 

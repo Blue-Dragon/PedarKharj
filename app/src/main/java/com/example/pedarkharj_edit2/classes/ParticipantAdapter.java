@@ -1,5 +1,6 @@
 package com.example.pedarkharj_edit2.classes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +22,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.ViewHolder> implements View.OnClickListener {
     private ArrayList<Participant> participants;
     private Context mContext;
+    private Activity mActivity;
     private int mLayout, maxCheckImg;
+    private ViewHolder holder;
+    private Participant participant;
 
     /*      Constructors       */
     //main page
@@ -30,7 +34,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         this.participants = participants;
         this.mLayout = R.layout.sample_participant;
     }
-    //Expense/Contacts Activity
+    //Expense/ Contacts/ DiffDong Activity
     public ParticipantAdapter(Context mContext, int mLayout, ArrayList<Participant> participants) {
         this.mContext = mContext;
         this.participants = participants;
@@ -43,6 +47,12 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         this.participants = participants;
         this.mLayout = mLayout;
         this.maxCheckImg = maxCheckImg;
+    }
+    //DiffDong Activity
+    public ParticipantAdapter(Activity mActivity, int mLayout, ArrayList<Participant> participants) {
+        this.mActivity = mActivity;
+        this.participants = participants;
+        this.mLayout = mLayout;
     }
 
 
@@ -65,7 +75,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
             //
             plusBtn = itemView.findViewById(R.id.plus_btn);
             minusBtn = itemView.findViewById(R.id.minus_btn);
-            dongEtxt = itemView.findViewById(R.id.dong_Etxt);
+            dongEtxt = itemView.findViewById(R.id.dong_Etxt2);
 
         }
 
@@ -83,36 +93,25 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Participant participant = participants.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder1, final int position) {
+        participant = participants.get(position);
+        this.holder = holder1;
 
         if (participant.getName() !=null && holder.nameTv != null)     holder.nameTv.setText(participant.getName());
         if (participant.getProfBitmap() !=null && holder.profImv != null)     holder.profImv.setImageBitmap(participant.getProfBitmap());
         if (participant.getResult() !=null && holder.resultTxt != null)     holder.resultTxt.setText(String.valueOf(participant.getResult()));
-        //
-        if (participant.getDongNumber() >= 0 && holder.dongEtxt != null)     holder.dongEtxt.setText(participant.getDong());
-        if (holder.minusBtn != null)     holder.nameTv.setText(participant.getName());
-        if (holder.plusBtn != null)     holder.nameTv.setText(participant.getName());
+        //DiffDong (mActivity)
+        if (participant.getDongNumber() >= 0 && holder.dongEtxt != null)    holder.dongEtxt.setText(String.valueOf(participant.getDongNumber()));
+        //TODO: buttons not working
+        if (holder.minusBtn != null)     holder.minusBtn.setOnClickListener(this);
+        if (holder.plusBtn != null)     holder.plusBtn.setOnClickListener(this);
 
         holder.baseLayout.setOnClickListener(this);
-
         checkAsRadioBtn(holder);
 
     }
 
-    private void checkAsRadioBtn(@NonNull ViewHolder holder) {
-        if (holder.checkImg != null){
-                //TODO: change it to radio button action
-                if (holder.checkImg.getVisibility() != View.VISIBLE){
-                    holder.baseLayout.setOnClickListener(item -> holder.checkImg.setVisibility(View.VISIBLE));
-                    holder.profImv.setOnClickListener(item -> holder.checkImg.setVisibility(View.VISIBLE));
-                }
-                else if (holder.checkImg.getVisibility() == View.VISIBLE) {
-                    holder.baseLayout.setOnClickListener(item -> holder.checkImg.setVisibility(View.INVISIBLE));
-                    holder.profImv.setOnClickListener(item -> holder.checkImg.setVisibility(View.INVISIBLE));
-                }
-         }
-    }
+
 
     /**************************************       Methods       **************************************/
 
@@ -122,6 +121,30 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
             case R.id.base_layout:
                 Toast.makeText(mContext, " max CheckImg: " + maxCheckImg, Toast.LENGTH_SHORT).show();
                 break;
+
+            case R.id.plus_btn:
+                if (participant.getDongNumber() >= 0 && holder.dongEtxt != null)
+                    holder.dongEtxt.setText(String.valueOf(participant.getDongNumber()+ 1)) ;
+                break;
+
+            case R.id.minus_btn:
+                if (participant.getDongNumber() >= 0 && holder.dongEtxt != null)
+                    holder.dongEtxt.setText(String.valueOf(Integer.valueOf(String.valueOf(holder.dongEtxt.getText() )) - 1));
+                break;
+        }
+    }
+
+    private void checkAsRadioBtn(@NonNull ViewHolder holder) {
+        if (holder.checkImg != null){
+            //TODO: change it to radio button action
+            if (holder.checkImg.getVisibility() != View.VISIBLE){
+                holder.baseLayout.setOnClickListener(item -> holder.checkImg.setVisibility(View.VISIBLE));
+                holder.profImv.setOnClickListener(item -> holder.checkImg.setVisibility(View.VISIBLE));
+            }
+            else if (holder.checkImg.getVisibility() == View.VISIBLE) {
+                holder.baseLayout.setOnClickListener(item -> holder.checkImg.setVisibility(View.INVISIBLE));
+                holder.profImv.setOnClickListener(item -> holder.checkImg.setVisibility(View.INVISIBLE));
+            }
         }
     }
 
