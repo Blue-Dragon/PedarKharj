@@ -24,7 +24,14 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     private Context mContext;
     private Activity mActivity;
     private int mLayout, maxCheckImg;
+    private boolean amountModeDong;
 
+    public boolean isAmountModeDong() {
+        return amountModeDong;
+    }
+    public void setAmountModeDong(boolean amountModeDong) {
+        this.amountModeDong = amountModeDong;
+    }
 
     /*      Constructors       */
     //main page
@@ -48,10 +55,18 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         this.maxCheckImg = maxCheckImg;
     }
     //DiffDong Activity
+        // (Mode_01 number)
     public ParticipantAdapter(Activity mActivity, int mLayout, ArrayList<Participant> participants) {
         this.mActivity = mActivity;
         this.participants = participants;
         this.mLayout = mLayout;
+        this.amountModeDong = false;
+    }
+    public ParticipantAdapter(Activity mActivity, int mLayout, ArrayList<Participant> participants, boolean amountModeDong) {
+        this.mActivity = mActivity;
+        this.participants = participants;
+        this.mLayout = mLayout;
+        this.amountModeDong = amountModeDong; //if true, mode 2- amount
     }
 
 
@@ -62,6 +77,9 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         //diff dong
         Button plusBtn, minusBtn;
         EditText dongEtxt;
+            //mode_02 amount
+        EditText dongEtxtAmount;
+
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -71,10 +89,12 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
             baseLayout = itemView.findViewById(R.id.base_layout);
             //
             checkImg = itemView.findViewById(R.id.sub_img);
-            //
+            //dong
             plusBtn = itemView.findViewById(R.id.plus_btn);
             minusBtn = itemView.findViewById(R.id.minus_btn);
             dongEtxt = itemView.findViewById(R.id.dong_Etxt2);
+            // dong mode_02 only
+            dongEtxtAmount =  itemView.findViewById(R.id.dong_Etxt_amount);
 
         }
 
@@ -94,7 +114,6 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Participant participant = participants.get(position);
-        int curDongNum = 0;
 
         if (participant.getName() !=null && holder.nameTv != null)      holder.nameTv.setText(participant.getName());
         if (participant.getProfBitmap() !=null && holder.profImv != null)    holder.profImv.setImageBitmap(participant.getProfBitmap());
@@ -103,27 +122,32 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         holder.baseLayout.setOnClickListener(this);
         checkAsRadioBtn(holder);
 
-        //DiffDong (mActivity)
-        curDongNum = participant.getDongNumber();
-        if (curDongNum >= 0 && holder.dongEtxt != null)     holder.dongEtxt.setText(String.valueOf(curDongNum));
+    //DiffDong (mActivity)
+         //mode_01 numeric (if false)
+        if (!amountModeDong){
+            int curDongNum = participant.getDongNumber();
+            if (curDongNum >= 0 && holder.dongEtxt != null)     holder.dongEtxt.setText(String.valueOf(curDongNum));
 
+            if (holder.plusBtn != null) {
+                holder.plusBtn.setOnClickListener(view -> {
+                    int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
+                    holder.dongEtxt.setText(String.valueOf(++mCurNumber));
+                });
+            }
 
-        if (holder.plusBtn != null) {
-            holder.plusBtn.setOnClickListener(view -> {
-                int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
-                holder.dongEtxt.setText(String.valueOf(++mCurNumber));
-                Toast.makeText(mActivity, "CurrDong: "+ holder.dongEtxt.getText().toString(), Toast.LENGTH_SHORT).show();
-            });
+            if (holder.minusBtn != null){
+                holder.minusBtn.setOnClickListener(item-> {
+                    int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
+                    holder.dongEtxt.setText(String.valueOf(--mCurNumber));
+                });
+            }
+        }
+        //mode_02 amount (if true)
+         else {
+            int curDongAmount = participant.getDong();
+            if (curDongAmount >= 0 && holder.dongEtxtAmount != null)     holder.dongEtxtAmount.setText(String.valueOf(curDongAmount));
         }
 
-
-        if (holder.minusBtn != null){
-            holder.minusBtn.setOnClickListener(item-> {
-                int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
-                holder.dongEtxt.setText(String.valueOf(--mCurNumber));
-                Toast.makeText(mActivity, "CurrDong: "+ holder.dongEtxt.getText().toString(), Toast.LENGTH_SHORT).show();
-            });
-        }
 
 
 

@@ -8,6 +8,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.BuyerDialog;
@@ -16,8 +21,9 @@ import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.Routines;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class DiffDongActivity extends AppCompatActivity {
+public class DiffDongActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     RecyclerView recyclerView;
     ArrayList<Participant> participants;
     ParticipantAdapter adaptor;
@@ -25,6 +31,7 @@ public class DiffDongActivity extends AppCompatActivity {
     Context mContext = this;
     Activity mActivity = this;
     FloatingActionButton fab;
+    Spinner spinner;
 
 
     @Override
@@ -43,14 +50,26 @@ public class DiffDongActivity extends AppCompatActivity {
 
         //recyclerView
         recyclerView = findViewById(R.id.diff_dong_recView);
-        doRecyclerView();
+        doRecyclerView(false);
+
+        spinner = findViewById(R.id.spinner);
+        List<String> list = new ArrayList<String>();
+        list.add("تعداد دنگ");
+        list.add("مقداد دنگ");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+
+        spinner.setOnItemSelectedListener(this);
     }
 
 
 
 
     /********************************************       Methods     ****************************************************/
-    private void doRecyclerView() {
+    private void doRecyclerView(boolean mode_02) {
+        boolean b = mode_02;
+
         participants = new ArrayList<Participant>();
         participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali", 1));
         participants.add(new Participant( "Reza",2));
@@ -67,8 +86,24 @@ public class DiffDongActivity extends AppCompatActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong, participants);
+        if (!b) adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong, participants);
+        else adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong_mode2, participants);
         recyclerView.setAdapter(adaptor);
+    }
+
+    //spinner
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String selectedIten = parent.getItemAtPosition(position).toString();
+        if (selectedIten.equals("تعداد دنگ")){
+            doRecyclerView(false);
+        }else{
+            doRecyclerView(true);
+        }
+    }
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
 }
