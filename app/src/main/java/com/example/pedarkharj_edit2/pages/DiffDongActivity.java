@@ -61,7 +61,7 @@ public class DiffDongActivity extends AppCompatActivity {
         participants.add(new Participant( "mom",2));
         participants.add(new Participant( "Ali",4));
         participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Reza",3));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.w), "Mamad",0));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.w), "Mamad",22));
         //
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
