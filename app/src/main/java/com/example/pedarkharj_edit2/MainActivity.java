@@ -6,12 +6,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -26,25 +34,26 @@ import com.example.pedarkharj_edit2.pages.DiffDongActivity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     RecyclerView recyclerView;
     ArrayList<Participant> participants;
     ParticipantAdapter adaptor;
-
+    //
     Context mContext = this;
     Activity mActivity = this;
     FloatingActionButton fab;
+    //
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //
        Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
-
-        //todo
-        startActivity(new Intent(mActivity, DiffDongActivity.class));
 
         //Floating Btn
         fab = this.findViewById(R.id.fab);
@@ -53,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 //            startActivity(new Intent(mContext, AddExpenseActivity.class));
             showBuyerDialog();
         });
-
 
         //recyclerView
         recyclerView = findViewById(R.id.rv_partice_expenses);
@@ -77,11 +85,12 @@ public class MainActivity extends AppCompatActivity {
 //        });
         //
 
+        //        //drawerLayout
+        createDrawer();
+
     }
 
-    
-    
-    
+
     /********************************************       Methods     ****************************************************/
 
     private void showBuyerDialog() {
@@ -109,5 +118,76 @@ public class MainActivity extends AppCompatActivity {
         adaptor = new ParticipantAdapter(mContext, participants);
         recyclerView.setAdapter(adaptor);
     }
-    
+
+
+    /*****************          Drawer           ******************/
+    private void createDrawer() {
+        drawerLayout = findViewById(R.id.m_drawer);
+
+        //Nav View
+//        navigationView = findViewById(R.id.m_navigation_view); //already initiated
+        //todo: null object exp
+        navigationView.setNavigationItemSelectedListener(this); //onNavigationItemSelected() metod
+
+        //showing nav button
+        ActionBar actionbar = getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        } //now set the action in onOptionsItemSelected method
+
+        //toggle (it takes care of drawable methods)
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_drawer_open, R.string.nav_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState(); //rotating the icon
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.nav_contacts:
+                startActivity(new Intent(mContext, ContactsActivity.class));
+                break;
+            case R.id.nav_def_event:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag2()).commit();
+                break;
+            case R.id.nav_addNewEvent:
+//                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag3()).commit();
+                break;
+        }
+
+        //now we close the drawer
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true; //so when each item is selected, mark it as selected
+    }
+    /*******************/
+
+    // double back pressed
+    boolean alreadyPressed = false;
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START))
+            drawerLayout.closeDrawer(GravityCompat.START); //if drawable open, onBackPressed should close it
+        else {
+            if (alreadyPressed) {
+                super.onBackPressed(); //else, close the activity as usual
+            }
+
+            alreadyPressed = true;
+            Toast.makeText(this, "press back again to exit!", Toast.LENGTH_SHORT).show();
+            //give 2 seconds to press back again, or make the boolean false
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    alreadyPressed=false;
+                }
+            }, 2000);
+        }
+
+    }
+
 }

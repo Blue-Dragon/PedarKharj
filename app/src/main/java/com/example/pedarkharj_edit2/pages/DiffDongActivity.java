@@ -71,9 +71,9 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         boolean b = mode_02;
 
         participants = new ArrayList<Participant>();
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali", 1));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali", 0));
         participants.add(new Participant( "Reza",2));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Mamad",6));
+        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Mamad",0));
         participants.add(new Participant( "Hami",1));
         participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "sadi", 2));
         participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "dad",1));
