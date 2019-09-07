@@ -6,6 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.classes.BuyerDialog;
@@ -34,7 +38,7 @@ import com.example.pedarkharj_edit2.pages.DiffDongActivity;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     RecyclerView recyclerView;
     ArrayList<Participant> participants;
     ParticipantAdapter adaptor;
@@ -46,11 +50,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
+    ImageView menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.drawer_layout);
         //
        Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
@@ -85,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        });
         //
 
-        //        //drawerLayout
+         //drawerLayout
         createDrawer();
 
     }
@@ -103,13 +108,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali", 1000, 2050));
         participants.add(new Participant( "Reza", 15000, 2050));
         participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Mamad", 1000, 500));
-        participants.add(new Participant( "Hami", 5000, 2050));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "sadi", 1000, 2500));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "dad", 0, 2000));
-        participants.add(new Participant( "mom", 0, 6000));
-        participants.add(new Participant( "Ali", 1000, 2050));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Reza", 15000, 2050));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.w), "Mamad", 1000, 500));
+//        participants.add(new Participant( "Hami", 5000, 2050));
+//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "sadi", 1000, 2500));
+//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "dad", 0, 2000));
+//        participants.add(new Participant( "mom", 0, 6000));
+//        participants.add(new Participant( "Ali", 1000, 2050));
+//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Reza", 15000, 2050));
+//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.w), "Mamad", 1000, 500));
         //
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -123,21 +128,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /*****************          Drawer           ******************/
     private void createDrawer() {
         drawerLayout = findViewById(R.id.m_drawer);
+        menu = findViewById(R.id.menu); menu.setOnClickListener(this);
 
         //Nav View
-//        navigationView = findViewById(R.id.m_navigation_view); //already initiated
-        //todo: null object exp
+        navigationView = findViewById(R.id.m_navigation_view); //already initiated
         navigationView.setNavigationItemSelectedListener(this); //onNavigationItemSelected() metod
 
-        //showing nav button
-        ActionBar actionbar = getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setDisplayHomeAsUpEnabled(true);
-            actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        } //now set the action in onOptionsItemSelected method
-
         //toggle (it takes care of drawable methods)
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_drawer_open, R.string.nav_drawer_close);
+        toggle = new ActionBarDrawerToggle(mActivity, drawerLayout, R.string.nav_drawer_open, R.string.nav_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState(); //rotating the icon
     }
@@ -155,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_addNewEvent:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag3()).commit();
                 break;
+
         }
 
         //now we close the drawer
@@ -162,6 +161,30 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         return true; //so when each item is selected, mark it as selected
     }
+
+    //open drawer onclick
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.menu:
+                if (!drawerLayout.isDrawerOpen(GravityCompat.START)){
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+                break;
+        }
+    }
+
+
+    //open drawer onclick
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case android.R.id.home:
+//                drawerLayout.openDrawer(GravityCompat.START);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
     /*******************/
 
     // double back pressed
@@ -189,5 +212,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
 
 }
