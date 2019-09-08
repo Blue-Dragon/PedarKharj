@@ -15,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -35,7 +36,8 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
     Bitmap resizedBitmap;
     private Context mContext;
     private Activity mActivity;
-
+    String name, family;
+    EditText nameEdt, familyEdt;
     CircleImageView profPic;
     ImageView cancelImg, doneImg;
     RelativeLayout fromContactsBtn;
@@ -54,6 +56,8 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         cancelImg = findViewById(R.id.cancel_img);                               cancelImg.setOnClickListener(this);
         doneImg = findViewById(R.id.check_img);                                  doneImg.setOnClickListener(this);
         fromContactsBtn = findViewById(R.id.addFromContacts_btn);    fromContactsBtn.setOnClickListener(this);
+        nameEdt = findViewById(R.id.name_edt);
+        familyEdt = findViewById(R.id.family_edt);
 
         //def pic
         setDefPic();
@@ -80,7 +84,24 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 if (Build.VERSION.SDK_INT >= 23)
                     Routines.requestPermissions(mActivity, new String[]{READ_CONTACTS}, Routines.PER_CODE_READ_CONTACTS);
                 else
-//                    Routines.chooseCameraGallery(mActivity);
+                    Routines.chooseCameraGallery(mActivity);
+                break;
+
+            case R.id.check_img:
+                String fullName;
+                name = nameEdt.getText().toString();
+                family = familyEdt.getText().toString();
+                fullName = name+" "+ family;
+
+                if (fullName.length()>1) {
+                    setResult(ContactsActivity.INTENT_CODE,     new Intent().putExtra(ContactsActivity.INTENT_MASSEGE,  fullName));
+                    finish();
+                } else
+                    Toast.makeText(mContext, "نام مخاطب را مشخص کنید.", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.cancel_img:
+                finish();
                 break;
         }
     }
