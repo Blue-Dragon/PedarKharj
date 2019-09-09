@@ -5,10 +5,17 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class Participant {
+    private int id;
     private Bitmap bitmap, chkImg;
-    private String name, result;
+    private String name;
     private int expense, dong, dongNumber;
 
+/********      Participant     ********/
+    public Participant(int id, String name, Bitmap bitmap) {
+        this.id = id;
+        this.name = name;
+        this.bitmap = bitmap;
+    }
 
 /********      Main Page     ********/
     //with pic
@@ -85,6 +92,12 @@ public class Participant {
     }
     public void setDongNumber(int dongNumber) {
         this.dongNumber = dongNumber;
+    }
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getResult() {
