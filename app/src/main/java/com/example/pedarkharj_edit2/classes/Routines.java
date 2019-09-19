@@ -3,6 +3,7 @@ package com.example.pedarkharj_edit2.classes;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
@@ -20,6 +21,8 @@ public class Routines {
     public static final int PER_CODE_READ_CONTACTS = 2;
     public static final int GALLERY_INTENT = 3;
     public static final int CAMERA_INTENT = 4;
+    public static int usersId = 0;
+    private static int contactsSQLID ;
 
 //    Context mContext;
     Activity mActivity;
@@ -29,8 +32,8 @@ public class Routines {
         this.mActivity = mActivity;
     }
 
-    /********************************************       Methods     ****************************************************/
 
+    /********************************************       Methods     ****************************************************/
     public static void requestPermissions(Activity mActivity, String[] strings, int permissionCode) {
         ActivityCompat.requestPermissions(mActivity, strings, permissionCode);
     }
@@ -83,5 +86,9 @@ public class Routines {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory
                 .decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
+
+    public static int newContactId(Context mContext){
+        return  MydbHelper.getInstance(mContext).getRowsCount();
     }
 }

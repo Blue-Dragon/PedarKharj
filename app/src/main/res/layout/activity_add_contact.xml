@@ -25,15 +25,16 @@
                 android:id="@+id/cancel_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="18dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_cancel" />
+
             <ImageView
                 android:id="@+id/check_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="18dp"
+                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/ic_check" />
 
@@ -61,7 +62,10 @@
         android:layout_height="60dp"
         android:layout_below="@id/m_toolbar"
         android:layout_alignParentRight="true"
-        android:layout_margin="15dp"
+        android:layout_alignBottom="@id/family_edt"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/w" />
 
     <EditText
@@ -71,7 +75,7 @@
         android:layout_marginLeft="20dp"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/prof_pic"
-        android:layout_marginTop="74dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:inputType="textPersonName"
         style="@style/medium_koodak"
@@ -84,7 +88,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/name_edt"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="12dp"
         android:layout_toLeftOf="@+id/prof_pic"
         android:ems="10"
         android:inputType="textPersonName"
@@ -93,9 +96,9 @@
     <RelativeLayout
         android:id="@+id/addFromContacts_btn"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="45dp"
         android:layout_below="@id/family_edt"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:clickable="true"

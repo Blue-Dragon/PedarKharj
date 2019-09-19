@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.BuyerDialog;
+import com.example.pedarkharj_edit2.classes.MydbHelper;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.Routines;
@@ -40,27 +41,27 @@ public class ContactsActivity extends AppCompatActivity {
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
-        //recyclerView
-        recyclerView = findViewById(R.id.contacts_recView);
-        initRecView(); doRecyclerView();
-
         //Floating Btn
         fab = this.findViewById(R.id.fab);
-        fab.setOnClickListener(view -> startActivityForResult(new Intent(mContext, AddContactActivity.class), INTENT_CODE));
+        fab.setOnClickListener(view -> {
+//            startActivityForResult(new Intent(mContext, AddContactActivity.class), INTENT_CODE);
+            startActivity(new Intent(mContext, AddContactActivity.class));
+            finish();
+        });
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 1){
-            newName = data.getStringExtra(INTENT_MASSEGE);
-            if (newName != null){
-                participants.add(new Participant(newName));
-                doRecyclerView();
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == 1){
+//            newName = data.getStringExtra(INTENT_MASSEGE);
+//            if (newName != null){
+//                participants.add(new Participant(newName));
+//                doRecyclerView();
+//            }
+//        }
+//    }
 
     /********************************************       Methods     ****************************************************/
 
@@ -72,6 +73,7 @@ public class ContactsActivity extends AppCompatActivity {
         participants.add(new Participant( "Reza"));
         participants.add(new Participant(Routines.drawableToBitmap(mActivity,R.drawable.r), "Mamad"));
         participants.add(new Participant( "Hami"));
+        addFromSQLite();
 //        participants.add(new Participant(Routines.drawableToBitmap(mActivity,R.drawable.q), "sadi"));
 //        participants.add(new Participant(Routines.drawableToBitmap(mActivity,R.drawable.r), "dad"));
 //        participants.add(new Participant( "mom"));
@@ -90,6 +92,14 @@ public class ContactsActivity extends AppCompatActivity {
 //        participants.add(new Participant(Routines.drawableToBitmap(mActivity,R.drawable.w), "Mamad"));
     }
 
+    private void addFromSQLite() {
+        MydbHelper.TableData[] datas = MydbHelper.getInstance(mContext).getAllTable();
+
+        for (MydbHelper.TableData data : datas){
+            participants.add(new Participant(Routines.decodeBase64(data.getImgString()), data.getName() ));
+        }
+    }
+
     private void doRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -99,5 +109,11 @@ public class ContactsActivity extends AppCompatActivity {
         recyclerView.setAdapter(adaptor);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //recyclerView
+        recyclerView = findViewById(R.id.contacts_recView);
+        initRecView(); doRecyclerView();
+    }
 }

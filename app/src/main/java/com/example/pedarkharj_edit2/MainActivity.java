@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //recyclerView
         recyclerView = findViewById(R.id.rv_partice_expenses);
+        participants = new ArrayList<Participant>();
         doRecyclerView();
         //TODO: hide the fucking fab while scrolling
 //        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -104,7 +105,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void doRecyclerView() {
-        participants = new ArrayList<Participant>();
         participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali", 1000, 2050));
         participants.add(new Participant( "Reza", 15000, 2050));
         participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Mamad", 1000, 500));

@@ -14,16 +14,26 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.R;
+import com.example.pedarkharj_edit2.classes.MydbHelper;
+import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.Routines;
+import com.example.pedarkharj_edit2.classes.SharedPrefManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -58,9 +68,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         fromContactsBtn = findViewById(R.id.addFromContacts_btn);    fromContactsBtn.setOnClickListener(this);
         nameEdt = findViewById(R.id.name_edt);
         familyEdt = findViewById(R.id.family_edt);
-
-        //def pic
-        setDefPic();
+//
 
     }
 
@@ -88,16 +96,8 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.check_img:
-                String fullName;
-                name = nameEdt.getText().toString();
-                family = familyEdt.getText().toString();
-                fullName = name+" "+ family;
-
-                if (fullName.length()>1) {
-                    setResult(ContactsActivity.INTENT_CODE,     new Intent().putExtra(ContactsActivity.INTENT_MASSEGE,  fullName));
-                    finish();
-                } else
-                    Toast.makeText(mContext, "نام مخاطب را مشخص کنید.", Toast.LENGTH_SHORT).show();
+//                addNewContact();
+                addNewContactToDB();
                 break;
 
             case R.id.cancel_img:
@@ -106,11 +106,45 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void setDefPic() {
-        if (bitmap == null )bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.w);
-        resizedBitmap = Routines.resizeBitmap(bitmap);
-        profPic.setImageBitmap(resizedBitmap);
+    private void addNewContact() {
+            final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
+
+            //first we will do the validations
+            if (TextUtils.isEmpty(fullName)) {
+                nameEdt.setError("لطفا نام را وارد کنید");
+                nameEdt.requestFocus();
+                return;
+            }
+
+        //creating a new user object
+        Participant participant = new Participant(Routines.usersId++, fullName, bitmap);
+        //storing the user in shared preferences
+        SharedPrefManager.getInstance(getApplicationContext()).userLogin(participant);
+
+            //starting the contacts activity
+        setResult(ContactsActivity.INTENT_CODE,     new Intent().putExtra(ContactsActivity.INTENT_MASSEGE,  fullName));
+        finish();
     }
+
+    private void addNewContactToDB() {
+        final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
+
+        //first we will do the validations
+        if (TextUtils.isEmpty(fullName)) {
+            nameEdt.setError("لطفا نام را وارد کنید");
+            nameEdt.requestFocus();
+            return;
+        }
+
+        //creating a new user object
+        Participant participant = new Participant(Routines.usersId++, fullName, bitmap);
+        String imgString = Routines.encodeToBase64(mContext, participant);
+        //storing the user in SQLite
+        MydbHelper.getInstance(mContext).insertToTable(Routines.newContactId(mContext), fullName, imgString);
+        startActivity(new Intent(mContext, ContactsActivity.class));
+        finish();
+    }
+
 
     /*       permission stuff        */
     // Routines.requestPermissions...
@@ -175,5 +209,10 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
     /**/
 
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(mContext, ContactsActivity.class));
+        finish();
+    }
 }
