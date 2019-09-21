@@ -27,7 +27,8 @@
         <activity android:name=".classes.BuyerDialog" />
         <activity
             android:name=".pages.DiffDongActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".pages.AddExpenseActivity"
             android:theme="@style/AppTheme.NoActionBar"

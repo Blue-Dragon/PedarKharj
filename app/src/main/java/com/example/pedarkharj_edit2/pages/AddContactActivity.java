@@ -106,6 +106,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    //add to SharedPreff
     private void addNewContact() {
             final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
 
@@ -125,7 +126,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         setResult(ContactsActivity.INTENT_CODE,     new Intent().putExtra(ContactsActivity.INTENT_MASSEGE,  fullName));
         finish();
     }
-
+    //add to SQLite
     private void addNewContactToDB() {
         final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
 

@@ -28,7 +28,7 @@
             android:layout_centerHorizontal="true"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/q" />
+            android:src="@drawable/profile" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/sub_img"

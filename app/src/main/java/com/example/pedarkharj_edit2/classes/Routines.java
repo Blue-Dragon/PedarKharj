@@ -73,7 +73,7 @@ public class Routines {
     //Bitmap to string
     public static String encodeToBase64(Context mContext, Participant participant) {
         Bitmap bitmap = participant.getProfBitmap();
-        if (bitmap == null) bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.q);
+        if (bitmap == null) bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile);
         String profPicString;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);

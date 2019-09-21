@@ -99,7 +99,7 @@
                         android:id="@+id/selected_contact"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:src="@drawable/w"
+                        android:src="@drawable/profile"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="5dp"
                         android:layout_centerVertical="true"
