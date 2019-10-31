@@ -71,16 +71,18 @@ public class Routines {
     }
 
     //Bitmap to string
-    public static String encodeToBase64(Context mContext, Participant participant) {
-        Bitmap bitmap = participant.getProfBitmap();
-        if (bitmap == null) bitmap = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile);
-        String profPicString;
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        byte[] picBytes = byteArrayOutputStream.toByteArray();
-        profPicString = Base64.encodeToString(picBytes, Base64.DEFAULT);
+    public static String encodeToBase64(Bitmap bitmap) {
+        String profPicString = null;
+
+        if (bitmap != null) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+            byte[] picBytes = byteArrayOutputStream.toByteArray();
+            profPicString = Base64.encodeToString(picBytes, Base64.DEFAULT);
+        }
         return profPicString;
     }
+
     // String to Bitmap
     public static Bitmap decodeBase64(String input) {
         byte[] decodedByte = Base64.decode(input, 0);
@@ -88,7 +90,7 @@ public class Routines {
                 .decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
-    public static int newContactId(Context mContext){
-        return  MydbHelper.getInstance(mContext).getRowsCount();
-    }
+//    public static int newContactId(Context mContext){
+//        return  MydbHelper.getInstance(mContext).getRowsCount();
+//    }
 }

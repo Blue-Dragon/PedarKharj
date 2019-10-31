@@ -48,8 +48,8 @@ public class SharedPrefManager {
         if (participant.getId() > -1) {
             editor.putInt(KEY_ID, participant.getId());
             editor.putString(KEY_NAME, participant.getName());
-            //TODO:
-            String bitmapString = Routines.encodeToBase64(mContext, participant);
+            //TODO: bellow code should not be deleted, but debugged!
+//            String bitmapString = Routines.encodeToBase64(mContext, participant);
 //            if (!bitmapString.isEmpty())    editor.putString(KEY_BITMAP_STRING, bitmapString);
             editor.apply();
         }

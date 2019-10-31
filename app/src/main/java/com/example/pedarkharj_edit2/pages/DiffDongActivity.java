@@ -71,16 +71,16 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         boolean b = mode_02;
 
         participants = new ArrayList<Participant>();
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali", 0));
-        participants.add(new Participant( "Reza",2));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Mamad",0));
-        participants.add(new Participant( "Hami",1));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "sadi", 2));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "dad",1));
-        participants.add(new Participant( "mom",2));
-        participants.add(new Participant( "Ali",4));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Reza",3));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.w), "Mamad",22));
+//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali", 0));
+//        participants.add(new Participant( "Reza",2));
+//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Mamad",0));
+//        participants.add(new Participant( "Hami",1));
+//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "sadi", 2));
+//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "dad",1));
+//        participants.add(new Participant( "mom",2));
+//        participants.add(new Participant( "Ali",4));
+//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Reza",3));
+//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.w), "Mamad",22));
         //
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

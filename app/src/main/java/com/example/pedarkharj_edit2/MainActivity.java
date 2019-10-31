@@ -105,9 +105,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     private void doRecyclerView() {
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali", 1000, 2050));
+        participants.add(new Participant( "Ali", 1000, 2050));
         participants.add(new Participant( "Reza", 15000, 2050));
-        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Mamad", 1000, 500));
+        participants.add(new Participant("Mamad", 1000, 500));
 //        participants.add(new Participant( "Hami", 5000, 2050));
 //        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "sadi", 1000, 2500));
 //        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "dad", 0, 2000));

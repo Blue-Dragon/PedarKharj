@@ -3,19 +3,14 @@ package com.example.pedarkharj_edit2.pages;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.R;
-import com.example.pedarkharj_edit2.classes.BuyerDialog;
-import com.example.pedarkharj_edit2.classes.MydbHelper;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.Routines;
@@ -69,11 +64,11 @@ public class ContactsActivity extends AppCompatActivity {
 
     private void initRecView() {
         participants = new ArrayList<Participant>();
-        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.q), "Ali"));
+//        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.q), "Ali"));
         participants.add(new Participant( "Reza"));
-        participants.add(new Participant(Routines.drawableToBitmap(mActivity,R.drawable.r), "Mamad"));
+//        participants.add(new Participant(Routines.drawableToBitmap(mActivity,R.drawable.r), "Mamad"));
         participants.add(new Participant( "Hami"));
-        addFromSQLite();
+//        addFromSQLite();
 //        participants.add(new Participant(Routines.drawableToBitmap(mActivity,R.drawable.q), "sadi"));
 //        participants.add(new Participant(Routines.drawableToBitmap(mActivity,R.drawable.r), "dad"));
 //        participants.add(new Participant( "mom"));
@@ -92,13 +87,13 @@ public class ContactsActivity extends AppCompatActivity {
 //        participants.add(new Participant(Routines.drawableToBitmap(mActivity,R.drawable.w), "Mamad"));
     }
 
-    private void addFromSQLite() {
-        MydbHelper.TableData[] datas = MydbHelper.getInstance(mContext).getAllTable();
-
-        for (MydbHelper.TableData data : datas){
-            participants.add(new Participant(Routines.decodeBase64(data.getImgString()), data.getName() ));
-        }
-    }
+//    private void addFromSQLite() {
+//        MydbHelper.TableData[] datas = MydbHelper.getInstance(mContext).getAllTable();
+//
+//        for (MydbHelper.TableData data : datas){
+//            participants.add(new Participant(Routines.decodeBase64(data.getImgString()), data.getName() ));
+//        }
+//    }
 
     private void doRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);

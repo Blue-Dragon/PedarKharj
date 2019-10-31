@@ -116,7 +116,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         Participant participant = participants.get(position);
 
         if (participant.getName() !=null && holder.nameTv != null)      holder.nameTv.setText(participant.getName());
-        if (participant.getProfBitmap() !=null && holder.profImv != null)    holder.profImv.setImageBitmap(participant.getProfBitmap());
+        if (participant.getBitmap() !=null && holder.profImv != null)    holder.profImv.setImageBitmap(participant.getBitmap());
         if (participant.getResult() !=null && holder.resultTxt != null)    holder.resultTxt.setText(String.valueOf(participant.getResult()));
 
         holder.baseLayout.setOnClickListener(this);
@@ -144,7 +144,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         }
         //mode_02 amount (if true)
          else {
-            int curDongAmount = participant.getDong();
+            float curDongAmount = participant.getDebt();
             if (curDongAmount >= 0 && holder.dongEtxtAmount != null)     holder.dongEtxtAmount.setText(String.valueOf(curDongAmount));
         }
 

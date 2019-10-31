@@ -5,105 +5,105 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class Participant {
+    //vital
     private int id;
-    private Bitmap bitmap, chkImg;
     private String name;
-    private int expense, dong, dongNumber;
+    //others
+    private Bitmap bitmap;
+    private boolean chkImg;
+    private float expense;
+    private float debt;
+    private  int dongNumber;
+    private int eventId;
+    private int contactId;
 
-/********      Participant     ********/
-    public Participant(int id, String name, Bitmap bitmap) {
-        this.id = id;
-        this.name = name;
-        this.bitmap = bitmap;
-    }
 
-/********      Main Page     ********/
-    //with pic
-    public Participant(Bitmap bitmap, String name, int expense, int dong) {
-        this.bitmap = bitmap;
-        this.name = name;
-        this.expense = expense;
-        this.dong = dong;
-    }
-    //NO pic
-    public Participant(String name, int expense, int dong) {
-        this.name = name;
-        this.expense = expense;
-        this.dong = dong;
-    }
 
-/********      Expenses/Contacts Page   ********/
-    //NO pic
+        // constructors
+    public Participant() {
+            this.dongNumber = 1;
+            this.chkImg = false;
+        }
+
+        //main
     public Participant(String name) {
-        this.name = name;
-    }
-    //with pic
-    public Participant(Bitmap bitmap, String name) {
-        this.bitmap = bitmap;
-        this.name = name;
-    }
+            this.name = name;
+            this.dongNumber = 1;
+            this.chkImg = false;
+        }
 
-    /********      DiffDong Page   ********/
-    public Participant(String name, int dongNumber) {
-        this.name = name;
-        this.dongNumber = dongNumber;
-    }
-    //with pic
-    public Participant(Bitmap bitmap, String name, int dongNumber) {
-        this.bitmap = bitmap;
-        this.name = name;
-        this.dongNumber = dongNumber;
-    }
+    public Participant(String name, float expense, float debt) {
+            this.name = name;
+            this.expense = expense;
+            this.debt = debt;
+            this.dongNumber = 1;
+            this.chkImg = false;
+        }
 
-
-    /**********************************************************************************************/
-    public Bitmap getProfBitmap() {
-        return bitmap;
-    }
-    public void setProfBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
-    }
-    public Bitmap getChkImg() {
-        return chkImg;
-    }
-    public void setChkImg(Bitmap chkImg) {
-        this.chkImg = chkImg;
+    //getters
+    public int getId() {
+        return id;
     }
     public String getName() {
         return name;
     }
-    public void setName(String name) {
-        this.name = name;
+    public Bitmap getBitmap() {
+        return bitmap;
     }
-    public int getExpense() {
+    public boolean isChkImg() {
+        return chkImg;
+    }
+    public float getExpense() {
         return expense;
     }
-    public void setExpense(int expense) {
-        this.expense = expense;
-    }
-    public int getDong() {
-        return dong;
-    }
-    public void setDong(int dong) {
-        this.dong = dong;
+    public float getDebt() {
+        return debt;
     }
     public int getDongNumber() {
         return dongNumber;
     }
-    public void setDongNumber(int dongNumber) {
-        this.dongNumber = dongNumber;
+    public int getEventId() {
+        return eventId;
     }
-    public int getId() {
-        return id;
+    public int getContactId() {
+        return contactId;
     }
+
+    //setters
     public void setId(int id) {
         this.id = id;
     }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
+    }
+    public void setChkImg(boolean chkImg) {
+        this.chkImg = chkImg;
+    }
+    public void setExpense(float expense) {
+        this.expense = expense;
+    }
+    public void setDebt(float debt) {
+        this.debt = debt;
+    }
+    public void setDongNumber(int dongNumber) {
+        this.dongNumber = dongNumber;
+    }
+    public void setEventId(int eventId) {
+        this.eventId = eventId;
+    }
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
+    }
+
+    /**********************************************************************************************/
 
     public String getResult() {
-        if (expense-dong > 0)
-            return "+ "+ (expense-dong);
-        else  return String.valueOf(expense-dong);
+        if (expense-debt > 0)
+            return "+ "+ (expense-debt);
+        else  return String.valueOf(expense-debt);
     }
 
 }

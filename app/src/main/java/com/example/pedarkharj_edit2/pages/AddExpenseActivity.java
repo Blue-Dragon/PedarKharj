@@ -96,16 +96,16 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     private void doRecyclerView() {
 
         participants = new ArrayList<Participant>();
-        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.w), "hamed"));
+//        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.w), "hamed"));
         participants.add(new Participant("reza dasdf dadas dasd"));
-        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.r),"غلوم"));
+//        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.r),"غلوم"));
         participants.add(new Participant("حسین عباس پور"));
         participants.add(new Participant("محمد صیدالی"));
         participants.add(new Participant("پیمان"));
         participants.add(new Participant("reza"));
-        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.r),"مری"));
+//        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.r),"مری"));
         participants.add(new Participant("غلوم"));
-        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.w),"حامد گنجعلی"));
+//        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.w),"حامد گنجعلی"));
         participants.add(new Participant("حسین حسی حشسیح حظسز شسزبح پور"));
         participants.add(new Participant("حامد گنجعلی"));
         participants.add(new Participant("محمد صیدالی"));

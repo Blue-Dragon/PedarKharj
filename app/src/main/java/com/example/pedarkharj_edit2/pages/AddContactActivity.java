@@ -5,35 +5,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.R;
-import com.example.pedarkharj_edit2.classes.MydbHelper;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.Routines;
 import com.example.pedarkharj_edit2.classes.SharedPrefManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -97,7 +87,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.check_img:
 //                addNewContact();
-                addNewContactToDB();
+//                addNewContactToDB();
                 break;
 
             case R.id.cancel_img:
@@ -107,44 +97,45 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
     }
 
     //add to SharedPreff
-    private void addNewContact() {
-            final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
+//    private void addNewContact() {
+//            final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
+//
+//            //first we will do the validations
+//            if (TextUtils.isEmpty(fullName)) {
+//                nameEdt.setError("لطفا نام را وارد کنید");
+//                nameEdt.requestFocus();
+//                return;
+//            }
+//
+//        //creating a new user object
+//        Participant participant = new Participant(Routines.usersId++, fullName, bitmap);
+//        //storing the user in shared preferences
+//        SharedPrefManager.getInstance(getApplicationContext()).userLogin(participant);
+//
+//            //starting the contacts activity
+//        setResult(ContactsActivity.INTENT_CODE,     new Intent().putExtra(ContactsActivity.INTENT_MASSEGE,  fullName));
+//        finish();
+//    }
 
-            //first we will do the validations
-            if (TextUtils.isEmpty(fullName)) {
-                nameEdt.setError("لطفا نام را وارد کنید");
-                nameEdt.requestFocus();
-                return;
-            }
-
-        //creating a new user object
-        Participant participant = new Participant(Routines.usersId++, fullName, bitmap);
-        //storing the user in shared preferences
-        SharedPrefManager.getInstance(getApplicationContext()).userLogin(participant);
-
-            //starting the contacts activity
-        setResult(ContactsActivity.INTENT_CODE,     new Intent().putExtra(ContactsActivity.INTENT_MASSEGE,  fullName));
-        finish();
-    }
     //add to SQLite
-    private void addNewContactToDB() {
-        final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
-
-        //first we will do the validations
-        if (TextUtils.isEmpty(fullName)) {
-            nameEdt.setError("لطفا نام را وارد کنید");
-            nameEdt.requestFocus();
-            return;
-        }
-
-        //creating a new user object
-        Participant participant = new Participant(Routines.usersId++, fullName, bitmap);
-        String imgString = Routines.encodeToBase64(mContext, participant);
-        //storing the user in SQLite
-        MydbHelper.getInstance(mContext).insertToTable(Routines.newContactId(mContext), fullName, imgString);
-        startActivity(new Intent(mContext, ContactsActivity.class));
-        finish();
-    }
+//    private void addNewContactToDB() {
+//        final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
+//
+//        //first we will do the validations
+//        if (TextUtils.isEmpty(fullName)) {
+//            nameEdt.setError("لطفا نام را وارد کنید");
+//            nameEdt.requestFocus();
+//            return;
+//        }
+//
+//        //creating a new user object
+//        Participant participant = new Participant(Routines.usersId++, fullName, bitmap);
+//        String imgString = Routines.encodeToBase64(mContext, participant);
+//        //storing the user in SQLite
+//        MydbHelper.getInstance(mContext).insertToTable(Routines.newContactId(mContext), fullName, imgString);
+//        startActivity(new Intent(mContext, ContactsActivity.class));
+//        finish();
+//    }
 
 
     /*       permission stuff        */
