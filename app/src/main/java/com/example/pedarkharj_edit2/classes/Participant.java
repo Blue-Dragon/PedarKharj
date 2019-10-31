@@ -8,15 +8,15 @@ public class Participant {
     //vital
     private int id;
     private String name;
-    //others
-    private Bitmap bitmap;
-    private boolean chkImg;
+    private int eventId;
+    private int contactId;
+    //money
     private float expense;
     private float debt;
     private  int dongNumber;
-    private int eventId;
-    private int contactId;
-
+    //
+    private String bitmapStr;
+    private boolean chkImg;
 
 
         // constructors
@@ -47,8 +47,8 @@ public class Participant {
     public String getName() {
         return name;
     }
-    public Bitmap getBitmap() {
-        return bitmap;
+    public String getBitmapStr() {
+        return bitmapStr;
     }
     public boolean isChkImg() {
         return chkImg;
@@ -76,8 +76,8 @@ public class Participant {
     public void setName(String name) {
         this.name = name;
     }
-    public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public void setBitmapStr(String bitmapStr) {
+        this.bitmapStr = bitmapStr;
     }
     public void setChkImg(boolean chkImg) {
         this.chkImg = chkImg;

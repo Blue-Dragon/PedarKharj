@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 public class Contact {
 
     int id;
-    Bitmap imgBitmap;
+    String bitmapStr;
     String name;
 
     String created_at;
@@ -14,14 +14,13 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(String name, int age) {
+    public Contact(String name) {
         this.name = name;
     }
 
-    public Contact(int id, String name, Bitmap imgBitmap) {
-        this.id = id;
+    public Contact(String name, String bitmapStr) {
         this.name = name;
-        this.imgBitmap = imgBitmap;
+        this.bitmapStr = bitmapStr;
     }
 
     // setters
@@ -31,8 +30,8 @@ public class Contact {
     public void setName(String name) {
         this.name = name;
     }
-    public void setImgBitmap(Bitmap imgBitmap) {
-        this.imgBitmap = imgBitmap;
+    public void setBitmapStr(String bitmapStr) {
+        this.bitmapStr = bitmapStr;
     }
     public void setCreatedAt(String created_at){
         this.created_at = created_at;
@@ -45,8 +44,8 @@ public class Contact {
     public String getName() {
         return this.name;
     }
-    public Bitmap getImgBitmap() {
-        return imgBitmap;
+    public String getBitmapStr() {
+        return bitmapStr;
     }
     public String getCreated_at() {
         return created_at;

@@ -1,51 +1,46 @@
 package com.example.pedarkharj_edit2;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.classes.BuyerDialog;
+import com.example.pedarkharj_edit2.classes.Contact;
+import com.example.pedarkharj_edit2.classes.DatabaseHelper;
+import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
-import com.example.pedarkharj_edit2.classes.Routines;
-import com.example.pedarkharj_edit2.pages.AddExpenseActivity;
 import com.example.pedarkharj_edit2.pages.ContactsActivity;
-import com.example.pedarkharj_edit2.pages.DiffDongActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     RecyclerView recyclerView;
-    ArrayList<Participant> participants;
+    List<Participant> mParticipants;
     ParticipantAdapter adaptor;
     //
     Context mContext = this;
     Activity mActivity = this;
     FloatingActionButton fab;
+    DatabaseHelper db;
     //
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -56,9 +51,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_layout);
-        //
        Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
+
+        mParticipants = new ArrayList<>();
 
         //Floating Btn
         fab = this.findViewById(R.id.fab);
@@ -68,10 +64,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showBuyerDialog();
         });
 
+        //-------------------------     SQLite    --------------------------//
+        db = new DatabaseHelper(mContext);
+//        long contact_1 =  db.createContact(new Contact("Abbas"));
+//        long contact_2 = db.createContact(new Contact("Sadi"));
+////
+////
+//        db.createNewEventWithPartices(new Event("سفر")
+//                , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)} );
+
+
+
+
         //recyclerView
         recyclerView = findViewById(R.id.rv_partice_expenses);
-        participants = new ArrayList<Participant>();
-        doRecyclerView();
+        setRecParticesUnderEvent();
         //TODO: hide the fucking fab while scrolling
 //        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override
@@ -91,9 +98,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        });
         //
 
+
+
          //drawerLayout
         createDrawer();
 
+
+        //Close db
+        db.closeDB();
     }
 
 
@@ -104,28 +116,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    private void doRecyclerView() {
-        participants.add(new Participant( "Ali", 1000, 2050));
-        participants.add(new Participant( "Reza", 15000, 2050));
-        participants.add(new Participant("Mamad", 1000, 500));
-//        participants.add(new Participant( "Hami", 5000, 2050));
-//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "sadi", 1000, 2500));
-//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "dad", 0, 2000));
-//        participants.add(new Participant( "mom", 0, 6000));
-//        participants.add(new Participant( "Ali", 1000, 2050));
-//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Reza", 15000, 2050));
-//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.w), "Mamad", 1000, 500));
-        //
+    //-------------------------     RecyclerView    --------------------------//
+    private void setRecParticesUnderEvent() {
+
+        Event event = db.getEventById(1);
+        List<Participant> participants0 = db.getAllParticeUnderEvent(1);
+        Log.d("Event", event.getEventName());
+        for (Participant participant : participants0){
+            Log.d("Partices", participant.getId()+ ": "+ participant.getName());
+            mParticipants.add(new Participant( participant.getName(), participant.getExpense(), participant.getDebt()));
+        }
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext, participants);
+        adaptor = new ParticipantAdapter(mContext, participants0);
         recyclerView.setAdapter(adaptor);
     }
 
 
-    /*****************          Drawer           ******************/
+//-------------------------     Drawer    --------------------------//
     private void createDrawer() {
         drawerLayout = findViewById(R.id.m_drawer);
         menu = findViewById(R.id.menu); menu.setOnClickListener(this);

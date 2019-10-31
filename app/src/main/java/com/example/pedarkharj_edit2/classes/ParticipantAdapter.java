@@ -16,11 +16,12 @@ import android.widget.Toast;
 import com.example.pedarkharj_edit2.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.ViewHolder> implements View.OnClickListener {
-    private ArrayList<Participant> participants;
+    private List<Participant> participants;
     private Context mContext;
     private Activity mActivity;
     private int mLayout, maxCheckImg;
@@ -35,20 +36,20 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
     /*      Constructors       */
     //main page
-    public ParticipantAdapter(Context mContext, ArrayList<Participant> participants) {
+    public ParticipantAdapter(Context mContext, List<Participant> participants) {
         this.mContext = mContext;
         this.participants = participants;
         this.mLayout = R.layout.sample_participant;
     }
     //Expense/ Contacts Activity
-    public ParticipantAdapter(Context mContext, int mLayout, ArrayList<Participant> participants) {
+    public ParticipantAdapter(Context mContext, int mLayout, List<Participant> participants) {
         this.mContext = mContext;
         this.participants = participants;
         this.mLayout = mLayout;
         this.maxCheckImg = participants.size();
     }
     //BuyerDialog Activity
-    public ParticipantAdapter(Context mContext, int mLayout, ArrayList<Participant> participants, int maxCheckImg) {
+    public ParticipantAdapter(Context mContext, int mLayout, List<Participant> participants, int maxCheckImg) {
         this.mContext = mContext;
         this.participants = participants;
         this.mLayout = mLayout;
@@ -56,13 +57,13 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     }
     //DiffDong Activity
         // (Mode_01 number)
-    public ParticipantAdapter(Activity mActivity, int mLayout, ArrayList<Participant> participants) {
+    public ParticipantAdapter(Activity mActivity, int mLayout, List<Participant> participants) {
         this.mActivity = mActivity;
         this.participants = participants;
         this.mLayout = mLayout;
         this.amountModeDong = false;
     }
-    public ParticipantAdapter(Activity mActivity, int mLayout, ArrayList<Participant> participants, boolean amountModeDong) {
+    public ParticipantAdapter(Activity mActivity, int mLayout, List<Participant> participants, boolean amountModeDong) {
         this.mActivity = mActivity;
         this.participants = participants;
         this.mLayout = mLayout;
@@ -116,7 +117,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         Participant participant = participants.get(position);
 
         if (participant.getName() !=null && holder.nameTv != null)      holder.nameTv.setText(participant.getName());
-        if (participant.getBitmap() !=null && holder.profImv != null)    holder.profImv.setImageBitmap(participant.getBitmap());
+        if (participant.getBitmapStr() !=null && holder.profImv != null)    holder.profImv.setImageBitmap(Routines.decodeBase64(participant.getBitmapStr()));
         if (participant.getResult() !=null && holder.resultTxt != null)    holder.resultTxt.setText(String.valueOf(participant.getResult()));
 
         holder.baseLayout.setOnClickListener(this);

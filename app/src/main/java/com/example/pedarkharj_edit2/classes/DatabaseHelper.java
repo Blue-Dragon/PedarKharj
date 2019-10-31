@@ -5,11 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
-
-import com.example.pedarkharj_edit2.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // CONTACT Table - column names
     private static final String KEY_CONTACT_NAME = "contact_name";
-    private static final String KEY_IMG = "contact_img";
+    private static final String KEY_BMP_STR = "contact_img";
 
     // EVENTS Table - column names
     private static final String KEY_EVENT_NAME = "event_name";
@@ -56,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Contact table create statement
     private static final String CREATE_TABLE_CONTACT = "CREATE TABLE IF NOT EXISTS "
             + TABLE_CONTACTS + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CONTACT_NAME
-            + " TEXT," + KEY_IMG + " TEXT," + KEY_CREATED_AT
+            + " TEXT," + KEY_BMP_STR + " TEXT," + KEY_CREATED_AT
             + " DATETIME" + ")";
 
     // Event table create statement
@@ -110,16 +106,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         for(Contact contact : contacts){
+            createContact(contact);
+        }
+    }
+    // single contact
+    public long createContact(Contact contact) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
             ContentValues values = new ContentValues();
             values.put(KEY_CONTACT_NAME, contact.getName());
-            values.put(KEY_IMG, Routines.encodeToBase64(contact.getImgBitmap()) );
+            values.put(KEY_BMP_STR,  contact.getBitmapStr());
             values.put(KEY_CREATED_AT, getDateTime());
 
             // insert row
             long contact_id = db.insert(TABLE_CONTACTS, null, values);
             contact.setId((int) contact_id);
-        }
 
+            return contact_id;
     }
 
 
@@ -143,7 +146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Contact contact = new Contact();
         contact.setId(c.getInt(c.getColumnIndex(KEY_ID)));
         contact.setName((c.getString(c.getColumnIndex(KEY_CONTACT_NAME))));
-        contact.setImgBitmap(Routines.decodeBase64(c.getString(c.getColumnIndex(KEY_CONTACT_NAME))) ); //Be Careful: this bitmap could even be null!
+        contact.setBitmapStr(c.getString(c.getColumnIndex(KEY_BMP_STR)) ); //bitmapStr could even be null !
         contact.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
         return contact;
@@ -167,7 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Contact contact = new Contact();
                 contact.setId(c.getInt((c.getColumnIndex(KEY_ID))));
                 contact.setName((c.getString(c.getColumnIndex(KEY_CONTACT_NAME))));
-                contact.setImgBitmap(Routines.decodeBase64(c.getString(c.getColumnIndex(KEY_CONTACT_NAME))) ); //Be Careful: this bitmap could even be null!
+                contact.setBitmapStr(c.getString(c.getColumnIndex(KEY_BMP_STR)) ); //bitmapStr could even be null !
                 contact.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
                 // adding to to_do list
@@ -201,7 +204,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_CONTACT_NAME, contact.getName());
-        values.put(KEY_IMG, Routines.encodeToBase64(contact.getImgBitmap()) );
+        values.put(KEY_BMP_STR, contact.getBitmapStr());
         values.put(KEY_CREATED_AT, contact.getCreated_at());
         // updating TABLE_CONTACTS table row
         db.update(TABLE_CONTACTS, values, KEY_ID + " = ?", new String[] { String.valueOf(contact.getId()) });
@@ -262,7 +265,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Creating event with participants
      */
-    public long createEventWithPartices(Event event, Contact[] contacts) {
+    public long createNewEventWithPartices(Event event, Contact[] contacts) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -275,14 +278,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // insert contacts
         for (Contact contact : contacts) {
-            createEventPartice(event, contact);
+            createEventNewPartice(event, contact);
         }
 
         return event_id;
     }
 
 
-    private long createEventPartice(Event event, Contact contact) {
+    // Create new Partic in an existing Event
+    private long createEventNewPartice(Event event, Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
         Participant participant = new Participant(contact.getName());
 
@@ -578,7 +582,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Participant createPartic(String particeName, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Contact contact0  = new Contact(particeName, 10);
+        Contact contact0  = new Contact(particeName);
         createContacts(new Contact[] {contact0});
 
         Participant participant = new Participant(particeName);
