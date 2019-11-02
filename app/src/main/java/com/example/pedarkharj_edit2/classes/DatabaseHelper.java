@@ -29,6 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_CONTACTS = "contacts";
     private static final String TABLE_EVENTS = "events";
     private static final String TABLE_EVENT_PARTICES = "event_partices";
+    private static final String TABLE_EXPENSES = "expenses";
 
     // Common column names
     private static final String KEY_ID = "id";
@@ -48,6 +49,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_PARTICE_EXPENSE = "partice_expense";
     private static final String KEY_PARTICE_DEBT = "partice_debt";
 
+    // EXPENSES Table - column names
+    private static final String KEY_BUYER_ID = "buyer_id";
+    private static final String KEY_USER_ID = "user_id";
+    private static final String KEY_EXPENSE_TITLE = "expense_title";
+    private static final String KEY_EXPENSE_PRICE = "expense_price";
+    private static final String KEY_EXPENSE_DEBT = "expense_debt";
+
     // Table Create Statements
     // Contact table create statement
     private static final String CREATE_TABLE_CONTACT = "CREATE TABLE IF NOT EXISTS "
@@ -66,10 +74,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_EVENT_PARTICES  = "CREATE TABLE IF NOT EXISTS "
             + TABLE_EVENT_PARTICES
             + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
-            + KEY_EVENT_NAME + " TEXT,"  + KEY_EVENT_ID + " INTEGER,"
-            + KEY_PARTICE_NAME + " TEXT," + KEY_CONTACT_ID + " INTEGER,"
-            + KEY_PARTICE_EXPENSE + " INTEGER,"
-            + KEY_PARTICE_DEBT + " INTEGER"+ ")";
+            + KEY_EVENT_NAME + " TEXT,"
+            + KEY_EVENT_ID + " INTEGER,"
+            + KEY_PARTICE_NAME + " TEXT,"
+            + KEY_CONTACT_ID + " INTEGER,"
+            + KEY_PARTICE_EXPENSE + " REAL,"
+            + KEY_PARTICE_DEBT + " REAL"+ ")";
+
+    // Expense table create statement
+    private static final String CREATE_TABLE_EXPENSES = "CREATE TABLE IF NOT EXISTS "
+            + TABLE_EXPENSES
+            + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
+            + KEY_BUYER_ID + " INTEGER,"
+            + KEY_USER_ID + " INTEGER,"
+            + KEY_EXPENSE_TITLE+ " TEXT,"
+            + KEY_EXPENSE_PRICE+ " REAL,"
+            + KEY_EXPENSE_DEBT+ " REAL,"
+            + KEY_CREATED_AT + " DATETIME" + ")";
 
     /*******************************          Methods          ********************************/
 
@@ -84,6 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_CONTACT);
         db.execSQL(CREATE_TABLE_EVENT);
         db.execSQL(CREATE_TABLE_EVENT_PARTICES);
+        db.execSQL(CREATE_TABLE_EXPENSES);
     }
 
     @Override
@@ -92,10 +114,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENT_PARTICES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXPENSES);
 
         // create new tables
         onCreate(db);
     }
+
+    // ------------------------ "expenses" table methods ----------------//
+    // expense with equal debts
+    public void addExpense(Expense expense) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Expense.UserPartic[] userPartics = expense.getUserPartics();
+        int[] userIds = userPartics.getIds //todo: i dont get it.
+
+        for (int userId : userIds) {
+            ContentValues values = new ContentValues();
+            values.put(KEY_BUYER_ID, expense.getBuyerId());
+            values.put(KEY_USER_ID, userId);
+            values.put(KEY_EXPENSE_TITLE, expense.getExpenseTitle());
+            values.put(KEY_EXPENSE_PRICE, expense.getExpensePrice());
+            values.put(KEY_EXPENSE_DEBT, expense.getExpenseDebt());
+            values.put(KEY_CREATED_AT, getDateTime());
+            // insert row
+            db.insert(TABLE_EXPENSES, null, values);
+
+            //add Debt to event_participant table
+            ContentValues values2 = new ContentValues();
+            values2.put(KEY_PARTICE_DEBT, expense.getExpenseDebt() );
+            db.update(TABLE_EVENT_PARTICES, values2,  KEY_ID + " = ?", new String[] {String.valueOf(userId) });
+        }
+
+        // add Expense  to event_participant table
+        ContentValues values1 = new ContentValues();
+        values1.put(KEY_PARTICE_EXPENSE, expense.getExpensePrice());
+        db.update(TABLE_EVENT_PARTICES, values1,  KEY_ID + " = ?", new String[] {String.valueOf(expense.getBuyerId()) });
+
+    }
+
+
 
     // ------------------------ "contact" table methods ----------------//
 

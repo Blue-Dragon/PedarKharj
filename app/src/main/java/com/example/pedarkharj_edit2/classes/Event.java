@@ -25,7 +25,6 @@ public class Event {
     public void setId(int id) {
         this.id = id;
     }
-
     public void setEventName(String eventName) {
         this.event_name = eventName;
     }
@@ -37,11 +36,9 @@ public class Event {
     public int getId() {
         return this.id;
     }
-
     public String getEventName() {
         return this.event_name;
     }
-
     public String getCreated_at() {
         return created_at;
     }

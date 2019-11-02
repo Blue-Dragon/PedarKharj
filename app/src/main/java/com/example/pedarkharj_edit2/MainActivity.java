@@ -25,6 +25,7 @@ import com.example.pedarkharj_edit2.classes.BuyerDialog;
 import com.example.pedarkharj_edit2.classes.Contact;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Event;
+import com.example.pedarkharj_edit2.classes.Expense;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.pages.ContactsActivity;
@@ -66,12 +67,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //-------------------------     SQLite    --------------------------//
         db = new DatabaseHelper(mContext);
-//        long contact_1 =  db.createContact(new Contact("Abbas"));
-//        long contact_2 = db.createContact(new Contact("Sadi"));
-////
-////
-//        db.createNewEventWithPartices(new Event("سفر")
-//                , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)} );
+        long contact_1 =  db.createContact(new Contact("Hamed"));
+        long contact_2 = db.createContact(new Contact("Reza"));
+        long contact_3 =  db.createContact(new Contact("Sadi"));
+        long contact_4 = db.createContact(new Contact("Abbas"));
+//
+//
+        db.createNewEventWithPartices(new Event("سفر")
+                , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)
+                        ,db.getContactById(contact_3), db.getContactById(contact_4), });
+
+        //add expense
+        int[] userIds = new int[] {1,2,3,4};
+        db.getParticeById(1).setDebt(500f);
+        db.getParticeById(2).setDebt(1500f);
+        db.getParticeById(3).setDebt(800f);
+        db.getParticeById(4).setDebt(1200f);
+
+
+        float price = 1000f;
+        for (int i : userIds){
+            Participant participant = db.getParticeById(i);
+            float debt = participant.getDebt() > 0 ? participant.getDebt() : price/userIds.length;
+            Log.d("DEBT", String.valueOf(debt));
+            Expense expense = new Expense(1, new int[]{i}, "Fast food", price, debt);
+            db.addExpense(expense);
+        }
+
 
 
 
