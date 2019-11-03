@@ -85,6 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_EXPENSES = "CREATE TABLE IF NOT EXISTS "
             + TABLE_EXPENSES
             + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
+            + KEY_EVENT_ID + " INTEGER,"
             + KEY_BUYER_ID + " INTEGER,"
             + KEY_USER_ID + " INTEGER,"
             + KEY_EXPENSE_TITLE+ " TEXT,"
@@ -124,32 +125,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // expense with equal debts
     public void addExpense(Expense expense) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Expense.UserPartic[] userPartics = expense.getUserPartics();
-        int[] userIds = userPartics.getIds //todo: i dont get it.
 
-        for (int userId : userIds) {
+        Participant buyer = expense.getBuyer();
+        //get users as an array
+        Participant[] userPartics = expense.getUserPartics();
+        int userId;
+
+        for (Participant user : userPartics){
+            userId = user.getId();
+            Log.e("ExpenseIds", user.getId() + "");
+
+            // send and Expense
             ContentValues values = new ContentValues();
-            values.put(KEY_BUYER_ID, expense.getBuyerId());
+            values.put(KEY_EVENT_ID, expense.getEvent().getId());
+            values.put(KEY_BUYER_ID, expense.getBuyer().getId());
             values.put(KEY_USER_ID, userId);
             values.put(KEY_EXPENSE_TITLE, expense.getExpenseTitle());
-            values.put(KEY_EXPENSE_PRICE, expense.getExpensePrice());
+            if (user.getId() == buyer.getId()) {
+                values.put(KEY_EXPENSE_PRICE, expense.getExpensePrice());
+            } else      values.put(KEY_EXPENSE_PRICE, 0);
             values.put(KEY_EXPENSE_DEBT, expense.getExpenseDebt());
             values.put(KEY_CREATED_AT, getDateTime());
             // insert row
             db.insert(TABLE_EXPENSES, null, values);
 
-            //add Debt to event_participant table
+            //Add Debt to event_participant table
             ContentValues values2 = new ContentValues();
-            values2.put(KEY_PARTICE_DEBT, expense.getExpenseDebt() );
+            values2.put(KEY_PARTICE_DEBT, user.getDebt());
             db.update(TABLE_EVENT_PARTICES, values2,  KEY_ID + " = ?", new String[] {String.valueOf(userId) });
         }
 
         // add Expense  to event_participant table
         ContentValues values1 = new ContentValues();
-        values1.put(KEY_PARTICE_EXPENSE, expense.getExpensePrice());
-        db.update(TABLE_EVENT_PARTICES, values1,  KEY_ID + " = ?", new String[] {String.valueOf(expense.getBuyerId()) });
-
+        values1.put(KEY_PARTICE_EXPENSE, buyer.getExpense());
+        db.update(TABLE_EVENT_PARTICES, values1,  KEY_ID + " = ?", new String[] {String.valueOf(buyer.getId()) });
     }
+
+    /**
+     //todo
+     * getting single expense
+     */
+//    public Contact getExpenseById(long contact_id) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS + " WHERE "
+//                + KEY_ID + " = " + contact_id;
+//
+//        Log.e(LOG, selectQuery);
+//
+//        Cursor c = db.rawQuery(selectQuery, null);
+//
+//        if (c != null)
+//            c.moveToFirst();
+//
+//
+//        Contact contact = new Contact();
+//        contact.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+//        contact.setName((c.getString(c.getColumnIndex(KEY_CONTACT_NAME))));
+//        contact.setBitmapStr(c.getString(c.getColumnIndex(KEY_BMP_STR)) ); //bitmapStr could even be null !
+//        contact.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+//
+//        return contact;
+//    }
 
 
 

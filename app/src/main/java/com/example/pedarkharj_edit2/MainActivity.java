@@ -67,31 +67,58 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //-------------------------     SQLite    --------------------------//
         db = new DatabaseHelper(mContext);
-        long contact_1 =  db.createContact(new Contact("Hamed"));
-        long contact_2 = db.createContact(new Contact("Reza"));
-        long contact_3 =  db.createContact(new Contact("Sadi"));
-        long contact_4 = db.createContact(new Contact("Abbas"));
-//
-//
-        db.createNewEventWithPartices(new Event("سفر")
-                , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)
-                        ,db.getContactById(contact_3), db.getContactById(contact_4), });
+//        long contact_1 =  db.createContact(new Contact("Hamed"));
+//        long contact_2 = db.createContact(new Contact("Reza"));
+//        long contact_3 =  db.createContact(new Contact("Sadi"));
+//        long contact_4 = db.createContact(new Contact("Abbas"));
+////
+////
+//        db.createNewEventWithPartices(new Event("سفر")
+//                , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)
+//                        ,db.getContactById(contact_3), db.getContactById(contact_4), });
 
-        //add expense
+        /*
+         * add a new expense with different debts
+         */
+
+        float price = 20000f;
+
+        //update buyer expense
+        Participant buyer = db.getParticeById(1);
+        float old_expense = buyer.getExpense();
+        buyer.setExpense(old_expense+price);
+        db.updatePartice(buyer);
+        Log.e("Fuck", "old: "+ old_expense+ "\nnew: "+ buyer.getExpense() );
+
+        // A fake result of DiffDong Activity
+        float[] newDebts = {2500f, 5000f, 1200f, 1800f};
         int[] userIds = new int[] {1,2,3,4};
-        db.getParticeById(1).setDebt(500f);
-        db.getParticeById(2).setDebt(1500f);
-        db.getParticeById(3).setDebt(800f);
-        db.getParticeById(4).setDebt(1200f);
 
-
-        float price = 1000f;
+        float debt;
+        float ex_debts;
+        float newDebt;
+        int count = 0;
         for (int i : userIds){
-            Participant participant = db.getParticeById(i);
-            float debt = participant.getDebt() > 0 ? participant.getDebt() : price/userIds.length;
+            Participant user = db.getParticeById(i);
+            Log.d("Fuck", "user "+ i +"  expense: "+ user.getExpense() );
+            Log.d("Fuck", "user "+ i +"  debt "+ user.getDebt() );
+
+            float mNewDebt = newDebts[count++];
+
+            // update users debts in Partice Table
+            ex_debts = user.getDebt();
+            newDebt = ex_debts + mNewDebt;
+            user.setDebt(newDebt);
+            db.updatePartice(user);
+
+            // set an expense in Expense Table todo: bug
+            debt = mNewDebt > 0 ? mNewDebt : price/userIds.length;
             Log.d("DEBT", String.valueOf(debt));
-            Expense expense = new Expense(1, new int[]{i}, "Fast food", price, debt);
+            Expense expense = new Expense(db.getEventById(1) ,db.getParticeById(1), new Participant[] {user}, "Fast food", price, debt);
             db.addExpense(expense);
+
+            Log.e("Fuck", "user "+ i +" new expense: "+ user.getExpense() );
+            Log.e("Fuck", "user "+ i +" new debt "+ user.getDebt() );
         }
 
 
