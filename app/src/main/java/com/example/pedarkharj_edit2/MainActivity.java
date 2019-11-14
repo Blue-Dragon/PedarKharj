@@ -28,6 +28,7 @@ import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Expense;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.pages.ContactsActivity;
 
 import java.util.ArrayList;
@@ -136,11 +137,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
          * recView onClick
          */
 
-        // handler for itemClick
+        Log.e("recOnClick", "onClick");
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Participant participant = mParticipants.get(position);
+                Log.d("recOnClick", participant.getName());
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Participant participant = mParticipants.get(position);
+                Log.d("recOnClick", participant.getResult());
+            }
+        }));
 
 
-
-        //TODO: hide the fucking fab while scrolling
+        /**
+         * TODO: hide the fucking fab while scrolling
+         */
 //        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 //            @Override
 //            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

@@ -171,8 +171,8 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.base_layout:
-                if (mContext != null)
-                    Toast.makeText(mContext, " max CheckImg: " + maxCheckImg, Toast.LENGTH_SHORT).show();
+//                if (mContext != null)
+//                    Toast.makeText(mContext, " max CheckImg: " + maxCheckImg, Toast.LENGTH_SHORT).show();
                 break;
 
         }
