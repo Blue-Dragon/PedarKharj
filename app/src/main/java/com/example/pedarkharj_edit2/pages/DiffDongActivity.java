@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.BuyerDialog;
+import com.example.pedarkharj_edit2.classes.DatabaseHelper;
+import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.Routines;
@@ -25,7 +28,8 @@ import java.util.List;
 
 public class DiffDongActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     RecyclerView recyclerView;
-    ArrayList<Participant> participants;
+    ArrayList<Participant> mParticipants;
+    DatabaseHelper db;
     ParticipantAdapter adaptor;
 
     Context mContext = this;
@@ -41,6 +45,9 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
+
+        mParticipants = new ArrayList<Participant>();
+        db = new DatabaseHelper(mContext);
 
         //Floating Btn
         fab = this.findViewById(R.id.fab);
@@ -67,27 +74,21 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
 
     /********************************************       Methods     ****************************************************/
-    private void doRecyclerView(boolean mode_02) {
-        boolean b = mode_02;
+    private void doRecyclerView(boolean mode) {
+        boolean b = mode;
 
-        participants = new ArrayList<Participant>();
-//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "Ali", 0));
-//        participants.add(new Participant( "Reza",2));
-//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Mamad",0));
-//        participants.add(new Participant( "Hami",1));
-//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.q), "sadi", 2));
-//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "dad",1));
-//        participants.add(new Participant( "mom",2));
-//        participants.add(new Participant( "Ali",4));
-//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.r), "Reza",3));
-//        participants.add(new Participant(Routines.drawableToBitmap(mContext, R.drawable.w), "Mamad",22));
+        //show partices of the Event todo: update -> get event
+        Event event = db.getEventById(1);
+        List<Participant> participants0 = db.getAllParticeUnderEvent(1);
+        mParticipants.addAll(participants0);
+
         //
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         //
-        if (!b) adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong, participants);
-        else adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong_mode2, participants);
+        if (!b) adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong, mParticipants);
+        else adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong_mode2, mParticipants);
         recyclerView.setAdapter(adaptor);
     }
 

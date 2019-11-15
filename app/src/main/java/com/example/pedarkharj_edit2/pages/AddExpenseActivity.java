@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -18,18 +19,22 @@ import android.widget.Toast;
 import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.example.pedarkharj_edit2.R;
+import com.example.pedarkharj_edit2.classes.DatabaseHelper;
+import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.Routines;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
-    ArrayList<Participant> participants;
+    ArrayList<Participant> mParticipants;
     ParticipantAdapter adapter;
     LinearLayout calcLT;
+    DatabaseHelper db;
 
     RecyclerView recyclerView;
     Context mContext;
@@ -46,6 +51,9 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         mContext = this;
         mActivity = this;
+        mParticipants = new ArrayList<Participant>();
+        db = new DatabaseHelper(mContext);
+
         particBtn = findViewById(R.id.custom_dong_btn);              particBtn.setOnClickListener(this);
         buyerBtn = findViewById(R.id.buyer_btn);                         buyerBtn.setOnClickListener(this);
         dateBtn = findViewById(R.id.date_btn);                             dateBtn.setOnClickListener(this);
@@ -95,42 +103,16 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     private void doRecyclerView() {
 
-        participants = new ArrayList<Participant>();
-//        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.w), "hamed"));
-        participants.add(new Participant("reza dasdf dadas dasd"));
-//        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.r),"غلوم"));
-        participants.add(new Participant("حسین عباس پور"));
-        participants.add(new Participant("محمد صیدالی"));
-        participants.add(new Participant("پیمان"));
-        participants.add(new Participant("reza"));
-//        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.r),"مری"));
-        participants.add(new Participant("غلوم"));
-//        participants.add(new Participant(Routines.drawableToBitmap(mActivity, R.drawable.w),"حامد گنجعلی"));
-        participants.add(new Participant("حسین حسی حشسیح حظسز شسزبح پور"));
-        participants.add(new Participant("حامد گنجعلی"));
-        participants.add(new Participant("محمد صیدالی"));
-        participants.add(new Participant("مری"));
-        participants.add(new Participant("پیمان"));
-        participants.add(new Participant("reza"));
-        participants.add(new Participant("غلوم"));
-        participants.add(new Participant("حسین عباس پور"));
-        participants.add(new Participant("حامد گنجعلی"));
-        participants.add(new Participant("محمد صیدالی"));
-        participants.add(new Participant("مری"));
-        participants.add(new Participant("پیمان"));
-        participants.add(new Participant("reza"));
-        participants.add(new Participant("غلوم"));
-        participants.add(new Participant("حسین عباس پور"));
-        participants.add(new Participant("حامد گنجعلی"));
-        participants.add(new Participant("محمد صیدالی"));
-        participants.add(new Participant("مری"));
-        participants.add(new Participant("پیمان"));
+        //show partices of the Event todo: update -> get event
+        Event event = db.getEventById(1);
+        List<Participant> participants0 = db.getAllParticeUnderEvent(1);
+        mParticipants.addAll(participants0);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 4, GridLayoutManager.HORIZONTAL, false);
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adapter = new ParticipantAdapter(mContext, R.layout.sample_contact, participants);
+        adapter = new ParticipantAdapter(mContext, R.layout.sample_contact, mParticipants);
         recyclerView.setAdapter(adapter);
     }
 

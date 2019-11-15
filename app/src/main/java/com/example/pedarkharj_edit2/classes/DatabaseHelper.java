@@ -312,7 +312,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values0.put(KEY_PARTICE_NAME, contact.getName());
             values0.put(KEY_PARTICE_EXPENSE, participant0.getExpense());
             values0.put(KEY_PARTICE_DEBT, participant0.getDebt());
-            values0.put(KEY_EVENT_ID, participant0.getEventId());
+            values0.put(KEY_EVENT_ID, participant0.getEvent().getId());
             values0.put(KEY_CONTACT_ID, contact.getId());
             // updating TABLE_EVENT_PARTICES table row
             db.update(TABLE_EVENT_PARTICES, values0, KEY_CONTACT_ID + " = ?", new String[] { String.valueOf(contact.getId()) });
@@ -531,9 +531,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Participant participant = new Participant();
         participant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-        participant.setEventId((c.getInt(c.getColumnIndex(KEY_EVENT_ID))));
         participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
-        participant.setContactId(c.getInt(c.getColumnIndex(KEY_CONTACT_ID)));
+        participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
+        participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
         participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
         participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
 
@@ -557,10 +557,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 Participant participant = new Participant();
                 participant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-                participant.setContactId(c.getInt(c.getColumnIndex(KEY_CONTACT_ID)));
-                participant.setName((c.getString(c.getColumnIndex(KEY_PARTICE_NAME))));
-                participant.setEventId(c.getInt(c.getColumnIndex(KEY_EVENT_ID)));
-                participant.setExpense(c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE)));
+                participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
+                participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
+                participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
+                participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
                 participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
 
                 // adding to participants list
@@ -625,9 +625,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 Participant participant = new Participant();
                 participant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-                participant.setContactId(c.getInt(c.getColumnIndex(KEY_CONTACT_ID)));
-                participant.setName((c.getString(c.getColumnIndex(KEY_PARTICE_NAME))));
-                participant.setExpense(c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE)));
+                participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
+                participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
+                participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
+                participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
                 participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
 
                 // adding to participants list
@@ -653,9 +654,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 Participant participant = new Participant();
                 participant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-                participant.setContactId(c.getInt(c.getColumnIndex(KEY_CONTACT_ID)));
-                participant.setName((c.getString(c.getColumnIndex(KEY_PARTICE_NAME))));
-                participant.setExpense(c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE)));
+                participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
+                participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
+                participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
+                participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
                 participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
 
                 // adding to participants list
@@ -679,7 +681,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         createContacts(new Contact[] {contact0});
 
         Participant participant = new Participant(particeName);
-        participant.setContactId((int) contact0.getId());
+        participant.setContact(contact0);
         // add partice to main table
         addPartic(participant, event);
 
@@ -701,7 +703,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_EVENT_NAME, event.getEventName());
         values.put(KEY_EVENT_ID, event.getId());
         values.put(KEY_PARTICE_NAME, participant.getName());
-        values.put(KEY_CONTACT_ID, participant.getContactId()); //
+        values.put(KEY_CONTACT_ID, participant.getContact().getId()); //
         values.put(KEY_PARTICE_EXPENSE, participant.getExpense());
         values.put(KEY_PARTICE_DEBT , participant.getDebt());
 
@@ -725,16 +727,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long updatePartice(Participant participant){
         SQLiteDatabase db = this.getWritableDatabase();
 
-        Event event = this.getEventById(participant.getEventId());
+        Event event = participant.getEvent();
         //update contact name
-        Contact contact = this.getContactById(participant.getContactId());
+        Contact contact = participant.getContact();
         this.updateContact(contact);
 
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_NAME, event.getEventName());
         values.put(KEY_EVENT_ID, event.getId());
         values.put(KEY_PARTICE_NAME, participant.getName());
-        values.put(KEY_CONTACT_ID, participant.getContactId());
+        values.put(KEY_CONTACT_ID, participant.getContact().getId());
         values.put(KEY_PARTICE_EXPENSE, participant.getExpense());
         values.put(KEY_PARTICE_DEBT , participant.getDebt());
 

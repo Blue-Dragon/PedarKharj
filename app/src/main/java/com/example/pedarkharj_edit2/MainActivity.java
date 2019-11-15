@@ -194,14 +194,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //-------------------------     RecyclerView    --------------------------//
     private void setRecParticesUnderEvent() {
+
         //show partices of the Event todo: update -> get event
         Event event = db.getEventById(1);
         List<Participant> participants0 = db.getAllParticeUnderEvent(1);
         Log.d("Event", event.getEventName());
-        for (Participant participant : participants0){
-            Log.d("Partices", participant.getId()+ ": "+ participant.getName());
-            mParticipants.add(new Participant( participant.getName(), participant.getExpense(), participant.getDebt()));
-        }
+        mParticipants.addAll(participants0);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

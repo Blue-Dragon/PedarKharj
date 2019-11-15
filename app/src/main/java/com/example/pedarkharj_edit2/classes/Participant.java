@@ -8,27 +8,23 @@ public class Participant {
     //vital
     private int id;
     private String name;
-    private int eventId;
-    private int contactId;
+    private Event event;
+    private Contact contact;
     //money
     private float expense;
     private float debt;
-    private  int dongNumber;
     //
-    private String bitmapStr;
     private boolean chkImg;
 
 
         // constructors
     public Participant() {
-            this.dongNumber = 1;
             this.chkImg = false;
         }
 
         //main
     public Participant(String name) {
             this.name = name;
-            this.dongNumber = 1;
             this.chkImg = false;
         }
 
@@ -36,11 +32,14 @@ public class Participant {
             this.name = name;
             this.expense = expense;
             this.debt = debt;
-            this.dongNumber = 1;
             this.chkImg = false;
         }
 
-    //getters
+
+    /**
+     * getters
+     */
+
     public int getId() {
         return id;
     }
@@ -48,7 +47,7 @@ public class Participant {
         return name;
     }
     public String getBitmapStr() {
-        return bitmapStr;
+        return contact.getBitmapStr();
     }
     public boolean isChkImg() {
         return chkImg;
@@ -59,17 +58,16 @@ public class Participant {
     public float getDebt() {
         return debt;
     }
-    public int getDongNumber() {
-        return dongNumber;
+    public Event getEvent() {
+        return event;
     }
-    public int getEventId() {
-        return eventId;
-    }
-    public int getContactId() {
-        return contactId;
+    public Contact getContact() {
+        return contact;
     }
 
-    //setters
+    /**
+     * setters
+     */
     public void setId(int id) {
         this.id = id;
     }
@@ -77,7 +75,7 @@ public class Participant {
         this.name = name;
     }
     public void setBitmapStr(String bitmapStr) {
-        this.bitmapStr = bitmapStr;
+        this.contact.setBitmapStr(bitmapStr);
     }
     public void setChkImg(boolean chkImg) {
         this.chkImg = chkImg;
@@ -88,14 +86,11 @@ public class Participant {
     public void setDebt(float debt) {
         this.debt = debt;
     }
-    public void setDongNumber(int dongNumber) {
-        this.dongNumber = dongNumber;
+    public void setEvent(Event eventId) {
+        this.event = event;
     }
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
-    }
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
+    public void setContact(Contact contact) {
+        this.contact = contact;
     }
 
     /**********************************************************************************************/

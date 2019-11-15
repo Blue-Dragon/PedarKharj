@@ -135,7 +135,8 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     //DiffDong (mActivity)
          //mode_01 numeric (if false)
         if (!amountModeDong){
-            int curDongNum = participant.getDongNumber();
+//            int curDongNum = participant.getDongNumber(); todo: ckeck if I haven't screwed this code
+            int curDongNum = 1;
             if (curDongNum >= 0 && holder.dongEtxt != null)     holder.dongEtxt.setText(String.valueOf(curDongNum));
 
             if (holder.plusBtn != null) {

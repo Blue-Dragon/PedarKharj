@@ -91,9 +91,7 @@ public class BuyerDialog extends Dialog implements View.OnClickListener {
         Event event = db.getEventById(1);
         List<Participant> participants0 = db.getAllParticeUnderEvent(1);
         Log.d("Event", event.getEventName());
-        for (Participant participant : participants0){
-            mParticipants.add(new Participant( participant.getName() ));
-        }
+        mParticipants.addAll(participants0);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 4, GridLayoutManager.VERTICAL, false);
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
