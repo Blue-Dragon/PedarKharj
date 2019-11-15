@@ -2,6 +2,7 @@ package com.example.pedarkharj_edit2.classes;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -120,6 +121,14 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         if (participant.getBitmapStr() !=null && holder.profImv != null)    holder.profImv.setImageBitmap(Routines.decodeBase64(participant.getBitmapStr()));
         if (participant.getResult() !=null && holder.resultTxt != null)    holder.resultTxt.setText(String.valueOf(participant.getResult()));
 
+
+        holder.baseLayout.setOnClickListener(item ->{
+            DatabaseHelper db = new DatabaseHelper(mActivity);
+            Intent intent = new Intent();
+            db.closeDB();
+        });
+
+
         holder.baseLayout.setOnClickListener(this);
         checkAsRadioBtn(holder);
 
@@ -162,8 +171,8 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.base_layout:
-                if (mContext != null)
-                    Toast.makeText(mContext, " max CheckImg: " + maxCheckImg, Toast.LENGTH_SHORT).show();
+//                if (mContext != null)
+//                    Toast.makeText(mContext, " max CheckImg: " + maxCheckImg, Toast.LENGTH_SHORT).show();
                 break;
 
         }
@@ -171,6 +180,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
     private void checkAsRadioBtn(@NonNull ViewHolder holder) {
         if (holder.checkImg != null){
+
             //TODO: change it to radio button action
             if (holder.checkImg.getVisibility() != View.VISIBLE){
                 holder.baseLayout.setOnClickListener(item -> holder.checkImg.setVisibility(View.VISIBLE));
@@ -180,6 +190,14 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
                 holder.baseLayout.setOnClickListener(item -> holder.checkImg.setVisibility(View.INVISIBLE));
                 holder.profImv.setOnClickListener(item -> holder.checkImg.setVisibility(View.INVISIBLE));
             }
+
+//            holder.baseLayout.setOnClickListener(item -> {
+//                DatabaseHelper db = new DatabaseHelper(mActivity);
+//                Participant participant = db.getParticeById(holder.nameTv)
+//
+//                        db.closeDB();
+//            });
+
         }
     }
 

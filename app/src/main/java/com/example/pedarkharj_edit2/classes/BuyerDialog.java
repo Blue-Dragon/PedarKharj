@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -20,14 +21,16 @@ import com.example.pedarkharj_edit2.pages.AddExpenseActivity;
 import com.example.pedarkharj_edit2.pages.ContactsActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BuyerDialog extends Dialog implements View.OnClickListener {
     private Activity mActivity;
     public Dialog d;
     private Button yes, no;
     RecyclerView recyclerView;
-    ArrayList<Participant> participants;
+    ArrayList<Participant> mParticipants;
     ParticipantAdapter adapter;
+    DatabaseHelper db;
 
 
     public BuyerDialog(Activity mActivity) {
@@ -40,12 +43,15 @@ public class BuyerDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_buyer_dialog);
+
+        db = new DatabaseHelper(mActivity);
         yes = (Button) findViewById(R.id.btn_yes);     yes.setOnClickListener(this);
         no = (Button) findViewById(R.id.btn_no);        no.setOnClickListener(this);
         recyclerView = findViewById(R.id.chooseBuyer_RecView);
         doRecyclerView();
 
 
+        db.closeDB();
     }
 
 
@@ -73,45 +79,29 @@ public class BuyerDialog extends Dialog implements View.OnClickListener {
     private Bitmap drawableToBitmap(int drawable){
         return BitmapFactory.decodeResource(mActivity.getResources(), drawable);
     }
+//        participants.add(new Participant(drawableToBitmap(R.drawable.r),"غلوم"));
+//        participants.add(new Participant("حسین عباس پور"));
+
+
 
     private void doRecyclerView() {
-        participants = new ArrayList<Participant>();
-//        participants.add(new Participant(drawableToBitmap(R.drawable.w), "hamed"));
-        participants.add(new Participant("reza dasdf dadas dasd"));
-//        participants.add(new Participant(drawableToBitmap(R.drawable.r),"غلوم"));
-        participants.add(new Participant("حسین عباس پور"));
-        participants.add(new Participant("محمد صیدالی"));
-        participants.add(new Participant("پیمان"));
-        participants.add(new Participant("reza"));
-//        participants.add(new Participant(drawableToBitmap(R.drawable.r),"مری"));
-        participants.add(new Participant("غلوم"));
-//        participants.add(new Participant(drawableToBitmap(R.drawable.w),"حامد گنجعلی"));
-        participants.add(new Participant("حسین حسی حشسیح حظسز شسزبح پور"));
-        participants.add(new Participant("حامد گنجعلی"));
-        participants.add(new Participant("محمد صیدالی"));
-        participants.add(new Participant("مری"));
-        participants.add(new Participant("پیمان"));
-        participants.add(new Participant("reza"));
-        participants.add(new Participant("غلوم"));
-        participants.add(new Participant("حسین عباس پور"));
-        participants.add(new Participant("حامد گنجعلی"));
-        participants.add(new Participant("محمد صیدالی"));
-        participants.add(new Participant("مری"));
-        participants.add(new Participant("پیمان"));
-        participants.add(new Participant("reza"));
-        participants.add(new Participant("غلوم"));
-        participants.add(new Participant("حسین عباس پور"));
-        participants.add(new Participant("حامد گنجعلی"));
-        participants.add(new Participant("محمد صیدالی"));
-        participants.add(new Participant("مری"));
-        participants.add(new Participant("پیمان"));
+        mParticipants = new ArrayList<Participant>();
+        db.closeDB();
+        //show partices of the Event todo: update -> get event
+        Event event = db.getEventById(1);
+        List<Participant> participants0 = db.getAllParticeUnderEvent(1);
+        Log.d("Event", event.getEventName());
+        for (Participant participant : participants0){
+            mParticipants.add(new Participant( participant.getName() ));
+        }
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 4, GridLayoutManager.VERTICAL, false);
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adapter = new ParticipantAdapter(mActivity, R.layout.sample_contact, participants, 3);
+        adapter = new ParticipantAdapter(mActivity, R.layout.sample_contact, mParticipants, 3);
         recyclerView.setAdapter(adapter);
+
     }
 
 }
