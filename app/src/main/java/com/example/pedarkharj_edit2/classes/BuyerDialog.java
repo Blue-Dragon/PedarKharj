@@ -82,6 +82,8 @@ public class BuyerDialog extends Dialog implements View.OnClickListener {
 //        participants.add(new Participant(drawableToBitmap(R.drawable.r),"غلوم"));
 //        participants.add(new Participant("حسین عباس پور"));
 
+
+
     private void doRecyclerView() {
         mParticipants = new ArrayList<Participant>();
         db.closeDB();
