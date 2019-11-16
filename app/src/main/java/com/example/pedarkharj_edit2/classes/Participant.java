@@ -86,7 +86,7 @@ public class Participant {
     public void setDebt(float debt) {
         this.debt = debt;
     }
-    public void setEvent(Event eventId) {
+    public void setEvent(Event event) {
         this.event = event;
     }
     public void setContact(Contact contact) {

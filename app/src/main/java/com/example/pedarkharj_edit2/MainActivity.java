@@ -86,70 +86,45 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /*
          * adding a new expense with different debts
          */
-//        float price = 20000f;
-//
-//        //update buyer expense
-//        Participant buyer = db.getParticeById(1);
-//        float old_expense = buyer.getExpense();
-//        buyer.setExpense(old_expense+price);
-//        db.updatePartice(buyer);
-//        Log.e("Fuck", "old: "+ old_expense+ "\nnew: "+ buyer.getExpense() );
-//
-//        // A fake result of DiffDong Activity
-//        float[] newDebts = {2500f, 5000f, 1200f, 1800f};
-//        int[] userIds = new int[] {1,2,3,4};
-//
-//        float debt;
-//        float ex_debts;
-//        float newDebt;
-//        int count = 0;
-//        for (int i : userIds){
-//            Participant user = db.getParticeById(i);
-//            Log.d("Fuck", "user "+ i +"  expense: "+ user.getExpense() );
-//            Log.d("Fuck", "user "+ i +"  debt "+ user.getDebt() );
-//
-//            float mNewDebt = newDebts[count++];
-//
-//            // update users debts in Partice Table
-//            ex_debts = user.getDebt();
-//            newDebt = ex_debts + mNewDebt;
-//            user.setDebt(newDebt);
-//            db.updatePartice(user);
-//
-//            // set an expense in Expense Table
-//            debt = mNewDebt > 0 ? mNewDebt : price/userIds.length;
-//            Log.d("DEBT", String.valueOf(debt));
-//            Expense expense = new Expense(db.getEventById(1) ,db.getParticeById(1), new Participant[] {user}, "Fast food", price, debt);
-//            db.addExpense(expense);
-//
-//            Log.e("Fuck", "user "+ i +" new expense: "+ user.getExpense() );
-//            Log.e("Fuck", "user "+ i +" new debt "+ user.getDebt() );
-//        }
+        float price = 20000f;
 
+        //update buyer expense
+        Participant buyer = db.getParticeById(1);
+        float old_expense = buyer.getExpense();
+        buyer.setExpense(old_expense+price);
+        db.updatePartice(buyer);
+        Log.e("Fuck", "old: "+ old_expense+ "\nnew: "+ buyer.getExpense() );
 
-//        List<Participant> participants =db.getAllParticeUnderEvent(1);
-//        for (Participant p : participants){
-//            Log.e("Fuck", "partic "+ p.getId() +" : "+ p.getEvent().getEventName()
-//                  );
-//        }
+        // A fake result of DiffDong Activity
+        float[] newDebts = {2500f, 5000f, 1200f, 1800f};
+        int[] userIds = new int[] {1,2,3,4};
 
-//        Participant p = new Participant("hamed");
-//        db.addPartic(p, new Event("sssEvent"));
-//        Contact c = new Contact("c1");
-//        long contact_5 = db.createContact(c);
-//
-//        Event e = new Event("event1");
-//        db.createEvent(e);
+        float debt;
+        float ex_debts;
+        float newDebt;
+        int count = 0;
+        for (int i : userIds){
+            Participant user = db.getParticeById(i);
+            Log.d("Fuck", "user "+ i +"  expense: "+ user.getExpense() );
+            Log.d("Fuck", "user "+ i +"  debt "+ user.getDebt() );
 
-//        Contact contact = db.getContactById(2);
-        Contact contact2 = new Contact("contact2");
-        long contact2_id = db.createContact(contact2);
+            float mNewDebt = newDebts[count++];
 
-        Event event = db.getEventById(1);
-        Participant p = db.createEventNewPartice(event, db.getContactById(contact2_id));
+            // update users debts in Partice Table
+            ex_debts = user.getDebt();
+            newDebt = ex_debts + mNewDebt;
+            user.setDebt(newDebt);
+            db.updatePartice(user);
 
-//        Participant pp = db.getParticeById(6);
-//        Log.e("Fuck", "partic "+ p.getId() );
+            // set an expense in Expense Table
+            debt = mNewDebt > 0 ? mNewDebt : price/userIds.length;
+            Log.d("DEBT", String.valueOf(debt));
+            Expense expense = new Expense(db.getEventById(1) ,db.getParticeById(1), new Participant[] {user}, "Fast food", price, debt);
+            db.addExpense(expense);
+
+            Log.e("Fuck", "user "+ i +" new expense: "+ user.getExpense() );
+            Log.e("Fuck", "user "+ i +" new debt "+ user.getDebt() );
+        }
 
 
 

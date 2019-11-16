@@ -655,7 +655,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Participant participant = new Participant();
                 participant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
                 participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
-                participant.setEvent( this.getEventById(eventId ));
+                participant.setEvent( this.getEventById(eventId) );
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
                 participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
                 participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
