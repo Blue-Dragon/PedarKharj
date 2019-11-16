@@ -3,6 +3,7 @@ package com.example.pedarkharj_edit2.pages;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.Contact;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
@@ -55,19 +57,6 @@ public class ContactsActivity extends AppCompatActivity {
         });
     }
 
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == 1){
-//            newName = data.getStringExtra(INTENT_MASSEGE);
-//            if (newName != null){
-//                participants.add(new Participant(newName));
-//                doRecyclerView();
-//            }
-//        }
-//    }
-
     /********************************************       Methods     ****************************************************/
 
     private void doRecyclerView() {
@@ -105,5 +94,12 @@ public class ContactsActivity extends AppCompatActivity {
         //recyclerView
         recyclerView = findViewById(R.id.contacts_recView);
         doRecyclerView();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(mContext, MainActivity.class));
+        finish();
     }
 }

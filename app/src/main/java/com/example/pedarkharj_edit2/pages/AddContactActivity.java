@@ -18,10 +18,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
-import com.example.pedarkharj_edit2.classes.Participant;
+import com.example.pedarkharj_edit2.classes.Contact;
+import com.example.pedarkharj_edit2.classes.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Routines;
-import com.example.pedarkharj_edit2.classes.SharedPrefManager;
 
 import java.io.IOException;
 
@@ -32,15 +33,18 @@ import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class AddContactActivity extends AppCompatActivity implements View.OnClickListener {
-    Bitmap bitmap;
-    Bitmap resizedBitmap;
     private Context mContext;
     private Activity mActivity;
     String name, family;
     EditText nameEdt, familyEdt;
-    CircleImageView profPic;
-    ImageView cancelImg, doneImg;
     RelativeLayout fromContactsBtn;
+    ImageView cancelImg, doneImg;
+    DatabaseHelper db;
+
+    Bitmap bitmap;
+    Bitmap resizedBitmap;
+    CircleImageView profPic;
+    boolean newImg;
 
 
     @Override
@@ -50,6 +54,8 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
 
         mActivity =this;
         mContext = this;
+        newImg = false;
+        db = new DatabaseHelper(mContext);
 
         fromContactsBtn = findViewById(R.id.addFromContacts_btn);    fromContactsBtn.setOnClickListener(this);
         profPic = findViewById(R.id.prof_pic);                                      profPic.setOnClickListener(this);
@@ -60,6 +66,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         familyEdt = findViewById(R.id.family_edt);
 //
 
+        db.closeDB();
     }
 
 
@@ -86,8 +93,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.check_img:
-//                addNewContact();
-//                addNewContactToDB();
+                addNewContact();
                 break;
 
             case R.id.cancel_img:
@@ -96,46 +102,31 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    //add to SharedPreff
-//    private void addNewContact() {
-//            final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
-//
-//            //first we will do the validations
-//            if (TextUtils.isEmpty(fullName)) {
-//                nameEdt.setError("لطفا نام را وارد کنید");
-//                nameEdt.requestFocus();
-//                return;
-//            }
-//
-//        //creating a new user object
-//        Participant participant = new Participant(Routines.usersId++, fullName, bitmap);
-//        //storing the user in shared preferences
-//        SharedPrefManager.getInstance(getApplicationContext()).userLogin(participant);
-//
-//            //starting the contacts activity
-//        setResult(ContactsActivity.INTENT_CODE,     new Intent().putExtra(ContactsActivity.INTENT_MASSEGE,  fullName));
-//        finish();
-//    }
 
-    //add to SQLite
-//    private void addNewContactToDB() {
-//        final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
-//
-//        //first we will do the validations
-//        if (TextUtils.isEmpty(fullName)) {
-//            nameEdt.setError("لطفا نام را وارد کنید");
-//            nameEdt.requestFocus();
-//            return;
-//        }
-//
-//        //creating a new user object
-//        Participant participant = new Participant(Routines.usersId++, fullName, bitmap);
+    //
+    private void addNewContact() {
+            final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
+
+            //first we will do the validations (name)
+            if (TextUtils.isEmpty(fullName)) {
+                nameEdt.setError("لطفا نام را وارد کنید");
+                nameEdt.requestFocus();
+                return;
+            }
+
 //        String imgString = Routines.encodeToBase64(mContext, participant);
-//        //storing the user in SQLite
-//        MydbHelper.getInstance(mContext).insertToTable(Routines.newContactId(mContext), fullName, imgString);
-//        startActivity(new Intent(mContext, ContactsActivity.class));
-//        finish();
-//    }
+
+        //creating a new Contact object
+        Contact contact = new Contact();
+        contact.setName(fullName);
+        if (newImg) contact.setBitmapStr(Routines.encodeToBase64(resizedBitmap));  //see if we have any images
+
+        //add to db
+        db.createContact(contact);
+        startActivity(new Intent(mContext, ContactsActivity.class));
+        finish();
+    }
+
 
 
     /*       permission stuff        */
@@ -160,7 +151,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 boolean permissionContact = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 if (grantResults.length > 0 && permissionContact) {
                     Toast.makeText(mActivity, "مجوز دسترسی contacts داده شد", Toast.LENGTH_SHORT).show();
-//                    Routines.chooseCameraGallery(mActivity);
+                    Routines.chooseCameraGallery(mActivity);
                 } else {
                     Toast.makeText(mActivity, "مجوز دسترسی contacts داده نشد", Toast.LENGTH_SHORT).show();
                 }
@@ -182,6 +173,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                     //resizing image
                     resizedBitmap = Routines.resizeBitmap(bitmap);
                     profPic.setImageBitmap(resizedBitmap);
+                    newImg = true;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -193,6 +185,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 if (bitmap != null) {
                     resizedBitmap = Routines.resizeBitmap(bitmap);
                     profPic.setImageBitmap(resizedBitmap);
+                    newImg = true;
                 }
             }
         }
