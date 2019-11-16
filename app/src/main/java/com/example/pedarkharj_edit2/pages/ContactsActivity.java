@@ -63,7 +63,9 @@ public class ContactsActivity extends AppCompatActivity {
 
 
         /**
-         * todo I'm forming Contacts as Participants, so I won't need to create another adaptor or even edit that. change this shit later in order not to get fucked up!
+         * todo: set Contact instead of Partice... :
+         * I'm forming Contacts as Participants, so I won't need to create another
+         * adaptor or even edit that. change this shit later in order not to get fucked up!
          */
         List<Contact> mContacts0 = db.getAllContacts();
         List<Participant> participants = new ArrayList<>(mContacts0.size());

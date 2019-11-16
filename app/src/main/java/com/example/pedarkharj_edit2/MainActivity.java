@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //-------------------------     SQLite    --------------------------//
         db = new DatabaseHelper(mContext);
 
+
+        //todo: set default event and partices
         /*
          * adding partices and an event
          */
@@ -76,8 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        long contact_2 = db.createContact(new Contact("Reza"));
 //        long contact_3 =  db.createContact(new Contact("Sadi"));
 //        long contact_4 = db.createContact(new Contact("Abbas"));
-////
-////
+//
 //        db.createNewEventWithPartices(new Event("سفر")
 //                , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)
 //                        ,db.getContactById(contact_3), db.getContactById(contact_4), });
@@ -126,6 +127,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        }
 
 
+//        List<Participant> participants =db.getAllParticeUnderEvent(1);
+//        for (Participant p : participants){
+//            Log.e("Fuck", "partic "+ p.getId() +" : "+ p.getEvent().getEventName()
+//                  );
+//        }
+
+//        Participant p = new Participant("hamed");
+//        db.addPartic(p, new Event("sssEvent"));
+//        Contact c = new Contact("c1");
+//        long contact_5 = db.createContact(c);
+//
+//        Event e = new Event("event1");
+//        db.createEvent(e);
+
+//        Contact contact = db.getContactById(2);
+        Contact contact2 = new Contact("contact2");
+        long contact2_id = db.createContact(contact2);
+
+        Event event = db.getEventById(1);
+        Participant p = db.createEventNewPartice(event, db.getContactById(contact2_id));
+
+//        Participant pp = db.getParticeById(6);
+//        Log.e("Fuck", "partic "+ p.getId() );
 
 
 
@@ -136,7 +160,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /**
          * recView onClick
          */
-
         Log.e("recOnClick", "onClick");
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override

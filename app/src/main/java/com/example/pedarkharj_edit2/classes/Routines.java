@@ -21,6 +21,7 @@ public class Routines {
     public static final int PER_CODE_READ_CONTACTS = 2;
     public static final int GALLERY_INTENT = 3;
     public static final int CAMERA_INTENT = 4;
+    public static final String PARTICIPANT_INFO = "PARTICIPANT_INFO";
     public static int usersId = 0;
     private static int contactsSQLID ;
 

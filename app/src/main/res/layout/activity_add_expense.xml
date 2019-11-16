@@ -164,12 +164,15 @@
                         <!-- Row 1 -->
                         <Button
                             android:text="7"
+                            android:id="@+id/b7"
                             style="@style/calcAction"/>
                         <Button
                             android:text="8"
+                            android:id="@+id/b8"
                             style="@style/calcAction"/>
                         <Button
                             android:text="9"
+                            android:id="@+id/b9"
                             style="@style/calcAction" />
                         <Button
                             android:id="@+id/date_btn"
@@ -183,12 +186,16 @@
                         <!-- Row 2 -->
                         <Button
                             android:text="4"
+                            android:id="@+id/b4"
                             style="@style/calcAction" />
+
                         <Button
-                            android:text="5"
-                            style="@style/calcAction"/>
+                            style="@style/calcAction"
+                            android:id="@+id/b5"
+                            android:text="5" />
                         <Button
                             android:text="6"
+                            android:id="@+id/b6"
                             style="@style/calcAction" />
                         <RelativeLayout
                             android:id="@+id/buyer_btn"
@@ -226,12 +233,15 @@
                         <!-- Row 3 -->
                         <Button
                             android:text="1"
+                            android:id="@+id/b1"
                             style="@style/calcAction" />
                         <Button
                             android:text="2"
+                            android:id="@+id/b2"
                             style="@style/calcAction"/>
                         <Button
                             android:text="3"
+                            android:id="@+id/b3"
                             style="@style/calcAction" />
                         <Button
                             android:id="@+id/custom_dong_btn"
@@ -247,9 +257,11 @@
                         <!-- Row 4 -->
                         <Button
                             android:text="."
+                            android:id="@+id/b."
                             style="@style/calcAction" />
                         <Button
                             android:text="0"
+                            android:id="@+id/b0"
                             style="@style/calcAction"/>
                         <RelativeLayout
                             android:clickable="true"

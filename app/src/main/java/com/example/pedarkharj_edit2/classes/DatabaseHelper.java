@@ -379,7 +379,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // Create new Partic in an existing Event
-    private long createEventNewPartice(Event event, Contact contact) {
+    public Participant createEventNewPartice(Event event, Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
         Participant participant = new Participant(contact.getName());
 
@@ -393,7 +393,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long id = db.insert(TABLE_EVENT_PARTICES, null, values);
 
-        return id;
+        return this.getParticeById(id);
     }
 
     /**
@@ -655,7 +655,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Participant participant = new Participant();
                 participant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
                 participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
-                participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
+                participant.setEvent( this.getEventById(eventId ));
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
                 participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
                 participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
@@ -688,20 +688,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return participant;
     }
      // adding partices to  an Event
-    public void addPartices(List<Participant> participants, Event event) {
+    private void addPartices(List<Participant> participants, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         for (Participant participant : participants){
-            addPartic(participant, event);
+            participant.setEvent(event);
+            addPartic(participant);
         }
     }
      // adding a participant
-    public void addPartic(Participant participant, Event event) {
+    private void addPartic(Participant participant) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_EVENT_NAME, event.getEventName());
-        values.put(KEY_EVENT_ID, event.getId());
+        values.put(KEY_EVENT_NAME, participant.getEvent().getEventName());
+        values.put(KEY_EVENT_ID, participant.getId());
+        values.put(KEY_PARTICE_NAME, participant.getName());
+        values.put(KEY_CONTACT_ID, participant.getContact().getId()); //
+        values.put(KEY_PARTICE_EXPENSE, participant.getExpense());
+        values.put(KEY_PARTICE_DEBT , participant.getDebt());
+
+        long id = db.insert(TABLE_EVENT_PARTICES, null, values);
+    }
+    private void addPartic(Participant participant, Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        participant.setEvent(event);
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_EVENT_NAME, participant.getEvent().getEventName());
+        values.put(KEY_EVENT_ID, participant.getId());
         values.put(KEY_PARTICE_NAME, participant.getName());
         values.put(KEY_CONTACT_ID, participant.getContact().getId()); //
         values.put(KEY_PARTICE_EXPENSE, participant.getExpense());

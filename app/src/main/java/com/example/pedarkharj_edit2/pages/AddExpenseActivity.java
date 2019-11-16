@@ -3,15 +3,13 @@ package com.example.pedarkharj_edit2.pages;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -33,15 +31,19 @@ import java.util.Locale;
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
     ArrayList<Participant> mParticipants;
     ParticipantAdapter adapter;
-    LinearLayout calcLT;
-    DatabaseHelper db;
+    LinearLayout calculator;
 
     RecyclerView recyclerView;
     Context mContext;
     Activity mActivity;
     Button removeBtn, dateBtn, particBtn;
+    EditText dongEText;
     RelativeLayout buyerBtn;
     Date mDate;
+
+    int particId;
+    Participant buyer;
+    DatabaseHelper db;
 
 
     @Override
@@ -53,12 +55,20 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         mActivity = this;
         mParticipants = new ArrayList<Participant>();
         db = new DatabaseHelper(mContext);
+        particId = getIntent().getIntExtra(Routines.PARTICIPANT_INFO, 0);
+        buyer = db.getParticeById(particId);
+
+
 
         particBtn = findViewById(R.id.custom_dong_btn);              particBtn.setOnClickListener(this);
         buyerBtn = findViewById(R.id.buyer_btn);                         buyerBtn.setOnClickListener(this);
         dateBtn = findViewById(R.id.date_btn);                             dateBtn.setOnClickListener(this);
-        calcLT = findViewById(R.id.calculator);
+        dongEText = findViewById(R.id.dong_Etxt);
+        calculator = findViewById(R.id.calculator);
         recyclerView = findViewById(R.id.participants_RecView);
+        //
+        if (particId != 0)  dongEText.setHint("خب... " +buyer.getName() + " چی خریده؟");
+
         //
         doRecyclerView();
 
@@ -100,6 +110,12 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         }
     }
+    //
+    public void onCalcClick(View view) {
+        View v = calculator.getChildAt(0);
+        Button b = mActivity.findViewById(v.getId());
+        Toast.makeText(mContext, b.getText(), Toast.LENGTH_SHORT).show();
+    }
 
     private void doRecyclerView() {
 
@@ -115,6 +131,8 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         adapter = new ParticipantAdapter(mContext, R.layout.sample_contact, mParticipants);
         recyclerView.setAdapter(adapter);
     }
+
+
 
 
     //Persian Calender

@@ -23,7 +23,7 @@ import com.example.pedarkharj_edit2.pages.ContactsActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuyerDialog extends Dialog implements View.OnClickListener {
+public class BuyerDialog extends Dialog {
     private Activity mActivity;
     public Dialog d;
     private Button yes, no;
@@ -45,43 +45,48 @@ public class BuyerDialog extends Dialog implements View.OnClickListener {
         setContentView(R.layout.activity_buyer_dialog);
 
         db = new DatabaseHelper(mActivity);
-        yes = (Button) findViewById(R.id.btn_yes);     yes.setOnClickListener(this);
-        no = (Button) findViewById(R.id.btn_no);        no.setOnClickListener(this);
+//        yes = (Button) findViewById(R.id.btn_yes);     yes.setOnClickListener(this);
+//        no = (Button) findViewById(R.id.btn_no);        no.setOnClickListener(this);
         recyclerView = findViewById(R.id.chooseBuyer_RecView);
         doRecyclerView();
 
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mActivity, recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Participant participant = mParticipants.get(position);
+                Intent intent =  new Intent(mActivity, AddExpenseActivity.class);
+                intent.putExtra(Routines.PARTICIPANT_INFO, participant.getId());
+                mActivity.startActivity(intent);
+            }
 
+            @Override
+            public void onLongClick(View view, int position) {
+            }
+        }));
+        //
         db.closeDB();
     }
 
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.btn_yes:
-                mActivity.startActivity(new Intent(mActivity, AddExpenseActivity.class));
-//                mActivity.finish();
-                break;
-
-            case R.id.btn_no:
-                mActivity.startActivity(new Intent(mActivity, ContactsActivity.class));
-//                mActivity.finish();
-                break;
-
-            default:
-                break;
-        }
-        dismiss();
-    }
-
-    private Bitmap drawableToBitmap(int drawable){
-        return BitmapFactory.decodeResource(mActivity.getResources(), drawable);
-    }
-//        participants.add(new Participant(drawableToBitmap(R.drawable.r),"غلوم"));
-//        participants.add(new Participant("حسین عباس پور"));
-
+//    @Override
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//
+//            case R.id.btn_yes:
+//                mActivity.startActivity(new Intent(mActivity, AddExpenseActivity.class));
+////                mActivity.finish();
+//                break;
+//
+//            case R.id.btn_no:
+//                mActivity.startActivity(new Intent(mActivity, ContactsActivity.class));
+////                mActivity.finish();
+//                break;
+//
+//            default:
+//                break;
+//        }
+//        dismiss();
+//    }
 
 
     private void doRecyclerView() {

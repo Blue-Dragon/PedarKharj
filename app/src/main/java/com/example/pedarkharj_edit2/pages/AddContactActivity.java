@@ -65,11 +65,8 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         nameEdt = findViewById(R.id.name_edt);
         familyEdt = findViewById(R.id.family_edt);
 //
-
         db.closeDB();
     }
-
-
 
 
     /********************************************       Methods     ****************************************************/
@@ -151,7 +148,6 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 boolean permissionContact = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 if (grantResults.length > 0 && permissionContact) {
                     Toast.makeText(mActivity, "مجوز دسترسی contacts داده شد", Toast.LENGTH_SHORT).show();
-                    Routines.chooseCameraGallery(mActivity);
                 } else {
                     Toast.makeText(mActivity, "مجوز دسترسی contacts داده نشد", Toast.LENGTH_SHORT).show();
                 }
