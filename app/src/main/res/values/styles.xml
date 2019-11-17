@@ -28,7 +28,9 @@
         <item name="android:textStyle">bold</item>
         <item name="android:background">@drawable/selector_buttom</item>
         <item name="android:onClick">"onCalcClick"</item>
+
     </style>
+
     <style name="calcDoneBtn">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">0dp</item>

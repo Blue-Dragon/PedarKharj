@@ -116,7 +116,7 @@
                         app:srcCompat="@drawable/write" />
 
                     <TextView
-                        android:id="@+id/resltNum_txt"
+                        android:id="@+id/price_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
@@ -133,11 +133,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/large_koodak"
+                        android:focusedByDefault="false"
                        android:maxLines="1"
                         android:ems="500"
                         android:inputType="textPersonName"
                         android:layout_toLeftOf= "@+id/write_img"
-                        android:layout_toRightOf="@+id/resltNum_txt"
+                        android:layout_toRightOf="@+id/price_txt"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="25dp"
                         android:layout_marginRight="10dp"
@@ -200,6 +201,7 @@
                         <RelativeLayout
                             android:id="@+id/buyer_btn"
                             style="@style/calcAction"
+                            android:onClick="onClick"
                             android:clickable="true"
                             android:focusable="true">
 
@@ -257,23 +259,21 @@
                         <!-- Row 4 -->
                         <Button
                             android:text="."
-                            android:id="@+id/b."
+                            android:id="@+id/bp"
                             style="@style/calcAction" />
                         <Button
                             android:text="0"
                             android:id="@+id/b0"
                             style="@style/calcAction"/>
-                        <RelativeLayout
-                            android:clickable="true"
-                            android:focusable="true"
-                            style="@style/calcAction">
 
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_centerInParent="true"
-                                android:src="@drawable/ic_keyback"/>
-                        </RelativeLayout>
+                        <Button
+                            android:text=""
+                            android:id="@+id/bkSpace"
+                            android:background="@drawable/ic_keyback"
+                            android:paddingLeft="50dp"
+                            style="@style/calcAction"/>
+
+
                         <Button
                             android:id="@+id/done_btn"
                             android:text="Done"

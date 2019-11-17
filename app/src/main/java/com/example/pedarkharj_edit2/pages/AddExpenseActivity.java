@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alirezaafkar.sundatepicker.DatePicker;
@@ -36,10 +37,13 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     RecyclerView recyclerView;
     Context mContext;
     Activity mActivity;
-    Button removeBtn, dateBtn, particBtn;
+    Button removeBtn, dateBtn, particBtn,
+    bp, b0, b1, b2, b3, b4, b5, b6, b7, b8, b9;
+    boolean pbCanUse;
     EditText dongEText;
     RelativeLayout buyerBtn;
     Date mDate;
+    TextView priceTv;
 
     int particId;
     Participant buyer;
@@ -53,6 +57,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         mContext = this;
         mActivity = this;
+        pbCanUse = true;
         mParticipants = new ArrayList<Participant>();
         db = new DatabaseHelper(mContext);
         particId = getIntent().getIntExtra(Routines.PARTICIPANT_INFO, 0);
@@ -64,14 +69,27 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         buyerBtn = findViewById(R.id.buyer_btn);                         buyerBtn.setOnClickListener(this);
         dateBtn = findViewById(R.id.date_btn);                             dateBtn.setOnClickListener(this);
         dongEText = findViewById(R.id.dong_Etxt);
-        calculator = findViewById(R.id.calculator);
+        priceTv = findViewById(R.id.price_txt);
         recyclerView = findViewById(R.id.participants_RecView);
         //
-        if (particId != 0)  dongEText.setHint("خب... " +buyer.getName() + " چی خریده؟");
+        calculator = findViewById(R.id.calculator);                          calculator.setOnClickListener(this);
+//        bp = findViewById(R.id.bp);
+//        b0 = findViewById(R.id.b0);
+//        b1 = findViewById(R.id.b1);
+//        b2 = findViewById(R.id.b2);
+//        b3 = findViewById(R.id.b3);
+//        b4 = findViewById(R.id.b4);
+//        b5 = findViewById(R.id.b5);
+//        b6 = findViewById(R.id.b6);
+//        b7 = findViewById(R.id.b7);
+//        b8 = findViewById(R.id.b8);
+//        b9 = findViewById(R.id.b9);
+
 
         //
+        if (particId != 0)  dongEText.setHint("خب... " +buyer.getName() + " چی خریده؟");
+        //
         doRecyclerView();
-
 
     }
 
@@ -90,7 +108,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.buyer_btn:
-                Toast.makeText(mContext, "Hi", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "buyer_btn", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.date_btn:
@@ -101,20 +119,46 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                 builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
                 builder.build((id1, calendar, day, month, year) -> {
                     mDate.setDate(day, month, year);
-
                     //dateBtn
                     dateBtn.setText(mDate.getDate());
-
                 }).show(getSupportFragmentManager(), "");
                 break;
-
         }
     }
+
     //
     public void onCalcClick(View view) {
-        View v = calculator.getChildAt(0);
-        Button b = mActivity.findViewById(v.getId());
-        Toast.makeText(mContext, b.getText(), Toast.LENGTH_SHORT).show();
+        Button b = mActivity.findViewById(view.getId() ) ;
+
+        StringBuilder builder = new StringBuilder();
+        if (Float.valueOf(priceTv.getText().toString()) > 0f ) builder.append(priceTv.getText());
+
+        // Not letting user to use '.' twice
+        if (b.getId() == R.id.bp ){
+            if (pbCanUse) {
+                pbCanUse = false;
+                builder.append(b.getText());
+            }
+        }
+            //delete
+        else if (b.getId() == R.id.bkSpace){
+            char[] chars = priceTv.getText().toString().toCharArray();
+            int i = chars.length;
+
+            if (chars.length > 0 ){
+                builder.delete(i-1, i);
+
+                chars = builder.toString().toCharArray();
+                if ( chars.length < 1 ) builder.append(0);
+            }
+        }
+        // add number to priceTv
+        else {
+            builder.append(b.getText());
+        }
+
+
+        priceTv.setText(builder);
     }
 
     private void doRecyclerView() {
