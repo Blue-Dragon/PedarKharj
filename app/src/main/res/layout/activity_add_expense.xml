@@ -277,7 +277,8 @@
                         <Button
                             android:id="@+id/done_btn"
                             android:text="Done"
-                            style="@style/calcDoneBtn" />
+                            style="@style/calcDoneBtn"
+                            android:onClick="onClick"/>
                     </LinearLayout>
                 </LinearLayout>
 

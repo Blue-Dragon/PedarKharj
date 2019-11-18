@@ -135,7 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             userId = user.getId();
             Log.e("ExpenseIds", user.getId() + "");
 
-            // send and Expense
+            // send an Expense
             ContentValues values = new ContentValues();
             values.put(KEY_EVENT_ID, expense.getEvent().getId());
             values.put(KEY_BUYER_ID, expense.getBuyer().getId());
@@ -151,13 +151,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             //Add Debt to event_participant table
             ContentValues values2 = new ContentValues();
-            values2.put(KEY_PARTICE_DEBT, user.getDebt());
+            values2.put(KEY_PARTICE_DEBT, user.getDebt() + expense.getExpenseDebt());
             db.update(TABLE_EVENT_PARTICES, values2,  KEY_ID + " = ?", new String[] {String.valueOf(userId) });
         }
 
         // add Expense  to event_participant table
         ContentValues values1 = new ContentValues();
-        values1.put(KEY_PARTICE_EXPENSE, buyer.getExpense());
+        values1.put(KEY_PARTICE_EXPENSE, buyer.getExpense() + expense.getExpensePrice());
         db.update(TABLE_EVENT_PARTICES, values1,  KEY_ID + " = ?", new String[] {String.valueOf(buyer.getId()) });
     }
 

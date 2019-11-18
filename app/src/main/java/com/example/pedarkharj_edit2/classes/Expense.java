@@ -17,8 +17,8 @@ public class Expense {
 
     }
 
-    public Expense(Event event, Participant buyer, Participant[] userPartics, String expenseTitle, float expensePrice, float expenseDebt) {
-        this.event = event;
+    public Expense(Participant buyer, Participant[] userPartics, String expenseTitle, float expensePrice, float expenseDebt) {
+        this.event = buyer.getEvent();
         this.buyer = buyer;
         this.userPartics = userPartics;
         this.expenseTitle = expenseTitle;
