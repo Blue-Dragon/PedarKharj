@@ -8,22 +8,26 @@
             android:id="@+id/nav_contacts"
             android:icon="@android:drawable/picture_frame"
             android:title="افراد" />
+        <item
+        android:id="@+id/nav_events"
+        android:icon="@android:drawable/picture_frame"
+        android:title="مدیریت رویداد ها" />
     </group>
 
     <item
-        android:id="@+id/nav_events"
-        android:title="رویداد ها"
+        android:id="@+id/nav_contact_us"
+        android:title="ارتباط با ما"
         android:icon="@android:drawable/ic_menu_edit">
         <menu>
             <item
 
-                android:id="@+id/nav_def_event"
-                android:icon="@android:drawable/ic_menu_send"
-                android:title="رویداد 1" />
+                android:id="@+id/nav_our_number"
+                android:icon="@android:drawable/ic_menu_call"
+                android:title="our Number" />
             <item
-                android:id="@+id/nav_addNewEvent"
+                android:id="@+id/nav_our_email"
                 android:icon="@android:drawable/ic_menu_add"
-                android:title="رویجداد جدید" />
+                android:title="our Email" />
         </menu>
     </item>
 

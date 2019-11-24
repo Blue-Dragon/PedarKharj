@@ -94,4 +94,6 @@ public class Routines {
 //    public static int newContactId(Context mContext){
 //        return  MydbHelper.getInstance(mContext).getRowsCount();
 //    }
+
+
 }

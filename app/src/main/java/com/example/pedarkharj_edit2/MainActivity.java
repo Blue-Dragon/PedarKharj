@@ -25,11 +25,11 @@ import com.example.pedarkharj_edit2.classes.BuyerDialog;
 import com.example.pedarkharj_edit2.classes.Contact;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Event;
-import com.example.pedarkharj_edit2.classes.Expense;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.pages.ContactsActivity;
+import com.example.pedarkharj_edit2.pages.EventMngActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -194,16 +194,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void setRecParticesUnderEvent() {
 
         //show partices of the Event todo: update -> get event
-        Event event = db.getEventById(1);
-        List<Participant> participants0 = db.getAllParticeUnderEvent(1);
-        Log.d("Event", event.getEventName());
-        mParticipants.addAll(participants0);
+        mParticipants = db.getAllParticeUnderEvent(1);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext, participants0);
+        adaptor = new ParticipantAdapter(mContext, mParticipants);
         recyclerView.setAdapter(adaptor);
     }
 
@@ -230,10 +227,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_contacts:
                 startActivity(new Intent(mContext, ContactsActivity.class));
                 break;
-            case R.id.nav_def_event:
+            case R.id.nav_events:
+                startActivity(new Intent(mContext, EventMngActivity.class));
+                break;
+
+            case R.id.nav_our_number:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag2()).commit();
                 break;
-            case R.id.nav_addNewEvent:
+            case R.id.nav_our_email:
 //                getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new Frag3()).commit();
                 break;
 

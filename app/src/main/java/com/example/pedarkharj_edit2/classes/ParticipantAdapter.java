@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.ViewHolder> implements View.OnClickListener {
     private List<Participant> participants;
+    private List<Event> events;
     private Context mContext;
     private Activity mActivity;
     private int mLayout, maxCheckImg;
@@ -35,13 +37,26 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         this.amountModeDong = amountModeDong;
     }
 
-    /*      Constructors       */
+    //------------------------------      Constructors       ---------------------------------/
     //main page
     public ParticipantAdapter(Context mContext, List<Participant> participants) {
         this.mContext = mContext;
         this.participants = participants;
         this.mLayout = R.layout.sample_participant;
     }
+
+    //EventMng Activity
+    public ParticipantAdapter(Context mContext) {
+        this.mContext = mContext;
+        this.mLayout = R.layout.sample_event;
+    }
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+    public void setLayout(int layoutId) {
+        this.mLayout = layoutId;
+    }
+
     //Expense/ Contacts Activity
     public ParticipantAdapter(Context mContext, int mLayout, List<Participant> participants) {
         this.mContext = mContext;
@@ -72,6 +87,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     }
 
 
+    //------------------------------      ViewHolder innerClass       ---------------------------------/
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CircleImageView profImv, checkImg;
         TextView nameTv, resultTxt;
@@ -106,6 +122,8 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     }
 
 
+    //------------------------------      Interface Methods       ---------------------------------/
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -115,50 +133,73 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        Participant participant = participants.get(position);
 
-        if (participant.getName() !=null && holder.nameTv != null)      holder.nameTv.setText(participant.getName());
-        if (participant.getBitmapStr() !=null && holder.profImv != null)    holder.profImv.setImageBitmap(Routines.decodeBase64(participant.getBitmapStr()));
-        if (participant.getResult() !=null && holder.resultTxt != null)    holder.resultTxt.setText(String.valueOf(participant.getResult()));
+        /**
+         * EventMngActivity
+         */
+//        Log.e("E002",  String.valueOf(events) );
+        if (events != null){
+            Event event = events.get(position);
+            DatabaseHelper db0 = new DatabaseHelper(mContext);
+            int particNumber = db0.getAllParticeUnderEvent(event).size();
+
+            if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
+//        if (event.getBitmapStr() !=null && holder.profImv != null)    holder.profImv.setImageBitmap(Routines.decodeBase64(event.getBitmapStr()));
+            db0.closeDB();
+        }
+        // </ EventMngActivity >
+
+        if (participants != null) {
+            Participant participant = participants.get(position);
+
+            if (participant.getName() != null && holder.nameTv != null)
+                holder.nameTv.setText(participant.getName());
+            if (participant.getBitmapStr() != null && holder.profImv != null)
+                holder.profImv.setImageBitmap(Routines.decodeBase64(participant.getBitmapStr()));
+            if (participant.getResult() != null && holder.resultTxt != null)
+                holder.resultTxt.setText(String.valueOf(participant.getResult()));
 
 
-        holder.baseLayout.setOnClickListener(item ->{
-            DatabaseHelper db = new DatabaseHelper(mActivity);
-            Intent intent = new Intent();
-            db.closeDB();
-        });
+            holder.baseLayout.setOnClickListener(item -> {
+                DatabaseHelper db = new DatabaseHelper(mActivity);
+                Intent intent = new Intent();
+                db.closeDB();
+            });
 
 
-        holder.baseLayout.setOnClickListener(this);
-        checkAsRadioBtn(holder);
+            holder.baseLayout.setOnClickListener(this);
+            checkAsRadioBtn(holder);
 
-    //DiffDong (mActivity)
-         //mode_01 numeric (if false)
-        if (!amountModeDong){
+            //DiffDong (mActivity)
+            //mode_01 numeric (if false)
+            if (!amountModeDong) {
 //            int curDongNum = participant.getDongNumber(); todo: ckeck if I haven't screwed this code
-            int curDongNum = 1;
-            if (curDongNum >= 0 && holder.dongEtxt != null)     holder.dongEtxt.setText(String.valueOf(curDongNum));
+                int curDongNum = 1;
+                if (curDongNum >= 0 && holder.dongEtxt != null)
+                    holder.dongEtxt.setText(String.valueOf(curDongNum));
 
-            if (holder.plusBtn != null) {
-                holder.plusBtn.setOnClickListener(view -> {
-                    int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
-                    holder.dongEtxt.setText(String.valueOf(++mCurNumber));
-                });
+                if (holder.plusBtn != null) {
+                    holder.plusBtn.setOnClickListener(view -> {
+                        int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
+                        holder.dongEtxt.setText(String.valueOf(++mCurNumber));
+                    });
+                }
+
+                if (holder.minusBtn != null) {
+                    holder.minusBtn.setOnClickListener(item -> {
+                        int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
+                        holder.dongEtxt.setText(String.valueOf(--mCurNumber));
+                    });
+                }
+            }
+            //mode_02 amount (if true)
+            else {
+                float curDongAmount = participant.getDebt();
+                if (curDongAmount >= 0 && holder.dongEtxtAmount != null)
+                    holder.dongEtxtAmount.setText(String.valueOf(curDongAmount));
             }
 
-            if (holder.minusBtn != null){
-                holder.minusBtn.setOnClickListener(item-> {
-                    int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
-                    holder.dongEtxt.setText(String.valueOf(--mCurNumber));
-                });
-            }
         }
-        //mode_02 amount (if true)
-         else {
-            float curDongAmount = participant.getDebt();
-            if (curDongAmount >= 0 && holder.dongEtxtAmount != null)     holder.dongEtxtAmount.setText(String.valueOf(curDongAmount));
-        }
-
 
 
 
@@ -166,7 +207,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
 
 
-    /**************************************       Methods       **************************************/
+    /**************************************      other Methods       **************************************/
 
     @Override
     public void onClick(View view) {
@@ -204,6 +245,10 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
     @Override
     public int getItemCount() {
-        return participants.size();
+        if (participants != null)
+            return participants.size();
+        else if (events != null)
+            return events.size();
+        else return 0;
     }
 }

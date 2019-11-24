@@ -3,6 +3,8 @@ package com.example.pedarkharj_edit2.pages;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -32,6 +34,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
     ArrayList<Participant> mParticipants;
     ParticipantAdapter adapter;
@@ -42,6 +46,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     Activity mActivity;
     Button removeBtn, dateBtn, particBtn, doneBtn,
     bp, b0, b1, b2, b3, b4, b5, b6, b7, b8, b9;
+    CircleImageView circleImageView;
     boolean pbCanUse;
     EditText dongEText;
     RelativeLayout buyerBtn;
@@ -84,6 +89,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         dongEText = findViewById(R.id.dong_Etxt);
         priceTv = findViewById(R.id.price_txt);
         recyclerView = findViewById(R.id.participants_RecView);
+        circleImageView = findViewById(R.id.selected_contact);
         //
         calculator = findViewById(R.id.calculator);                          calculator.setOnClickListener(this);
 //        bp = findViewById(R.id.bp);
@@ -101,7 +107,14 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         dateBtn.setText(dateString(todayDate) );
 
         //
-        if (particId != 0)  dongEText.setHint("خب... " +buyer.getName() + " چی خریده؟");
+        if (particId != 0)  {
+            dongEText.setHint("خب... " +buyer.getName() + " چی خریده؟");
+
+            //if buyer has no pic, put a default pic
+            Bitmap defPic = Routines.resizeBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile) ) ;
+            Bitmap bitmap = buyer.getBitmapStr() != null ? Routines.decodeBase64(buyer.getBitmapStr() ) : defPic;
+            circleImageView.setImageBitmap( bitmap );
+        }
         //
         doRecyclerView();
 
