@@ -3,6 +3,7 @@ package com.example.pedarkharj_edit2.classes;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,6 +92,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     //------------------------------      ViewHolder innerClass       ---------------------------------/
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CircleImageView profImv, checkImg;
+        ImageView imageView;
         TextView nameTv, resultTxt;
         RelativeLayout baseLayout;
         //diff dong
@@ -101,6 +104,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
         ViewHolder(View itemView) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.imageview_event);
             profImv = itemView.findViewById(R.id.prof_pic);
             nameTv = itemView.findViewById(R.id.partic_name);
             resultTxt = itemView.findViewById(R.id.result_txt);
@@ -144,7 +148,9 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
             int particNumber = db0.getAllParticeUnderEvent(event).size();
 
             if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
-//        if (event.getBitmapStr() !=null && holder.profImv != null)    holder.profImv.setImageBitmap(Routines.decodeBase64(event.getBitmapStr()));
+            /* pic */ if ( holder.imageView != null && event.getBitmapStr() != null )       holder.profImv.setImageBitmap(Routines.decodeBase64(event.getBitmapStr()));
+            if (particNumber > -1 && holder.resultTxt != null)      holder.resultTxt.setText(particNumber + " عضو");
+            else Log.e("E002",  particNumber + "" );
             db0.closeDB();
         }
         // </ EventMngActivity >

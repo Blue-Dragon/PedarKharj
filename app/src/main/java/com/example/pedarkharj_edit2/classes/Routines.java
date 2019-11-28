@@ -60,10 +60,14 @@ public class Routines {
 
     public static Bitmap resizeBitmap(Bitmap bitmap) {
 
-        while (bitmap.getHeight() * bitmap.getWidth() > 90000){
+        while (bitmap.getHeight() * bitmap.getWidth() > 25000){
             bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*0.8), (int) (bitmap.getHeight()*0.8), true);
         }
         return bitmap;
+    }
+
+    public static Bitmap resizeBitmap(Context context, int bitmapId) {
+        return resizeBitmap( BitmapFactory.decodeResource(context.getResources(), bitmapId) );
     }
 
     public static Bitmap drawableToBitmap(Context mContext, int drawable){

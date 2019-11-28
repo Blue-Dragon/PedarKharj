@@ -79,32 +79,41 @@
         android:ems="10"
         android:inputType="textPersonName"
         style="@style/medium_koodak"
-        android:hint=" نام رویداد" />
+        android:hint="نام" />
 
-
-    <!-- categories -->
-    <ScrollView
+    <EditText
+        android:id="@+id/family_edt"
+        style="@style/medium_koodak"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp"
-        android:layout_below="@id/name_edt"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="40dp">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_edt"
+        android:layout_marginLeft="20dp"
+        android:layout_toLeftOf="@+id/prof_pic"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="نام خانوادگی" />
 
-        <RelativeLayout
+    <RelativeLayout
+        android:id="@+id/addFromContacts_btn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@id/family_edt"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@drawable/selector_button_addcontact">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="#00FFFFFF">
+            style="@style/medium_koodak"
+            android:textColor="#2962FF"
+            android:text="افزودن از مخاطبین گوشی"
+            android:gravity="center"
+            android:layout_centerInParent="true"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/choosePartices_RecView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </android.support.v7.widget.RecyclerView>
-
-        </RelativeLayout>
-
-    </ScrollView>
+    </RelativeLayout>
 
 </RelativeLayout>

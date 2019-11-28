@@ -18,9 +18,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".pages.EventMngActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".pages.AddEventActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".pages.EventMngActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".pages.AddContactActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -36,7 +39,6 @@
             android:name=".pages.AddExpenseActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

@@ -4,6 +4,7 @@ package com.example.pedarkharj_edit2.classes;
 public class Event {
 
     int id;
+    String bitmapStr;
     String event_name;
     String created_at;
 
@@ -31,6 +32,9 @@ public class Event {
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
+    public void setBitmapStr(String bitmapStr) {
+        this.bitmapStr = bitmapStr;
+    }
 
     // getter
     public int getId() {
@@ -42,6 +46,7 @@ public class Event {
     public String getCreated_at() {
         return created_at;
     }
-
-
+    public String getBitmapStr() {
+        return bitmapStr;
+    }
 }

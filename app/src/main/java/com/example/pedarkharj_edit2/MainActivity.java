@@ -3,10 +3,12 @@ package com.example.pedarkharj_edit2;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,7 +20,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.classes.BuyerDialog;
@@ -28,13 +34,17 @@ import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
+import com.example.pedarkharj_edit2.classes.Routines;
 import com.example.pedarkharj_edit2.pages.ContactsActivity;
 import com.example.pedarkharj_edit2.pages.EventMngActivity;
 
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
     RecyclerView recyclerView;
     List<Participant> mParticipants;
     ParticipantAdapter adaptor;
@@ -43,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Activity mActivity = this;
     FloatingActionButton fab;
     DatabaseHelper db;
+    Spinner spinner;
     //
+    CircleImageView drawerProfPic;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
@@ -56,9 +68,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
        Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
-        mParticipants = new ArrayList<>();
 
-        //Floating Btn
+        //-------------------------     Floating Btn    --------------------------//
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
@@ -66,9 +77,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showBuyerDialog();
         });
 
-        //-------------------------     SQLite    --------------------------//
-        db = new DatabaseHelper(mContext);
+        //-------------------------     Spinner    --------------------------//
+        spinner = findViewById(R.id.spinner);
+        List<String> list = new ArrayList<String>();
+        list.add("تعداد دنگ");
+        list.add("مقداد دنگ");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
 
+        spinner.setOnItemSelectedListener(this);
+
+        //-------------------------     SQLite & RecView   --------------------------//
+        mParticipants = new ArrayList<>();
+        db = new DatabaseHelper(mContext);
 
         //todo: set default event and partices
         /*
@@ -189,6 +211,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         new BuyerDialog(this).show();
     }
 
+    //-------------------------     Spinner    --------------------------//
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String selectedIten = adapterView.getItemAtPosition(i).toString();
+
+//        List<>
+//
+//        Event event;
+//        if (db.getEventByName(selectedIten) != null)    {
+//            event = db.getEventByName(selectedIten);
+//            Toast.makeText(mContext, "Event: "+ event.getEventName(), Toast.LENGTH_SHORT).show();
+//        }else     Toast.makeText(mContext, "Fuck u looser! ", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
 
     //-------------------------     RecyclerView    --------------------------//
     private void setRecParticesUnderEvent() {
@@ -207,12 +248,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 //-------------------------     Drawer    --------------------------//
     private void createDrawer() {
-        drawerLayout = findViewById(R.id.m_drawer);
         menu = findViewById(R.id.menu); menu.setOnClickListener(this);
+        drawerLayout = findViewById(R.id.m_drawer);
 
         //Nav View
         navigationView = findViewById(R.id.m_navigation_view); //already initiated
         navigationView.setNavigationItemSelectedListener(this); //onNavigationItemSelected() metod
+
+        View mView = navigationView.getHeaderView(0);
+        drawerProfPic = mView.findViewById(R.id.nav_profile_pic);
+        drawerProfPic.setImageBitmap(Routines.resizeBitmap(mContext, R.drawable.profile) ); //set a def pic for nav_view
 
         //toggle (it takes care of drawable methods)
         toggle = new ActionBarDrawerToggle(mActivity, drawerLayout, R.string.nav_drawer_open, R.string.nav_drawer_close);
@@ -296,6 +341,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
+
 
 
 }

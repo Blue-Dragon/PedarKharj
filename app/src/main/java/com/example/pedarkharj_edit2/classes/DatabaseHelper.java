@@ -435,8 +435,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null)
-            c.moveToFirst();
+        if (c != null)  c.moveToFirst();
 
         Event event = new Event();
         event.setId(c.getInt(c.getColumnIndex(KEY_ID)));

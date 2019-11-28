@@ -68,12 +68,8 @@ public class EventMngActivity extends AppCompatActivity {
     private void setRecEvents() {
 
        mEvents = db.getAllEvents();
-       for (Event e : mEvents){
-           Log.d("E002",  e.getId() + " - " +String.valueOf(e.getEventName())+ "\n" );
-       }
-
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
         //
