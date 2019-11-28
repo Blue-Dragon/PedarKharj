@@ -47,6 +47,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
     RecyclerView recyclerView;
     List<Participant> mParticipants;
+    List<Event> events ;
     ParticipantAdapter adaptor;
     //
     Context mContext = this;
@@ -77,20 +78,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showBuyerDialog();
         });
 
-        //-------------------------     Spinner    --------------------------//
-        spinner = findViewById(R.id.spinner);
-        List<String> list = new ArrayList<String>();
-        list.add("تعداد دنگ");
-        list.add("مقداد دنگ");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-
-        spinner.setOnItemSelectedListener(this);
-
         //-------------------------     SQLite & RecView   --------------------------//
         mParticipants = new ArrayList<>();
         db = new DatabaseHelper(mContext);
+
+        events  = db.getAllEvents(); //for spinner
 
         //todo: set default event and partices
         /*
@@ -195,10 +187,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //
 
 
+        /* -------------------------     Spinner    -------------------------- */
+        spinner = findViewById(R.id.spinner);
+        List<String> list = new ArrayList<String>();
+
+        events = db.getAllEvents();
+        for (Event event:events){
+            list.add(event.getEventName());
+        }
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+
+        spinner.setOnItemSelectedListener(this);
+
+
 
          //drawerLayout
         createDrawer();
-
 
         //Close db
         db.closeDB();
@@ -215,14 +222,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String selectedIten = adapterView.getItemAtPosition(i).toString();
+        Event event = db.getEventById(i+1);
 
-//        List<>
-//
-//        Event event;
-//        if (db.getEventByName(selectedIten) != null)    {
-//            event = db.getEventByName(selectedIten);
-//            Toast.makeText(mContext, "Event: "+ event.getEventName(), Toast.LENGTH_SHORT).show();
-//        }else     Toast.makeText(mContext, "Fuck u looser! ", Toast.LENGTH_SHORT).show();
+        if (event != null)    {
+            Toast.makeText(mContext, "Event: "+ event.getId()+ " = " + event.getEventName(), Toast.LENGTH_SHORT).show();
+        }else     Toast.makeText(mContext, "Fuck u looser! ", Toast.LENGTH_SHORT).show();
     }
 
     @Override
