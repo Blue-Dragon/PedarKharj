@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     List<Participant> mParticipants;
     List<Event> events ;
     ParticipantAdapter adaptor;
+    Event defEvent;
     //
     Context mContext = this;
     Activity mActivity = this;
@@ -69,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
        Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
+        mParticipants = new ArrayList<>();
+        db = new DatabaseHelper(mContext);
+        events  = db.getAllEvents(); //for spinner
+//        defEvent = ; //todo: create this on SharedPreferences
+
 
         //-------------------------     Floating Btn    --------------------------//
         fab = this.findViewById(R.id.fab);
@@ -78,28 +84,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showBuyerDialog();
         });
 
-        //-------------------------     SQLite & RecView   --------------------------//
-        mParticipants = new ArrayList<>();
-        db = new DatabaseHelper(mContext);
 
-        events  = db.getAllEvents(); //for spinner
 
+
+        //-------------------------     RecView   --------------------------//
         //todo: set default event and partices
-        /*
-         * adding partices and an event
-         */
-//        long contact_1 =  db.createContact(new Contact("Hamed"));
-//        long contact_2 = db.createContact(new Contact("Reza"));
-//        long contact_3 =  db.createContact(new Contact("Sadi"));
-//        long contact_4 = db.createContact(new Contact("Abbas"));
-//
-//        db.createNewEventWithPartices(new Event("سفر")
-//                , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)
-//                        ,db.getContactById(contact_3), db.getContactById(contact_4), });
 
-        /*
-         * adding a new expense with different debts
-         */
+        if (events.size() < 1 ){
+
+            /*
+             * adding partices and an event
+             */
+            long contact_1 =  db.createContact(new Contact("Hamed"));
+            long contact_2 = db.createContact(new Contact("Reza"));
+            long contact_3 =  db.createContact(new Contact("Sadi"));
+            long contact_4 = db.createContact(new Contact("Abbas"));
+
+            db.createNewEventWithPartices(new Event("سفر شمال")
+                    , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)
+                            ,db.getContactById(contact_3), db.getContactById(contact_4), });
+            /*
+             * adding a new expense with different debts
+             */
 //        float price = 20000f;
 //
 //        //update buyer expense
@@ -109,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        db.updatePartice(buyer);
 //        Log.e("Fuck", "old: "+ old_expense+ "\nnew: "+ buyer.getExpense() );
 
-        // A fake result of DiffDong Activity
+            // A fake result of DiffDong Activity
 //        float[] newDebts = {2500f, 5000f, 1200f, 1800f};
 //        int[] userIds = new int[] {1,2,3,4};
 //
@@ -142,7 +148,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-        //recyclerView
+            //recyclerView
+        }
+
         recyclerView = findViewById(R.id.rv_partice_expenses);
         setRecParticesUnderEvent(); //show partices of the Event
 
@@ -203,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         spinner.setOnItemSelectedListener(this);
 
 
-
          //drawerLayout
         createDrawer();
 
@@ -221,7 +228,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //-------------------------     Spinner    --------------------------//
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String selectedIten = adapterView.getItemAtPosition(i).toString();
         Event event = db.getEventById(i+1);
 
         if (event != null)    {
