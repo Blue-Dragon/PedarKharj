@@ -9,10 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -64,6 +66,12 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
+        Toolbar toolbar =  findViewById(R.id.m_toolbar);
+        setSupportActionBar(toolbar);
+
+        //back imageView btn
+        ImageView backBtn = findViewById(R.id.back_btn);
+        backBtn.setOnClickListener(item -> finish());
 
         mContext = this;
         mActivity = this;
@@ -72,6 +80,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         db = new DatabaseHelper(mContext);
         particId = getIntent().getIntExtra(Routines.PARTICIPANT_INFO, 0);
         buyer = db.getParticeById(particId);
+
 
         List<Participant> usersList = db.getAllParticeUnderEvent(buyer.getEvent());
         users = new Participant[usersList.size()];

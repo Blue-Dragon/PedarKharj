@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
@@ -41,12 +42,15 @@ public class ContactsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
-
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
         mContacts = new ArrayList<Contact>();
         db = new DatabaseHelper(mContext);
+
+        //back imageView btn
+        ImageView backBtn = findViewById(R.id.back_btn);
+        backBtn.setOnClickListener(item -> finish());
 
         //Floating Btn
         fab = this.findViewById(R.id.fab);

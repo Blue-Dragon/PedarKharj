@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -51,17 +52,21 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
+        Toolbar toolbar =  findViewById(R.id.m_toolbar);
+        setSupportActionBar(toolbar);
+
+//        //back imageView btn
+//        ImageView backBtn = findViewById(R.id.back_btn);
+//        backBtn.setOnClickListener(item -> finish());
 
         mActivity =this;
         mContext = this;
         newImg = false;
         db = new DatabaseHelper(mContext);
 
-        fromContactsBtn = findViewById(R.id.addFromContacts_btn);    fromContactsBtn.setOnClickListener(this);
         profPic = findViewById(R.id.prof_pic);                                      profPic.setOnClickListener(this);
         cancelImg = findViewById(R.id.cancel_img);                               cancelImg.setOnClickListener(this);
         doneImg = findViewById(R.id.check_img);                                  doneImg.setOnClickListener(this);
-        fromContactsBtn = findViewById(R.id.addFromContacts_btn);    fromContactsBtn.setOnClickListener(this);
         nameEdt = findViewById(R.id.name_edt);
         familyEdt = findViewById(R.id.family_edt);
 //
@@ -82,12 +87,6 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                     Routines.chooseCameraGallery(mActivity);
                 break;
 
-            case R.id.addFromContacts_btn:
-                if (Build.VERSION.SDK_INT >= 23)
-                    Routines.requestPermissions(mActivity, new String[]{READ_CONTACTS}, Routines.PER_CODE_READ_CONTACTS);
-                else
-                    Routines.chooseCameraGallery(mActivity);
-                break;
 
             case R.id.check_img:
                 addNewContact();

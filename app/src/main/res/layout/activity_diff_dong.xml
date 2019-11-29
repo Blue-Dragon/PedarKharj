@@ -23,11 +23,10 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="wrap_content"
+                android:id="@+id/back_btn"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
                 android:layout_marginStart="0dp"
                 android:src="@drawable/back" />
 
@@ -38,7 +37,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="10dp"
-                android:layout_toRightOf="@+id/imageView3"
+                android:layout_toRightOf="@+id/back_btn"
                 android:foregroundGravity="center"
                 android:gravity="center"
                 android:text="دنگ های متفاوت"

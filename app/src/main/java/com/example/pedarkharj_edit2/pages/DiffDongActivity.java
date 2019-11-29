@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,9 +32,9 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     ArrayList<Participant> mParticipants;
     DatabaseHelper db;
     ParticipantAdapter adaptor;
-
     Context mContext = this;
     Activity mActivity = this;
+
     FloatingActionButton fab;
     Spinner spinner;
 
@@ -42,12 +43,15 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diff_dong);
-
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
         mParticipants = new ArrayList<Participant>();
         db = new DatabaseHelper(mContext);
+
+        //back imageView btn
+        ImageView backBtn = findViewById(R.id.back_btn);
+        backBtn.setOnClickListener(item -> finish());
 
         //Floating Btn
         fab = this.findViewById(R.id.fab);

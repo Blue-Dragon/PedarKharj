@@ -23,9 +23,8 @@
             android:id="@+id/rl_prof_pic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="8dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="8dp"
             android:layout_centerVertical="true">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -39,8 +38,8 @@
             android:id="@+id/rl_particName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/rl_prof_pic"
-            android:layout_marginRight="12dp"
+            android:layout_toRightOf="@id/rl_prof_pic"
+            android:layout_marginLeft="12dp"
             android:gravity="center"
             android:layout_centerVertical="true">
 
@@ -61,8 +60,8 @@
             android:id="@+id/rl_my_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
             android:gravity="center"
             android:layout_centerVertical="true">
 

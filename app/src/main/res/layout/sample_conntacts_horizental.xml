@@ -14,8 +14,8 @@
         android:id="@+id/prof_pic"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="18dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="18dp"
         android:layout_centerVertical="true"
         android:src="@drawable/profile"/>
 
@@ -26,8 +26,8 @@
         android:layout_above="@id/tv_my_dong"
         android:layout_marginBottom="-2dp"
         android:fontFamily="@font/b_koodak"
-        android:layout_toLeftOf="@id/prof_pic"
-        android:layout_marginRight="12dp"
+        android:layout_toRightOf="@id/prof_pic"
+        android:layout_marginLeft="12dp"
         android:gravity="center"
         android:layout_centerVertical="true"
         android:text="ممد"
@@ -38,10 +38,10 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/prof_pic"
-        android:layout_toLeftOf="@id/prof_pic"
+        android:layout_toRightOf="@id/prof_pic"
+        android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginTop="5dp"
-        android:layout_marginLeft="12dp"
         android:background="#E6E6E6"/>
 
 </RelativeLayout>

@@ -93,27 +93,17 @@
         android:inputType="textPersonName"
         android:hint="نام خانوادگی" />
 
-    <RelativeLayout
-        android:id="@+id/addFromContacts_btn"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@id/family_edt"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="@drawable/selector_button_addcontact">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            style="@style/medium_koodak"
-            android:textColor="#2962FF"
-            android:text="افزودن از مخاطبین گوشی"
-            android:gravity="center"
-            android:layout_centerInParent="true"/>
-
-    </RelativeLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="14dp"
+        app:backgroundTint="#DCEDC8"
+        app:srcCompat="@drawable/ic_check" />
 
 </RelativeLayout>

@@ -40,17 +40,20 @@ public class EventMngActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_mng);
-
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
         mEvents = new ArrayList<>();
 
-        //Floating Btn
+        //back imageView btn
+        ImageView backBtn = findViewById(R.id.back_btn);
+        backBtn.setOnClickListener(item -> finish());
+
+        //-------------------------     Floating Btn    --------------------------//
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-//            startActivity(new Intent(mContext, AddExpenseActivity.class));
+            startActivity(new Intent(mContext, AddEventParticesActivity.class));
 //            showBuyerDialog();
         });
 

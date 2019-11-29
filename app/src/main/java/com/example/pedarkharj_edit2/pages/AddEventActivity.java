@@ -2,14 +2,18 @@ package com.example.pedarkharj_edit2.pages;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
@@ -23,41 +27,60 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddEventActivity extends AppCompatActivity {
-    private Activity mActivity;
-    public Dialog d;
-    private Button yes, no;
-    RecyclerView recyclerView;
+    Context mContext;
     ArrayList<Participant> mParticipants;
     ParticipantAdapter adapter;
     DatabaseHelper db;
+
+    Dialog d;
+    Button yes, no;
+    ImageView cancelImg, doneImg;
+    RecyclerView recyclerView;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+        Toolbar toolbar =  findViewById(R.id.m_toolbar);
+        setSupportActionBar(toolbar);
 
-        db = new DatabaseHelper(mActivity);
+        mContext = this;
+        db = new DatabaseHelper(mContext);
 
+//        //back imageView btn
+//        ImageView backBtn = findViewById(R.id.back_btn);
+//        backBtn.setOnClickListener(item -> finish());
+
+        //-------------------------     Floating Btn    --------------------------//
+        fab = this.findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+            startActivity(new Intent(mContext, EventMngActivity.class));
+            finish();
+        });
+
+        //-------------------------     RecView    --------------------------//
         /**
-         * RecView todo: change BuyerDialog codes in here to the relative codes
+         *  todo: change BuyerDialog codes in here to the relative codes
          */
-        recyclerView = findViewById(R.id.chooseBuyer_RecView);
-        doRecyclerView();
-
-        recyclerView.addOnItemTouchListener(
-                new RecyclerTouchListener(mActivity, recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Participant participant = mParticipants.get(position);
-                Intent intent =  new Intent(mActivity, AddExpenseActivity.class);
-                intent.putExtra(Routines.PARTICIPANT_INFO, participant.getId());
-                mActivity.startActivity(intent);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-            }
-        }));
+//        recyclerView = findViewById(R.id.chooseBuyer_RecView);
+//        doRecyclerView();
+//
+//        recyclerView.addOnItemTouchListener(
+//                new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+//            @Override
+//            public void onClick(View view, int position) {
+//                Participant participant = mParticipants.get(position);
+//                Intent intent =  new Intent(mContext, AddExpenseActivity.class);
+//                intent.putExtra(Routines.PARTICIPANT_INFO, participant.getId());
+//                mContext.startActivity(intent);
+//            }
+//
+//            @Override
+//            public void onLongClick(View view, int position) {
+//            }
+//        }));
         //
         db.closeDB();
     }
@@ -74,11 +97,11 @@ public class AddEventActivity extends AppCompatActivity {
         Log.d("Event", event.getEventName());
         mParticipants.addAll(participants0);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 4, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 4, GridLayoutManager.VERTICAL, false);
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adapter = new ParticipantAdapter(mActivity, R.layout.sample_contact, mParticipants, 3);
+        adapter = new ParticipantAdapter(mContext, R.layout.sample_contact, mParticipants, 3);
         recyclerView.setAdapter(adapter);
 
     }
