@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext, mParticipants);
+        adaptor = new ParticipantAdapter(mContext, R.layout.sample_participant,  mParticipants);
         recyclerView.setAdapter(adaptor);
     }
 

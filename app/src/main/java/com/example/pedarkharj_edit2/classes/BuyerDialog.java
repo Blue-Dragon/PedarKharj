@@ -102,7 +102,7 @@ public class BuyerDialog extends Dialog {
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adapter = new ParticipantAdapter(mActivity, R.layout.sample_contact, mParticipants, 3);
+        adapter = new ParticipantAdapter(mActivity, R.layout.sample_contact, mParticipants);
         recyclerView.setAdapter(adapter);
 
     }

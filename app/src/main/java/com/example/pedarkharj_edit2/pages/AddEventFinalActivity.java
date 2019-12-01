@@ -26,7 +26,7 @@ import com.example.pedarkharj_edit2.classes.Routines;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddEventActivity extends AppCompatActivity {
+public class AddEventFinalActivity extends AppCompatActivity {
     Context mContext;
     ArrayList<Participant> mParticipants;
     ParticipantAdapter adapter;
@@ -101,7 +101,7 @@ public class AddEventActivity extends AppCompatActivity {
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adapter = new ParticipantAdapter(mContext, R.layout.sample_contact, mParticipants, 3);
+        adapter = new ParticipantAdapter(mContext, R.layout.sample_contact, mParticipants);
         recyclerView.setAdapter(adapter);
 
     }

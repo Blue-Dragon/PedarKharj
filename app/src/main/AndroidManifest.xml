@@ -21,7 +21,7 @@
         <activity android:name=".pages.AddEventParticesActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".pages.AddEventActivity"
+            android:name=".pages.AddEventFinalActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".pages.EventMngActivity"

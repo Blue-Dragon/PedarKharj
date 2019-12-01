@@ -73,7 +73,7 @@
 
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_events"
+                android:id="@+id/rv"
                 android:layout_marginTop="5dp"
                 android:paddingBottom="5dp"
                 android:layout_width="match_parent"

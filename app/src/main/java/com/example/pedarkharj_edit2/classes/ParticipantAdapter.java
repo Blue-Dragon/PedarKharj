@@ -25,6 +25,9 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.ViewHolder> implements View.OnClickListener {
+    final static boolean AMOUNT_MODE = true;
+    final static boolean DONG_MODE = false;
+
     private List<Participant> participants;
     private List<Event> events;
     private Context mContext;
@@ -41,11 +44,11 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
     //------------------------------      Constructors       ---------------------------------/
     //main page
-    public ParticipantAdapter(Context mContext, List<Participant> participants) {
-        this.mContext = mContext;
-        this.participants = participants;
-        this.mLayout = R.layout.sample_participant;
-    }
+//    public ParticipantAdapter(Context mContext , List<Participant> participants) {
+//        this.mContext = mContext;
+//        this.participants = participants;
+//        this.mLayout = R.layout.sample_participant;
+//    }
 
     //EventMng Activity
     public ParticipantAdapter(Context mContext) {
@@ -59,28 +62,19 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         this.mLayout = layoutId;
     }
 
-    //Expense/ Contacts Activity
+    //Typical Activities
     public ParticipantAdapter(Context mContext, int mLayout, List<Participant> participants) {
         this.mContext = mContext;
         this.participants = participants;
         this.mLayout = mLayout;
-        this.maxCheckImg = participants.size();
     }
-    //BuyerDialog Activity
-    public ParticipantAdapter(Context mContext, int mLayout, List<Participant> participants, int maxCheckImg) {
-        this.mContext = mContext;
-        this.participants = participants;
-        this.mLayout = mLayout;
+    public void setMaxCheckImg(int maxCheckImg) {
         this.maxCheckImg = maxCheckImg;
     }
-    //DiffDong Activity
-        // (Mode_01 number)
-    public ParticipantAdapter(Activity mActivity, int mLayout, List<Participant> participants) {
-        this.mActivity = mActivity;
+    public void setParticipants(List<Participant> participants) {
         this.participants = participants;
-        this.mLayout = mLayout;
-        this.amountModeDong = false;
     }
+
     public ParticipantAdapter(Activity mActivity, int mLayout, List<Participant> participants, boolean amountModeDong) {
         this.mActivity = mActivity;
         this.participants = participants;

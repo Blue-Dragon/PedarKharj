@@ -29,7 +29,6 @@ public class ContactsActivity extends AppCompatActivity {
     final public static int INTENT_CODE = 1;
     final public static String INTENT_MASSEGE = "NEW_NAME";
     RecyclerView recyclerView;
-    ArrayList<Contact> mContacts;
     DatabaseHelper db;
 
     ParticipantAdapter adaptor;
@@ -45,7 +44,6 @@ public class ContactsActivity extends AppCompatActivity {
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
-        mContacts = new ArrayList<Contact>();
         db = new DatabaseHelper(mContext);
 
         //back imageView btn
@@ -72,20 +70,7 @@ public class ContactsActivity extends AppCompatActivity {
          * adaptor or even edit that. change this shit later in order not to get fucked up!
          */
         List<Contact> mContacts0 = db.getAllContacts();
-        List<Participant> participants = new ArrayList<>(mContacts0.size());
-
-        mContacts.addAll(mContacts0);
-        for (Contact c : mContacts0){
-            Participant participant = new Participant();
-            participant.setContact(c);
-            participant.setId((int) c.getId());
-            participant.setName(c.getName());
-            participants.add(participant);
-//
-//            Log.d("Contact", c.getId()+ " : "+ c.getName());
-//            Log.e("Contact", participant.getId()+ " : "+ participant.getName());
-        }
-
+        List<Participant> participants = Routines.contactToPartic(mContacts0);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -93,6 +78,7 @@ public class ContactsActivity extends AppCompatActivity {
         adaptor = new ParticipantAdapter(mContext, R.layout.sample_conntacts_horizental, participants);
         recyclerView.setAdapter(adaptor);
     }
+
 
     @Override
     protected void onResume() {

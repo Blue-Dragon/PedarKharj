@@ -1,26 +1,20 @@
 package com.example.pedarkharj_edit2.pages;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Event;
-import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 
 import java.util.ArrayList;
@@ -57,18 +51,18 @@ public class EventMngActivity extends AppCompatActivity {
 //            showBuyerDialog();
         });
 
-        //-------------------------     SQLite    --------------------------//
+        //
         db = new DatabaseHelper(mContext);
+        setRecView(); //show Events
 
-
-        recyclerView = findViewById(R.id.rv_events);
-        setRecEvents(); //show Events
-
+        //
+        db.closeDB();
     }
 
 
     //-------------------------     RecyclerView    --------------------------//
-    private void setRecEvents() {
+    private void setRecView() {
+        recyclerView = findViewById(R.id.rv);
 
        mEvents = db.getAllEvents();
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);

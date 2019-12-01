@@ -14,6 +14,8 @@ import android.util.Base64;
 import com.example.pedarkharj_edit2.R;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Routines {
@@ -99,5 +101,23 @@ public class Routines {
 //        return  MydbHelper.getInstance(mContext).getRowsCount();
 //    }
 
+    public static List<Participant> contactToPartic(List<Contact> mContacts0){
+
+        ArrayList<Contact> mContacts = new ArrayList<Contact>();
+        List<Participant> participants = new ArrayList<>(mContacts0.size());
+
+        mContacts.addAll(mContacts0);
+        for (Contact c : mContacts0){
+            Participant participant = new Participant();
+            participant.setContact(c);
+            if (c.getId() > 0) participant.setId((int) c.getId());
+            participant.setName(c.getName());
+            participants.add(participant);
+//
+//            Log.d("Contact", c.getId()+ " : "+ c.getName());
+//            Log.e("Contact", participant.getId()+ " : "+ participant.getName());
+        }
+        return participants;
+    }
 
 }
