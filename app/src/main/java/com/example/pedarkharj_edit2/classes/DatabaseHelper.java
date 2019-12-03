@@ -435,7 +435,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c != null)  c.moveToFirst();
+        if (c != null){
+            c.moveToFirst();
+        }
 
         Event event = new Event();
         event.setId(c.getInt(c.getColumnIndex(KEY_ID)));
@@ -672,7 +674,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * adding a participant to main table
      */
-     // creating a new participant with a new contact
+     // creating a new contact THEN a new participant
     public Participant createPartic(String particeName, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -682,26 +684,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Participant participant = new Participant(particeName);
         participant.setContact(contact0);
         // add partice to main table
-        addPartic(participant, event);
+        createPartic(participant, event);
 
         return participant;
     }
+
      // adding partices to  an Event
-    private void addPartices(List<Participant> participants, Event event) {
+    public List<Participant> createParticesUnderEvent(List<Participant> participants, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         for (Participant participant : participants){
             participant.setEvent(event);
-            addPartic(participant);
+            createPartic(participant);
         }
+
+        return participants;
     }
      // adding a participant
-    private void addPartic(Participant participant) {
+    private void createPartic(Participant participant) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_NAME, participant.getEvent().getEventName());
-        values.put(KEY_EVENT_ID, participant.getId());
+//        values.put(KEY_EVENT_ID, participant.getId());
         values.put(KEY_PARTICE_NAME, participant.getName());
         values.put(KEY_CONTACT_ID, participant.getContact().getId()); //
         values.put(KEY_PARTICE_EXPENSE, participant.getExpense());
@@ -709,13 +714,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long id = db.insert(TABLE_EVENT_PARTICES, null, values);
     }
-    private void addPartic(Participant participant, Event event) {
+    private void createPartic(Participant participant, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
         participant.setEvent(event);
 
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_NAME, participant.getEvent().getEventName());
-        values.put(KEY_EVENT_ID, participant.getId());
+//        values.put(KEY_EVENT_ID, participant.getId());
         values.put(KEY_PARTICE_NAME, participant.getName());
         values.put(KEY_CONTACT_ID, participant.getContact().getId()); //
         values.put(KEY_PARTICE_EXPENSE, participant.getExpense());
@@ -725,7 +730,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * deleting a participant
+     * Deleting a participant
      */
     public void deletePartic(Participant participant) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -733,6 +738,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // now delete the Partic
         db.delete(TABLE_EVENT_PARTICES, KEY_ID + " = ?",
                 new String[] { String.valueOf(participant.getId()) });
+    }
+
+    /**
+     * Deleting all participants Under Event
+     */
+    public void deleteAllParticeUnderEvent(Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "DELETE  * FROM " + TABLE_EVENT_PARTICES + " WHERE " + KEY_EVENT_NAME + " = " + Routines.EVENT_TEMP_NAME;
+
+        Log.e(LOG, selectQuery);
+
     }
 
     /**

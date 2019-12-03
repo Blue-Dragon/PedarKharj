@@ -28,7 +28,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
     Context mContext;
     RecyclerView recyclerView, rec_01;
     List<Contact> contacts;
-    List<Participant> participants;
+    List<Participant> participants, participants_01;
     ParticipantAdapter adaptor;
     DatabaseHelper db;
 
@@ -47,21 +47,42 @@ public class AddEventParticesActivity extends AppCompatActivity {
         ImageView backBtn = findViewById(R.id.back_btn);
         backBtn.setOnClickListener(item -> finish());
 
-        //-------------------------     Floating Btn    --------------------------//
-        fab = this.findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            startActivity(new Intent(mContext, AddEventFinalActivity.class));
-            finish();
-        });
-
-        //
+        /**
+         * RecView & DB
+         */
         db = new DatabaseHelper(mContext);
         rec_01 = findViewById(R.id.rv_01);
         participants = new ArrayList<>();
+        participants_01 = new ArrayList<>();
 
         recyclerView = findViewById(R.id.rv);
         setRecView(); //show contacts
+
+        //-------------------------     Floating Btn    --------------------------//
+        fab = this.findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+
+            //get saved partices in tempEvent
+            Routines.addParticesToTempEvent(participants_01, db);
+
+            int[] ids = new int[participants_01.size()];
+            int i = 0;
+            for (Participant participant: participants_01){
+
+                ids[i] = participant.getId();
+                Log.e("fuckEvent",  "id: " +( i) + " = " + participant.getEvent().getEventName());
+                i++;
+
+            }
+
+            Intent intent = new Intent(mContext, AddEventFinalActivity.class);
+            intent.putExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT, ids);
+            Log.d("fuckEvent",  "id: " + ids[0] + " "+ ids[1]);
+            startActivity(intent);
+//
+        });
+
+
 
         //
         db.closeDB();
@@ -81,13 +102,13 @@ public class AddEventParticesActivity extends AppCompatActivity {
          * adaptor or even edit that. change this shit later in order not to get fucked up!
          */
         contacts = db.getAllContacts();
-        List<Participant> participants0 = Routines.contactToPartic(contacts);
+        participants = Routines.contactToPartic(contacts);
 
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext, R.layout.sample_conntacts_horizental, participants0);
+        adaptor = new ParticipantAdapter(mContext, R.layout.sample_conntacts_horizental, participants);
         recyclerView.setAdapter(adaptor);
 
         //onClick
@@ -95,10 +116,9 @@ public class AddEventParticesActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Contact contact = contacts.get(position);
-                Participant participant = new Participant(contact.getName());       participant.setContact(contact);
-                participants.add(participant);
-                setRecView01();
+                Participant participant = participants.get(position);
+                participants_01.add(participant);
+                setRecView01(participants_01);
 
                 Log.d("recOnClick", participant.getName());
             }
@@ -109,9 +129,10 @@ public class AddEventParticesActivity extends AppCompatActivity {
         }));
     }
 
-    private void setRecView01(){
+    private void setRecView01(List<Participant> participants){
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.HORIZONTAL, false);
+        GridLayoutManager gridLayoutManager =
+                new GridLayoutManager(mContext, 1, GridLayoutManager.HORIZONTAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rec_01.setLayoutManager(gridLayoutManager);
         //

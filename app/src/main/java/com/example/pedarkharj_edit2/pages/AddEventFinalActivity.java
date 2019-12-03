@@ -52,6 +52,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
 //        ImageView backBtn = findViewById(R.id.back_btn);
 //        backBtn.setOnClickListener(item -> finish());
 
+
         //-------------------------     Floating Btn    --------------------------//
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
@@ -61,26 +62,9 @@ public class AddEventFinalActivity extends AppCompatActivity {
         });
 
         //-------------------------     RecView    --------------------------//
-        /**
-         *  todo: change BuyerDialog codes in here to the relative codes
-         */
-//        recyclerView = findViewById(R.id.chooseBuyer_RecView);
-//        doRecyclerView();
-//
-//        recyclerView.addOnItemTouchListener(
-//                new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
-//            @Override
-//            public void onClick(View view, int position) {
-//                Participant participant = mParticipants.get(position);
-//                Intent intent =  new Intent(mContext, AddExpenseActivity.class);
-//                intent.putExtra(Routines.PARTICIPANT_INFO, participant.getId());
-//                mContext.startActivity(intent);
-//            }
-//
-//            @Override
-//            public void onLongClick(View view, int position) {
-//            }
-//        }));
+        recyclerView = findViewById(R.id.rv);
+        doRecyclerView();
+
         //
         db.closeDB();
     }
@@ -89,20 +73,31 @@ public class AddEventFinalActivity extends AppCompatActivity {
     // ---------------------------  Methods  --------------------------- //
 
     private void doRecyclerView() {
-        mParticipants = new ArrayList<Participant>();
-        db.closeDB();
-        //show partices of the Event todo: update -> get event
-        Event event = db.getEventById(1);
-        List<Participant> participants0 = db.getAllParticeUnderEvent(1);
-        Log.d("Event", event.getEventName());
-        mParticipants.addAll(participants0);
+        int[] ids = getIntent().getIntArrayExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 4, GridLayoutManager.VERTICAL, false);
-//        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
+        mParticipants = new ArrayList<Participant>();
+        for (int i : ids){
+            mParticipants.add(db.getParticeById(i));
+        }
+
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3, GridLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         //
         adapter = new ParticipantAdapter(mContext, R.layout.sample_contact, mParticipants);
         recyclerView.setAdapter(adapter);
-
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        try {
+            Routines.deleteTempEvent(mContext);
+
+        }catch (Exception e){
+            Log.d("Fuck06", e + "");
+        }
+    }
+
+
 }

@@ -127,6 +127,9 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         //
         doRecyclerView();
 
+
+        // db
+        db.closeDB();
     }
 
 

@@ -3,15 +3,12 @@ package com.example.pedarkharj_edit2.classes;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-
-import com.example.pedarkharj_edit2.R;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -26,6 +23,11 @@ public class Routines {
     public static final String PARTICIPANT_INFO = "PARTICIPANT_INFO";
     public static int usersId = 0;
     private static int contactsSQLID ;
+    public static final String EVENT_TEMP_NAME = "EVENT_TEMP";
+
+
+    //Intent extras
+    public static final String NEW_EVENT_PARTIC_IDS_INTENT = "NEW_EVENT_PARTIC_IDS_INTENT";
 
 //    Context mContext;
     Activity mActivity;
@@ -37,6 +39,10 @@ public class Routines {
 
 
     /********************************************       Methods     ****************************************************/
+
+    /**
+     *  Permissions
+     */
     public static void requestPermissions(Activity mActivity, String[] strings, int permissionCode) {
         ActivityCompat.requestPermissions(mActivity, strings, permissionCode);
     }
@@ -59,7 +65,9 @@ public class Routines {
                 .show();
     }
 
-
+    /**
+     *  Bitmap
+     */
     public static Bitmap resizeBitmap(Bitmap bitmap) {
 
         while (bitmap.getHeight() * bitmap.getWidth() > 25000){
@@ -101,6 +109,9 @@ public class Routines {
 //        return  MydbHelper.getInstance(mContext).getRowsCount();
 //    }
 
+    /**
+     * Contacts to Prtices
+     */
     public static List<Participant> contactToPartic(List<Contact> mContacts0){
 
         ArrayList<Contact> mContacts = new ArrayList<Contact>();
@@ -118,6 +129,28 @@ public class Routines {
 //            Log.e("Contact", participant.getId()+ " : "+ participant.getName());
         }
         return participants;
+    }
+
+    // add to db
+    public static List<Participant> addParticesToTempEvent (List<Participant> participants, DatabaseHelper db){
+
+        //add partices to db
+
+
+        //add an Event to these partices
+        long id = db.createEvent(new Event(EVENT_TEMP_NAME));
+        Event tempEvent = db.getEventById(id);
+        db.createParticesUnderEvent(participants, tempEvent);
+
+        return participants;
+    }
+
+    //
+    public static void deleteTempEvent(Context mContext) {
+        DatabaseHelper db = new DatabaseHelper(mContext);
+        Event tempEvent = db.getEventByName(Routines.EVENT_TEMP_NAME);
+        db.deleteEvent(tempEvent, true);
+        db.closeDB();
     }
 
 }
