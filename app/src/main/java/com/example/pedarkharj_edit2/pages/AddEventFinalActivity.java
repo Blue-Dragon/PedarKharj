@@ -75,11 +75,13 @@ public class AddEventFinalActivity extends AppCompatActivity {
 //        backBtn.setOnClickListener(item -> finish());
         eventPic = findViewById(R.id.prof_pic);
         eventPic.setOnClickListener(item ->{
+            suddenly_stop = false;
             if (Build.VERSION.SDK_INT >= 23)
                 Routines.requestPermissions(mActivity, new String[]{CAMERA, READ_EXTERNAL_STORAGE}, Routines.PER_CODE_CAMERA_READexSTG);
             else
                 Routines.chooseCameraGallery(mActivity);
         });
+        suddenly_stop = true;
 
 
 
@@ -148,7 +150,6 @@ public class AddEventFinalActivity extends AppCompatActivity {
                 boolean permissiongallery = grantResults[1] == PackageManager.PERMISSION_GRANTED;
                 if (grantResults.length > 0 && permissioncamera && permissiongallery) {
                     Toast.makeText(mActivity, "مجوز دسترسی داده شد", Toast.LENGTH_SHORT).show();
-                    suddenly_stop = false;
                     Routines.chooseCameraGallery(mActivity);
                 } else {
                     Toast.makeText(mActivity, "مجوز دسترسی داده نشد", Toast.LENGTH_SHORT).show();
@@ -196,6 +197,15 @@ public class AddEventFinalActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        if (suddenly_stop) {
+            Routines.deleteTempEvent(mContext, eventId);
+            Log.d("Fuck07", "onStop");
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         if (suddenly_stop) {
             Routines.deleteTempEvent(mContext, eventId);
             Log.d("Fuck07", "onStop");
