@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class Routines {
 
     //Intent extras
     public static final String NEW_EVENT_PARTIC_IDS_INTENT = "NEW_EVENT_PARTIC_IDS_INTENT";
+    public static final String NEW_EVENT_PARTIC_EVENT_ID_INTENT = "NEW_EVENT_PARTIC_EVENT_ID_INTENT";
 
 //    Context mContext;
     Activity mActivity;
@@ -140,15 +142,16 @@ public class Routines {
         //add an Event to these partices
         long id = db.createEvent(new Event(EVENT_TEMP_NAME));
         Event tempEvent = db.getEventById(id);
+        Log.d("Fuck06", id +  "");
         db.createParticesUnderEvent(participants, tempEvent);
 
         return participants;
     }
 
     //
-    public static void deleteTempEvent(Context mContext) {
+    public static void deleteTempEvent(Context mContext, int eventId) {
         DatabaseHelper db = new DatabaseHelper(mContext);
-        Event tempEvent = db.getEventByName(Routines.EVENT_TEMP_NAME);
+        Event tempEvent = db.getEventById(eventId);
         db.deleteEvent(tempEvent, true);
         db.closeDB();
     }

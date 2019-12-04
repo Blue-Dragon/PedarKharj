@@ -66,17 +66,22 @@ public class AddEventParticesActivity extends AppCompatActivity {
             Routines.addParticesToTempEvent(participants_01, db);
 
             int[] ids = new int[participants_01.size()];
+            int eventId = 0;
             int i = 0;
             for (Participant participant: participants_01){
-
-                ids[i] = participant.getId();
-                Log.e("fuckEvent",  "id: " +( i) + " = " + participant.getEvent().getEventName());
-                i++;
-
+                Log.d("Fuck06", "i: "+ i );
+                ids[i++] = participant.getId();
             }
+
+            Log.d("Fuck06", "eventId before send: "+ eventId );
+            eventId = participants_01.get(0).getEvent().getId();
+
+
+            Log.d("Fuck06", "eventId at send: "+ eventId );
 
             Intent intent = new Intent(mContext, AddEventFinalActivity.class);
             intent.putExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT, ids);
+            intent.putExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, eventId);
             Log.d("fuckEvent",  "id: " + ids[0] + " "+ ids[1]);
             startActivity(intent);
 //

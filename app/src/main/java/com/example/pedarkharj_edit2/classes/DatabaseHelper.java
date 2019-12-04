@@ -706,6 +706,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_NAME, participant.getEvent().getEventName());
+        values.put(KEY_EVENT_ID, participant.getEvent().getId());
 //        values.put(KEY_EVENT_ID, participant.getId());
         values.put(KEY_PARTICE_NAME, participant.getName());
         values.put(KEY_CONTACT_ID, participant.getContact().getId()); //
@@ -720,6 +721,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_NAME, participant.getEvent().getEventName());
+        values.put(KEY_EVENT_ID, event.getId());
 //        values.put(KEY_EVENT_ID, participant.getId());
         values.put(KEY_PARTICE_NAME, participant.getName());
         values.put(KEY_CONTACT_ID, participant.getContact().getId()); //

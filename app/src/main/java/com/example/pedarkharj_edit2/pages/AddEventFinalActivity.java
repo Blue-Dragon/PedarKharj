@@ -88,14 +88,17 @@ public class AddEventFinalActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+
+    //todo: BUG
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        int eventId = getIntent().getIntExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, 0);
         try {
-            Routines.deleteTempEvent(mContext);
+            Routines.deleteTempEvent(mContext, eventId);
 
         }catch (Exception e){
-            Log.d("Fuck06", e + "");
+            Log.d("Fuck06", "eventId: "+ eventId + "\n"+ e + "");
         }
     }
 
