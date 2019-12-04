@@ -12,7 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.Contact;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
@@ -45,7 +47,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
         //back imageView btn
         ImageView backBtn = findViewById(R.id.back_btn);
-        backBtn.setOnClickListener(item -> finish());
+        backBtn.setOnClickListener(item -> onBackPressed());
 
         /**
          * RecView & DB
@@ -66,24 +68,23 @@ public class AddEventParticesActivity extends AppCompatActivity {
             Routines.addParticesToTempEvent(participants_01, db);
 
             int[] ids = new int[participants_01.size()];
-            int eventId = 0;
             int i = 0;
             for (Participant participant: participants_01){
                 Log.d("Fuck06", "i: "+ i );
                 ids[i++] = participant.getId();
             }
 
-            Log.d("Fuck06", "eventId before send: "+ eventId );
-            eventId = participants_01.get(0).getEvent().getId();
+            if (participants_01.size() > 0){
 
+                int eventId = participants_01.get(0).getEvent().getId();
 
-            Log.d("Fuck06", "eventId at send: "+ eventId );
-
-            Intent intent = new Intent(mContext, AddEventFinalActivity.class);
-            intent.putExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT, ids);
-            intent.putExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, eventId);
-            Log.d("fuckEvent",  "id: " + ids[0] + " "+ ids[1]);
-            startActivity(intent);
+                Intent intent = new Intent(mContext, AddEventFinalActivity.class);
+                intent.putExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT, ids);
+                intent.putExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, eventId);
+                startActivity(intent);
+            }else {
+                Toast.makeText(mContext, "لطفا اعضا را انتخاب کنید", Toast.LENGTH_SHORT).show();
+            }
 //
         });
 
@@ -156,7 +157,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        startActivity(new Intent(mContext, MainActivity.class));
+        startActivity(new Intent(mContext, MainActivity.class));
         finish();
     }
 

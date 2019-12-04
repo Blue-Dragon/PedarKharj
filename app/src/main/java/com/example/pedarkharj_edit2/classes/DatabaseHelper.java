@@ -41,6 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // EVENTS Table - column names
     private static final String KEY_EVENT_NAME = "event_name";
+    private static final String KEY_EVENT_BMP = "event_img";
 
     // EVENT_PARTICES Table - column names
     private static final String KEY_CONTACT_ID = "contact_id";
@@ -59,14 +60,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table Create Statements
     // Contact table create statement
     private static final String CREATE_TABLE_CONTACT = "CREATE TABLE IF NOT EXISTS "
-            + TABLE_CONTACTS + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_CONTACT_NAME
-            + " TEXT," + KEY_BMP_STR + " TEXT," + KEY_CREATED_AT
-            + " DATETIME" + ")";
+            + TABLE_CONTACTS + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
+            + KEY_CONTACT_NAME+ " TEXT,"
+            + KEY_BMP_STR + " TEXT,"
+            + KEY_CREATED_AT+ " DATETIME" + ")";
 
     // Event table create statement
     private static final String CREATE_TABLE_EVENT = "CREATE TABLE IF NOT EXISTS "
             + TABLE_EVENTS
-            + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_EVENT_NAME + " TEXT,"
+            + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
+            + KEY_EVENT_NAME + " TEXT,"
+            + KEY_EVENT_BMP + " TEXT,"
             + KEY_CREATED_AT + " DATETIME" + ")";
 
 
@@ -346,6 +350,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_NAME, event.getEventName());
+        values.put(KEY_EVENT_BMP, event.getBitmapStr());
         values.put(KEY_CREATED_AT, getDateTime());
 
         // insert row
@@ -363,6 +368,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_NAME, event.getEventName());
+        values.put(KEY_EVENT_BMP, event.getBitmapStr());
         values.put(KEY_CREATED_AT, getDateTime());
 
         // insert row
@@ -414,6 +420,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Event event = new Event();
                 event.setId(c.getInt((c.getColumnIndex(KEY_ID))));
                 event.setEventName(c.getString(c.getColumnIndex(KEY_EVENT_NAME)));
+                event.setBitmapStr(c.getString(c.getColumnIndex(KEY_EVENT_BMP)));
                 event.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
                 // adding to events list
@@ -442,6 +449,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Event event = new Event();
         event.setId(c.getInt(c.getColumnIndex(KEY_ID)));
         event.setEventName((c.getString(c.getColumnIndex(KEY_EVENT_NAME))));
+        event.setBitmapStr(c.getString(c.getColumnIndex(KEY_EVENT_BMP)));
         event.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
         Log.e("Event Maker ", event.getEventName() + "\n"+ event.getId());
@@ -467,6 +475,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Event event = new Event();
         event.setId(c.getInt(c.getColumnIndex(KEY_ID)));
         event.setEventName((c.getString(c.getColumnIndex(KEY_EVENT_NAME))));
+        event.setBitmapStr(c.getString(c.getColumnIndex(KEY_EVENT_BMP)));
         event.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
         Log.e("Event Maker ", event.getEventName() + "\n"+ event.getId());
@@ -477,16 +486,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Updating an event
      */
-    public void updateEventName(Event event) {
+    public void updateEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_NAME, event.getEventName());
-
-        // updating TABLE_EVENTS table row
-        db.update(TABLE_EVENTS, values, KEY_ID + " = ?", new String[] { String.valueOf(event.getId()) });
-        // updating TABLE_EVENTS table row
+        // updating TABLTABLE_EVENT_PARTICES table row (event name ONLY)
         db.update(TABLE_EVENT_PARTICES, values, KEY_EVENT_ID + " = ?", new String[] { String.valueOf(event.getId()) });
+
+        values.put(KEY_EVENT_BMP, event.getBitmapStr());
+        // updating TABLE_EVENTS table row (event name & Bmp)
+        db.update(TABLE_EVENTS, values, KEY_ID + " = ?", new String[] { String.valueOf(event.getId()) });
     }
 
 

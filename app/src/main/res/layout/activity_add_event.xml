@@ -58,48 +58,36 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/prof_pic"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="114dp"
+        android:layout_height="100dp"
         android:layout_below="@id/m_toolbar"
         android:layout_alignParentRight="true"
-        android:layout_alignBottom="@id/family_edt"
-        android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
         android:src="@drawable/profile" />
 
     <EditText
         android:id="@+id/name_edt"
-        android:layout_width="match_parent"
+        style="@style/medium_koodak"
+        android:layout_width="244dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/prof_pic"
-        android:layout_marginTop="80dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        style="@style/medium_koodak"
-        android:hint="نام" />
-
-    <EditText
-        android:id="@+id/family_edt"
-        style="@style/medium_koodak"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/name_edt"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="20dp"
         android:layout_toLeftOf="@+id/prof_pic"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="نام خانوادگی" />
+        android:hint="نام رویداد"
+        android:inputType="textPersonName" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="461dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
         android:layout_marginTop="5dp"
+        android:background="#C5CAE9"
         android:foregroundGravity="center_horizontal">
 
         <RelativeLayout

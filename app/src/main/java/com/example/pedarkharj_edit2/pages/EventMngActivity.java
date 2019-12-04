@@ -41,13 +41,14 @@ public class EventMngActivity extends AppCompatActivity {
 
         //back imageView btn
         ImageView backBtn = findViewById(R.id.back_btn);
-        backBtn.setOnClickListener(item -> finish());
+        backBtn.setOnClickListener(item -> onBackPressed());
 
         //-------------------------     Floating Btn    --------------------------//
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             startActivity(new Intent(mContext, AddEventParticesActivity.class));
+            finish();
 //            showBuyerDialog();
         });
 

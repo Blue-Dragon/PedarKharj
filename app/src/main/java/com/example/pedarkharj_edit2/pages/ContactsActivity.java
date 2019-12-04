@@ -48,7 +48,7 @@ public class ContactsActivity extends AppCompatActivity {
 
         //back imageView btn
         ImageView backBtn = findViewById(R.id.back_btn);
-        backBtn.setOnClickListener(item -> finish());
+        backBtn.setOnClickListener(item -> onBackPressed());
 
         //Floating Btn
         fab = this.findViewById(R.id.fab);

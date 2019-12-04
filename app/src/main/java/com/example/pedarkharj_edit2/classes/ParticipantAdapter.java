@@ -142,7 +142,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
             int particNumber = db0.getAllParticeUnderEvent(event).size();
 
             if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
-            /* pic */ if ( holder.imageView != null && event.getBitmapStr() != null )       holder.profImv.setImageBitmap(Routines.decodeBase64(event.getBitmapStr()));
+/* pic */ if ( holder.imageView != null && event.getBitmapStr() != null )       holder.imageView.setImageBitmap(Routines.decodeBase64(event.getBitmapStr()));
             if (particNumber > -1 && holder.resultTxt != null)      holder.resultTxt.setText(particNumber + " عضو");
             else Log.e("E002",  particNumber + "" );
             db0.closeDB();
