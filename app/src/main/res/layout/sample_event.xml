@@ -2,8 +2,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="120dp"
-    android:layout_height="160dp"
-
+    android:layout_height="wrap_content"
+    android:layoutDirection="ltr"
     android:layout_marginTop="2dp"
     android:layout_marginRight="2dp"
     android:layout_marginBottom="15dp"
@@ -11,8 +11,7 @@
 
     <RelativeLayout
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        >
+        android:layout_width="match_parent">
 
         <ImageView
             android:id="@+id/imageview_event"
@@ -24,20 +23,18 @@
             />
 
 
-
-            <TextView
+        <TextView
                 android:id="@+id/partic_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginLeft="7dp"
-                android:layout_marginRight="7dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="2dp"
                 android:layout_below="@id/imageview_event"
-
-                android:gravity="right"
-                android:padding="3dp"
+                android:gravity="right|center_vertical"
                 android:layout_gravity="right"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="HappyCoding"
                 style="@style/XL_koodak"/>
 
@@ -46,18 +43,16 @@
             android:id="@+id/result_txt"
             style="@style/medium_koodak"
             android:layout_width="match_parent"
-
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/partic_name"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="right"
-
             android:layout_marginLeft="7dp"
-            android:layout_marginTop="-15dp"
-            android:layout_marginRight="7dp"
-            android:layout_marginBottom="0dp"
-            android:gravity="right"
-            android:padding="3dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginBottom="2dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_gravity="right"
+            android:gravity="right|top"
             android:text="HappyCoding"
             android:textColor="#696969" />
 

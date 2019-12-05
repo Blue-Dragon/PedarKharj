@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="ltr"
     tools:context=".pages.AddContactActivity">
 
     <android.support.v7.widget.Toolbar
@@ -22,21 +23,13 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/cancel_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="18dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_cancel" />
-
-            <ImageView
-                android:id="@+id/check_img"
-                android:layout_width="wrap_content"
+                android:id="@+id/back_btn"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_check" />
+                android:layout_marginStart="0dp"
+                android:src="@drawable/back" />
 
             <TextView
                 android:id="@+id/textView"
@@ -47,7 +40,7 @@
                 android:foregroundGravity="center"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:text="مخاطبین"
+                android:text="ساخت رویداد جدید"
                 android:textColor="#868686"
                 android:textSize="24dp" />
 
@@ -58,36 +51,60 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/prof_pic"
-        android:layout_width="114dp"
-        android:layout_height="100dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_below="@id/m_toolbar"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="15dp"
-        android:src="@drawable/profile" />
+        android:layout_centerInParent="true"
+        android:layout_marginTop="24dp"
+        app:civ_border_color="#9CCC65"
+        app:civ_border_width="2dp"
+        android:src="@drawable/bk1" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+    android:id="@+id/change_pic_bkg"
+    android:layout_width="55dp"
+    android:layout_height="55dp"
+    android:layout_below="@id/m_toolbar"
+    android:layout_alignEnd="@+id/prof_pic"
+    android:layout_centerVertical="true"
+    android:layout_marginTop="166dp"
+    android:layout_marginEnd="12dp"
+    android:src="#000000"
+        app:civ_border_color="#000000"
+        app:civ_border_width="1dp"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/change_pic"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_alignStart="@+id/change_pic_bkg"
+        android:layout_alignEnd="@+id/change_pic_bkg"
+        android:layout_alignTop="@id/change_pic_bkg"
+        android:layout_alignBottom="@id/change_pic_bkg"
+        android:padding="7dp"
+        android:layout_marginTop="2dp"
+        android:src="@drawable/ic_camera_white" />
 
     <EditText
         android:id="@+id/name_edt"
         style="@style/medium_koodak"
-        android:layout_width="244dp"
+        android:layout_width="303dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginRight="20dp"
-        android:layout_toLeftOf="@+id/prof_pic"
+        android:layout_below="@+id/prof_pic"
+        android:layout_alignStart="@+id/prof_pic"
+        android:layout_alignEnd="@+id/prof_pic"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="نام رویداد"
         android:inputType="textPersonName" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="461dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="5dp"
-        android:background="#C5CAE9"
+        android:background="#FEF2F2"
         android:foregroundGravity="center_horizontal">
 
         <RelativeLayout
@@ -103,7 +120,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="250dp"
                 android:layout_marginTop="5dp"
                 android:paddingBottom="5dp" />
 

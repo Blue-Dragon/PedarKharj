@@ -18,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.R;
@@ -65,6 +66,10 @@ public class AddEventFinalActivity extends AppCompatActivity {
         mActivity = this;
         db = new DatabaseHelper(mContext);
         newImg = false;
+
+        //back imageView btn
+        ImageView backBtn = findViewById(R.id.back_btn);
+        backBtn.setOnClickListener(item -> onBackPressed());
 
         suddenly_stop = true;
         ed = findViewById(R.id.name_edt);

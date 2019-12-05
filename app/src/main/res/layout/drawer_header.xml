@@ -5,6 +5,7 @@
     android:layout_height="176dp"
     android:background="#AA00FF"
     android:orientation="vertical"
+    android:layoutDirection="ltr"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <LinearLayout

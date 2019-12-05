@@ -16,6 +16,7 @@ import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit2.classes.Routines;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,12 +67,19 @@ public class EventMngActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rv);
 
        mEvents = db.getAllEvents();
+       // Not letting TempEvents to be shown
+        List<Event> realEvents = new ArrayList<>();
+        for (Event event : mEvents){
+            if (!event.getEventName().equals(Routines.EVENT_TEMP_NAME)) realEvents.add(event);
+        }
+
+
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext);     adaptor.setEvents(mEvents);
+        adaptor = new ParticipantAdapter(mContext);     adaptor.setEvents(realEvents);
         recyclerView.setAdapter(adaptor);
     }
 
