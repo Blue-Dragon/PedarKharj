@@ -24,7 +24,6 @@
         android:id="@+id/partic_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/tv_my_dong"
         android:layout_marginBottom="-2dp"
         android:fontFamily="@font/b_koodak"
         android:layout_toRightOf="@id/prof_pic"

@@ -83,7 +83,7 @@
         android:layout_alignBottom="@id/change_pic_bkg"
         android:padding="7dp"
         android:layout_marginTop="2dp"
-        android:src="@drawable/ic_camera_white" />
+        app:srcCompat="@drawable/ic_camera_white" />
 
     <EditText
         android:id="@+id/name_edt"
@@ -98,12 +98,20 @@
         android:hint="نام رویداد"
         android:inputType="textPersonName" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/scroll"
+        android:layout_marginTop="5dp"
+        android:background="#E6E6E6"/>
+
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:background="#FEF2F2"
         android:foregroundGravity="center_horizontal">
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_fuck"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center_horizontal"
@@ -39,7 +39,7 @@
             android:layout_toRightOf="@id/prof_pic"
             android:layout_marginLeft="-44dp"
             android:layout_marginTop="-14dp"
-            android:src="@drawable/ic_check_2"
+            app:srcCompat="@drawable/ic_check_2"
             android:visibility="invisible"/>
 
         <TextView

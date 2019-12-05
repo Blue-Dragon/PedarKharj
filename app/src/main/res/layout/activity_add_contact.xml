@@ -29,7 +29,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="18dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_cancel" />
+                app:srcCompat="@drawable/ic_cancel" />
 
             <ImageView
                 android:id="@+id/check_img"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_check" />
+                app:srcCompat="@drawable/ic_check" />
 
             <TextView
                 android:id="@+id/textView"

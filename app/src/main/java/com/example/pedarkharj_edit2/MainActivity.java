@@ -67,29 +67,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_layout); //todo: bug
+
        Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
         mParticipants = new ArrayList<>();
         db = new DatabaseHelper(mContext);
-        events  = db.getAllEvents(); //for spinner
-        defEvent = db.getEventById(1) ; //todo: create this on SharedPreferencesv => def if what has been chosen the last time this app got used
-        curEvent = defEvent; // if we haven't chosen yet
-
-        //-------------------------     Floating Btn    --------------------------//
-        fab = this.findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-//            startActivity(new Intent(mContext, AddExpenseActivity.class));
-            showBuyerDialog();
-        });
-
-
-
+        events  = db.getAllEvents(); //for spinner && def partices
 
         /*-------------------------     RecView   --------------------------*/
 
-        //Setting default event and partices
+        /**
+         * Setting default event and partices
+         */
         if (events.size() < 1 ){
 
             /*
@@ -151,8 +141,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //recyclerView
         }
 
+        /**
+         *  Event stuff
+         */
+        defEvent = db.getEventById(1) ; //todo: create this on SharedPreferencesv => def if what has been chosen the last time this app got used
+        curEvent = defEvent; // if we haven't chosen yet
+
         recyclerView = findViewById(R.id.rv_partice_expenses);
-        setRecParticesUnderEvent(); //show partices of the Event
+        setRecParticesUnderEvent(curEvent); //show partices of the Event
 
         /**
          * recView onClick
@@ -201,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         events = db.getAllEvents();
         for (Event event:events){
-            list.add(event.getEventName());
+            if (!event.getEventName().equals(Routines.EVENT_TEMP_NAME)) list.add(event.getEventName());
         }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
@@ -211,7 +207,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         spinner.setOnItemSelectedListener(this);
 
 
-         //drawerLayout
+        //-------------------------     Floating Btn    --------------------------//
+        fab = this.findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//            startActivity(new Intent(mContext, AddExpenseActivity.class));
+            showBuyerDialog(curEvent);
+        });
+
+
+
+
+        //drawerLayout
         createDrawer();
 
         //Close db
@@ -221,8 +228,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /********************************************       Methods     ****************************************************/
 
-    private void showBuyerDialog() {
-        new BuyerDialog(this).show();
+    private void showBuyerDialog(Event curEvent) {
+        new BuyerDialog(this, curEvent).show();
     }
 
     //-------------------------     Spinner    --------------------------//
@@ -233,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (event != null)    {
             Toast.makeText(mContext, "Event: "+ event.getId()+ " = " + event.getEventName(), Toast.LENGTH_SHORT).show();
             curEvent = event;
-            setRecParticesUnderEvent();
+            setRecParticesUnderEvent(curEvent);
         }else     Toast.makeText(mContext, "Fuck u looser! ", Toast.LENGTH_SHORT).show();
     }
 
@@ -244,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     //-------------------------     RecyclerView    --------------------------//
-    private void setRecParticesUnderEvent() {
+    private void setRecParticesUnderEvent(Event curEvent) {
 
         //show partices of the Event
         mParticipants = db.getAllParticeUnderEvent(curEvent);

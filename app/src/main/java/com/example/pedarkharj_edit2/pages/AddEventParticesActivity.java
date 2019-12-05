@@ -77,6 +77,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
             if (participants_01.size() > 0){
 
                 int eventId = participants_01.get(0).getEvent().getId();
+                Log.d("Fuck09", "eventId_ sent"+ eventId);
 
                 Intent intent = new Intent(mContext, AddEventFinalActivity.class);
                 intent.putExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT, ids);
@@ -143,6 +144,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         rec_01.setLayoutManager(gridLayoutManager);
         //
         adaptor = new ParticipantAdapter(mContext, R.layout.sample_contact, participants);
+//        recyclerView.smoothScrollToPosition( participants.size() - 1 ); // focus on the End of the list
         rec_01.setAdapter(adaptor);
 
     }

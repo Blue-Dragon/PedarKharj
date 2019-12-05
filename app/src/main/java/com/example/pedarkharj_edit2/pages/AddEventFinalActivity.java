@@ -46,7 +46,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
     Bitmap bitmap;
     Bitmap resizedBitmap;
     boolean newImg;
-    CircleImageView eventPic;
+    CircleImageView eventPic, changePic_bkg;
 
     boolean suddenly_stop;
     int eventId;
@@ -74,18 +74,22 @@ public class AddEventFinalActivity extends AppCompatActivity {
         suddenly_stop = true;
         ed = findViewById(R.id.name_edt);
         eventId = getIntent().getIntExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, 0);
-        event = db.getEventById(eventId);
+        Log.d("Fuck09", "eventId_received: "+ eventId);
+        try {
+
+            event = db.getEventById(eventId);
+        }catch (Exception e){
+            Log.e("Fuck09", " "+ e);
+
+        }
+
 //        //back imageView btn
 //        ImageView backBtn = findViewById(R.id.back_btn);
 //        backBtn.setOnClickListener(item -> finish());
+        changePic_bkg = findViewById(R.id.change_pic_bkg);
         eventPic = findViewById(R.id.prof_pic);
-        eventPic.setOnClickListener(item ->{
-            suddenly_stop = false;
-            if (Build.VERSION.SDK_INT >= 23)
-                Routines.requestPermissions(mActivity, new String[]{CAMERA, READ_EXTERNAL_STORAGE}, Routines.PER_CODE_CAMERA_READexSTG);
-            else
-                Routines.chooseCameraGallery(mActivity);
-        });
+        eventPic.setOnClickListener(item -> changePic());
+        changePic_bkg.setOnClickListener(item -> changePic());
         suddenly_stop = true;
 
 
@@ -93,11 +97,10 @@ public class AddEventFinalActivity extends AppCompatActivity {
         //-------------------------     Floating Btn    --------------------------//
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
             updateEvent();
             suddenly_stop = false;
-            startActivity(new Intent(mContext, EventMngActivity.class));
-            finish();
+
         });
 
         //-------------------------     RecView    --------------------------//
@@ -108,12 +111,23 @@ public class AddEventFinalActivity extends AppCompatActivity {
         db.closeDB();
     }
 
+
     // ********************************  Methods  ******************************** //
+
+    private void changePic() {
+        suddenly_stop = false;
+        if (Build.VERSION.SDK_INT >= 23) {
+            Routines.requestPermissions(mActivity, new String[]{CAMERA, READ_EXTERNAL_STORAGE}, Routines.PER_CODE_CAMERA_READexSTG);
+        }
+        else {
+            Routines.chooseCameraGallery(mActivity);
+        }
+    }
 
     private void updateEvent() {
         final String eventName = ed.getText().toString().trim();
         if (TextUtils.isEmpty(eventName)){
-            ed.setText("لطفا نام رویداد را وارد کنید");
+            ed.setError("لطفا نام رویداد را وارد کنید");
             ed.requestFocus();
             return;
         }
@@ -122,6 +136,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
         if (resizedBitmap != null) event.setBitmapStr( Routines.encodeToBase64(resizedBitmap) );
         db.updateEvent(event);
 
+        startActivity(new Intent(mContext, EventMngActivity.class));
+        finish();
     }
 
 

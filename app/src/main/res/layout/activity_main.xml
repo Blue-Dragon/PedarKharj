@@ -32,7 +32,7 @@
                 android:layout_marginLeft="-10dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_menu" />
+                app:srcCompat="@drawable/ic_menu" />
 
 
             <Spinner

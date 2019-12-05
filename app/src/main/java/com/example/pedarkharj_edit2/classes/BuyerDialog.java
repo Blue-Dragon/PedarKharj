@@ -28,14 +28,16 @@ public class BuyerDialog extends Dialog {
     public Dialog d;
     private Button yes, no;
     RecyclerView recyclerView;
-    ArrayList<Participant> mParticipants;
+    List<Participant> mParticipants;
     ParticipantAdapter adapter;
     DatabaseHelper db;
+    Event event;
 
 
-    public BuyerDialog(Activity mActivity) {
+    public BuyerDialog(Activity mActivity, Event event) {
         super(mActivity);
         this.mActivity = mActivity;
+        this.event =event;
     }
 
     @Override
@@ -50,6 +52,9 @@ public class BuyerDialog extends Dialog {
         recyclerView = findViewById(R.id.chooseBuyer_RecView);
         doRecyclerView();
 
+        /**
+         * recView onClick
+         */
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mActivity, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -92,11 +97,9 @@ public class BuyerDialog extends Dialog {
     private void doRecyclerView() {
         mParticipants = new ArrayList<Participant>();
         db.closeDB();
-        //show partices of the Event todo: update -> get event
-        Event event = db.getEventById(1);
-        List<Participant> participants0 = db.getAllParticeUnderEvent(1);
-        Log.d("Event", event.getEventName());
-        mParticipants.addAll(participants0);
+        //show partices of the Event
+
+        mParticipants = db.getAllParticeUnderEvent(event);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 4, GridLayoutManager.VERTICAL, false);
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));

@@ -73,7 +73,6 @@ public class EventMngActivity extends AppCompatActivity {
             if (!event.getEventName().equals(Routines.EVENT_TEMP_NAME)) realEvents.add(event);
         }
 
-
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

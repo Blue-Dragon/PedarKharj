@@ -24,6 +24,7 @@ import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
+import com.example.pedarkharj_edit2.classes.BuyerDialog;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Expense;
@@ -39,9 +40,10 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
-    ArrayList<Participant> mParticipants;
+    List<Participant> mParticipants;
     ParticipantAdapter adapter;
     LinearLayout calculator;
+    Event curEvent;
 
     RecyclerView recyclerView;
     Context mContext;
@@ -54,7 +56,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     RelativeLayout buyerBtn;
     pDate mDate;
     pDate todayDate;
-    TextView priceTv;
+    TextView priceTv, BuyerBtnTxt;
 
     int particId;
     Participant buyer;
@@ -78,11 +80,13 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         pbCanUse = true;
         mParticipants = new ArrayList<Participant>();
         db = new DatabaseHelper(mContext);
+
         particId = getIntent().getIntExtra(Routines.PARTICIPANT_INFO, 0);
         buyer = db.getParticeById(particId);
+        curEvent = buyer.getEvent();
 
 
-        List<Participant> usersList = db.getAllParticeUnderEvent(buyer.getEvent());
+        List<Participant> usersList = db.getAllParticeUnderEvent(curEvent);
         users = new Participant[usersList.size()];
         for (int i=0; i<usersList.size(); i++){
             users[i] = usersList.get(i);
@@ -90,15 +94,15 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         }
 
 
-
+        BuyerBtnTxt = findViewById(R.id.buyer_btn_txt);             BuyerBtnTxt.setText(buyer.getName());
         particBtn = findViewById(R.id.custom_dong_btn);              particBtn.setOnClickListener(this);
         buyerBtn = findViewById(R.id.buyer_btn);                         buyerBtn.setOnClickListener(this);
-        doneBtn = findViewById(R.id.done_btn);                         buyerBtn.setOnClickListener(this);
+        doneBtn = findViewById(R.id.done_btn);                             buyerBtn.setOnClickListener(this);
         dateBtn = findViewById(R.id.date_btn);                             dateBtn.setOnClickListener(this);
-        dongEText = findViewById(R.id.dong_Etxt);
+        dongEText = findViewById(R.id.dong_Etxt);                       //dongEText.setSelection(dongEText.getText().length());
         priceTv = findViewById(R.id.price_txt);
         recyclerView = findViewById(R.id.participants_RecView);
-        circleImageView = findViewById(R.id.selected_contact);
+        circleImageView = findViewById(R.id.selected_contact);     circleImageView.setOnClickListener(this);
         //
         calculator = findViewById(R.id.calculator);                          calculator.setOnClickListener(this);
 //        bp = findViewById(R.id.bp);
@@ -147,7 +151,8 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.buyer_btn:
-                Toast.makeText(mContext, "buyer_btn", Toast.LENGTH_SHORT).show();
+            case R.id.selected_contact:
+//                new BuyerDialog(mActivity,curEvent)
                 break;
 
             case R.id.date_btn:
@@ -216,10 +221,8 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     private void doRecyclerView() {
 
-        //show partices of the Event todo: update -> get event
-        Event event = db.getEventById(1);
-        List<Participant> participants0 = db.getAllParticeUnderEvent(1);
-        mParticipants.addAll(participants0);
+        //show partices of the Event
+        mParticipants = db.getAllParticeUnderEvent(curEvent);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 4, GridLayoutManager.HORIZONTAL, false);
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
