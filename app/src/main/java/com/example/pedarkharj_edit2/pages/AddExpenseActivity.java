@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,12 +26,12 @@ import com.alirezaafkar.sundatepicker.DatePicker;
 import com.alirezaafkar.sundatepicker.components.DateItem;
 import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
-import com.example.pedarkharj_edit2.classes.BuyerDialog;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Expense;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
 
 import java.util.ArrayList;
@@ -41,9 +43,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
     List<Participant> mParticipants;
+    List<Participant> expensePartices;
     ParticipantAdapter adapter;
     LinearLayout calculator;
     Event curEvent;
+    RecyclerTouchListener listener;
+    int recyclerChildCount, curChildCount;
 
     RecyclerView recyclerView;
     Context mContext;
@@ -57,6 +62,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     pDate mDate;
     pDate todayDate;
     TextView priceTv, BuyerBtnTxt;
+    Switch aSwitch;
 
     int particId;
     Participant buyer;
@@ -78,20 +84,13 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         mContext = this;
         mActivity = this;
         pbCanUse = true;
-        mParticipants = new ArrayList<Participant>();
+        mParticipants = new ArrayList<>();
+        expensePartices = new ArrayList<>();
         db = new DatabaseHelper(mContext);
 
         particId = getIntent().getIntExtra(Routines.PARTICIPANT_INFO, 0);
         buyer = db.getParticeById(particId);
         curEvent = buyer.getEvent();
-
-
-        List<Participant> usersList = db.getAllParticeUnderEvent(curEvent);
-        users = new Participant[usersList.size()];
-        for (int i=0; i<usersList.size(); i++){
-            users[i] = usersList.get(i);
-            Log.e("Fuch", users[i].getName() + "");
-        }
 
 
         BuyerBtnTxt = findViewById(R.id.buyer_btn_txt);             BuyerBtnTxt.setText(buyer.getName());
@@ -103,6 +102,8 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         priceTv = findViewById(R.id.price_txt);
         recyclerView = findViewById(R.id.participants_RecView);
         circleImageView = findViewById(R.id.selected_contact);     circleImageView.setOnClickListener(this);
+        aSwitch = findViewById(R.id.switch1);
+
         //
         calculator = findViewById(R.id.calculator);                          calculator.setOnClickListener(this);
 //        bp = findViewById(R.id.bp);
@@ -129,7 +130,48 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             circleImageView.setImageBitmap( bitmap );
         }
         //
-        doRecyclerView();
+        doRecyclerView(Routines.NOT_SELECT_ALL);
+
+        // -----------------------------        on participant click        --------------------------------//
+        /**
+         * recView onClick
+         */
+        Log.e("recOnClick", "onClick");
+        listener = new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Participant participant = mParticipants.get(position);
+                AppCompatImageView subImg = view.findViewById(R.id.sub_img);
+
+                // gather expense partices when clicked (check img code is in `aSwitch.setOnClickListener` Call)
+                if (subImg.getVisibility() != View.VISIBLE ) {
+                    subImg.setVisibility(View.VISIBLE);
+                    curChildCount++;
+                    expensePartices.add(participant);
+                } else{
+                    subImg.setVisibility(View.INVISIBLE);
+                    curChildCount--;
+                    if (expensePartices.contains(participant)) expensePartices.remove(participant);
+                }
+
+
+                aSwitch.setChecked(false);  //set switch off, when unSelect one among all
+                if (curChildCount == recyclerChildCount)    aSwitch.setChecked(true); //set switch on, when all are selected one by one
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {}
+        });
+        recyclerView.addOnItemTouchListener(listener);
+        /*
+         * CheckAll
+         */
+        aSwitch.setOnClickListener(view -> {
+            if (aSwitch.isChecked())    doRecyclerView(Routines.SELECT_ALL);
+            else doRecyclerView(Routines.UNSELECT_ALL);
+        });
+
+
 
 
         // db
@@ -138,8 +180,17 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
 
 
+
     /********************************************       Methods     ****************************************************/
 
+//    private void LOGPartices(List<Participant> participants) {
+//        StringBuilder builder = new StringBuilder();
+//        builder.append("Partices' names:\n");
+//        for (Participant participant1: participants){
+//            builder.append(participant1.getName()+ "\n");
+//        }
+//        Log.d("Fuck010", builder.toString());
+//    }
 
     @Override
     public void onClick(View view) {
@@ -169,22 +220,40 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.done_btn:
-                float price = Float.valueOf( priceTv.getText().toString());
-                String priceStr = dongEText.getText().toString().trim();
-                Expense expense = new Expense(buyer,
-                        users,
-                        priceStr,
-                        price,
-                        price/users.length);
+                // expense users
+                users = new Participant[expensePartices.size()];
+                for (int i=0; i<expensePartices.size(); i++){
+                    users[i] = expensePartices.get(i);
+                }
 
-                db.addExpense(expense);
-                startActivity(new Intent(mContext,  MainActivity.class));
-                finish();
+                if (users.length > 0)     saveExpense();
+                else                            Toast.makeText(mContext, "لطفا افراد شرکت کننده را انتخاب کنید.", Toast.LENGTH_SHORT).show();
+
                 break;
         }
     }
 
-    // Writes numbers when calculator layout buttons clicked
+    private void saveExpense() {
+        float price = Float.valueOf( priceTv.getText().toString());
+
+        if (price > 0){
+            String priceStr = dongEText.getText().toString().trim();
+            Expense expense = new Expense(
+                    buyer,
+                    users,
+                    priceStr,
+                    price,
+                    price/users.length);
+
+            db.addExpense(expense);
+            startActivity(new Intent(mContext,  MainActivity.class));
+            finish();
+        } else Toast.makeText(mContext, "لطفا هزینه خرج را وارد کنید", Toast.LENGTH_SHORT).show();
+
+
+    }
+
+    // Writes numbers when calculator layout buttons clicked (method got used in XML layout)
     public void onCalcClick(View view) {
         Button b = mActivity.findViewById(view.getId() ) ;
 
@@ -219,16 +288,17 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         priceTv.setText(builder);
     }
 
-    private void doRecyclerView() {
-
+    private void doRecyclerView(short selectMode) {
         //show partices of the Event
         mParticipants = db.getAllParticeUnderEvent(curEvent);
+        recyclerChildCount = mParticipants.size();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 4, GridLayoutManager.HORIZONTAL, false);
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
         recyclerView.setLayoutManager(gridLayoutManager);
         //
         adapter = new ParticipantAdapter(mContext, R.layout.sample_contact, mParticipants);
+        adapter.setSelectMode(selectMode);
         recyclerView.setAdapter(adapter);
     }
 

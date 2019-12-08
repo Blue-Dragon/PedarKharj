@@ -11,14 +11,7 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/m_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorWhite"
-        android:elevation="2dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        style="@style/toolbar_style">
 
         <RelativeLayout
             android:layout_width="match_parent"

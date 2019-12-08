@@ -25,6 +25,10 @@ public class Routines {
     public static int usersId = 0;
     private static int contactsSQLID ;
     public static final String EVENT_TEMP_NAME = "EVENT_TEMP";
+    //adaptor
+    public final static short UNSELECT_ALL = 0;
+    public final static short SELECT_ALL = 1;
+    public final static short NOT_SELECT_ALL = 2;
 
 
     //Intent extras

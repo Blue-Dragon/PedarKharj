@@ -9,14 +9,7 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/m_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorWhite"
-        android:elevation="2dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        style="@style/toolbar_style">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -31,17 +24,16 @@
                 android:layout_marginStart="0dp"
                 android:src="@drawable/back" />
 
-            <TextView
+            <Switch
+                android:id="@+id/switch1"
+                style="@style/medium_koodak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_centerInParent="true"
-                android:foregroundGravity="center"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="Add expenses"
-                android:textColor="#868686"
-                android:textSize="24dp" />
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="12dp"
+                android:text="انتخاب همه" />
+
 
         </RelativeLayout>
 
