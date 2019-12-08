@@ -167,8 +167,14 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
          * CheckAll
          */
         aSwitch.setOnClickListener(view -> {
-            if (aSwitch.isChecked())    doRecyclerView(Routines.SELECT_ALL);
-            else doRecyclerView(Routines.UNSELECT_ALL);
+            if (aSwitch.isChecked()) {
+                doRecyclerView(Routines.SELECT_ALL);
+                curChildCount = recyclerChildCount;
+            }
+            else {
+                doRecyclerView(Routines.UNSELECT_ALL);
+                curChildCount = 0;
+            }
         });
 
 
