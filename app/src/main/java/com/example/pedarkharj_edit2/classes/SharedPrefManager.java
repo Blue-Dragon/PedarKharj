@@ -18,7 +18,7 @@ public class SharedPrefManager {
      * logout(): This method clear the SharedPreferences data and makes user log-out.
      */
 
-    private static final String SHARED_PREF_NAME = "usersInfo";
+    private static final String SHARED_PREF_NAME = "defEvent";
     private static final String KEY_ID = "keyId";
     private static final String KEY_NAME = "keyName";;
     private static SharedPrefManager mInstance;
@@ -40,6 +40,32 @@ public class SharedPrefManager {
         return mInstance;
     }
 
+
+    //this method will store the default event id in shared preferences
+    public void saveDefEvent (Event event) {
+        sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        if (event.getId() > -1) {
+            editor.putInt(KEY_ID, event.getId());
+            editor.apply();
+        }
+    }
+
+    //this method will check whether user is already logged in or not
+    public int getDefEventId() {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(KEY_ID, 0) ;
+    }
+
+
+    //this method will clear the defEvent
+    public void clearShrdPref() {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+    }
+    //--------------------------     previous app codes      ----------------------------//
 
     //this method will store the user data in shared preferences
     public void userLogin(Participant participant) {

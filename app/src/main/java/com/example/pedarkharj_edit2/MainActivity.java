@@ -35,12 +35,15 @@ import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
+import com.example.pedarkharj_edit2.classes.SharedPrefManager;
 import com.example.pedarkharj_edit2.pages.ContactsActivity;
 import com.example.pedarkharj_edit2.pages.EventMngActivity;
 
 import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     RecyclerView recyclerView;
     List<Participant> mParticipants;
     List<Event> events ;
+    Map spinnerEventIds;
     ParticipantAdapter adaptor;
     Event defEvent, curEvent;
     //
@@ -62,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     ImageView menu;
+    int sentEventId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mParticipants = new ArrayList<>();
         db = new DatabaseHelper(mContext);
         events  = db.getAllEvents(); //for spinner && def partices
+        spinnerEventIds =  new HashMap<Integer, Event>();
+
+        sentEventId = getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
 
         /*-------------------------     RecView   --------------------------*/
 
@@ -141,14 +149,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //recyclerView
         }
 
-        /**
-         *  Event stuff
-         */
-        defEvent = db.getEventById(1) ; //todo: create this on SharedPreferencesv => def if what has been chosen the last time this app got used
-        curEvent = defEvent; // if we haven't chosen yet
-
         recyclerView = findViewById(R.id.rv_partice_expenses);
-        setRecParticesUnderEvent(curEvent); //show partices of the Event
+
+
 
         /**
          * recView onClick
@@ -191,21 +194,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //
 
 
+
+
         /* -------------------------     Spinner    -------------------------- */
         spinner = findViewById(R.id.spinner);
         List<String> list = new ArrayList<String>();
 
         events = db.getAllEvents();
         for (Event event:events){
-            if (!event.getEventName().equals(Routines.EVENT_TEMP_NAME)) list.add(event.getEventName());
+            if (!event.getEventName().equals(Routines.EVENT_TEMP_NAME)) {
+                list.add(event.getEventName());
+                //save events ids in spinner
+                spinnerEventIds.put(event.getId(), event);
+            }
         }
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
 
-        spinner.setOnItemSelectedListener(this);
+        /**
+         *  set to_be_shown Event
+         */
+        //def & cur Event
+        int defEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
+        if (defEventId > 0){
+            defEvent = db.getEventById(defEventId);
+            SharedPrefManager.getInstance(mContext).saveDefEvent(defEvent); //save  defEvent for next time to SharedPref
+        }else  defEvent = db.getEventById(1) ;
+        curEvent = defEvent; // if we haven't chosen yet
+        Log.i("fuck011", "defEventId: " + defEventId+ "");
 
+        //if we have a chosen event already
+        if ( sentEventId > 0 ) {
+            curEvent = db.getEventById(sentEventId);
+        }
+        spinner.setSelection( curEvent.getId() - 1); //def event
+
+
+
+        spinner.setOnItemSelectedListener(this);
+        Log.i("fuck011", "saveDefEvent: " + curEvent.getId()+ "");
 
         //-------------------------     Floating Btn    --------------------------//
         fab = this.findViewById(R.id.fab);
@@ -238,10 +267,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Event event = db.getEventById(i+1);
 
         if (event != null)    {
-            Toast.makeText(mContext, "Event: "+ event.getId()+ " = " + event.getEventName(), Toast.LENGTH_SHORT).show();
             curEvent = event;
             setRecParticesUnderEvent(curEvent);
-        }else     Toast.makeText(mContext, "Fuck u looser! ", Toast.LENGTH_SHORT).show();
+            SharedPrefManager.getInstance(mContext).saveDefEvent(curEvent); //save curEvent (as defEvent for next time) to SharedPref
+        }
     }
 
     @Override
@@ -340,26 +369,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.START))
-            drawerLayout.closeDrawer(GravityCompat.START); //if drawable open, onBackPressed should close it
-        else {
-            if (alreadyPressed) {
-                super.onBackPressed(); //else, close the activity as usual
+
+        if (sentEventId != 0){
+            // if we aren't  get back to EventMngActivity
+            super.onBackPressed();
+        } else {
+
+            if (drawerLayout.isDrawerOpen(GravityCompat.START))
+                drawerLayout.closeDrawer(GravityCompat.START); //if drawable open, onBackPressed should close it
+            else {
+                if (alreadyPressed) {
+                    super.onBackPressed(); //else, close the activity as usual
+                }
+
+                alreadyPressed = true;
+                Toast.makeText(this, "press back again to exit!", Toast.LENGTH_SHORT).show();
+                //give 2 seconds to press back again, or make the boolean false
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        alreadyPressed=false;
+                    }
+                }, 2000);
             }
 
-            alreadyPressed = true;
-            Toast.makeText(this, "press back again to exit!", Toast.LENGTH_SHORT).show();
-            //give 2 seconds to press back again, or make the boolean false
-            new Handler().postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-                    alreadyPressed=false;
-                }
-            }, 2000);
         }
 
+
+
+
     }
+
+
 
 
 

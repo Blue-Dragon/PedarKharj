@@ -9,13 +9,17 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Event;
+import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
 
 import java.util.ArrayList;
@@ -39,10 +43,34 @@ public class EventMngActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mEvents = new ArrayList<>();
+        //
+        db = new DatabaseHelper(mContext);
+        setRecView(); //show Events
+
 
         //back imageView btn
         ImageView backBtn = findViewById(R.id.back_btn);
         backBtn.setOnClickListener(item -> onBackPressed());
+
+        /**
+         * recView onClick
+         */
+        Log.e("recOnClick", "onClick");
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                //open MainActivity on this event
+                Event event = mEvents.get(position);
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra(Routines.SEND_EVENT_ID_INTENT, event.getId());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                //options
+            }
+        }));
 
         //-------------------------     Floating Btn    --------------------------//
         fab = this.findViewById(R.id.fab);
@@ -53,9 +81,6 @@ public class EventMngActivity extends AppCompatActivity {
 //            showBuyerDialog();
         });
 
-        //
-        db = new DatabaseHelper(mContext);
-        setRecView(); //show Events
 
         //
         db.closeDB();
