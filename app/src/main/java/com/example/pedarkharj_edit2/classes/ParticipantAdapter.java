@@ -175,34 +175,34 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
             holder.baseLayout.setOnClickListener(this);
 //            checkAsRadioBtn(holder);
 
-            //DiffDong (mActivity)
-            //mode_01 numeric (if false)
-            if (!amountModeDong) {
-//            int curDongNum = participant.getDongNumber(); todo: ckeck if I haven't screwed this code
-                int curDongNum = 1;
-                if (curDongNum >= 0 && holder.dongEtxt != null)
-                    holder.dongEtxt.setText(String.valueOf(curDongNum));
-
-                if (holder.plusBtn != null) {
-                    holder.plusBtn.setOnClickListener(view -> {
-                        int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
-                        holder.dongEtxt.setText(String.valueOf(++mCurNumber));
-                    });
-                }
-
-                if (holder.minusBtn != null) {
-                    holder.minusBtn.setOnClickListener(item -> {
-                        int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
-                        holder.dongEtxt.setText(String.valueOf(--mCurNumber));
-                    });
-                }
-            }
-            //mode_02 amount (if true)
-            else {
-                float curDongAmount = participant.getDebt();
-                if (curDongAmount >= 0 && holder.dongEtxtAmount != null)
-                    holder.dongEtxtAmount.setText(String.valueOf(curDongAmount));
-            }
+//            //DiffDong (mActivity)
+//            //mode_01 numeric (if false)
+//            if (!amountModeDong) {
+////            int curDongNum = participant.getDongNumber(); todo: ckeck if I haven't screwed this code
+//                int curDongNum = 1;
+//                if (curDongNum >= 0 && holder.dongEtxt != null)
+//                    holder.dongEtxt.setText(String.valueOf(curDongNum));
+//
+//                if (holder.plusBtn != null) {
+//                    holder.plusBtn.setOnClickListener(view -> {
+//                        int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
+//                        holder.dongEtxt.setText(String.valueOf(++mCurNumber));
+//                    });
+//                }
+//
+//                if (holder.minusBtn != null) {
+//                    holder.minusBtn.setOnClickListener(item -> {
+//                        int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
+//                        holder.dongEtxt.setText(String.valueOf(--mCurNumber));
+//                    });
+//                }
+//            }
+//            //mode_02 amount (if true)
+//            else {
+//                float curDongAmount = participant.getDebt();
+//                if (curDongAmount >= 0 && holder.dongEtxtAmount != null)
+//                    holder.dongEtxtAmount.setText(String.valueOf(curDongAmount));
+//            }
 
         }
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
@@ -35,7 +34,6 @@ import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -212,7 +210,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         switch (id){
 
             case R.id.custom_dong_btn:
-                float price = Float.valueOf( priceTv.getText().toString());
+                int price = Integer.valueOf( priceTv.getText().toString());
                 // expense users' ids
                 int[] usersIds = new int[usersListPartices.size()];
                 int j = 0;
@@ -224,7 +222,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                     if (usersIds.length > 0)  {
                         Intent intent = new Intent(mContext,  DiffDongActivity.class);
                         intent.putExtra(Routines.SEND_EVENT_ID_INTENT, curEvent.getId());
-                        intent.putExtra(Routines.SEND_EXPENSE_FLOAT_INTENT, price);
+                        intent.putExtra(Routines.SEND_EXPENSE_INT_INTENT, price);
                         intent.putExtra(Routines.SEND_USERS_INTENT, usersIds);
                         startActivity(intent);
                     }

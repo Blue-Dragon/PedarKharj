@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -21,10 +23,10 @@ import com.example.pedarkharj_edit2.classes.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DiffDongActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -38,8 +40,10 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     Context mContext = this;
     Activity mActivity = this;
     Event curEvent;
-    float expense, eachDongAmount;
-    int dongsNumber;
+
+    int dongsNumber, eachDongAmount,expense;
+    int[] usersIds;
+    int userDong;
     boolean layoutMode;
 
     FloatingActionButton fab;
@@ -60,9 +64,19 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         curEvent = db.getEventById( getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 1) );
         layoutMode = DONG_MODE; //by default
 
-        expense = getIntent().getFloatExtra(Routines.SEND_EXPENSE_FLOAT_INTENT, 0);
-        dongsNumber = 10; //todo: should be counted
-        eachDongAmount = expense/dongsNumber;
+        expense = getIntent().getIntExtra(Routines.SEND_EXPENSE_INT_INTENT, 0);
+        usersIds = getIntent().getIntArrayExtra(Routines.SEND_USERS_INTENT);
+        dongsNumber = usersIds.length;
+        eachDongAmount = (int) (expense/dongsNumber);
+
+        //the rectangle above
+        tvL1 = findViewById(R.id. tv_title_my_expense);
+        tvL2 = findViewById(R.id.tv_my_expense );
+        tvC1 = findViewById(R.id. tv_title_my_dong);
+        tvC2 = findViewById(R.id. tv_my_dong);
+        tvR1 = findViewById(R.id. tv_title_my_result);
+        tvR2 = findViewById(R.id. tv_my_result);
+
 
         //back imageView btn
         ImageView backBtn = findViewById(R.id.back_btn);
@@ -86,15 +100,41 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         spinner.setOnItemSelectedListener(this);
 
         /*
+         * recView onClick
+         */
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Button plus = view.findViewById(R.id.plus_btn);
+                Button minus = view.findViewById(R.id.minus_btn);
+                EditText editText = view.findViewById(R.id.dong_Etxt2);
+                userDong = Integer.valueOf(editText.getText().toString());
+                Log.i("fuck013", userDong + "");
+
+                plus.setOnClickListener(item -> {
+                    editText.setText(String.valueOf(++userDong));
+                    tvC2.setText(String.valueOf(++dongsNumber));
+                    eachDongAmount = (int) (expense/dongsNumber);
+                    tvR2.setText(String.valueOf(eachDongAmount));
+                });
+                minus.setOnClickListener(item -> {
+                    tvC2.setText(String.valueOf(--dongsNumber));
+                    editText.setText(String.valueOf(--userDong));
+                    eachDongAmount = (int) (expense/dongsNumber);
+                    tvR2.setText(String.valueOf(eachDongAmount));
+                });
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
+
+        /*
          * the rectangle above
          */
-        tvL1 = findViewById(R.id. tv_title_my_expense);
-        tvL2 = findViewById(R.id.tv_my_expense );
-        tvC1 = findViewById(R.id. tv_title_my_dong);
-        tvC2 = findViewById(R.id. tv_my_dong);
-        tvR1 = findViewById(R.id. tv_title_my_result);
-        tvR2 = findViewById(R.id. tv_my_result);
-
         if (layoutMode == DONG_MODE){
             tvL1.setText("مبلغ خرج");
             tvL2.setText(String.valueOf(expense));
@@ -124,7 +164,6 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
     /********************************************       Methods     ****************************************************/
     private void doRecyclerView(boolean cashMode) {
-        int[] usersIds = getIntent().getIntArrayExtra(Routines.SEND_USERS_INTENT);
         usersList.clear();
         for (int i : usersIds){
             usersList.add(db.getParticeById(i));
