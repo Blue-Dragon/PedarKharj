@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class Participant {
+import java.io.Serializable;
+
+public class Participant  {
     //vital
     private int id;
     private String name;

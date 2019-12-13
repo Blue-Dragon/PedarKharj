@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
@@ -34,6 +35,7 @@ import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -43,7 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
     List<Participant> mParticipants;
-    List<Participant> expensePartices;
+    List<Participant> usersListPartices;
     ParticipantAdapter adapter;
     LinearLayout calculator;
     Event curEvent;
@@ -85,7 +87,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         mActivity = this;
         pbCanUse = true;
         mParticipants = new ArrayList<>();
-        expensePartices = new ArrayList<>();
+        usersListPartices = new ArrayList<>();
         db = new DatabaseHelper(mContext);
 
         particId = getIntent().getIntExtra(Routines.PARTICIPANT_INFO, 0);
@@ -147,11 +149,11 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                 if (subImg.getVisibility() != View.VISIBLE ) {
                     subImg.setVisibility(View.VISIBLE);
                     curChildCount++;
-                    expensePartices.add(participant);
+                    usersListPartices.add(participant);
                 } else{
                     subImg.setVisibility(View.INVISIBLE);
                     curChildCount--;
-                    if (expensePartices.contains(participant)) expensePartices.remove(participant);
+                    if (usersListPartices.contains(participant)) usersListPartices.remove(participant);
                 }
 
 
@@ -170,9 +172,15 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             if (aSwitch.isChecked()) {
                 doRecyclerView(Routines.SELECT_ALL);
                 curChildCount = recyclerChildCount;
+                //add all as users
+                usersListPartices.clear();
+                for (Participant participant : mParticipants){
+                    usersListPartices.add(participant);
+                }
             }
             else {
                 doRecyclerView(Routines.UNSELECT_ALL);
+                usersListPartices.clear(); //remove all as users
                 curChildCount = 0;
             }
         });
@@ -204,7 +212,26 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         switch (id){
 
             case R.id.custom_dong_btn:
-                startActivity(new Intent(mContext,  DiffDongActivity.class));
+                float price = Float.valueOf( priceTv.getText().toString());
+                // expense users' ids
+                int[] usersIds = new int[usersListPartices.size()];
+                int j = 0;
+                for (Participant participant: usersListPartices){
+                    usersIds[j++] = participant.getId();
+                }
+
+                if (price > 0){
+                    if (usersIds.length > 0)  {
+                        Intent intent = new Intent(mContext,  DiffDongActivity.class);
+                        intent.putExtra(Routines.SEND_EVENT_ID_INTENT, curEvent.getId());
+                        intent.putExtra(Routines.SEND_EXPENSE_FLOAT_INTENT, price);
+                        intent.putExtra(Routines.SEND_USERS_INTENT, usersIds);
+                        startActivity(intent);
+                    }
+                    else   Toast.makeText(mContext, "لطفا افراد شرکت کننده را انتخاب کنید.", Toast.LENGTH_SHORT).show();
+
+                } else Toast.makeText(mContext, "لطفا هزینه خرج را وارد کنید", Toast.LENGTH_SHORT).show();
+
                 break;
 
             case R.id.buyer_btn:
@@ -227,9 +254,9 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.done_btn:
                 // expense users
-                users = new Participant[expensePartices.size()];
-                for (int i=0; i<expensePartices.size(); i++){
-                    users[i] = expensePartices.get(i);
+                users = new Participant[usersListPartices.size()];
+                for (int i = 0; i< usersListPartices.size(); i++){
+                    users[i] = usersListPartices.get(i);
                 }
 
                 if (users.length > 0)     saveExpense();

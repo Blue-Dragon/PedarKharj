@@ -2,6 +2,7 @@ package com.example.pedarkharj_edit2.pages;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -69,6 +70,7 @@ public class EventMngActivity extends AppCompatActivity {
             @Override
             public void onLongClick(View view, int position) {
                 //options
+                view.setBackgroundColor(Color.CYAN);
             }
         }));
 

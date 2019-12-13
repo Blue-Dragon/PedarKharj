@@ -59,7 +59,7 @@
                 android:gravity="center"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="3dp"
-                android:text="حساب شما"
+                android:text="حساب من"
                 android:fontFamily="@font/b_koodak"
                 android:textColor="#000000"
                 android:textSize="12sp" />
@@ -81,7 +81,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:text="224"
-                android:textColor="#000000"
+                android:textColor="#8C8C8C"
                 android:textSize="24sp" />
             <TextView
                 android:id="@+id/tv_title_my_dong"
@@ -92,8 +92,8 @@
                 android:gravity="center"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="3dp"
-                android:text="دنگ ها"
-                android:textColor="#000000"
+                android:text="دونگ های من"
+                android:textColor="#8C8C8C"
                 android:textSize="12sp" />
         </RelativeLayout>
 
@@ -112,7 +112,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:text="438"
-                android:textColor="#000000"
+                android:textColor="#8C8C8C"
                 android:textSize="24sp" />
             <TextView
                 android:id="@+id/tv_title_my_expense"
@@ -123,8 +123,8 @@
                 android:gravity="center"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="3dp"
-                android:text="خرج ها"
-                android:textColor="#000000"
+                android:text="هزینه های من"
+                android:textColor="#8C8C8C"
                 android:textSize="12sp" />
         </RelativeLayout>
 
