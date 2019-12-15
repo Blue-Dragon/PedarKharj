@@ -82,8 +82,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_EVENT_ID + " INTEGER,"
             + KEY_PARTICE_NAME + " TEXT,"
             + KEY_CONTACT_ID + " INTEGER,"
-            + KEY_PARTICE_EXPENSE + " REAL,"
-            + KEY_PARTICE_DEBT + " REAL"+ ")";
+            + KEY_PARTICE_EXPENSE + " INTEGER,"
+            + KEY_PARTICE_DEBT + " INTEGER"+ ")";
 
     // Expense table create statement
     private static final String CREATE_TABLE_EXPENSES = "CREATE TABLE IF NOT EXISTS "
@@ -93,8 +93,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_BUYER_ID + " INTEGER,"
             + KEY_USER_ID + " INTEGER,"
             + KEY_EXPENSE_TITLE+ " TEXT,"
-            + KEY_EXPENSE_PRICE+ " REAL,"
-            + KEY_EXPENSE_DEBT+ " REAL,"
+            + KEY_EXPENSE_PRICE+ " INTEGER,"
+            + KEY_EXPENSE_DEBT+ " INTEGER,"
             + KEY_CREATED_AT + " DATETIME" + ")";
 
     /*******************************          Methods          ********************************/
@@ -545,8 +545,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
         participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
         participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
-        participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
-        participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
+        participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
+        participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
 
         return participant;
     }
@@ -571,8 +571,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
                 participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
-                participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
-                participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
+                participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
+                participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
 
                 // adding to participants list
                 participants.add(participant);
@@ -639,8 +639,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
                 participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
-                participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
-                participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
+                participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
+                participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
 
                 // adding to participants list
                 participants.add(participant);
@@ -668,8 +668,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
                 participant.setEvent( this.getEventById(eventId) );
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
-                participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
-                participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
+                participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
+                participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
 
                 // adding to participants list
                 participants.add(participant);

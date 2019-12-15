@@ -140,7 +140,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
             if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
 /* pic */ if ( holder.imageView != null && event.getBitmapStr() != null )       holder.imageView.setImageBitmap(Routines.decodeBase64(event.getBitmapStr()));
-            if (particNumber > -1 && holder.resultTxt != null)      holder.resultTxt.setText(particNumber + " عضو");
+            if (particNumber > 0 && holder.resultTxt != null)      holder.resultTxt.setText(particNumber + " عضو");
             else Log.e("E002",  particNumber + "" );
             db0.closeDB();
         }
@@ -154,8 +154,11 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
             if (participant.getBitmapStr() != null && holder.profImv != null)
                 holder.profImv.setImageBitmap(Routines.decodeBase64(participant.getBitmapStr()));
             if (participant.getResult() != null && holder.resultTxt != null)
-                holder.resultTxt.setText(String.valueOf(participant.getResult()));
+                holder.resultTxt.setText(participant.getResult());
 
+            /*
+             * AddExpenseActivity_ selecting users
+             */
             if (selectMode == Routines.UNSELECT_ALL){
                 //unselectAll
                 holder.checkedImg.setVisibility(View.INVISIBLE);
@@ -167,46 +170,14 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
             holder.baseLayout.setOnClickListener(item -> {
                 DatabaseHelper db = new DatabaseHelper(mActivity);
-                Intent intent = new Intent();
+//                Intent intent = new Intent();
                 db.closeDB();
             });
 
 
             holder.baseLayout.setOnClickListener(this);
 //            checkAsRadioBtn(holder);
-
-//            //DiffDong (mActivity)
-//            //mode_01 numeric (if false)
-//            if (!amountModeDong) {
-////            int curDongNum = participant.getDongNumber(); todo: ckeck if I haven't screwed this code
-//                int curDongNum = 1;
-//                if (curDongNum >= 0 && holder.dongEtxt != null)
-//                    holder.dongEtxt.setText(String.valueOf(curDongNum));
-//
-//                if (holder.plusBtn != null) {
-//                    holder.plusBtn.setOnClickListener(view -> {
-//                        int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
-//                        holder.dongEtxt.setText(String.valueOf(++mCurNumber));
-//                    });
-//                }
-//
-//                if (holder.minusBtn != null) {
-//                    holder.minusBtn.setOnClickListener(item -> {
-//                        int mCurNumber = Integer.valueOf(holder.dongEtxt.getText().toString());
-//                        holder.dongEtxt.setText(String.valueOf(--mCurNumber));
-//                    });
-//                }
-//            }
-//            //mode_02 amount (if true)
-//            else {
-//                float curDongAmount = participant.getDebt();
-//                if (curDongAmount >= 0 && holder.dongEtxtAmount != null)
-//                    holder.dongEtxtAmount.setText(String.valueOf(curDongAmount));
-//            }
-
         }
-
-
 
     }
 
@@ -225,31 +196,6 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         }
     }
 
-    /**
-     *  Check mark when clicked
-     */
-//    private void checkAsRadioBtn(@NonNull ViewHolder holder) {
-//        if (holder.checkedImg != null){
-//
-//            //TODO: change it to radio button action
-//            if (holder.checkedImg.getVisibility() != View.VISIBLE){
-//                holder.baseLayout.setOnClickListener(item -> holder.checkedImg.setVisibility(View.VISIBLE));
-//                holder.profImv.setOnClickListener(item -> holder.checkedImg.setVisibility(View.VISIBLE));
-//            }
-//            else if (holder.checkedImg.getVisibility() == View.VISIBLE) {
-//                holder.baseLayout.setOnClickListener(item -> holder.checkedImg.setVisibility(View.INVISIBLE));
-//                holder.profImv.setOnClickListener(item -> holder.checkedImg.setVisibility(View.INVISIBLE));
-//            }
-//
-////            holder.baseLayout.setOnClickListener(item -> {
-////                DatabaseHelper db = new DatabaseHelper(mActivity);
-////                Participant participant = db.getParticeById(holder.nameTv)
-////
-////                        db.closeDB();
-////            });
-//
-//        }
-//    }
 
     @Override
     public int getItemCount() {

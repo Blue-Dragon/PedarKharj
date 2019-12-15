@@ -13,8 +13,8 @@ public class Participant  {
     private Event event;
     private Contact contact;
     //money
-    private float expense;
-    private float debt;
+    private int expense;
+    private int debt;
     //
     private boolean chkImg;
 
@@ -30,7 +30,7 @@ public class Participant  {
             this.chkImg = false;
         }
 
-    public Participant(String name, float expense, float debt) {
+    public Participant(String name, int expense, int debt) {
             this.name = name;
             this.expense = expense;
             this.debt = debt;
@@ -54,10 +54,10 @@ public class Participant  {
     public boolean isChkImg() {
         return chkImg;
     }
-    public float getExpense() {
+    public int getExpense() {
         return expense;
     }
-    public float getDebt() {
+    public int getDebt() {
         return debt;
     }
     public Event getEvent() {
@@ -82,10 +82,10 @@ public class Participant  {
     public void setChkImg(boolean chkImg) {
         this.chkImg = chkImg;
     }
-    public void setExpense(float expense) {
+    public void setExpense(int expense) {
         this.expense = expense;
     }
-    public void setDebt(float debt) {
+    public void setDebt(int debt) {
         this.debt = debt;
     }
     public void setEvent(Event event) {

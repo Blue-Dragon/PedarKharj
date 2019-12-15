@@ -26,6 +26,15 @@ public class Expense {
         this.expenseDebt = expenseDebt;
     }
 
+//    public Expense(Participant buyer, Participant[] userPartics, String expenseTitle, float expensePrice, float expenseDebt) {
+//        this.event = buyer.getEvent();
+//        this.buyer = buyer;
+//        this.userPartics = userPartics;
+//        this.expenseTitle = expenseTitle;
+//        this.expensePrice = expensePrice;
+//        this.expenseDebt = expenseDebt;
+//    }
+
     //GETTER
     public int getId() {
         return id;

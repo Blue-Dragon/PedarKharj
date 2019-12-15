@@ -265,7 +265,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void saveExpense() {
-        float price = Float.valueOf( priceTv.getText().toString());
+        int price = Integer.valueOf( priceTv.getText().toString());
 
         if (price > 0){
             String priceStr = dongEText.getText().toString().trim();
@@ -274,7 +274,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                     users,
                     priceStr,
                     price,
-                    price/users.length);
+                    (int) price/users.length);
 
             db.addExpense(expense);
             startActivity(new Intent(mContext,  MainActivity.class));
@@ -289,7 +289,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         Button b = mActivity.findViewById(view.getId() ) ;
 
         StringBuilder builder = new StringBuilder();
-        if (Float.valueOf(priceTv.getText().toString()) > 0f ) builder.append(priceTv.getText());
+        if (Integer.valueOf(priceTv.getText().toString()) > 0 ) builder.append(priceTv.getText());
 
         // Not letting user to use '.' twice
         if (b.getId() == R.id.bp ){
