@@ -69,7 +69,7 @@ public class EventMngActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-                //options
+                //options todo: fix it
                 view.setBackgroundColor(Color.CYAN);
             }
         }));

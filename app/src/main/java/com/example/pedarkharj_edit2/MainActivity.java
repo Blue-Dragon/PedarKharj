@@ -219,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //def & cur Event
         int defEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
         if (defEventId > 0){
+            Log.i("fuck016", defEventId + "");
             defEvent = db.getEventById(defEventId);
         }else  defEvent = db.getEventById(1) ;
 

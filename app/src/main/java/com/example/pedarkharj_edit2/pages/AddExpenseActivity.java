@@ -294,7 +294,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             expense.setUserPartics(users);
             expense.setExpenseTitle(priceTitle);
             expense.setExpensePrice(price);
-            if (expenseDebts.length < 1){
+            if (expenseDebts == null || expenseDebts.length < 1){
                 //same debts
                expenseDebts = new int[usersListPartices.size()];
                 for (int debt: expenseDebts){
