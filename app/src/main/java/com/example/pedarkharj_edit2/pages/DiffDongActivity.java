@@ -118,7 +118,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
             public void onClick(View view, int position) {
                 Button plus = view.findViewById(R.id.plus_btn);
                 Button minus = view.findViewById(R.id.minus_btn);
-                EditText editText = view.findViewById(R.id.dong_Etxt2);
+                TextView editText = view.findViewById(R.id.dong_Etxt2);
                 userDong = Integer.valueOf(editText.getText().toString());
                 Participant user = usersList.get(position);
 

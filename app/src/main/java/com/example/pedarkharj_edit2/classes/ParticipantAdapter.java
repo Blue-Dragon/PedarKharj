@@ -88,7 +88,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         RelativeLayout baseLayout;
         //diff dong
         Button plusBtn, minusBtn;
-        EditText dongEtxt;
+        TextView dongEtxt;
             //mode_02 amount
         EditText dongEtxtAmount;
 

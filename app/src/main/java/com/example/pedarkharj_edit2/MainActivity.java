@@ -220,9 +220,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int defEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
         if (defEventId > 0){
             defEvent = db.getEventById(defEventId);
-            SharedPrefManager.getInstance(mContext).saveDefEvent(defEvent); //save  defEvent for next time to SharedPref
         }else  defEvent = db.getEventById(1) ;
+
         curEvent = defEvent; // if we haven't chosen yet
+        SharedPrefManager.getInstance(mContext).saveDefEvent(defEvent); //save  defEvent for next time to SharedPref
         Log.i("fuck011", "defEventId: " + defEventId+ "");
 
         //if we have a chosen event already
