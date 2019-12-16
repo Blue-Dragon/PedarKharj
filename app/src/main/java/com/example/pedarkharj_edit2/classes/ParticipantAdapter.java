@@ -34,6 +34,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     private int mLayout, maxCheckImg;
     private boolean amountModeDong;
     private short selectMode = 3;
+    private int defaultDong;
 
     public boolean isAmountModeDong() {
         return amountModeDong;
@@ -69,6 +70,9 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     }
     public void setSelectMode(short selectMode){
         this.selectMode = selectMode;
+    }
+    public void setDefaultDong(int defaultDong) {
+        this.defaultDong = defaultDong;
     }
 
     public ParticipantAdapter(Activity mActivity, int mLayout, List<Participant> participants, boolean amountModeDong) {
@@ -155,6 +159,11 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
                 holder.profImv.setImageBitmap(Routines.decodeBase64(participant.getBitmapStr()));
             if (participant.getResult() != null && holder.resultTxt != null)
                 holder.resultTxt.setText(participant.getResult());
+
+            //addExpenseActivity_ amountMode
+            if (defaultDong > 0 && holder.dongEtxtAmount != null)
+                holder.dongEtxtAmount.setText(String.valueOf(defaultDong));
+
 
             /*
              * AddExpenseActivity_ selecting users

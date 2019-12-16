@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.drawer_layout); //todo: bug
+        setContentView(R.layout.drawer_layout);
 
        Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);

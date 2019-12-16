@@ -37,8 +37,8 @@ import java.util.List;
 import java.util.Map;
 
 public class DiffDongActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    static boolean CASH_MODE = true;
-    static boolean DONG_MODE = false;
+    final static boolean CASH_MODE = true;
+    final static boolean DONG_MODE = false;
 
     RecyclerView recyclerView;
     List<Participant> usersList;
@@ -53,6 +53,8 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     int[] usersIds;
     int userDong;
     boolean layoutMode;
+    int defDong;
+//    int wholeExpense;
 
     FloatingActionButton fab;
     Spinner spinner;
@@ -72,6 +74,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         db = new DatabaseHelper(mContext);
         curEvent = db.getEventById( getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 1) );
         layoutMode = DONG_MODE; //by default
+        defDong = 1;//by default
 
         expense = getIntent().getIntExtra(Routines.SEND_EXPENSE_INT_INTENT, 0);
         usersIds = getIntent().getIntArrayExtra(Routines.SEND_USERS_INTENT);
@@ -85,7 +88,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         tvC2 = findViewById(R.id. tv_my_dong);
         tvR1 = findViewById(R.id. tv_title_my_result);
         tvR2 = findViewById(R.id. tv_my_result);
-
+//        wholeExpense = Integer.valueOf(tvL2.getText().toString().trim());
 
         //back imageView btn
         ImageView backBtn = findViewById(R.id.back_btn);
@@ -116,31 +119,32 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                Participant user = usersList.get(position);
                 Button plus = view.findViewById(R.id.plus_btn);
                 Button minus = view.findViewById(R.id.minus_btn);
-                TextView editText = view.findViewById(R.id.dong_Etxt2);
-                userDong = Integer.valueOf(editText.getText().toString());
-                Participant user = usersList.get(position);
+                TextView tv = view.findViewById(R.id.dong_Etxt2);
+//                EditText editText = view.findViewById(R.id.dong_Etxt_amount);
 
+                if (layoutMode == DONG_MODE){
+                    userDong = Integer.valueOf(tv.getText().toString());
 
-                plus.setOnClickListener(item -> {
-                    editText.setText(String.valueOf(++userDong));
-                    tvC2.setText(String.valueOf(++dongsNumber));
-                    doDongStuff(user, userDong, dongsNumber);
-//                    Log.i("fuck013", "id " +user.getId()+ ": " +userDong + "");
-                });
-                minus.setOnClickListener(item -> {
-                    if (userDong > 1){
-                        editText.setText(String.valueOf(--userDong));
-                        tvC2.setText(String.valueOf(--dongsNumber));
+                    plus.setOnClickListener(item -> {
+                        tv.setText(String.valueOf(++userDong));
+                        tvC2.setText(String.valueOf(++dongsNumber));
                         doDongStuff(user, userDong, dongsNumber);
+//                    Log.i("fuck013", "id " +user.getId()+ ": " +userDong + "");
+                    });
+                    minus.setOnClickListener(item -> {
+                        if (userDong > 1){
+                            tv.setText(String.valueOf(--userDong));
+                            tvC2.setText(String.valueOf(--dongsNumber));
+                            doDongStuff(user, userDong, dongsNumber);
 //                        Log.i("fuck013", "id " +user.getId()+ ": " +userDong + "");
 
-                    } else
-                        Toast.makeText(mContext, "دونگ نمی تواند کمتر از یک سهم باشد.", Toast.LENGTH_SHORT).show();
-                });
-
-                //
+                        } else
+                            Toast.makeText(mContext, "دونگ نمی تواند کمتر از یک سهم باشد.", Toast.LENGTH_SHORT).show();
+                    });
+                    //
 
 //                editText.addTextChangedListener(new TextWatcher() {
 //                    String before ;
@@ -167,6 +171,28 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 //                        doDongStuff(user, userDong, dongsNumber);
 //                    }
 //                });
+                }
+//                else {
+//                    //in Amount Mode
+//                    editText.addTextChangedListener(new TextWatcher() {
+//                        @Override
+//                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                        }
+//
+//                        @Override
+//                        public void afterTextChanged(Editable editable) {
+//
+//                        }
+//                    });
+//                }
+
+
             }
 
             @Override
@@ -199,7 +225,6 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
          */
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            //todo: done btn
             int dongAmountUnit = Integer.valueOf(tvR2.getText().toString().trim());
             int[] expenseDongs = new int[usersList.size()];
 
@@ -208,7 +233,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
             Log.i("fuck014", ". \n\n" );
 
             for (Participant user : usersList){
-                userDong = (Integer) usersDongMap.get(user.getId()); //todo: it is null
+                userDong = (Integer) usersDongMap.get(user.getId());
                 expenseDongs[i] = userDong * dongAmountUnit;
                 i++;
             }
@@ -241,18 +266,19 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         usersList.clear();
         for (int i : usersIds){
             usersList.add(db.getParticeById(i));
-            usersDongMap.put(i, 1);
+            usersDongMap.put(i, defDong);
         }
         //
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        //
+        //dongNumber mode
         if (!cashMode) {
             adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong__dong_mode, usersList);
         }
         else {
             adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong__cash_mode, usersList);
+            adaptor.setDefaultDong(defDong);
         }
         recyclerView.setAdapter(adaptor);
     }
@@ -262,11 +288,13 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String selectedIten = parent.getItemAtPosition(position).toString();
         if (selectedIten.equals("تعداد دنگ")){
-            doRecyclerView(DONG_MODE);
+            defDong = 1;
             layoutMode = DONG_MODE;
+            doRecyclerView(DONG_MODE);
         }else{
-            doRecyclerView(CASH_MODE);
+            defDong = eachDongAmount;
             layoutMode = CASH_MODE;
+            doRecyclerView(CASH_MODE);
         }
     }
     @Override

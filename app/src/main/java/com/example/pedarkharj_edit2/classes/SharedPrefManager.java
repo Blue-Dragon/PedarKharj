@@ -68,24 +68,24 @@ public class SharedPrefManager {
     //--------------------------     previous app codes      ----------------------------//
 
     //this method will store the user data in shared preferences
-    public void userLogin(Participant participant) {
-        sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        if (participant.getId() > -1) {
-            editor.putInt(KEY_ID, participant.getId());
-            editor.putString(KEY_NAME, participant.getName());
-            //TODO: bellow code should not be deleted, but debugged!
-//            String bitmapString = Routines.encodeToBase64(mContext, participant);
-//            if (!bitmapString.isEmpty())    editor.putString(KEY_BITMAP_STRING, bitmapString);
-            editor.apply();
-        }
-    }
-
-    //this method will check whether user is already logged in or not
-    public boolean isLoggedIn() {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(KEY_NAME, null) != null;
-    }
+//    public void userLogin(Participant participant) {
+//        sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        if (participant.getId() > -1) {
+//            editor.putInt(KEY_ID, participant.getId());
+//            editor.putString(KEY_NAME, participant.getName());
+//            //TODOthing: bellow code should not be deleted, but debugged!
+////            String bitmapString = Routines.encodeToBase64(mContext, participant);
+////            if (!bitmapString.isEmpty())    editor.putString(KEY_BITMAP_STRING, bitmapString);
+//            editor.apply();
+//        }
+//    }
+//
+//    //this method will check whether user is already logged in or not
+//    public boolean isLoggedIn() {
+//        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//        return sharedPreferences.getString(KEY_NAME, null) != null;
+//    }
 
     //this method will give info of the logged in user
 //    public Participant getParticipant(){
@@ -93,7 +93,7 @@ public class SharedPrefManager {
 //        return new Participant(
 //                sharedPreferences.getInt(KEY_ID, -1),
 //                sharedPreferences.getString(KEY_NAME, null),
-//                Routines.decodeBase64(sharedPreferences.getString(KEY_BITMAP_STRING, null)) //TODO
+//                Routines.decodeBase64(sharedPreferences.getString(KEY_BITMAP_STRING, null))
 //        );
 //    }
 

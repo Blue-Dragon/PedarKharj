@@ -42,6 +42,9 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
+    final static boolean DONG_NUMBER = true;
+    final static boolean DONG_AMOUNT = false;
+
     List<Participant> mParticipants;
     List<Participant> usersListPartices;
     int[] expenseDebts;
