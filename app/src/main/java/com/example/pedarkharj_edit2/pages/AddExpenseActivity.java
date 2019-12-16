@@ -44,6 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
     List<Participant> mParticipants;
     List<Participant> usersListPartices;
+    int[] expenseDebts;
     ParticipantAdapter adapter;
     LinearLayout calculator;
     Event curEvent;
@@ -204,6 +205,23 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 //        Log.d("Fuck010", builder.toString());
 //    }
 
+    /*
+     * setting diff dong, if set
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Routines.RESULT_OK) {
+            if(resultCode == Activity.RESULT_OK){
+                expenseDebts = data.getIntArrayExtra(Routines.RESULT);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+    }
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -224,7 +242,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                         intent.putExtra(Routines.SEND_EVENT_ID_INTENT, curEvent.getId());
                         intent.putExtra(Routines.SEND_EXPENSE_INT_INTENT, price);
                         intent.putExtra(Routines.SEND_USERS_INTENT, usersIds);
-                        startActivity(intent);
+                        startActivityForResult(intent, Routines.RESULT_OK);
                     }
                     else   Toast.makeText(mContext, "لطفا افراد شرکت کننده را انتخاب کنید.", Toast.LENGTH_SHORT).show();
 
@@ -267,14 +285,25 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     private void saveExpense() {
         int price = Integer.valueOf( priceTv.getText().toString());
 
+
         if (price > 0){
-            String priceStr = dongEText.getText().toString().trim();
-            Expense expense = new Expense(
-                    buyer,
-                    users,
-                    priceStr,
-                    price,
-                    (int) price/users.length);
+            String priceTitle = dongEText.getText().toString().trim();
+            Expense expense = new Expense();
+            expense.setEvent(curEvent);
+            expense.setBuyer(buyer);
+            expense.setUserPartics(users);
+            expense.setExpenseTitle(priceTitle);
+            expense.setExpensePrice(price);
+            if (expenseDebts.length < 1){
+                //same debts
+               expenseDebts = new int[usersListPartices.size()];
+                for (int debt: expenseDebts){
+                    debt = price/usersListPartices.size();
+                    Log.i("Fuck012", debt+ "");
+                 }
+
+            }
+            expense.setExpenseDebts(expenseDebts);
 
             db.addExpense(expense);
             startActivity(new Intent(mContext,  MainActivity.class));

@@ -131,10 +131,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Participant buyer = expense.getBuyer();
-        //get users as an array
         Participant[] userPartics = expense.getUserPartics();
+        int i =0;
+        int[] expenseDebts = expense.getExpenseDebts();
+        //get users as an array
         int userId;
-
         for (Participant user : userPartics){
             userId = user.getId();
             Log.e("ExpenseIds", user.getId() + "");
@@ -148,14 +149,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (user.getId() == buyer.getId()) {
                 values.put(KEY_EXPENSE_PRICE, expense.getExpensePrice());
             } else      values.put(KEY_EXPENSE_PRICE, 0);
-            values.put(KEY_EXPENSE_DEBT, expense.getExpenseDebt());
+            values.put(KEY_EXPENSE_DEBT, expenseDebts[i]);
             values.put(KEY_CREATED_AT, getDateTime());
             // insert row
             db.insert(TABLE_EXPENSES, null, values);
 
             //Add Debt to event_participant table
             ContentValues values2 = new ContentValues();
-            values2.put(KEY_PARTICE_DEBT, user.getDebt() + expense.getExpenseDebt());
+            values2.put(KEY_PARTICE_DEBT, user.getDebt() + expenseDebts[i++]);
             db.update(TABLE_EVENT_PARTICES, values2,  KEY_ID + " = ?", new String[] {String.valueOf(userId) });
         }
 
@@ -200,8 +201,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Creating contacts
      */
     public void createContacts(Contact[] contacts) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         for(Contact contact : contacts){
             createContact(contact);
         }
@@ -243,7 +242,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Contact contact = new Contact();
         contact.setId(c.getInt(c.getColumnIndex(KEY_ID)));
         contact.setName((c.getString(c.getColumnIndex(KEY_CONTACT_NAME))));
-        contact.setBitmapStr(c.getString(c.getColumnIndex(KEY_BMP_STR)) ); //bitmapStr could even be null !
+        contact.setBitmapStr(c.getString(c.getColumnIndex(KEY_BMP_STR)) ); // bitmapStr could even be null ! that's ok.
         contact.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
         return contact;

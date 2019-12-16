@@ -17,11 +17,22 @@ import java.util.List;
 
 
 public class Routines {
+    //Intent extras
+    public static final String NEW_EVENT_PARTIC_IDS_INTENT = "NEW_EVENT_PARTIC_IDS_INTENT";
+    public static final String NEW_EVENT_PARTIC_EVENT_ID_INTENT = "NEW_EVENT_PARTIC_EVENT_ID_INTENT";
+    public static final String SEND_EVENT_ID_INTENT = "SEND_EVENT_ID_INTENT";
+    public static final String SEND_EXPENSE_INT_INTENT = "SEND_EXPENSE_INT_INTENT";
+    public static final String SEND_USERS_INTENT = "SEND_USERS_INTENT";
+    //forResult
+    public static final String RESULT = "RESULT";
+    public static final int RESULT_OK = 1;
+    public static final int RESULT_CANCEL = 0;
     //Permissions
     public static final int PER_CODE_CAMERA_READexSTG = 1;
     public static final int PER_CODE_READ_CONTACTS = 2;
     public static final int GALLERY_INTENT = 3;
     public static final int CAMERA_INTENT = 4;
+
     //other stuff
     public static final String PARTICIPANT_INFO = "PARTICIPANT_INFO";
     public static final String EVENT_TEMP_NAME = "EVENT_TEMP";
@@ -29,12 +40,7 @@ public class Routines {
     public final static short UNSELECT_ALL = 0;
     public final static short SELECT_ALL = 1;
     public final static short NOT_SELECT_ALL = 2;
-    //Intent extras
-    public static final String NEW_EVENT_PARTIC_IDS_INTENT = "NEW_EVENT_PARTIC_IDS_INTENT";
-    public static final String NEW_EVENT_PARTIC_EVENT_ID_INTENT = "NEW_EVENT_PARTIC_EVENT_ID_INTENT";
-    public static final String SEND_EVENT_ID_INTENT = "SEND_EVENT_ID_INTENT";
-    public static final String SEND_EXPENSE_INT_INTENT = "SEND_EXPENSE_INT_INTENT";
-    public static final String SEND_USERS_INTENT = "SEND_USERS_INTENT";
+
 
 //    Context mContext;
     Activity mActivity;

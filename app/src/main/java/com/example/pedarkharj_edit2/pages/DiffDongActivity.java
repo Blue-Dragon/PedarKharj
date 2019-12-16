@@ -2,12 +2,15 @@ package com.example.pedarkharj_edit2.pages;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +19,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TabWidget;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
@@ -27,7 +32,9 @@ import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DiffDongActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     static boolean CASH_MODE = true;
@@ -35,6 +42,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
     RecyclerView recyclerView;
     List<Participant> usersList;
+    Map usersDongMap;
     DatabaseHelper db;
     ParticipantAdapter adaptor;
     Context mContext = this;
@@ -60,6 +68,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         setSupportActionBar(toolbar);
 
         usersList = new ArrayList<Participant>();
+        usersDongMap = new HashMap<Integer, Integer>();
         db = new DatabaseHelper(mContext);
         curEvent = db.getEventById( getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 1) );
         layoutMode = DONG_MODE; //by default
@@ -67,7 +76,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         expense = getIntent().getIntExtra(Routines.SEND_EXPENSE_INT_INTENT, 0);
         usersIds = getIntent().getIntArrayExtra(Routines.SEND_USERS_INTENT);
         dongsNumber = usersIds.length;
-        eachDongAmount = (int) (expense/dongsNumber);
+        eachDongAmount = expense/dongsNumber;
 
         //the rectangle above
         tvL1 = findViewById(R.id. tv_title_my_expense);
@@ -99,6 +108,8 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         //
         spinner.setOnItemSelectedListener(this);
 
+
+
         /*
          * recView onClick
          */
@@ -109,20 +120,53 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                 Button minus = view.findViewById(R.id.minus_btn);
                 EditText editText = view.findViewById(R.id.dong_Etxt2);
                 userDong = Integer.valueOf(editText.getText().toString());
-                Log.i("fuck013", userDong + "");
+                Participant user = usersList.get(position);
+
 
                 plus.setOnClickListener(item -> {
                     editText.setText(String.valueOf(++userDong));
                     tvC2.setText(String.valueOf(++dongsNumber));
-                    eachDongAmount = (int) (expense/dongsNumber);
-                    tvR2.setText(String.valueOf(eachDongAmount));
+                    doDongStuff(user, userDong, dongsNumber);
+//                    Log.i("fuck013", "id " +user.getId()+ ": " +userDong + "");
                 });
                 minus.setOnClickListener(item -> {
-                    tvC2.setText(String.valueOf(--dongsNumber));
-                    editText.setText(String.valueOf(--userDong));
-                    eachDongAmount = (int) (expense/dongsNumber);
-                    tvR2.setText(String.valueOf(eachDongAmount));
+                    if (userDong > 1){
+                        editText.setText(String.valueOf(--userDong));
+                        tvC2.setText(String.valueOf(--dongsNumber));
+                        doDongStuff(user, userDong, dongsNumber);
+//                        Log.i("fuck013", "id " +user.getId()+ ": " +userDong + "");
+
+                    } else
+                        Toast.makeText(mContext, "دونگ نمی تواند کمتر از یک سهم باشد.", Toast.LENGTH_SHORT).show();
                 });
+
+                //
+
+//                editText.addTextChangedListener(new TextWatcher() {
+//                    String before ;
+//                    int beforeInt;
+//                    @Override
+//                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                        before = charSequence.toString().trim();
+//                        beforeInt = Integer.valueOf(before);
+//                    }
+//
+//                    @Override
+//                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+////                        if (Integer.valueOf(charSequence.toString()) < 1 ){
+////                            Toast.makeText(mContext, "دونگ نمی تواند کمتر از یک سهم باشد.", Toast.LENGTH_SHORT).show();
+////                        } editText.setText(before);
+//                    }
+//
+//                    @Override
+//                    public void afterTextChanged(Editable editable) {
+//                        int i = Integer.valueOf(editable.toString()) ;
+//                        userDong = i;
+//                        dongsNumber += (i - beforeInt);
+////                        editText.setText(String.valueOf(i));
+//                        doDongStuff(user, userDong, dongsNumber);
+//                    }
+//                });
             }
 
             @Override
@@ -156,6 +200,23 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             //todo: done btn
+            int dongAmountUnit = Integer.valueOf(tvR2.getText().toString().trim());
+            int[] expenseDongs = new int[usersList.size()];
+
+            int i = 0;
+            int userDong;
+            Log.i("fuck014", ". \n\n" );
+
+            for (Participant user : usersList){
+                userDong = (Integer) usersDongMap.get(user.getId()); //todo: it is null
+                expenseDongs[i] = userDong * dongAmountUnit;
+                i++;
+            }
+
+            Intent intent = new Intent(mContext, AddExpenseActivity.class);
+            intent.putExtra(Routines.RESULT, expenseDongs);
+            setResult(Activity.RESULT_OK, intent);
+            finish();
         });
     }
 
@@ -163,10 +224,24 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
 
     /********************************************       Methods     ****************************************************/
+
+    void  doDongStuff(Participant user, int userDong, int allDongsNum){
+        /*
+         * Map: to save each dongNumber
+         * todo: update -> replace Map with SparseIntArray (for less memory)
+         */
+        usersDongMap.put(user.getId(), userDong);
+        Log.i("fuck015", "usersDongMap id: "+ user.getId()+ " : "+ userDong);
+        //
+        eachDongAmount = expense/allDongsNum;
+        tvR2.setText(String.valueOf(eachDongAmount));
+    }
+
     private void doRecyclerView(boolean cashMode) {
         usersList.clear();
         for (int i : usersIds){
             usersList.add(db.getParticeById(i));
+            usersDongMap.put(i, 1);
         }
         //
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
