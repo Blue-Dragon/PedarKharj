@@ -49,7 +49,10 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     Activity mActivity = this;
     Event curEvent;
 
-    int dongsNumber, eachDongAmount,expense;
+    int    dongsNumber,
+            eachDongAmount,
+            expense,
+            countedExpenses;
     int[] usersIds;
     int userDong;
     boolean layoutMode;
@@ -77,6 +80,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         defDong = 1;//by default
 
         expense = getIntent().getIntExtra(Routines.SEND_EXPENSE_INT_INTENT, 0);
+        countedExpenses = expense;
         usersIds = getIntent().getIntArrayExtra(Routines.SEND_USERS_INTENT);
         dongsNumber = usersIds.length;
         eachDongAmount = expense/dongsNumber;
@@ -123,7 +127,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                 Button plus = view.findViewById(R.id.plus_btn);
                 Button minus = view.findViewById(R.id.minus_btn);
                 TextView tv = view.findViewById(R.id.dong_Etxt2);
-//                EditText editText = view.findViewById(R.id.dong_Etxt_amount);
+                EditText editText = view.findViewById(R.id.dong_Etxt_amount);
 
                 if (layoutMode == DONG_MODE){
                     userDong = Integer.valueOf(tv.getText().toString());
@@ -171,26 +175,25 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 //                        doDongStuff(user, userDong, dongsNumber);
 //                    }
 //                });
+                } else {
+                    //in Amount Mode
+                    editText.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable editable) {
+
+                        }
+                    });
                 }
-//                else {
-//                    //in Amount Mode
-//                    editText.addTextChangedListener(new TextWatcher() {
-//                        @Override
-//                        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//
-//                        }
-//
-//                        @Override
-//                        public void afterTextChanged(Editable editable) {
-//
-//                        }
-//                    });
-//                }
 
 
             }
@@ -205,19 +208,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         /*
          * the rectangle above
          */
-        if (layoutMode == DONG_MODE){
-            tvL1.setText("مبلغ خرج");
-            tvL2.setText(String.valueOf(expense));
-
-            tvC1.setText("تعداد دنگ ها");
-            tvC2.setText(String.valueOf(dongsNumber));
-
-            tvR1.setText("قیمت هر دنگ");
-            tvR2.setText(String.valueOf(eachDongAmount));
-
-        }else {
-
-        }
+        initRectangleAbove();
 
 
         /*
@@ -287,7 +278,11 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String selectedIten = parent.getItemAtPosition(position).toString();
+        dongsNumber = usersIds.length;
+        eachDongAmount = expense/dongsNumber;
+
         if (selectedIten.equals("تعداد دنگ")){
+            tvC2.setText(String.valueOf(dongsNumber));
             defDong = 1;
             layoutMode = DONG_MODE;
             doRecyclerView(DONG_MODE);
@@ -296,10 +291,32 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
             layoutMode = CASH_MODE;
             doRecyclerView(CASH_MODE);
         }
+        initRectangleAbove();
     }
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    private void initRectangleAbove() {
+        tvL1.setText("مبلغ خرج");
+        tvL2.setText(String.valueOf(expense));
+
+        if (layoutMode == DONG_MODE){
+            tvC1.setText("تعداد دنگ ها");
+            tvC2.setText(String.valueOf(dongsNumber));
+
+            tvR1.setText("قیمت هر دنگ");
+            tvR2.setText(String.valueOf(eachDongAmount));
+
+        }else {
+            tvC1.setText("قیمت هر دنگ");
+            tvC2.setText(String.valueOf(eachDongAmount));
+
+            tvR1.setText("هزینه باقی مانده");
+            int theRest = expense - countedExpenses;
+            tvR2.setText(String.valueOf(theRest));
+        }
     }
 
 }
