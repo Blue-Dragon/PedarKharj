@@ -42,8 +42,6 @@ import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddExpenseActivity extends AppCompatActivity implements View.OnClickListener {
-    final static boolean DONG_NUMBER = true;
-    final static boolean DONG_AMOUNT = false;
 
     List<Participant> mParticipants;
     List<Participant> usersListPartices;
@@ -162,10 +160,11 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
                 aSwitch.setChecked(false);  //set switch off, when unSelect one among all
                 if (curChildCount == recyclerChildCount)    aSwitch.setChecked(true); //set switch on, when all are selected one by one
             }
-
             @Override
             public void onLongClick(View view, int position) {}
         });
+
+
         recyclerView.addOnItemTouchListener(listener);
         /*
          * CheckAll
@@ -189,7 +188,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
 
 
-
+        aSwitch.performClick();     //check all be def
         // db
         db.closeDB();
     }
