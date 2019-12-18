@@ -31,6 +31,7 @@ import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
 
 import java.util.ArrayList;
+import java.util.FormatFlagsConversionMismatchException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,15 +49,14 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     Activity mActivity = this;
     Event curEvent;
 
-    int    dongsNumber,
-            eachDongAmount,
-            expense,
-            countedExpenses;
     int[] usersIds;
     int userDong;
     boolean layoutMode;
     int defDong;
-//    int wholeExpense;
+    int    dongsNumber,
+            eachDongAmount,
+            expense,
+            countedExpenses;
 
     FloatingActionButton fab;
     Spinner spinner;
@@ -79,7 +79,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         defDong = 1;//by default
 
         expense = getIntent().getIntExtra(Routines.SEND_EXPENSE_INT_INTENT, 0);
-        countedExpenses = expense;
+        countedExpenses = 0; //By def; we'll set it after Spinner to count the exact thing
         usersIds = getIntent().getIntArrayExtra(Routines.SEND_USERS_INTENT);
         dongsNumber = usersIds.length;
         eachDongAmount = expense/dongsNumber;
@@ -91,7 +91,6 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         tvC2 = findViewById(R.id. tv_my_dong);
         tvR1 = findViewById(R.id. tv_title_my_result);
         tvR2 = findViewById(R.id. tv_my_result);
-//        wholeExpense = Integer.valueOf(tvL2.getText().toString().trim());
 
         //back imageView btn
         ImageView backBtn = findViewById(R.id.back_btn);
@@ -113,6 +112,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         spinner.setAdapter(dataAdapter);
         //
         spinner.setOnItemSelectedListener(this);
+
 
 
 
@@ -305,7 +305,13 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
             defDong = eachDongAmount; //change diffDong to cash
             layoutMode = CASH_MODE;
             doRecyclerView(CASH_MODE);
+
+            for (Participant user: usersList) {
+                countedExpenses += usersDongMap.get(user.getId());
+            }
+//            Log.i("fuck018", "1- expense: " + expense + " \n"+ " countedExpenses: "+ countedExpenses);
         }
+
         initRectangleAbove();
     }
     @Override
@@ -330,6 +336,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
             tvR1.setText("هزینه باقی مانده");
             int theRest = expense - countedExpenses;
+//            Log.i("fuck018", "2- expense: " + expense + " \n"+ " countedExpenses: "+ countedExpenses);
             tvR2.setText(String.valueOf(theRest));
         }
     }
