@@ -93,6 +93,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         particId = getIntent().getIntExtra(Routines.PARTICIPANT_INFO, 0);
         buyer = db.getParticeById(particId);
         curEvent = buyer.getEvent();
+        expenseDebts = new  int[]{}; //by deff
 
 
         BuyerBtnTxt = findViewById(R.id.buyer_btn_txt);             BuyerBtnTxt.setText(buyer.getName());
@@ -290,22 +291,25 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         if (price > 0){
             String priceTitle = dongEText.getText().toString().trim();
+
+//            if (expenseDebts == null || expenseDebts.length < 1){
+//                //same debts
+//               expenseDebts = new int[usersListPartices.size()];
+//                for (int debt: expenseDebts){
+//                    debt = price/usersListPartices.size();
+//                    Log.i("Fuck012", debt+ "");
+//                 }
+//
+//            }
+
             Expense expense = new Expense();
             expense.setEvent(curEvent);
             expense.setBuyer(buyer);
             expense.setUserPartics(users);
             expense.setExpenseTitle(priceTitle);
             expense.setExpensePrice(price);
-            if (expenseDebts == null || expenseDebts.length < 1){
-                //same debts
-               expenseDebts = new int[usersListPartices.size()];
-                for (int debt: expenseDebts){
-                    debt = price/usersListPartices.size();
-                    Log.i("Fuck012", debt+ "");
-                 }
-
-            }
-            expense.setExpenseDebts(expenseDebts);
+            if (expenseDebts == null || expenseDebts.length < 1) expense.setExpenseDebts(price/users.length);
+            else expense.setExpenseDebts(expenseDebts);
 
             db.addExpense(expense);
             startActivity(new Intent(mContext,  MainActivity.class));

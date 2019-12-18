@@ -82,12 +82,21 @@ public class Expense {
     public void setExpenseTitle(String expenseTitle) {
         this.expenseTitle = expenseTitle;
     }
+
     public void setExpensePrice(int expensePrice) {
         this.expensePrice = expensePrice;
     }
     public void setExpenseDebts(int[] expenseDebt) {
         this.expenseDebts = expenseDebt;
     }
+    public void setExpenseDebts(int expenseDebt) {
+        this.expenseDebts = new int[userPartics.length];
+        int i =0;
+        for (Participant ignored : this.userPartics){
+            this.expenseDebts[i++] = expenseDebt;
+        }
+    }
+
     public void setEvent(Event event) {
         this.event = event;
     }
