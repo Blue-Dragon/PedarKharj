@@ -178,47 +178,29 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                 else {
                     //in Amount Mode
                     editText.addTextChangedListener(new TextWatcher() {
-                        int ex;
                         int cur;
-                        int diff;
 
                         @Override
                         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                            ex = Integer.valueOf(charSequence.toString());
-                            Log.i("fuck016",  "." );
-                            Log.i("fuck016",  "." );
-                            Log.i("fuck016",  "." );
-                            Log.i("fuck016",  "user Name: " + user.getName());
-
-                            Log.i("fuck016",  "Ex: " + ex);
                         }
 
                         @Override
                         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                            Log.e("fuck017",  ". " );
-                            Log.e("fuck017",  ". " );
-                            Log.e("fuck017",  "Fuck u " + user.getName());
-                            Log.e("fuck017",  "i: "+ i );
-                            Log.e("fuck017",  "i1: "+ i1 );
-                            Log.e("fuck017",  "i2: "+ i2 );
-
                         }
 
                         @Override
                         public void afterTextChanged(Editable editable) {
+                            int countedExpenses = 0;
                             cur = !editable.toString().equals("") ? Integer.valueOf(editable.toString()) : 0 ;
-                            editText.setText(cur);
-                            Log.i("fuck017",  "cur: " + cur);
 
-                            diff = cur - ex;
-                            Log.i("fuck016",  "diff: " + diff);
-                            countedExpenses += diff;
                             Log.i("fuck016",  "expense: " + expense);
-                            Log.i("fuck016",  "countedExpenses: " + countedExpenses);
-                            Log.i("fuck016",  "remaining: " + (expense - countedExpenses) );
 
-                            tvR2.setText(String.valueOf(expense - countedExpenses));
                             doDongStuff(user, cur, dongsNumber);
+                            for (Participant user : usersList){
+                                countedExpenses += usersDongMap.get(user.getId());
+                            }
+                            tvR2.setText(String.valueOf(expense - countedExpenses));
+                            Log.i("fuck016",  "remaining: " + (expense - countedExpenses) );
 
                         }
                     });
