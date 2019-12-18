@@ -31,7 +31,6 @@ import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
 
 import java.util.ArrayList;
-import java.util.FormatFlagsConversionMismatchException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -190,15 +189,13 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
                         @Override
                         public void afterTextChanged(Editable editable) {
-                            int countedExpenses = 0;
+//                            int countedExpenses = 0;
                             cur = !editable.toString().equals("") ? Integer.valueOf(editable.toString()) : 0 ;
 
                             Log.i("fuck016",  "expense: " + expense);
 
                             doDongStuff(user, cur, dongsNumber);
-                            for (Participant user : usersList){
-                                countedExpenses += usersDongMap.get(user.getId());
-                            }
+                            countedExpenses = reGetCountedExpenses();
                             tvR2.setText(String.valueOf(expense - countedExpenses));
                             Log.i("fuck016",  "remaining: " + (expense - countedExpenses) );
 
@@ -227,6 +224,12 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
          */
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
+            countedExpenses = reGetCountedExpenses();
+            if (layoutMode == CASH_MODE && (expense - countedExpenses) != 0){
+                Toast.makeText(mContext, "Fuck u", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             int dongAmountUnit = Integer.valueOf(tvR2.getText().toString().trim());
             int[] expenseDongs = new int[usersList.size()];
 
@@ -239,8 +242,12 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                 if (layoutMode == DONG_MODE)
                     expenseDongs[i++] = userDong * dongAmountUnit;
                 else
-                    expenseDongs[i] =userDong;
+                    expenseDongs[i++] =userDong;
             }
+
+            Toast.makeText(mContext, ""+( expense - countedExpenses), Toast.LENGTH_SHORT).show();
+
+
 
             Intent intent = new Intent(mContext, AddExpenseActivity.class);
             intent.putExtra(Routines.RESULT, expenseDongs);
@@ -253,6 +260,13 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
 
     /********************************************       Methods     ****************************************************/
+    private int reGetCountedExpenses() {
+        int countedExpenses = 0;
+        for (Participant user : usersList) {
+            countedExpenses += usersDongMap.get(user.getId());
+        }
+        return countedExpenses;
+    }
 
     void  doDongStuff(Participant user, int userDong, int allDongsNum){
         /*
@@ -306,9 +320,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
             layoutMode = CASH_MODE;
             doRecyclerView(CASH_MODE);
 
-            for (Participant user: usersList) {
-                countedExpenses += usersDongMap.get(user.getId());
-            }
+            countedExpenses = reGetCountedExpenses();
 //            Log.i("fuck018", "1- expense: " + expense + " \n"+ " countedExpenses: "+ countedExpenses);
         }
 
