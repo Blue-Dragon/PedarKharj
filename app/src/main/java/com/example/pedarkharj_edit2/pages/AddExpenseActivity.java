@@ -58,7 +58,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     Button removeBtn, dateBtn, particBtn, doneBtn,
     bp, b0, b1, b2, b3, b4, b5, b6, b7, b8, b9;
     CircleImageView circleImageView;
-    boolean pbCanUse;
+    boolean pmCanUse;
     EditText dongEText;
     RelativeLayout buyerBtn;
     pDate mDate;
@@ -85,7 +85,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         mContext = this;
         mActivity = this;
-        pbCanUse = true;
+        pmCanUse = true;
         mParticipants = new ArrayList<>();
         usersListPartices = new ArrayList<>();
         db = new DatabaseHelper(mContext);
@@ -96,9 +96,10 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         expenseDebts = new  int[]{}; //by deff
 
 
-        BuyerBtnTxt = findViewById(R.id.buyer_btn_txt);             BuyerBtnTxt.setText(buyer.getName());
+        BuyerBtnTxt = findViewById(R.id.buyer_btn_txt);
+//        BuyerBtnTxt.setText(buyer.getName());
         particBtn = findViewById(R.id.custom_dong_btn);              particBtn.setOnClickListener(this);
-        buyerBtn = findViewById(R.id.buyer_btn);                         buyerBtn.setOnClickListener(this);
+        buyerBtn = findViewById(R.id.plus_btn);                         buyerBtn.setOnClickListener(this);
         doneBtn = findViewById(R.id.done_btn);                             buyerBtn.setOnClickListener(this);
         dateBtn = findViewById(R.id.date_btn);                             dateBtn.setOnClickListener(this);
         dongEText = findViewById(R.id.dong_Etxt);                       //dongEText.setSelection(dongEText.getText().length());
@@ -253,7 +254,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
                 break;
 
-            case R.id.buyer_btn:
+            case R.id.plus_btn:
             case R.id.selected_contact:
 //                new BuyerDialog(mActivity,curEvent)
                 break;
@@ -327,9 +328,9 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         if (Integer.valueOf(priceTv.getText().toString()) > 0 ) builder.append(priceTv.getText());
 
         // Not letting user to use '.' twice
-        if (b.getId() == R.id.bp ){
-            if (pbCanUse) {
-                pbCanUse = false;
+        if (b.getId() == R.id.minus_btn || b.getId() == R.id.plus_btn ){
+            if (pmCanUse) {
+                pmCanUse = false;
                 builder.append(b.getText());
             }
         }

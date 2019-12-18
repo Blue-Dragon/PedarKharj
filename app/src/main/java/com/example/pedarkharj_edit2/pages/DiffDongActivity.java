@@ -226,7 +226,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         fab.setOnClickListener(view -> {
             countedExpenses = reGetCountedExpenses();
             if (layoutMode == CASH_MODE && (expense - countedExpenses) != 0){
-                Toast.makeText(mContext, "Fuck u", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Fuck u", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -245,7 +245,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                     expenseDongs[i++] =userDong;
             }
 
-            Toast.makeText(mContext, ""+( expense - countedExpenses), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, ""+( expense - countedExpenses), Toast.LENGTH_SHORT).show();
 
 
 
