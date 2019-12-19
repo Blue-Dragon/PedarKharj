@@ -303,7 +303,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         recyclerView.setAdapter(adaptor);
     }
 
-    //spinner
+    //--------------------------    spinner    --------------------------//
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String selectedIten = parent.getItemAtPosition(position).toString();

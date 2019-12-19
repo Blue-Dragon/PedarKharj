@@ -68,7 +68,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     int particId;
     Participant buyer;
-    Participant[] users;
+    List<Participant> users;
     DatabaseHelper db;
 
 
@@ -274,12 +274,12 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.done_btn:
                 // expense users
-                users = new Participant[usersListPartices.size()];
-                for (int i = 0; i< usersListPartices.size(); i++){
-                    users[i] = usersListPartices.get(i);
-                }
+//                users = new Participant[usersListPartices.size()];
+//                for (int i = 0; i< usersListPartices.size(); i++){
+//                    users[i] = usersListPartices.get(i);
+//                }
 
-                if (users.length > 0)     saveExpense();
+                if (usersListPartices.size() > 0)     saveExpense();
                 else                            Toast.makeText(mContext, "لطفا افراد شرکت کننده را انتخاب کنید.", Toast.LENGTH_SHORT).show();
 
                 break;
@@ -306,10 +306,10 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             Expense expense = new Expense();
             expense.setEvent(curEvent);
             expense.setBuyer(buyer);
-            expense.setUserPartics(users);
+            expense.setUserPartics(usersListPartices);
             expense.setExpenseTitle(priceTitle);
             expense.setExpensePrice(price);
-            if (expenseDebts == null || expenseDebts.length < 1) expense.setExpenseDebts(price/users.length);
+            if (expenseDebts == null || expenseDebts.length < 1) expense.setExpenseDebts(price/usersListPartices.size());
             else expense.setExpenseDebts(expenseDebts);
 
             db.addExpense(expense);

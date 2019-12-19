@@ -1,11 +1,13 @@
 package com.example.pedarkharj_edit2.classes;
 
+import java.util.List;
+
 public class Expense {
     //vital
     private int id;
     private Event event;
     private Participant buyer;
-    private Participant[] userPartics;
+    private List<Participant> userPartics;
     private String expenseTitle;
     //money
     private int expensePrice;
@@ -13,8 +15,8 @@ public class Expense {
 
     String created_at;
 
+    //----------------------    Constructors    ---------------------//
     public Expense() {
-
     }
 
 //    public Expense(Participant buyer, Participant[] userPartics, String expenseTitle, int expensePrice, int expenseDebts) {
@@ -32,7 +34,7 @@ public class Expense {
 //        this.expensePrice = expensePrice;
 //    }
 
-    public Expense(Event event, Participant buyer, Participant[] userPartics, String expenseTitle, int expensePrice, int[] expenseDebts) {
+    public Expense(Event event, Participant buyer, List<Participant> userPartics, String expenseTitle, int expensePrice, int[] expenseDebts) {
         this.event = buyer.getEvent();
         this.buyer = buyer;
         this.userPartics = userPartics;
@@ -50,7 +52,7 @@ public class Expense {
     public Participant getBuyer() {
         return buyer;
     }
-    public Participant[] getUserPartics() {
+    public List<Participant> getUserPartics() {
         return userPartics;
     }
     public String getExpenseTitle() {
@@ -76,7 +78,7 @@ public class Expense {
     public void setBuyer(Participant buyer) {
         this.buyer = buyer;
     }
-    public void setUserPartics(Participant[] userPartics) {
+    public void setUserPartics(List<Participant> userPartics) {
         this.userPartics = userPartics;
     }
     public void setExpenseTitle(String expenseTitle) {
@@ -90,7 +92,7 @@ public class Expense {
         this.expenseDebts = expenseDebt;
     }
     public void setExpenseDebts(int expenseDebt) {
-        this.expenseDebts = new int[userPartics.length];
+        this.expenseDebts = new int[userPartics.size()];
         int i =0;
         for (Participant ignored : this.userPartics){
             this.expenseDebts[i++] = expenseDebt;

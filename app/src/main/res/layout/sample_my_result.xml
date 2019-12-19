@@ -83,16 +83,17 @@
                 android:text="224"
                 android:textColor="#8C8C8C"
                 android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/tv_title_my_dong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/b_koodak"
                 android:layout_above="@id/tv_my_dong"
-                android:gravity="center"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="3dp"
-                android:text="دونگ های من"
+                android:fontFamily="@font/b_koodak"
+                android:gravity="center"
+                android:text="خرج های من"
                 android:textColor="#8C8C8C"
                 android:textSize="12sp" />
         </RelativeLayout>
@@ -114,16 +115,17 @@
                 android:text="438"
                 android:textColor="#8C8C8C"
                 android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/tv_title_my_expense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/b_koodak"
                 android:layout_above="@id/tv_my_expense"
-                android:gravity="center"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="3dp"
-                android:text="هزینه های من"
+                android:fontFamily="@font/b_koodak"
+                android:gravity="center"
+                android:text="هزینه کل"
                 android:textColor="#8C8C8C"
                 android:textSize="12sp" />
         </RelativeLayout>

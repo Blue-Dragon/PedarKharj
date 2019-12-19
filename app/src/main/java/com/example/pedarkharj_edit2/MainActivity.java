@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.classes.BuyerDialog;
@@ -48,24 +49,26 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
-    RecyclerView recyclerView;
     List<Participant> mParticipants;
     List<Event> events ;
     Map spinnerEventIds;
-    ParticipantAdapter adaptor;
-    Event defEvent, curEvent;
-    //
+
     Context mContext = this;
     Activity mActivity = this;
-    FloatingActionButton fab;
+    ParticipantAdapter adaptor;
+    Event defEvent, curEvent;
     DatabaseHelper db;
-    Spinner spinner;
     //
+    RecyclerView recyclerView;
+    FloatingActionButton fab;
+    Spinner spinner;
     CircleImageView drawerProfPic;
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
     ImageView menu;
+    TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
+    //
     int sentEventId;
 
     @Override
@@ -82,6 +85,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         spinnerEventIds =  new HashMap<Integer, Event>();
 
         sentEventId = getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
+
+        //the rectangle above
+        tvL1 = findViewById(R.id. tv_title_my_expense);
+        tvL2 = findViewById(R.id.tv_my_expense );
+        tvC1 = findViewById(R.id. tv_title_my_dong);
+        tvC2 = findViewById(R.id. tv_my_dong);
+        tvR1 = findViewById(R.id. tv_title_my_result);
+        tvR2 = findViewById(R.id. tv_my_result);
 
         /*-------------------------     RecView   --------------------------*/
 
@@ -214,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         spinner.setAdapter(dataAdapter);
 
         /**
-         *  set to_be_shown Event
+         *  set the event to show as recView
          */
         //def & cur Event
         int defEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
@@ -272,8 +283,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             curEvent = event;
             setRecParticesUnderEvent(curEvent);
             SharedPrefManager.getInstance(mContext).saveDefEvent(curEvent); //save curEvent (as defEvent for next time) to SharedPref
+            initRectangleAbove();
         }
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
@@ -398,12 +411,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
 
-
-
-
     }
 
+    private void initRectangleAbove() {
+        tvL2.setText(String.valueOf(000));
 
+    }
 
 
 
