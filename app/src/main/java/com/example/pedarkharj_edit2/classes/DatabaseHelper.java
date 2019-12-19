@@ -720,72 +720,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.update(TABLE_PARTICES, values, KEY_ID + " = ?", new String[] { String.valueOf( participant.getId()) });
     }
 
-    /**
-     * getting all expenses of a partic (in a specific event)
-     */
-//    public List<Expense> getExpenseOfEvent(Event event) {
-//        List<Expense> expenseList = new ArrayList<>();
-//        List<Integer> buyerIds = new ArrayList<>();
-//
-//        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_ID + " = " + event.getId();
-//        Log.e(LOG, selectQuery);
-//
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor c = db.rawQuery(selectQuery, null);
-//
-////        //money
-////        private int expensePrice;
-////        private int[] expenseDebts;
-//        if (c.moveToFirst()){
-//            do {
-//                int newBuyerId = c.getInt(c.getColumnIndex(KEY_BUYER_ID));
-//                if (!buyerIds.contains(newBuyerId))
-//                    buyerIds.add(newBuyerId);
-//
-//
-//            } while (c.moveToNext());
-//        }
-//
-//        //for each buyerId, get an expense for me
-//        for (int buyerId : buyerIds){
-//            Participant buyer = this.getParticeById(buyerId);
-//
-//            Expense expense = new Expense();
-//            expense.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-//            expense.setEvent(this.getEventById( (c.getInt(c.getColumnIndex(KEY_EVENT_ID))) ));
-//            expense.setBuyer(buyer);
-//            expense.setUserPartics(this.getAllUsersByBuyer(buyerId));
-//            expense.setExpenseTitle(c.getString(c.getColumnIndex(KEY_EXPENSE_TITLE)));
-//            expense.setExpensePrice(c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE)));
-//            expense.setExpenseDebts(c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE)));
-//
-//
-//            // adding to participants list
-//            expenseList.add(expense);
-//        }
-//
-//        return expenseList;
-//    }
-
-    /**
-     * getting all users of an expense
-     */
-//    public List<Participant> getAllUsersByBuyer(int buyerId) {
-//        List<Participant> users = new ArrayList<>();
-//        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_BUYER_ID + " = " + buyerId;
-//        Log.e(LOG, selectQuery);
-//
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor c = db.rawQuery(selectQuery, null);
-//
-//        if (c.moveToFirst()){
-//            do {
-//                int userId = c.getInt(c.getColumnIndex(KEY_USER_ID));
-//                users.add(this.getParticeById(userId));
-//            } while (c.moveToNext());
-//        }
-//        return users;
-//    }
 
     // ------------------------ "expenses" table methods -----------------------//
     /**
@@ -883,6 +817,88 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // ------------------------ other methods ----------------//
+
+    /**
+     * getting all expenses of a partic (in a specific event)
+     */
+    public List<Expense> getAllExpensesOfEvent(Event event) {
+        List<Expense> expenseList = new ArrayList<>();
+        List<Integer> expenseIds = new ArrayList<>();
+        List<Integer> buyerIds = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_EVENT_ID + " = " + event.getId();
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()){
+            do {
+                //we get them each time, cuz we won't know if some ids have been deleted by then.
+                int newExpenseId = c.getInt(c.getColumnIndex(KEY_EXPENSE_ID));
+                if (!expenseIds.contains(newExpenseId))
+                    expenseIds.add(newExpenseId);
+                //
+                int newBuyerId = c.getInt(c.getColumnIndex(KEY_BUYER_ID));
+                if (!buyerIds.contains(newBuyerId))
+                    buyerIds.add(newBuyerId);
+
+            } while (c.moveToNext());
+        }
+
+         // getting each expense
+        for (int buyerId : buyerIds) {
+            getExpenseByBuyerId(buyerId);
+        }
+        return expenseList;
+    }
+    /**
+     * getting s single expense of a partic (in a specific event)
+     */
+    private void getExpenseByBuyerId(int buyerId) {
+        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_BUYER_ID + " = " + buyerId;
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToNext()){
+
+            Expense expense = new Expense();
+            expense.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+            expense.setEvent(this.getEventById((c.getInt(c.getColumnIndex(KEY_EVENT_ID)))));
+            expense.setBuyer(this.getParticeById( c.getInt(c.getColumnIndex(KEY_BUYER_ID)) ));
+            expense.setUserPartics(this.getAllUsersByExpense( c.getInt(c.getColumnIndex(KEY_EXPENSE_ID)) ));
+            expense.setExpenseTitle(c.getString(c.getColumnIndex(KEY_EXPENSE_TITLE)));
+            expense.setExpensePrice(c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE)));
+            expense.setExpenseDebts(c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE)));
+
+            // adding to participants list
+            expenseList.add(expense);
+        }
+   /
+    }
+
+    /**
+     * getting all users of an expense
+     */
+    public List<Participant> getAllUsersByExpense(int buyerId) {
+        List<Participant> users = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_BUYER_ID + " = " + buyerId;
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()){
+            do {
+                int userId = c.getInt(c.getColumnIndex(KEY_USER_ID));
+                users.add(this.getParticeById(userId));
+            } while (c.moveToNext());
+        }
+        return users;
+    }
+
 
     // ------------------------ other stuff ---------------------//
     /**
