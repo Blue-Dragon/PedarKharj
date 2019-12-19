@@ -5,6 +5,7 @@ import java.util.List;
 public class Expense {
     //vital
     private int id;
+    private int expenseId;
     private Event event;
     private Participant buyer;
     private List<Participant> userPartics;
@@ -34,7 +35,8 @@ public class Expense {
 //        this.expensePrice = expensePrice;
 //    }
 
-    public Expense(Event event, Participant buyer, List<Participant> userPartics, String expenseTitle, int expensePrice, int[] expenseDebts) {
+    public Expense(int expenseId ,Event event, Participant buyer, List<Participant> userPartics, String expenseTitle, int expensePrice, int[] expenseDebts) {
+        this.expenseId = expenseId;
         this.event = buyer.getEvent();
         this.buyer = buyer;
         this.userPartics = userPartics;
@@ -70,6 +72,9 @@ public class Expense {
     public Event getEvent() {
         return event;
     }
+    public int getExpenseId() {
+        return expenseId;
+    }
 
     //SETTER
     public void setId(int id) {
@@ -84,7 +89,6 @@ public class Expense {
     public void setExpenseTitle(String expenseTitle) {
         this.expenseTitle = expenseTitle;
     }
-
     public void setExpensePrice(int expensePrice) {
         this.expensePrice = expensePrice;
     }
@@ -98,9 +102,18 @@ public class Expense {
             this.expenseDebts[i++] = expenseDebt;
         }
     }
-
     public void setEvent(Event event) {
         this.event = event;
     }
+    public void setExpenseId(int expenseId) {
+        this.expenseId = expenseId;
+    }
 
+    public int setExpenseIdByOrder(DatabaseHelper db){
+        int lastExpenseId = db.getLastExpenseId();
+        if (lastExpenseId < 1) this.expenseId = 1;
+        else this.expenseId = lastExpenseId + 1;
+
+        return expenseId;
+    }
 }

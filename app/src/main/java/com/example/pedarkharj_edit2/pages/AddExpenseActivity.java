@@ -304,6 +304,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 //            }
 
             Expense expense = new Expense();
+            expense.setExpenseIdByOrder(db);
             expense.setEvent(curEvent);
             expense.setBuyer(buyer);
             expense.setUserPartics(usersListPartices);
