@@ -730,6 +730,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Participant buyer = expense.getBuyer();
         List<Participant> userPartics = expense.getUserPartics();
+        List<Integer> userIds = new ArrayList<>();
+        for (Participant user : userPartics){
+            userIds.add(user.getId());
+        }
+
+        boolean isBuyerIn = userIds.contains(buyer.getId());
+        if (!isBuyerIn) userPartics.add(buyer);
+        Log.e("fuck020", isBuyerIn + "");
+
         int i =0;
         List<Integer> expenseDebts = expense.getExpenseDebts();
         //get users as an array
@@ -748,14 +757,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (user.getId() == buyer.getId()) {
                 values.put(KEY_EXPENSE_PRICE, expense.getExpensePrice());
             } else      values.put(KEY_EXPENSE_PRICE, 0);
-            values.put(KEY_EXPENSE_DEBT, expenseDebts.get(i));
+            if (userId == buyer.getId() && !isBuyerIn){
+                values.put(KEY_EXPENSE_DEBT, 0); //we need the buyer in to get the expense price
+            } else values.put(KEY_EXPENSE_DEBT, expenseDebts.get(i));
             values.put(KEY_CREATED_AT, getDateTime());
             // insert row
             db.insert(TABLE_EXPENSES, null, values);
 
             //Add Debt to event_participant table
             ContentValues values2 = new ContentValues();
-            values2.put(KEY_PARTICE_DEBT, user.getDebt() + expenseDebts.get(i));
+            if (userId == buyer.getId() && !isBuyerIn){
+                values2.put(KEY_PARTICE_DEBT, user.getDebt());
+            } else  values2.put(KEY_PARTICE_DEBT, user.getDebt() + expenseDebts.get(i));
             db.update(TABLE_PARTICES, values2,  KEY_ID + " = ?", new String[] {String.valueOf(userId) });
             i++;
         }
@@ -826,18 +839,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-        if (c.moveToNext()){
+        if (c.moveToFirst()){
             int expenseId = c.getInt(c.getColumnIndex(KEY_EXPENSE_ID));
+            int price = c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE));
 
-            expense.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-            expense.setExpenseId(expenseId);
-            expense.setEvent( this.getEventById((c.getInt(c.getColumnIndex(KEY_EVENT_ID))) ));
-            expense.setBuyer( this.getParticeById( c.getInt(c.getColumnIndex(KEY_BUYER_ID)) ));
-            expense.setUserPartics(this.getAllUsersByExpense(expenseId));
-            expense.setExpenseTitle(c.getString(c.getColumnIndex(KEY_EXPENSE_TITLE)));
-            expense.setExpensePrice(c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE)));
-            expense.setExpenseDebts(this.getAllDebtsByExpense(expenseId));
-            expense.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+            if (price > 0) {
+                expense.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                expense.setExpenseId(expenseId);
+                expense.setEvent( this.getEventById((c.getInt(c.getColumnIndex(KEY_EVENT_ID))) ));
+                expense.setBuyer( this.getParticeById( c.getInt(c.getColumnIndex(KEY_BUYER_ID)) ));
+                expense.setUserPartics(this.getAllUsersByExpense(expenseId));
+                expense.setExpenseTitle(c.getString(c.getColumnIndex(KEY_EXPENSE_TITLE)));
+                expense.setExpensePrice(price);
+                expense.setExpenseDebts(this.getAllDebtsByExpense(expenseId));
+                expense.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+            } else c.moveToNext();
+
+
         }
 
         return expense;

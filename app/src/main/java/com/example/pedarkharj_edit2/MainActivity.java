@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setRecParticesUnderEvent(curEvent);
             SharedPrefManager.getInstance(mContext).saveDefEvent(curEvent); //save curEvent (as defEvent for next time) to SharedPref
             initRectangleAbove();
-            Log.i("fuck019", "*******************************************************************" +
+            Log.i("fuck020", "*******************************************************************" +
                     LogStrOfTheExpenses(event));
         }
     }
@@ -293,8 +293,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         for (Expense expense : expenseList){
             List<Integer> debts = expense.getExpenseDebts();
 
-            builder.append("\n\nExpense id: ").append(expense.getId()).append("\nexpense Title: ").append(expense.getExpenseTitle())
-                    .append("\nBuyer: ").append(expense.getBuyer().getName()).append(" - price: ").append(expense.getExpensePrice()).append("\nusers: ");
+            builder.append("\n\nExpense id: ").append(expense.getExpenseId()).append("\nexpense Title: ").append(expense.getExpenseTitle())
+                    .append("\nBuyer: ")
+                    .append(expense.getBuyer() //todo: bug: getName()' on a null object reference
+                            .getName()).append(" - price: ").append(expense.getExpensePrice()).append("\nusers: ");
             int i = 0;
             for (Participant participant : expense.getUserPartics()){
                 builder.append("\n *").append(participant.getName()).append(" - Debt: ").append(debts.get(i++));
