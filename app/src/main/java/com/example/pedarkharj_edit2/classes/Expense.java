@@ -1,5 +1,6 @@
 package com.example.pedarkharj_edit2.classes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Expense {
@@ -12,9 +13,9 @@ public class Expense {
     private String expenseTitle;
     //money
     private int expensePrice;
-    private int[] expenseDebts;
+    private List<Integer> expenseDebts;
 
-    String created_at;
+    private String created_at;
 
     //----------------------    Constructors    ---------------------//
     public Expense() {
@@ -35,7 +36,8 @@ public class Expense {
 //        this.expensePrice = expensePrice;
 //    }
 
-    public Expense(int expenseId ,Event event, Participant buyer, List<Participant> userPartics, String expenseTitle, int expensePrice, int[] expenseDebts) {
+    public Expense(int expenseId ,Event event, Participant buyer, List<Participant> userPartics,
+                   String expenseTitle, int expensePrice, List<Integer> expenseDebts) {
         this.expenseId = expenseId;
         this.event = buyer.getEvent();
         this.buyer = buyer;
@@ -63,7 +65,7 @@ public class Expense {
     public int getExpensePrice() {
         return expensePrice;
     }
-    public int[] getExpenseDebts() {
+    public List<Integer> getExpenseDebts() {
         return expenseDebts;
     }
     public String getCreated_at() {
@@ -92,16 +94,21 @@ public class Expense {
     public void setExpensePrice(int expensePrice) {
         this.expensePrice = expensePrice;
     }
-    public void setExpenseDebts(int[] expenseDebt) {
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public void setExpenseDebts(List<Integer> expenseDebt) {
         this.expenseDebts = expenseDebt;
     }
     public void setExpenseDebts(int expenseDebt) {
-        this.expenseDebts = new int[userPartics.size()];
-        int i =0;
+        this.expenseDebts = new ArrayList<>();
+
         for (Participant ignored : this.userPartics){
-            this.expenseDebts[i++] = expenseDebt;
+            this.expenseDebts.add(expenseDebt);
         }
     }
+
     public void setEvent(Event event) {
         this.event = event;
     }

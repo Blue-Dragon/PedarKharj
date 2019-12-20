@@ -731,7 +731,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Participant buyer = expense.getBuyer();
         List<Participant> userPartics = expense.getUserPartics();
         int i =0;
-        int[] expenseDebts = expense.getExpenseDebts();
+        List<Integer> expenseDebts = expense.getExpenseDebts();
         //get users as an array
         int userId;
         for (Participant user : userPartics){
@@ -748,15 +748,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (user.getId() == buyer.getId()) {
                 values.put(KEY_EXPENSE_PRICE, expense.getExpensePrice());
             } else      values.put(KEY_EXPENSE_PRICE, 0);
-            values.put(KEY_EXPENSE_DEBT, expenseDebts[i]);
+            values.put(KEY_EXPENSE_DEBT, expenseDebts.get(i));
             values.put(KEY_CREATED_AT, getDateTime());
             // insert row
             db.insert(TABLE_EXPENSES, null, values);
 
             //Add Debt to event_participant table
             ContentValues values2 = new ContentValues();
-            values2.put(KEY_PARTICE_DEBT, user.getDebt() + expenseDebts[i++]);
+            values2.put(KEY_PARTICE_DEBT, user.getDebt() + expenseDebts.get(i));
             db.update(TABLE_PARTICES, values2,  KEY_ID + " = ?", new String[] {String.valueOf(userId) });
+            i++;
         }
 
         // add Expense  to event_participant table
@@ -784,39 +785,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return lastId;
     }
 
-    /**
-     //todo
-     * getting single expense
-     */
-//    public Contact getExpenseById(long contact_id) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS + " WHERE "
-//                + KEY_ID + " = " + contact_id;
-//
-//        Log.e(LOG, selectQuery);
-//
-//        Cursor c = db.rawQuery(selectQuery, null);
-//
-//        if (c != null)
-//            c.moveToFirst();
-//
-//
-//        Contact contact = new Contact();
-//        contact.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-//        contact.setName((c.getString(c.getColumnIndex(KEY_CONTACT_NAME))));
-//        contact.setBitmapStr(c.getString(c.getColumnIndex(KEY_BMP_STR)) ); //bitmapStr could even be null !
-//        contact.setCreatedAt(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
-//
-//        return contact;
-//    }
-
-
-
-    // ------------------------ "contact" table methods ----------------//
-
-
-    // ------------------------ other methods ----------------//
 
     /**
      * getting all expenses of a partic (in a specific event)
@@ -824,7 +792,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<Expense> getAllExpensesOfEvent(Event event) {
         List<Expense> expenseList = new ArrayList<>();
         List<Integer> expenseIds = new ArrayList<>();
-        List<Integer> buyerIds = new ArrayList<>();
 
         String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_EVENT_ID + " = " + event.getId();
         Log.e(LOG, selectQuery);
@@ -838,53 +805,69 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 int newExpenseId = c.getInt(c.getColumnIndex(KEY_EXPENSE_ID));
                 if (!expenseIds.contains(newExpenseId))
                     expenseIds.add(newExpenseId);
-                //
-                int newBuyerId = c.getInt(c.getColumnIndex(KEY_BUYER_ID));
-                if (!buyerIds.contains(newBuyerId))
-                    buyerIds.add(newBuyerId);
-
             } while (c.moveToNext());
         }
 
-         // getting each expense
-        for (int buyerId : buyerIds) {
-            getExpenseByBuyerId(buyerId);
+        // getting each expense
+        for (int expenseId : expenseIds) {
+            expenseList.add( getExpenseById(expenseId) );
         }
         return expenseList;
     }
+
     /**
-     * getting s single expense of a partic (in a specific event)
+     * getting s single expense BY the buyer partic (in a specific event)
      */
-    private void getExpenseByBuyerId(int buyerId) {
-        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_BUYER_ID + " = " + buyerId;
+    public Expense getExpenseById(int expenseId0) {
+        Expense expense = new Expense();
+        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_EXPENSE_ID + " = " + expenseId0;
         Log.e(LOG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
         if (c.moveToNext()){
+            int expenseId = c.getInt(c.getColumnIndex(KEY_EXPENSE_ID));
 
-            Expense expense = new Expense();
             expense.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-            expense.setEvent(this.getEventById((c.getInt(c.getColumnIndex(KEY_EVENT_ID)))));
-            expense.setBuyer(this.getParticeById( c.getInt(c.getColumnIndex(KEY_BUYER_ID)) ));
-            expense.setUserPartics(this.getAllUsersByExpense( c.getInt(c.getColumnIndex(KEY_EXPENSE_ID)) ));
+            expense.setExpenseId(expenseId);
+            expense.setEvent( this.getEventById((c.getInt(c.getColumnIndex(KEY_EVENT_ID))) ));
+            expense.setBuyer( this.getParticeById( c.getInt(c.getColumnIndex(KEY_BUYER_ID)) ));
+            expense.setUserPartics(this.getAllUsersByExpense(expenseId));
             expense.setExpenseTitle(c.getString(c.getColumnIndex(KEY_EXPENSE_TITLE)));
             expense.setExpensePrice(c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE)));
-            expense.setExpenseDebts(c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE)));
-
-            // adding to participants list
-            expenseList.add(expense);
+            expense.setExpenseDebts(this.getAllDebtsByExpense(expenseId));
+            expense.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
         }
-   /
+
+        return expense;
+    }
+
+    /**
+     * getting everyone's debt as a list (in an Expense)
+     */
+    private List<Integer> getAllDebtsByExpense(int expenseId) {
+        List<Integer> expenseDebts = new ArrayList<>();
+        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_EXPENSE_ID + " = " + expenseId;
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()){
+            do {
+                expenseDebts.add( c.getInt(c.getColumnIndex(KEY_EXPENSE_DEBT)) );
+            }while (c.moveToNext());
+        }
+        return expenseDebts;
     }
 
     /**
      * getting all users of an expense
      */
-    public List<Participant> getAllUsersByExpense(int buyerId) {
+    private List<Participant> getAllUsersByExpense(int expenseId) {
         List<Participant> users = new ArrayList<>();
-        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_BUYER_ID + " = " + buyerId;
+        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_EXPENSE_ID + " = " + expenseId;
         Log.e(LOG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -912,6 +895,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * get datetime
+     * todo: change to persian
      */
     private String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat(

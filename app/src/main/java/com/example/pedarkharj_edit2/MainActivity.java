@@ -3,12 +3,10 @@ package com.example.pedarkharj_edit2;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,7 +21,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +29,7 @@ import com.example.pedarkharj_edit2.classes.BuyerDialog;
 import com.example.pedarkharj_edit2.classes.Contact;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Event;
+import com.example.pedarkharj_edit2.classes.Expense;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
@@ -41,7 +39,6 @@ import com.example.pedarkharj_edit2.pages.ContactsActivity;
 import com.example.pedarkharj_edit2.pages.EventMngActivity;
 
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -284,7 +281,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setRecParticesUnderEvent(curEvent);
             SharedPrefManager.getInstance(mContext).saveDefEvent(curEvent); //save curEvent (as defEvent for next time) to SharedPref
             initRectangleAbove();
+            Log.i("fuck019", "*******************************************************************" +
+                    LogStrOfTheExpenses(event));
         }
+    }
+
+    private String LogStrOfTheExpenses(Event event) {
+        List<Expense> expenseList = db.getAllExpensesOfEvent(event);
+        StringBuilder builder = new StringBuilder();
+
+        for (Expense expense : expenseList){
+            List<Integer> debts = expense.getExpenseDebts();
+
+            builder.append("\n\nExpense id: ").append(expense.getId()).append("\nexpense Title: ").append(expense.getExpenseTitle())
+                    .append("\nBuyer: ").append(expense.getBuyer().getName()).append(" - price: ").append(expense.getExpensePrice()).append("\nusers: ");
+            int i = 0;
+            for (Participant participant : expense.getUserPartics()){
+                builder.append("\n *").append(participant.getName()).append(" - Debt: ").append(debts.get(i++));
+            }
+        }
+        return builder.toString();
     }
 
 

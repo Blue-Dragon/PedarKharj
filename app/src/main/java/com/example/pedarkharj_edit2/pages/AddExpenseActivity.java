@@ -45,7 +45,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     List<Participant> mParticipants;
     List<Participant> usersListPartices;
-    int[] expenseDebts;
+    List<Integer> expenseDebtsList;
     ParticipantAdapter adapter;
     LinearLayout calculator;
     Event curEvent;
@@ -88,12 +88,13 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         pmCanUse = true;
         mParticipants = new ArrayList<>();
         usersListPartices = new ArrayList<>();
+        expenseDebtsList = new ArrayList<>();
         db = new DatabaseHelper(mContext);
 
         particId = getIntent().getIntExtra(Routines.PARTICIPANT_INFO, 0);
         buyer = db.getParticeById(particId);
         curEvent = buyer.getEvent();
-        expenseDebts = new  int[]{}; //by deff
+//        expenseDebtsList = new  int[]{}; //by deff
 
 
         BuyerBtnTxt = findViewById(R.id.buyer_btn_txt);
@@ -218,11 +219,14 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
         if (requestCode == Routines.RESULT_OK) {
             if(resultCode == Activity.RESULT_OK){
-                expenseDebts = data.getIntArrayExtra(Routines.RESULT);
+                int[] intArrayExtra = data.getIntArrayExtra(Routines.RESULT);
+                for (int i : intArrayExtra){
+                    expenseDebtsList.add(i);
+                }
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
-            }
+//            if (resultCode == Activity.RESULT_CANCELED) {
+//                //Write your code if there's no result
+//            }
         }
     }
 
@@ -293,10 +297,10 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         if (price > 0){
             String priceTitle = dongEText.getText().toString().trim();
 
-//            if (expenseDebts == null || expenseDebts.length < 1){
+//            if (expenseDebtsList == null || expenseDebtsList.length < 1){
 //                //same debts
-//               expenseDebts = new int[usersListPartices.size()];
-//                for (int debt: expenseDebts){
+//               expenseDebtsList = new int[usersListPartices.size()];
+//                for (int debt: expenseDebtsList){
 //                    debt = price/usersListPartices.size();
 //                    Log.i("Fuck012", debt+ "");
 //                 }
@@ -310,8 +314,8 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             expense.setUserPartics(usersListPartices);
             expense.setExpenseTitle(priceTitle);
             expense.setExpensePrice(price);
-            if (expenseDebts == null || expenseDebts.length < 1) expense.setExpenseDebts(price/usersListPartices.size());
-            else expense.setExpenseDebts(expenseDebts);
+            if (expenseDebtsList == null || expenseDebtsList.size() < 1) expense.setExpenseDebts(price/usersListPartices.size());
+            else expense.setExpenseDebts(expenseDebtsList);
 
             db.addExpense(expense);
             startActivity(new Intent(mContext,  MainActivity.class));
