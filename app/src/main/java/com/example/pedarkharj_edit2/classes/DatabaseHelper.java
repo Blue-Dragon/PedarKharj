@@ -76,7 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     // Participants table create statement
-    private static final String CREATE_TABLE_EVENT_PARTICES  = "CREATE TABLE IF NOT EXISTS "
+    private static final String CREATE_TABLE_PARTICES = "CREATE TABLE IF NOT EXISTS "
             + TABLE_PARTICES
             + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_EVENT_NAME + " TEXT,"
@@ -111,7 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // creating required tables
         db.execSQL(CREATE_TABLE_CONTACT);
         db.execSQL(CREATE_TABLE_EVENT);
-        db.execSQL(CREATE_TABLE_EVENT_PARTICES);
+        db.execSQL(CREATE_TABLE_PARTICES);
         db.execSQL(CREATE_TABLE_EXPENSES);
     }
 
@@ -821,9 +821,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
 
+        Log.e("fuck021", "********************************************************* ");
+
         // getting each expense
         for (int expenseId : expenseIds) {
-            expenseList.add( getExpenseById(expenseId) );
+            expenseList.add( getExpenseByExpenseId(expenseId) );
         }
         return expenseList;
     }
@@ -831,7 +833,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * getting s single expense BY the buyer partic (in a specific event)
      */
-    public Expense getExpenseById(int expenseId0) {
+    public Expense getExpenseByExpenseId(int expenseId0) {
         Expense expense = new Expense();
         String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_EXPENSE_ID + " = " + expenseId0;
         Log.e(LOG, selectQuery);
@@ -841,20 +843,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (c.moveToFirst()){
             int expenseId = c.getInt(c.getColumnIndex(KEY_EXPENSE_ID));
-            int price = c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE));
+            int price;
 
-            if (price > 0) {
-                expense.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-                expense.setExpenseId(expenseId);
-                expense.setEvent( this.getEventById((c.getInt(c.getColumnIndex(KEY_EVENT_ID))) ));
-                expense.setBuyer( this.getParticeById( c.getInt(c.getColumnIndex(KEY_BUYER_ID)) ));
-                expense.setUserPartics(this.getAllUsersByExpense(expenseId));
-                expense.setExpenseTitle(c.getString(c.getColumnIndex(KEY_EXPENSE_TITLE)));
-                expense.setExpensePrice(price);
-                expense.setExpenseDebts(this.getAllDebtsByExpense(expenseId));
-                expense.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
-            } else c.moveToNext();
+            do {
+                //todo: fuck ur code! that's bullshit, yet it works for now
+                price = c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE));
+            }while (price <= 0 && c.moveToNext());
 
+                    expense.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                    expense.setExpenseId(expenseId);
+                    expense.setEvent( this.getEventById((c.getInt(c.getColumnIndex(KEY_EVENT_ID))) ));
+                    expense.setBuyer( this.getParticeById( c.getInt(c.getColumnIndex(KEY_BUYER_ID)) ));
+                    expense.setUserPartics(this.getAllUsersByExpense(expenseId));
+                    expense.setExpenseTitle(c.getString(c.getColumnIndex(KEY_EXPENSE_TITLE)));
+                    expense.setExpensePrice(price);
+                    expense.setExpenseDebts(this.getAllDebtsByExpense(expenseId));
+                    expense.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+//            Log.e("fuck021", ": ");
+//            Log.e("fuck021", ": ");
+//
+//            Log.e("fuck021", "expenseId0: "+ expenseId0);
+//
+//            Log.e("fuck021", "id: "+c.getInt(c.getColumnIndex(KEY_ID)) );
+//            Log.e("fuck021", "setExpenseId: "+expenseId );
+//            Log.e("fuck021", "EventId "+c.getInt(c.getColumnIndex(KEY_EVENT_ID)) );
+//            Log.e("fuck021", "UserId "+c.getInt(c.getColumnIndex(KEY_USER_ID)) );
+//            Log.e("fuck021", "BuyerId "+ c.getInt(c.getColumnIndex(KEY_BUYER_ID)) );
+//            price = c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE));
+//            Log.e("fuck021",  price+" price > 0 ? : "+ (price > 0));
+//            Log.e("fuck021", "Debt: "+ c.getInt(c.getColumnIndex(KEY_EXPENSE_DEBT)) );
+//                }
 
         }
 
@@ -900,6 +918,59 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return users;
     }
 
+    /**
+     * getting a participant's all debts in an event
+     */
+    public int getAllParticDebtsByParticeId(int particId) {
+        int debt = 0;
+        String selectQuery = "SELECT  * FROM " + TABLE_PARTICES + " WHERE " + KEY_ID + " = " + particId;
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()){
+            debt = c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT));
+        }
+        return debt;
+    }
+
+    /**
+     * getting a participant's all expenses in an event
+     */
+    public int getAllParticExpensesByParticeId(int particId) {
+        int debt = 0;
+        String selectQuery = "SELECT  * FROM " + TABLE_PARTICES + " WHERE " + KEY_ID + " = " + particId;
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()){
+            debt = c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE));
+        }
+        return debt;
+    }
+
+    /**
+     * getting an Event whole Expenses
+     */
+    public int getEventAllExpensesByEventId(int eventId) {
+        int allExpenses = 0;
+        String selectQuery = "SELECT  * FROM " + TABLE_PARTICES + " WHERE " + KEY_EVENT_ID + " = " + eventId;
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+
+        if (c.moveToFirst()){
+            do {
+                allExpenses += c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE));
+            } while (c.moveToNext());
+        }
+        return allExpenses;
+    }
 
     // ------------------------ other stuff ---------------------//
     /**

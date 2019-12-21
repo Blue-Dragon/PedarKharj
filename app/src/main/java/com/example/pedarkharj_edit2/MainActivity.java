@@ -109,52 +109,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             db.createNewEventWithPartices(new Event("سفر شمال")
                     , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)
                             ,db.getContactById(contact_3), db.getContactById(contact_4), });
-            /*
-             * adding a new expense with different debts
-             */
-//        float price = 20000f;
-//
-//        //update buyer expense
-//        Participant buyer = db.getParticeById(1);
-//        float old_expense = buyer.getExpense();
-//        buyer.setExpense(old_expense+price);
-//        db.updatePartice(buyer);
-//        Log.e("Fuck", "old: "+ old_expense+ "\nnew: "+ buyer.getExpense() );
 
-            // A fake result of DiffDong Activity
-//        float[] newDebts = {2500f, 5000f, 1200f, 1800f};
-//        int[] userIds = new int[] {1,2,3,4};
-//
-//        float debt;
-//        float ex_debts;
-//        float newDebt;
-//        int count = 0;
-//        for (int i : userIds){
-//            Participant user = db.getParticeById(i);
-//            Log.d("Fuck", "user "+ i +"  expense: "+ user.getExpense() );
-//            Log.d("Fuck", "user "+ i +"  debt "+ user.getDebt() );
-//
-//            float mNewDebt = newDebts[count++];
-//
-//            // update users debts in Partice Table
-//            ex_debts = user.getDebt();
-//            newDebt = ex_debts + mNewDebt;
-//            user.setDebt(newDebt);
-//            db.updatePartice(user);
-//
-//            // set an expense in Expense Table
-//            debt = mNewDebt > 0 ? mNewDebt : price/userIds.length;
-//            Log.d("DEBT", String.valueOf(debt));
-//            Expense expense = new Expense(db.getParticeById(1), new Participant[] {user}, "Fast food", price, debt);
-//            db.addExpense(expense);
-//
-//            Log.e("Fuck", "user "+ i +" new expense: "+ user.getExpense() );
-//            Log.e("Fuck", "user "+ i +" new debt "+ user.getDebt() );
-//        }
-
-
-
-            //recyclerView
         }
 
         recyclerView = findViewById(R.id.rv_partice_expenses);
@@ -281,29 +236,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setRecParticesUnderEvent(curEvent);
             SharedPrefManager.getInstance(mContext).saveDefEvent(curEvent); //save curEvent (as defEvent for next time) to SharedPref
             initRectangleAbove();
-            Log.i("fuck020", "*******************************************************************" +
-                    LogStrOfTheExpenses(event));
+//            Log.i("fuck020", "*******************************************************************" +
+//                    LogStrOfTheExpenses(event)); //todo: delete it
+            //init Rectangle
+            int myExpenses = db.getAllParticExpensesByParticeId(1);
+            int myDebt = db.getAllParticDebtsByParticeId(1);
+            int allEventExpenses = db.getEventAllExpensesByEventId(event.getId());
+            tvL2.setText(String.valueOf(allEventExpenses));
+            tvC2.setText(String.valueOf(myExpenses));
+            tvR2.setText(String.valueOf(myExpenses - myDebt));
+
         }
     }
 
-    private String LogStrOfTheExpenses(Event event) {
-        List<Expense> expenseList = db.getAllExpensesOfEvent(event);
-        StringBuilder builder = new StringBuilder();
-
-        for (Expense expense : expenseList){
-            List<Integer> debts = expense.getExpenseDebts();
-
-            builder.append("\n\nExpense id: ").append(expense.getExpenseId()).append("\nexpense Title: ").append(expense.getExpenseTitle())
-                    .append("\nBuyer: ")
-                    .append(expense.getBuyer() //todo: bug: getName()' on a null object reference
-                            .getName()).append(" - price: ").append(expense.getExpensePrice()).append("\nusers: ");
-            int i = 0;
-            for (Participant participant : expense.getUserPartics()){
-                builder.append("\n *").append(participant.getName()).append(" - Debt: ").append(debts.get(i++));
-            }
-        }
-        return builder.toString();
-    }
+//    private String LogStrOfTheExpenses(Event event) {
+//        List<Expense> expenseList = db.getAllExpensesOfEvent(event);
+//        StringBuilder builder = new StringBuilder();
+//
+//        for (Expense expense : expenseList){
+//            List<Integer> debts = expense.getExpenseDebts();
+//
+//            builder.append("\n\nExpense id: ").append(expense.getExpenseId()).append("\nexpense Title: ").append(expense.getExpenseTitle())
+//                    .append("\nBuyer: ")
+//                    .append(expense.getBuyer().getName()) //todo: bug: getName()' on a null object reference
+//                           .append(" - price: ").append(expense.getExpensePrice()).append("\nusers: ");
+//            int i = 0;
+//            for (Participant participant : expense.getUserPartics()){
+//                builder.append("\n *").append(participant.getName()).append(" - Debt: ").append(debts.get(i++));
+//            }
+//        }
+//        return builder.toString();
+//    }
 
 
     @Override
