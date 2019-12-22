@@ -1,6 +1,8 @@
 package com.example.pedarkharj_edit2;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -114,27 +116,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         recyclerView = findViewById(R.id.rv_partice_expenses);
 
-
-
-        /**
-         * recView onClick
-         */
-        Log.e("recOnClick", "onClick");
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Participant participant = mParticipants.get(position);
-                Log.d("recOnClick", participant.getName());
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                Participant participant = mParticipants.get(position);
-                Log.d("recOnClick", participant.getResult());
-            }
-        }));
-
-
         /**
          * TODO: hide the fucking fab while scrolling
          */
@@ -196,10 +177,50 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         spinner.setSelection( curEvent.getId() - 1); //def event
 
-
-
         spinner.setOnItemSelectedListener(this);
         Log.i("fuck011", "saveDefEvent: " + curEvent.getId()+ "");
+
+
+        /**
+         * recView onClick
+         */
+        List<Expense> expenseList = db.getAllExpensesOfEvent(curEvent);
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                StringBuilder builder = new StringBuilder();
+                Participant participant = mParticipants.get(position);
+                Log.d("fuck023", "." );                Log.d("fuck023", "." );
+
+                Log.d("fuck023", "partic name: " + participant.getName());
+
+
+                int i =0;
+                for (Expense expense : expenseList){
+
+                    List<Participant> users = expense.getUserPartics();
+                    for (Participant user: users){
+
+                        if (user.getId() == participant.getId())
+                            builder.append(expense.getCreated_at()).append("\n");
+                            if (expense.getBuyer().getId() == participant.getId()) builder.append(expense.getExpensePrice()).append(" طلب و");
+                            builder.append(expense.getExpenseDebts().get(0)).append(" بدهی از خرج: ").append(expense.getExpenseTitle()).append("\n\n");
+                    }
+                }
+
+                new AlertDialog.Builder(mContext)
+                        .setTitle("خلاصه خرج ها:")
+                        .setMessage(builder.toString())
+                        .show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                Participant participant = mParticipants.get(position);
+                Log.d("recOnClick", participant.getResult());
+            }
+        }));
 
         //-------------------------     Floating Btn    --------------------------//
         fab = this.findViewById(R.id.fab);
@@ -236,8 +257,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             setRecParticesUnderEvent(curEvent);
             SharedPrefManager.getInstance(mContext).saveDefEvent(curEvent); //save curEvent (as defEvent for next time) to SharedPref
             initRectangleAbove();
-//            Log.i("fuck020", "*******************************************************************" +
-//                    LogStrOfTheExpenses(event)); //todo: delete it
             //init Rectangle
             int myExpenses = db.getAllParticExpensesByParticeId(1);
             int myDebt = db.getAllParticDebtsByParticeId(1);
@@ -249,24 +268,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-//    private String LogStrOfTheExpenses(Event event) {
-//        List<Expense> expenseList = db.getAllExpensesOfEvent(event);
-//        StringBuilder builder = new StringBuilder();
-//
-//        for (Expense expense : expenseList){
-//            List<Integer> debts = expense.getExpenseDebts();
-//
-//            builder.append("\n\nExpense id: ").append(expense.getExpenseId()).append("\nexpense Title: ").append(expense.getExpenseTitle())
-//                    .append("\nBuyer: ")
-//                    .append(expense.getBuyer().getName()) //todo: bug: getName()' on a null object reference
-//                           .append(" - price: ").append(expense.getExpensePrice()).append("\nusers: ");
-//            int i = 0;
-//            for (Participant participant : expense.getUserPartics()){
-//                builder.append("\n *").append(participant.getName()).append(" - Debt: ").append(debts.get(i++));
-//            }
-//        }
-//        return builder.toString();
-//    }
 
 
     @Override

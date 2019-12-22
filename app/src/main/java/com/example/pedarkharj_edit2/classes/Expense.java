@@ -65,7 +65,7 @@ public class Expense {
     public int getExpensePrice() {
         return expensePrice;
     }
-    public List<Integer> getExpenseDebts() {
+    public List<Integer> getExpenseDebts() { //todo: should be Map
         return expenseDebts;
     }
     public String getCreated_at() {
