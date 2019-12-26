@@ -7,4 +7,6 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="calcAccent">#ef6c00</color>
+
+    <color name="colorSelected">#A5388FD4</color>
 </resources>

@@ -3,9 +3,12 @@ package com.example.pedarkharj_edit2.pages;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
@@ -25,6 +29,7 @@ import com.example.pedarkharj_edit2.classes.Routines;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class EventMngActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -34,19 +39,32 @@ public class EventMngActivity extends AppCompatActivity {
     Context mContext = this;
     FloatingActionButton fab;
     DatabaseHelper db;
+    Toolbar toolbar;
+    //Action mode
+    boolean is_in_action_mode =false;
+    TextView counter_text_view, title;
+    int counter;
+    List<Event> selectionList;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_mng);
-        Toolbar toolbar =  findViewById(R.id.m_toolbar);
+        toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
         mEvents = new ArrayList<>();
         //
         db = new DatabaseHelper(mContext);
         setRecView(); //show Events
+        //Action mode
+        selectionList = new ArrayList<>();
+        counter_text_view = findViewById(R.id.tv_counter);
+        title = findViewById(R.id.textView);
+        counter_text_view.setVisibility(View.GONE);
+        title.setVisibility(View.VISIBLE);
+        counter = 0;
 
 
         //back imageView btn
@@ -60,17 +78,25 @@ public class EventMngActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                //open MainActivity on this event
-                Event event = mEvents.get(position);
-                Intent intent = new Intent(mContext, MainActivity.class);
-                intent.putExtra(Routines.SEND_EVENT_ID_INTENT, event.getId());
-                startActivity(intent);
+                if (is_in_action_mode){
+                    prepareSelection(view, position);
+
+                } else {
+                    //open MainActivity on this event
+                    Event event = mEvents.get(position);
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    intent.putExtra(Routines.SEND_EVENT_ID_INTENT, event.getId());
+                    startActivity(intent);
+                }
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                //options todo: fix it
-                view.setBackgroundColor(Color.CYAN);
+                if (!is_in_action_mode){
+                    setActionModeOn();
+                }
+                onClick(view, position);
+
             }
         }));
 
@@ -89,6 +115,8 @@ public class EventMngActivity extends AppCompatActivity {
     }
 
 
+
+
     //-------------------------     RecyclerView    --------------------------//
     private void setRecView() {
         recyclerView = findViewById(R.id.rv);
@@ -103,18 +131,82 @@ public class EventMngActivity extends AppCompatActivity {
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setHasFixedSize(true); //doesn't work
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext);     adaptor.setEvents(realEvents);
+        adaptor = new ParticipantAdapter(mContext);
+        adaptor.setEvents(realEvents);
         recyclerView.setAdapter(adaptor);
     }
 
 
 
+    //-------------------------    ActionMode (selection on longClick)    --------------------------//
+    private void setActionModeOn() {
+        toolbar.getMenu().clear();//clear activity menu
+        toolbar.inflateMenu(R.menu.menu_action_mode);//inflate action mode menu
+        counter_text_view.setVisibility(View.VISIBLE); //make textView visible on it
+//        updateCounter(counter); //show textView with nothing selected by def
+        title.setVisibility(View.GONE);
+        is_in_action_mode = true;
+//        adaptor.notifyDataSetChanged();//notify adapter about this  change
+    }
+
+    /*
+     * textview above
+     */
+    private void updateCounter(int counter) {
+        counter_text_view.setText(counter + " رویداد انتخاب شده");
+    }
+
+    private void setActionModeOff() {
+        toolbar.getMenu().clear();//clear activity menu
+//        toolbar.inflateMenu(R.menu.menu_action_mode);
+        counter_text_view.setVisibility(View.GONE);
+        title.setVisibility(View.VISIBLE);
+        is_in_action_mode = false;//make checkbox visible
+        adaptor.notifyDataSetChanged();//notify adapter about this  change
+        counter = 0;
+        selectionList.clear();
+    }
+
+    /*
+     * on select/deselect method
+     */
+    private void prepareSelection(View view, int position) {
+        Event event = mEvents.get(position);
+        if (!selectionList.contains(event)) {
+            selectionList.add(event);
+            view.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, R.color.colorSelected) ));
+            updateCounter(++counter);
+
+        }else {
+            selectionList.remove(event);
+            view.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, R.color.colorTransparent) ));
+            if (selectionList.isEmpty()) {
+                setActionModeOff();
+            } else {
+                updateCounter(--counter);
+            }
+        }
+
+    }
+
+    private void selectionChangeColor(int id) {
+        adaptor.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, id)));
+    }
+
+    //-------------------------    other stuff    --------------------------//
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(mContext, MainActivity.class));
-        finish();
+//        super.onBackPressed();
+        if (is_in_action_mode){
+            selectionChangeColor(R.color.colorTransparent);
+            setActionModeOff();
+        }else {
+            startActivity(new Intent(mContext, MainActivity.class));
+            finish();
+        }
     }
 }

@@ -3,8 +3,12 @@ package com.example.pedarkharj_edit2.classes;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +39,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     private boolean amountModeDong;
     private short selectMode = 3;
     private int defaultDong;
+    private Drawable drawable; //EventMng
 
     public boolean isAmountModeDong() {
         return amountModeDong;
@@ -54,6 +59,9 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     }
     public void setLayout(int layoutId) {
         this.mLayout = layoutId;
+    }
+    public void setForeground(Drawable drawable) {
+        this.drawable = drawable;
     }
 
     //Typical Activities
@@ -90,6 +98,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         ImageView imageView;
         TextView nameTv, resultTxt;
         RelativeLayout baseLayout;
+        CardView cardView; //EventMng
         //diff dong
         Button plusBtn, minusBtn;
         TextView dongEtxt;
@@ -110,8 +119,9 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
             plusBtn = itemView.findViewById(R.id.plus_btn);
             minusBtn = itemView.findViewById(R.id.minus_btn);
             dongEtxt = itemView.findViewById(R.id.dong_Etxt2);
-            // dong mode_02 only
-            dongEtxtAmount =  itemView.findViewById(R.id.dong_Etxt_amount);
+            dongEtxtAmount =  itemView.findViewById(R.id.dong_Etxt_amount); // dong mode_02 only
+            //
+            cardView = itemView.findViewById(R.id.card_layout); //EventMng
 
         }
 
@@ -143,9 +153,12 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
             int particNumber = db0.getAllParticeUnderEvent(event).size();
 
             if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
-/* pic */ if ( holder.imageView != null && event.getBitmapStr() != null )       holder.imageView.setImageBitmap(Routines.decodeBase64(event.getBitmapStr()));
+/* pic */ if ( event.getBitmapStr() != null  && holder.imageView != null)       holder.imageView.setImageBitmap(Routines.decodeBase64(event.getBitmapStr()));
             if (particNumber > 0 && holder.resultTxt != null)      holder.resultTxt.setText(particNumber + " عضو");
             else Log.e("E002",  particNumber + "" );
+
+            if (drawable != null && holder.cardView != null) holder.cardView.setForeground(drawable); //onLongClick color changing
+
             db0.closeDB();
         }
         // </ EventMngActivity >
