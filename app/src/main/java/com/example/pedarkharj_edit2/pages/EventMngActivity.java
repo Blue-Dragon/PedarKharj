@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -14,9 +15,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
@@ -26,6 +29,7 @@ import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
+import com.example.pedarkharj_edit2.classes.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +45,8 @@ public class EventMngActivity extends AppCompatActivity {
     DatabaseHelper db;
     Toolbar toolbar;
     //Action mode
-    boolean is_in_action_mode =false;
+    boolean is_in_action_mode = false;
+//    boolean is_select_one = false;
     TextView counter_text_view, title;
     int counter;
     List<Event> selectionList;
@@ -152,11 +157,13 @@ public class EventMngActivity extends AppCompatActivity {
 //        adaptor.notifyDataSetChanged();//notify adapter about this  change
     }
 
-    /*
-     * textview above
-     */
-    private void updateCounter(int counter) {
-        counter_text_view.setText(counter + " رویداد انتخاب شده");
+    private void setActionMode2On() {
+        toolbar.getMenu().clear();//clear activity menu
+        toolbar.inflateMenu(R.menu.menu_action_mode_2);//inflate action mode menu
+        counter_text_view.setVisibility(View.VISIBLE); //make textView visible on it
+        title.setVisibility(View.GONE);
+        is_in_action_mode = true;
+//        is_select_one = false;
     }
 
     private void setActionModeOff() {
@@ -171,7 +178,14 @@ public class EventMngActivity extends AppCompatActivity {
     }
 
     /*
-     * on select/deselect method
+     * textview above
+     */
+    private void updateCounter(int counter) {
+        counter_text_view.setText(counter + " رویداد انتخاب شده");
+    }
+
+    /*
+     * on select/deselect methods
      */
     private void prepareSelection(View view, int position) {
         Event event = mEvents.get(position);
@@ -190,17 +204,60 @@ public class EventMngActivity extends AppCompatActivity {
             }
         }
 
+        //edit & delete option be shown only if just ONE item is selected
+        if (selectionList.size() > 1){
+            setActionMode2On();
+        } else if (selectionList.size() == 1){
+            setActionModeOn();
+        }
     }
 
     private void selectionChangeColor(int id) {
         adaptor.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, id)));
     }
 
-    //-------------------------    other stuff    --------------------------//
+    int i =0;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_delete:
+
+                new AlertDialog.Builder(mContext)
+                        .setTitle("پاک کنم؟")
+                        .setMessage("این اطلاعات از دم نیست و نابود میشن هااا !")
+                        .setPositiveButton("پاک کن بره داداچ", (dialogInterface, i1) -> {
+                            for (Event event : selectionList){
+                                db.deleteEvent(event, true);
+                                Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
+//                                if (event.getId() == MainActivity.defEventId){
+                                    SharedPrefManager.getInstance(mContext).clearShrdPref();
+                                    Toast.makeText(mContext, "EventId : "+ event.getId(), Toast.LENGTH_SHORT).show(); //todo: bug
+
+//                                }
+                            }
+                        })
+                        .setNegativeButton("نه، بی خیال!", (dialogInterface, i1) -> finish())
+                        .show();
+
+
+
+
+                break;
+
+            case R.id.item_edit:
+
+                break;
+        }
+
+        return true;
+    }
+
+//-------------------------    other stuff    --------------------------//
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+
+        //        super.onBackPressed();
         if (is_in_action_mode){
             selectionChangeColor(R.color.colorTransparent);
             setActionModeOff();
@@ -208,5 +265,6 @@ public class EventMngActivity extends AppCompatActivity {
             startActivity(new Intent(mContext, MainActivity.class));
             finish();
         }
+
     }
 }

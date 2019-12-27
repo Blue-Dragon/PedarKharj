@@ -17,9 +17,11 @@ public class Participant  {
     private int debt;
     //
     private boolean chkImg;
+    private String created_at;
 
 
-        // constructors
+
+    // constructors
     public Participant() {
             this.chkImg = false;
         }
@@ -66,6 +68,9 @@ public class Participant  {
     public Contact getContact() {
         return contact;
     }
+    public String getCreated_at() {
+        return created_at;
+    }
 
     /**
      * setters
@@ -93,6 +98,9 @@ public class Participant  {
     }
     public void setContact(Contact contact) {
         this.contact = contact;
+    }
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
     /**********************************************************************************************/

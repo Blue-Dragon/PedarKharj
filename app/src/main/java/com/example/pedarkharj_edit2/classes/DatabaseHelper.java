@@ -15,6 +15,7 @@ import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    private  PersianDate persianDate;
     /******************************       Constants      *******************************/
     // Logcat tag
     private static final String LOG = DatabaseHelper.class.getName();
@@ -84,7 +85,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_PARTICE_NAME + " TEXT,"
             + KEY_CONTACT_ID + " INTEGER,"
             + KEY_PARTICE_EXPENSE + " INTEGER,"
-            + KEY_PARTICE_DEBT + " INTEGER"+ ")";
+            + KEY_PARTICE_DEBT + " INTEGER,"
+            + KEY_CREATED_AT+ " DATETIME" + ")";
+
 
     // Expense table create statement
     private static final String CREATE_TABLE_EXPENSES = "CREATE TABLE IF NOT EXISTS "
@@ -103,6 +106,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        persianDate = new PersianDate();
     }
 
     @Override
@@ -144,7 +148,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(KEY_CONTACT_NAME, contact.getName());
             values.put(KEY_BMP_STR,  contact.getBitmapStr());
-            values.put(KEY_CREATED_AT, getDateTime());
+            values.put(KEY_CREATED_AT, persianDate.getFullDateNTime());
 
             // insert row
             long contact_id = db.insert(TABLE_CONTACTS, null, values);
@@ -282,7 +286,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_NAME, event.getEventName());
         values.put(KEY_EVENT_BMP, event.getBitmapStr());
-        values.put(KEY_CREATED_AT, getDateTime());
+        values.put(KEY_CREATED_AT, persianDate.getFullDateNTime() );
 
         // insert row
         long event_id = db.insert(TABLE_EVENTS, null, values);
@@ -300,7 +304,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_NAME, event.getEventName());
         values.put(KEY_EVENT_BMP, event.getBitmapStr());
-        values.put(KEY_CREATED_AT, getDateTime());
+        values.put(KEY_CREATED_AT, persianDate.getFullDateNTime());
 
         // insert row
         long event_id = db.insert(TABLE_EVENTS, null, values);
@@ -459,6 +463,75 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // ------------------------ "partices" table methods ----------------//
 
     /**
+     *adding a participant
+     */
+    private void createPartic(Participant participant) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_EVENT_NAME, participant.getEvent().getEventName());
+        values.put(KEY_EVENT_ID, participant.getEvent().getId());
+//        values.put(KEY_EVENT_ID, participant.getId());
+        values.put(KEY_PARTICE_NAME, participant.getName());
+        values.put(KEY_CONTACT_ID, participant.getContact().getId()); //
+        values.put(KEY_PARTICE_EXPENSE, participant.getExpense());
+        values.put(KEY_PARTICE_DEBT , participant.getDebt());
+        values.put(KEY_CREATED_AT, persianDate.getFullDateNTime());
+
+
+        long id = db.insert(TABLE_PARTICES, null, values);
+    }
+    private void createPartic(Participant participant, Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        participant.setEvent(event);
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_EVENT_NAME, participant.getEvent().getEventName());
+        values.put(KEY_EVENT_ID, event.getId());
+//        values.put(KEY_EVENT_ID, participant.getId());
+        values.put(KEY_PARTICE_NAME, participant.getName());
+        values.put(KEY_CONTACT_ID, participant.getContact().getId()); //
+        values.put(KEY_PARTICE_EXPENSE, participant.getExpense());
+        values.put(KEY_PARTICE_DEBT , participant.getDebt());
+        values.put(KEY_CREATED_AT, persianDate.getFullDateNTime());
+
+
+        long id = db.insert(TABLE_PARTICES, null, values);
+    }
+
+    /**
+     * adding a participant to main table
+     */
+    // creating a new contact THEN a new participant
+    public Participant createPartic(String particeName, Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Contact contact0  = new Contact(particeName);
+        createContacts(new Contact[] {contact0});
+
+        Participant participant = new Participant(particeName);
+        participant.setContact(contact0);
+        // add partice to main table
+        createPartic(participant, event);
+
+        return participant;
+    }
+
+    /**
+     *   adding partices to  an Event
+     */
+    public List<Participant> createParticesUnderEvent(List<Participant> participants, Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        for (Participant participant : participants){
+            participant.setEvent(event);
+            createPartic(participant);
+        }
+
+        return participants;
+    }
+
+    /**
      * getting single Partice
      */
     public Participant getParticeById(long particeId) {
@@ -478,6 +551,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
         participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
         participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
+        participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
         return participant;
     }
@@ -504,6 +578,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
                 participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
                 participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
+                participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+
 
                 // adding to participants list
                 participants.add(participant);
@@ -572,6 +648,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
                 participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
                 participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
+                participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+
 
                 // adding to participants list
                 participants.add(participant);
@@ -601,6 +679,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
                 participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
                 participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
+                participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
                 // adding to participants list
                 participants.add(participant);
@@ -612,69 +691,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    /**
-     * adding a participant to main table
-     */
-     // creating a new contact THEN a new participant
-    public Participant createPartic(String particeName, Event event) {
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        Contact contact0  = new Contact(particeName);
-        createContacts(new Contact[] {contact0});
 
-        Participant participant = new Participant(particeName);
-        participant.setContact(contact0);
-        // add partice to main table
-        createPartic(participant, event);
-
-        return participant;
-    }
-
-    /**
-     *   adding partices to  an Event
-     */
-    public List<Participant> createParticesUnderEvent(List<Participant> participants, Event event) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        for (Participant participant : participants){
-            participant.setEvent(event);
-            createPartic(participant);
-        }
-
-        return participants;
-    }
-     /**
-      *adding a participant
-      */
-    private void createPartic(Participant participant) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_EVENT_NAME, participant.getEvent().getEventName());
-        values.put(KEY_EVENT_ID, participant.getEvent().getId());
-//        values.put(KEY_EVENT_ID, participant.getId());
-        values.put(KEY_PARTICE_NAME, participant.getName());
-        values.put(KEY_CONTACT_ID, participant.getContact().getId()); //
-        values.put(KEY_PARTICE_EXPENSE, participant.getExpense());
-        values.put(KEY_PARTICE_DEBT , participant.getDebt());
-
-        long id = db.insert(TABLE_PARTICES, null, values);
-    }
-    private void createPartic(Participant participant, Event event) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        participant.setEvent(event);
-
-        ContentValues values = new ContentValues();
-        values.put(KEY_EVENT_NAME, participant.getEvent().getEventName());
-        values.put(KEY_EVENT_ID, event.getId());
-//        values.put(KEY_EVENT_ID, participant.getId());
-        values.put(KEY_PARTICE_NAME, participant.getName());
-        values.put(KEY_CONTACT_ID, participant.getContact().getId()); //
-        values.put(KEY_PARTICE_EXPENSE, participant.getExpense());
-        values.put(KEY_PARTICE_DEBT , participant.getDebt());
-
-        long id = db.insert(TABLE_PARTICES, null, values);
-    }
 
     /**
      * Deleting a participant
@@ -716,6 +734,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_CONTACT_ID, participant.getContact().getId());
         values.put(KEY_PARTICE_EXPENSE, participant.getExpense());
         values.put(KEY_PARTICE_DEBT , participant.getDebt());
+        values.put(KEY_CREATED_AT, persianDate.getFullDateNTime());
+
 
         return db.update(TABLE_PARTICES, values, KEY_ID + " = ?", new String[] { String.valueOf( participant.getId()) });
     }
@@ -760,7 +780,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (userId == buyer.getId() && !isBuyerIn){
                 values.put(KEY_EXPENSE_DEBT, 0); //we need the buyer in to get the expense price
             } else values.put(KEY_EXPENSE_DEBT, expenseDebts.get(i));
-            values.put(KEY_CREATED_AT, getDateTime());
+            values.put(KEY_CREATED_AT, persianDate.getFullDateNTime());
             // insert row
             db.insert(TABLE_EXPENSES, null, values);
 
@@ -982,14 +1002,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.close();
     }
 
-    /**
-     * get datetime
-     * todo: change to persian
-     */
-    private String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        Date date = new Date();
-        return dateFormat.format(date);
-    }
 }

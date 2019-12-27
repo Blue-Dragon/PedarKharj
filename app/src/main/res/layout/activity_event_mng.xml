@@ -23,7 +23,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="0dp"
                 android:src="@drawable/back" />
 
             <TextView
@@ -33,9 +32,9 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/back_btn"
                 android:text="مدیریت رویداد ها"
-                android:textColor="#868686"
+                android:textColor="#1A237E"
                 android:visibility="gone"
-                android:textSize="24dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/textView"

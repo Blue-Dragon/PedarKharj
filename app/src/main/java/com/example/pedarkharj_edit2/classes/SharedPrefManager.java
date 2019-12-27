@@ -99,14 +99,14 @@ public class SharedPrefManager {
 
 
     //this method will logout the user
-    public void logout() {
-        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
-//        Intent intent = new Intent(mContext, LoginActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        mContext.startActivity(intent);
-    }
+//    public void logout() {
+//        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.clear();
+//        editor.apply();
+////        Intent intent = new Intent(mContext, LoginActivity.class);
+////        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+////        mContext.startActivity(intent);
+//    }
 
 }

@@ -31,6 +31,7 @@ import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Expense;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit2.classes.PersianDate;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
 
@@ -61,8 +62,8 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     boolean pmCanUse;
     EditText dongEText;
     RelativeLayout buyerBtn;
-    pDate mDate;
-    pDate todayDate;
+    PersianDate mDate;
+    PersianDate todayDate;
     TextView priceTv, BuyerBtnTxt;
     Switch aSwitch;
 
@@ -122,7 +123,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 //        b7 = findViewById(R.id.b7);
 //        b8 = findViewById(R.id.b8);
 //        b9 = findViewById(R.id.b9);
-        todayDate = new pDate();
+        todayDate = new PersianDate();
         dateBtn.setText(dateString(todayDate) );
 
         //
@@ -265,7 +266,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
             case R.id.date_btn:
                 DatePicker.Builder builder = new DatePicker.Builder().theme(R.style.DialogTheme);
-                mDate = new pDate();
+                mDate = new PersianDate();
                 builder.date(mDate.getDay(), mDate.getMonth(), mDate.getYear());
                 builder.build((id1, calendar, day, month, year) -> {
                     mDate.setDate(day, month, year);
@@ -374,9 +375,9 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         recyclerView.setAdapter(adapter);
     }
 
-    private String dateString(pDate mDate) {
+    private String dateString(PersianDate mDate) {
         String dateStringType;
-        pDate todayDate = new pDate();
+        PersianDate todayDate = new PersianDate();
 
         if (mDate.getFullDate().equals(todayDate.getFullDate()) ){
             dateStringType =  String.format(Locale.US, "%s\n%s", "امروز", mDate.getShortDate() );
@@ -388,55 +389,5 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
 
 
-    //Persian Calender
-    class pDate extends DateItem {
-        private int mYear, mMonth, mDay;
-        private  String shortDate, fullDate;
-        private Calendar calendar;
-
-        public pDate() {
-            this.calendar = getCalendar();
-            this.mYear = calendar.get(Calendar.YEAR);
-            this.mMonth = calendar.get(Calendar.MONTH);
-            this.mDay = calendar.get(Calendar.DAY_OF_MONTH);
-            this.shortDate = getShortDate();
-            this.fullDate = getFullDate();
-        }
-
-        //-------------- getters ---------------//
-
-
-        public int getmYear() {
-            return Integer.valueOf( String.format(Locale.US, "%d", getYear(), + calendar.get(Calendar.YEAR)) ) ;
-        }
-
-        public int getmMonth() {
-            return Integer.valueOf( String.format(Locale.US, "%d", getYear(), + calendar.get(Calendar.MONTH)) ) ;
-        }
-
-        public int getmDay() {
-            return Integer.valueOf( String.format(Locale.US, "%d", getYear(), + calendar.get(Calendar.DAY_OF_MONTH)) ) ;
-        }
-
-
-        public String getShortDate() {
-//            Calendar calendar = getCalendar();
-            return String.format(Locale.US,
-                    "%d/%d",
-                     getMonth(), getDay(),
-                    +calendar.get(Calendar.MONTH) + 1,
-                    +calendar.get(Calendar.DAY_OF_MONTH));
-        }
-
-        public String getFullDate() {
-//            Calendar calendar = getCalendar();
-            return String.format(Locale.US,
-                    "%d/%d/%d",
-                    getYear(), getMonth(), getDay(),
-                    calendar.get(Calendar.YEAR),
-                    +calendar.get(Calendar.MONTH) + 1,
-                    +calendar.get(Calendar.DAY_OF_MONTH));
-        }
-    }
 
 }
