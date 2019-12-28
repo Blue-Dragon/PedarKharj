@@ -42,11 +42,11 @@ public class SharedPrefManager {
 
 
     //this method will store the default event id in shared preferences
-    public void saveDefEvent (Event event) {
+    public void saveLastSeenEventId(int eventId) {
         sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        if (event.getId() > -1) {
-            editor.putInt(KEY_ID, event.getId());
+        if (eventId > -1) {
+            editor.putInt(KEY_ID, eventId);
             editor.apply();
         }
     }

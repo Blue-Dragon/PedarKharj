@@ -121,7 +121,7 @@ public class EventMngActivity extends AppCompatActivity {
 
 
 
-
+ /***************************************     Methods     ******************************************/
     //-------------------------     RecyclerView    --------------------------//
     private void setRecView() {
         recyclerView = findViewById(R.id.rv);
@@ -146,7 +146,7 @@ public class EventMngActivity extends AppCompatActivity {
 
 
 
-    //-------------------------    ActionMode (selection on longClick)    --------------------------//
+    //---------------    ActionMode (selection on longClick)    ----------------//
     private void setActionModeOn() {
         toolbar.getMenu().clear();//clear activity menu
         toolbar.inflateMenu(R.menu.menu_action_mode);//inflate action mode menu
@@ -229,7 +229,7 @@ public class EventMngActivity extends AppCompatActivity {
                             for (Event event : selectionList){
                                 db.deleteEvent(event, true);
                                 Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
-//                                if (event.getId() == MainActivity.defEventId){
+//                                if (event.getId() == MainActivity.lastSeenEventId){
                                     SharedPrefManager.getInstance(mContext).clearShrdPref();
                                     Toast.makeText(mContext, "EventId : "+ event.getId(), Toast.LENGTH_SHORT).show(); //todo: bug
 

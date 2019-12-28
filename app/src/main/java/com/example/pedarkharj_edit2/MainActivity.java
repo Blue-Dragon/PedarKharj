@@ -2,14 +2,12 @@ package com.example.pedarkharj_edit2;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -35,18 +33,15 @@ import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Expense;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
-import com.example.pedarkharj_edit2.classes.PersianDate;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
 import com.example.pedarkharj_edit2.classes.SharedPrefManager;
 import com.example.pedarkharj_edit2.pages.ContactsActivity;
 import com.example.pedarkharj_edit2.pages.EventMngActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,13 +49,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
     List<Participant> mParticipants;
     List<Event> events ;
-    Map spinnerEventIds;
+    List<Integer> eventSpinerList;
+    Map<Integer, Event> spinnerEventIdsMap;
 
-    public static int defEventId;
+    public static int lastSeenEventId;
     Context mContext = this;
     Activity mActivity = this;
     ParticipantAdapter adaptor;
-    Event defEvent, curEvent;
+    Event curEvent;
     DatabaseHelper db;
     //
     RecyclerView recyclerView;
@@ -87,8 +83,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mParticipants = new ArrayList<>();
         db = new DatabaseHelper(mContext);
         events  = db.getAllEvents(); //for spinner && def partices
-        spinnerEventIds =  new HashMap<Integer, Event>();
-        defEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
+        eventSpinerList = new ArrayList<>();
+        spinnerEventIdsMap =  new HashMap<Integer, Event>();
+        lastSeenEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
 
 
         sentEventId = getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
@@ -138,42 +135,77 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         spinner = findViewById(R.id.spinner);
         List<String> list = new ArrayList<String>();
 
+        int j = 0;
         events = db.getAllEvents();
         for (Event event:events){
             if (!event.getEventName().equals(Routines.EVENT_TEMP_NAME)) {
                 list.add(event.getEventName());
-                //save events ids in spinner
-                spinnerEventIds.put(event.getId(), event);
+                eventSpinerList.add(j);
+                //save spinner events by order ids
+                spinnerEventIdsMap.put(j++, event);
             }
         }
+        if (events.size() == 0 ) createDefEvent();
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
 
-        if (events.size() == 0 ) createDefEvent();
+
 
         /**
          *  set the event to show as recView
          */
-        //def & cur Event
-        if (defEventId > 0 ){
-            Log.i("fuck016", defEventId + "");
-            defEvent = db.getEventById(defEventId);
-        }else  defEvent = events.get(0);
+        // setting Cur Event
+        if (lastSeenEventId > 0 ){
+            curEvent = db.getEventById(lastSeenEventId);
+        } else  curEvent = events.get(0);
 
-        curEvent = defEvent; // if we haven't chosen yet
-        SharedPrefManager.getInstance(mContext).saveDefEvent(defEvent); //save  defEvent for next time to SharedPref
-        Log.i("fuck011", "defEventId: " + defEventId+ "");
+//        StringBuilder builder = new StringBuilder();
+//        builder.append(".\n");
+//        builder.append(".\n");
+//        int i = 0;
+//        for (Event event: events){
+//            builder.append("No.").append(i++).append(" - ").append(event.getEventName()).append("\n");
+//        }
+//        Log.i("fuck024", builder.toString());
 
-        //if we have a chosen event already
-        if ( sentEventId > 0 ) {
-            curEvent = db.getEventById(sentEventId);
+        /*
+         * setting spinner to show lastSeenEvent items
+         */
+        int selectedEventSpinnerId = 0;
+        if (lastSeenEventId > 0){
+            for (int i=0; i<events.size(); i++){
+                if (events.get(i).getId() == lastSeenEventId ) {
+                    selectedEventSpinnerId = i;
+                    break;
+                }
+            }
         }
-        spinner.setSelection( curEvent.getId() - 1); //def event
+
+
+
+        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
+        Log.i("fuck011", "lastSeenEventId: " + lastSeenEventId + "");
+
+
+        /*
+         * setting spinner to show lastSeenEvent items:
+         * Here, if we have a chosen event already (by Intent)
+         */
+        if ( sentEventId > 0  &&  sentEventId != lastSeenEventId) {
+
+            for (int i=0; i<events.size(); i++){
+                if (events.get(i).getId() == sentEventId ) {
+                    selectedEventSpinnerId = i;
+                    break;
+                }
+            }
+        }
+        spinner.setSelection( selectedEventSpinnerId); //def event
 
         spinner.setOnItemSelectedListener(this);
-        Log.i("fuck011", "saveDefEvent: " + curEvent.getId()+ "");
+        Log.i("fuck011", "saveLastSeenEventId: " + curEvent.getId()+ "");
 
 
         /**
@@ -247,22 +279,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //-------------------------     Spinner    --------------------------//
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Event event = db.getEventById(i+1);
+        Event event = spinnerEventIdsMap.get(i);
+        if (event == null) event = events.get(0); //todo: change it. if we remove the last event, there shouldn't be any. dough!
+//        Log.i("fuck025", ".");
+//        Log.i("fuck025", ".");
+//        Log.i("fuck025", ".");
+//
+//        Log.i("fuck025", "selected event: "+ event.getEventName());
+//        Log.i("fuck025", ".");
 
-        if (event != null)    {
-            curEvent = event;
-            setRecParticesUnderEvent(curEvent);
-            SharedPrefManager.getInstance(mContext).saveDefEvent(curEvent); //save curEvent (as defEvent for next time) to SharedPref
-            initRectangleAbove();
-            //init Rectangle
-            int myExpenses = db.getAllParticExpensesByParticeId(1);
-            int myDebt = db.getAllParticDebtsByParticeId(1);
-            int allEventExpenses = db.getEventAllExpensesByEventId(event.getId());
-            tvL2.setText(String.valueOf(allEventExpenses));
-            tvC2.setText(String.valueOf(myExpenses));
-            tvR2.setText(String.valueOf(myExpenses - myDebt));
-
+        for (Event event0 : events) {
+            Log.i("fuck025", event0.getEventName());
         }
+
+        curEvent = event;
+        setRecParticesUnderEvent(curEvent); //show recyclerView
+        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(curEvent.getId()); //save curEvent (as defEvent for next time) to SharedPref
+        initRectangleAbove();
+        //init Rectangle
+        int myExpenses = db.getAllParticExpensesByParticeId(1);
+        int myDebt = db.getAllParticDebtsByParticeId(1);
+        int allEventExpenses = db.getEventAllExpensesByEventId(event.getId());
+        tvL2.setText(String.valueOf(allEventExpenses));
+        tvC2.setText(String.valueOf(myExpenses));
+        tvR2.setText(String.valueOf(myExpenses - myDebt));
+
     }
 
 
@@ -286,22 +327,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adaptor = new ParticipantAdapter(mContext, R.layout.sample_participant,  mParticipants);
         recyclerView.setAdapter(adaptor);
     }
+
     private void createDefEvent() {
         if (events.size() < 1 ){
-
             /*
              * adding partices and an event
              */
-            long contact_1 =  db.createContact(new Contact("Hamed"));
-            long contact_2 = db.createContact(new Contact("Reza"));
-            long contact_3 =  db.createContact(new Contact("Sadi"));
-            long contact_4 = db.createContact(new Contact("Abbas"));
-
-            db.createNewEventWithPartices(new Event("سفر شمال")
-                    , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)
-                            ,db.getContactById(contact_3), db.getContactById(contact_4), });
+            createEvent("سفر شمال");
+            createEvent("سفر 2");
+            createEvent("سفر 3");
+            createEvent("سفر 4");
+            createEvent("سفر 5");
 
         }
+    }
+
+    private void createEvent(String eventName) {
+
+        /*
+         * adding partices and an event
+         */
+        long contact_1 =  db.createContact(new Contact("Hamed"));
+        long contact_2 = db.createContact(new Contact("Reza"));
+        long contact_3 =  db.createContact(new Contact("Sadi"));
+        long contact_4 = db.createContact(new Contact("Abbas"));
+
+        db.createNewEventWithPartices(new Event(eventName)
+                , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)
+                        ,db.getContactById(contact_3), db.getContactById(contact_4), });
     }
 
 
