@@ -517,7 +517,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     *   adding partices to  an Event
+     *   adding new partices to an existing Event
      */
     public List<Participant> addParticesToEvent(List<Participant> participants, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();

@@ -18,7 +18,6 @@ import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.Contact;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
-import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
@@ -29,10 +28,10 @@ import java.util.List;
 
 public class AddEventParticesActivity extends AppCompatActivity {
     Context mContext;
-    RecyclerView recyclerView, rec_01;
+    RecyclerView recyclerView, selected_recView;
     List<Contact> contacts;
     List<Participant> allContactsTo_participants, selectedPartices;
-    ParticipantAdapter adaptor;
+    ParticipantAdapter adaptor, selectedAdaptor;
     DatabaseHelper db;
 
     FloatingActionButton fab;
@@ -57,28 +56,62 @@ public class AddEventParticesActivity extends AppCompatActivity {
          * RecView & DB
          */
         db = new DatabaseHelper(mContext);
-        rec_01 = findViewById(R.id.rv_01);
         allContactsTo_participants = new ArrayList<>();
-
         selectedPartices = new ArrayList<>();
+
+
+        //-------------------------     RecView    --------------------------//
+        recyclerView = findViewById(R.id.rv);
+        selected_recView = findViewById(R.id.rv_01);
+        setRecView(); //show contacts (allContactsTo_participants) and init selectedPartices
         /*
          * init selectedPartice if we are in edit mode
          */
         curEventId = getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
         if (curEventId > 0){
             edit_mode = true;
-//            Event curEvent = db.getEventById(eventId);
-            Log.i("fuck026",".");
-            Log.i("fuck026",".");
-
             selectedPartices = db.getAllParticeUnderEvent(curEventId);
-            for (Participant participant: selectedPartices){
-                Log.i("fuck026",participant.getName());
-            }
+            setSelectedRecView(selectedPartices);
         }
 
-        recyclerView = findViewById(R.id.rv);
-        setRecView(); //show contacts
+        /*
+         * onClick
+         */
+        Log.e("recOnClick", "onClick");
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Participant participant = allContactsTo_participants.get(position);
+                selectedPartices.add(participant);
+//                setSelectedRecView(selectedPartices);
+                selectedAdaptor.notifyDataSetChanged();
+
+                Log.d("recOnClick", participant.getName());
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+            }
+        }));
+
+        /*
+         * onClick selected
+         */
+        Log.e("Selected_RecOnClick", "onClick");
+        selected_recView.addOnItemTouchListener(new RecyclerTouchListener(mContext, selected_recView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Participant participant = selectedPartices.get(position);
+                selectedPartices.remove(participant);
+//                setSelectedRecView(selectedPartices);
+                selectedAdaptor.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
 
         //-------------------------     Floating Btn    --------------------------//
         fab = this.findViewById(R.id.fab);
@@ -113,8 +146,6 @@ public class AddEventParticesActivity extends AppCompatActivity {
 //
         });
 
-
-
         //
         db.closeDB();
     }
@@ -141,35 +172,19 @@ public class AddEventParticesActivity extends AppCompatActivity {
         //
         adaptor = new ParticipantAdapter(mContext, R.layout.sample_conntacts_horizental, allContactsTo_participants);
         recyclerView.setAdapter(adaptor);
-
-        //onClick
-        Log.e("recOnClick", "onClick");
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-                Participant participant = allContactsTo_participants.get(position);
-                selectedPartices.add(participant);
-                setRecView01(selectedPartices);
-
-                Log.d("recOnClick", participant.getName());
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-            }
-        }));
     }
 
-    private void setRecView01(List<Participant> participants){
+
+    private void setSelectedRecView(List<Participant> participants){
 
         GridLayoutManager gridLayoutManager =
                 new GridLayoutManager(mContext, 1, GridLayoutManager.HORIZONTAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rec_01.setLayoutManager(gridLayoutManager);
+        selected_recView.setLayoutManager(gridLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext, R.layout.sample_contact, participants);
+        selectedAdaptor = new ParticipantAdapter(mContext, R.layout.sample_contact, participants);
 //        recyclerView.smoothScrollToPosition( allContactsTo_participants.size() - 1 ); // focus on the End of the list
-        rec_01.setAdapter(adaptor);
+        selected_recView.setAdapter(selectedAdaptor);
 
     }
 
