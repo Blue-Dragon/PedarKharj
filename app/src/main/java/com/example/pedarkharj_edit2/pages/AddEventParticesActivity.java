@@ -18,6 +18,7 @@ import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.Contact;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
+import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
@@ -52,6 +53,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         ImageView backBtn = findViewById(R.id.back_btn);
         backBtn.setOnClickListener(item -> onBackPressed());
 
+
         /**
          * RecView & DB
          */
@@ -71,8 +73,8 @@ public class AddEventParticesActivity extends AppCompatActivity {
         if (curEventId > 0){
             edit_mode = true;
             selectedPartices = db.getAllParticeUnderEvent(curEventId);
-            setSelectedRecView(selectedPartices);
         }
+        setSelectedRecView(selectedPartices);
 
         /*
          * onClick
@@ -83,8 +85,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
             public void onClick(View view, int position) {
                 Participant participant = allContactsTo_participants.get(position);
                 selectedPartices.add(participant);
-//                setSelectedRecView(selectedPartices);
-                selectedAdaptor.notifyDataSetChanged();
+                selectedAdaptor.notifyDataSetChanged(); //setSelectedRecView(selectedPartices);
 
                 Log.d("recOnClick", participant.getName());
             }
@@ -117,6 +118,11 @@ public class AddEventParticesActivity extends AppCompatActivity {
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
 
+            if (edit_mode){
+                Event event = db.getEventById(curEventId);
+                event.se
+                db.updateEvent();
+            }
             //get saved partices in tempEvent
             Routines.addParticesToTempEvent(selectedPartices, db);
 
@@ -128,7 +134,6 @@ public class AddEventParticesActivity extends AppCompatActivity {
             }
 
             if (selectedPartices.size() > 0){
-
 
                 int eventId = selectedPartices.get(0).getEvent().getId();
 //                Log.d("Fuck09", "eventId_ sent"+ eventId);
@@ -187,14 +192,6 @@ public class AddEventParticesActivity extends AppCompatActivity {
         selected_recView.setAdapter(selectedAdaptor);
 
     }
-
-
-private void editEvent(){
-
-}
-
-
-
 
 
     @Override

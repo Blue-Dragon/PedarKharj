@@ -45,7 +45,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
 
     Bitmap bitmap;
     Bitmap resizedBitmap;
-    boolean newImg;
+    boolean newImg, edit_mode;
     CircleImageView eventPic, changePic_bkg;
 
     boolean suddenly_stop;
@@ -66,10 +66,16 @@ public class AddEventFinalActivity extends AppCompatActivity {
         mActivity = this;
         db = new DatabaseHelper(mContext);
         newImg = false;
+        edit_mode = false;
 
         //back imageView btn
         ImageView backBtn = findViewById(R.id.back_btn);
         backBtn.setOnClickListener(item -> onBackPressed());
+
+        edit_mode = getIntent().getBooleanExtra(Routines.EDIT_MODE, false);
+        if (edit_mode) {
+            ed.setText(event.getEventName());
+        }
 
         suddenly_stop = true;
         ed = findViewById(R.id.name_edt);
@@ -218,17 +224,19 @@ public class AddEventFinalActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (suddenly_stop) {
-            Routines.deleteTempEvent(mContext, eventId);
-            Log.d("Fuck07", "onStop");
-        }
+        suddenlyStopedTask();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
+        suddenlyStopedTask();
+    }
+
+    private void suddenlyStopedTask() {
         if (suddenly_stop) {
-            Routines.deleteTempEvent(mContext, eventId);
+            if (edit_mode) updateEvent();
+            else Routines.deleteTempEvent(mContext, eventId);
             Log.d("Fuck07", "onStop");
         }
     }
