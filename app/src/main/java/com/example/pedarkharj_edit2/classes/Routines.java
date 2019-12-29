@@ -23,6 +23,8 @@ public class Routines {
     public static final String SEND_EVENT_ID_INTENT = "SEND_EVENT_ID_INTENT";
     public static final String SEND_EXPENSE_INT_INTENT = "SEND_EXPENSE_INT_INTENT";
     public static final String SEND_USERS_INTENT = "SEND_USERS_INTENT";
+    public static final String EDIT_MODE = "EDIT_MODE";
+    public static final boolean IS_EDIT_MODE = true;
     //forResult
     public static final String RESULT = "RESULT";
     public static final int RESULT_OK = 1;
@@ -154,7 +156,7 @@ public class Routines {
         long id = db.createEvent(new Event(EVENT_TEMP_NAME));
         Event tempEvent = db.getEventById(id);
         Log.d("Fuck06", id +  "");
-        db.createParticesUnderEvent(participants, tempEvent);
+        db.addParticesToEvent(participants, tempEvent);
 
         return participants;
     }

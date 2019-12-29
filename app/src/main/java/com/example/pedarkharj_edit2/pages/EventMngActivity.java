@@ -48,7 +48,7 @@ public class EventMngActivity extends AppCompatActivity {
     boolean is_in_action_mode = false;
 //    boolean is_select_one = false;
     TextView counter_text_view, title;
-    int counter;
+    int counter, selectedEventId;
     List<Event> selectionList;
 
 
@@ -163,6 +163,7 @@ public class EventMngActivity extends AppCompatActivity {
         counter_text_view.setVisibility(View.VISIBLE); //make textView visible on it
         title.setVisibility(View.GONE);
         is_in_action_mode = true;
+        selectedEventId = 0;
 //        is_select_one = false;
     }
 
@@ -174,6 +175,7 @@ public class EventMngActivity extends AppCompatActivity {
         is_in_action_mode = false;//make checkbox visible
         adaptor.notifyDataSetChanged();//notify adapter about this  change
         counter = 0;
+        selectedEventId = 0;
         selectionList.clear();
     }
 
@@ -207,8 +209,10 @@ public class EventMngActivity extends AppCompatActivity {
         //edit & delete option be shown only if just ONE item is selected
         if (selectionList.size() > 1){
             setActionMode2On();
+
         } else if (selectionList.size() == 1){
             setActionModeOn();
+            selectedEventId = selectionList.get(0).getId();
         }
     }
 
@@ -228,24 +232,24 @@ public class EventMngActivity extends AppCompatActivity {
                         .setPositiveButton("پاک کن بره داداچ", (dialogInterface, i1) -> {
                             for (Event event : selectionList){
                                 db.deleteEvent(event, true);
-                                Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
-//                                if (event.getId() == MainActivity.lastSeenEventId){
+//                                Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
+                                if (event.getId() == MainActivity.lastSeenEventId){
                                     SharedPrefManager.getInstance(mContext).clearShrdPref();
-                                    Toast.makeText(mContext, "EventId : "+ event.getId(), Toast.LENGTH_SHORT).show(); //todo: bug
-
-//                                }
+                                    Toast.makeText(mContext, "EventId : "+ event.getId() + "Deleted", Toast.LENGTH_SHORT).show();
+                                }
                             }
+                            startActivity(new Intent(mContext, getClass()));
+                            finish();
                         })
-                        .setNegativeButton("نه، بی خیال!", (dialogInterface, i1) -> finish())
+                        .setNegativeButton("نه، بی خیال!", (dialogInterface, i1) -> {})
                         .show();
-
-
-
-
                 break;
 
             case R.id.item_edit:
-
+                Intent intent = new Intent(mContext, AddEventParticesActivity.class);
+                intent.putExtra(Routines.SEND_EVENT_ID_INTENT, selectedEventId);
+                startActivity(intent);
+                finish();
                 break;
         }
 

@@ -18,6 +18,7 @@ import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
 import com.example.pedarkharj_edit2.classes.Contact;
 import com.example.pedarkharj_edit2.classes.DatabaseHelper;
+import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
@@ -30,11 +31,13 @@ public class AddEventParticesActivity extends AppCompatActivity {
     Context mContext;
     RecyclerView recyclerView, rec_01;
     List<Contact> contacts;
-    List<Participant> participants, participants_01;
+    List<Participant> allContactsTo_participants, selectedPartices;
     ParticipantAdapter adaptor;
     DatabaseHelper db;
 
     FloatingActionButton fab;
+    boolean edit_mode;
+    int curEventId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         mContext = this;
+//        edit_mode = false;
 
         //back imageView btn
         ImageView backBtn = findViewById(R.id.back_btn);
@@ -54,8 +58,24 @@ public class AddEventParticesActivity extends AppCompatActivity {
          */
         db = new DatabaseHelper(mContext);
         rec_01 = findViewById(R.id.rv_01);
-        participants = new ArrayList<>();
-        participants_01 = new ArrayList<>();
+        allContactsTo_participants = new ArrayList<>();
+
+        selectedPartices = new ArrayList<>();
+        /*
+         * init selectedPartice if we are in edit mode
+         */
+        curEventId = getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
+        if (curEventId > 0){
+            edit_mode = true;
+//            Event curEvent = db.getEventById(eventId);
+            Log.i("fuck026",".");
+            Log.i("fuck026",".");
+
+            selectedPartices = db.getAllParticeUnderEvent(curEventId);
+            for (Participant participant: selectedPartices){
+                Log.i("fuck026",participant.getName());
+            }
+        }
 
         recyclerView = findViewById(R.id.rv);
         setRecView(); //show contacts
@@ -65,21 +85,25 @@ public class AddEventParticesActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
 
             //get saved partices in tempEvent
-            Routines.addParticesToTempEvent(participants_01, db);
+            Routines.addParticesToTempEvent(selectedPartices, db);
 
-            int[] ids = new int[participants_01.size()];
+            int[] ids = new int[selectedPartices.size()];
             int i = 0;
-            for (Participant participant: participants_01){
+            for (Participant participant: selectedPartices){
                 Log.d("Fuck06", "i: "+ i );
                 ids[i++] = participant.getId();
             }
 
-            if (participants_01.size() > 0){
+            if (selectedPartices.size() > 0){
 
-                int eventId = participants_01.get(0).getEvent().getId();
-                Log.d("Fuck09", "eventId_ sent"+ eventId);
 
+                int eventId = selectedPartices.get(0).getEvent().getId();
+//                Log.d("Fuck09", "eventId_ sent"+ eventId);
                 Intent intent = new Intent(mContext, AddEventFinalActivity.class);
+                if (edit_mode){
+                    eventId = curEventId;
+                    intent.putExtra(Routines.EDIT_MODE, Routines.IS_EDIT_MODE);
+                }
                 intent.putExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT, ids);
                 intent.putExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, eventId);
                 startActivity(intent);
@@ -109,13 +133,13 @@ public class AddEventParticesActivity extends AppCompatActivity {
          * adaptor or even edit that. change this shit later in order not to get fucked up!
          */
         contacts = db.getAllContacts();
-        participants = Routines.contactToPartic(contacts);
+        allContactsTo_participants = Routines.contactToPartic(contacts);
 
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext, R.layout.sample_conntacts_horizental, participants);
+        adaptor = new ParticipantAdapter(mContext, R.layout.sample_conntacts_horizental, allContactsTo_participants);
         recyclerView.setAdapter(adaptor);
 
         //onClick
@@ -123,9 +147,9 @@ public class AddEventParticesActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Participant participant = participants.get(position);
-                participants_01.add(participant);
-                setRecView01(participants_01);
+                Participant participant = allContactsTo_participants.get(position);
+                selectedPartices.add(participant);
+                setRecView01(selectedPartices);
 
                 Log.d("recOnClick", participant.getName());
             }
@@ -144,13 +168,15 @@ public class AddEventParticesActivity extends AppCompatActivity {
         rec_01.setLayoutManager(gridLayoutManager);
         //
         adaptor = new ParticipantAdapter(mContext, R.layout.sample_contact, participants);
-//        recyclerView.smoothScrollToPosition( participants.size() - 1 ); // focus on the End of the list
+//        recyclerView.smoothScrollToPosition( allContactsTo_participants.size() - 1 ); // focus on the End of the list
         rec_01.setAdapter(adaptor);
 
     }
 
 
+private void editEvent(){
 
+}
 
 
 

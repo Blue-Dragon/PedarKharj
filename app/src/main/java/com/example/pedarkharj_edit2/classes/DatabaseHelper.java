@@ -7,11 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -296,7 +293,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Creating event with participants
+     * Creating new event with already existed Contacts
      */
     public long createNewEventWithPartices(Event event, Contact[] contacts) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -319,7 +316,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    // Create new Partic in an existing Event
+    /**
+     *  Creating a new Participant in an existing Event
+     */
     public Participant createEventNewPartice(Event event, Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
         Participant participant = new Participant(contact.getName());
@@ -465,7 +464,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      *adding a participant
      */
-    private void createPartic(Participant participant) {
+    private void addParticipant(Participant participant) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -481,7 +480,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long id = db.insert(TABLE_PARTICES, null, values);
     }
-    private void createPartic(Participant participant, Event event) {
+    private void addParticipant(Participant participant, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
         participant.setEvent(event);
 
@@ -503,7 +502,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * adding a participant to main table
      */
     // creating a new contact THEN a new participant
-    public Participant createPartic(String particeName, Event event) {
+    public Participant addParticipant(String particeName, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Contact contact0  = new Contact(particeName);
@@ -512,7 +511,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Participant participant = new Participant(particeName);
         participant.setContact(contact0);
         // add partice to main table
-        createPartic(participant, event);
+        addParticipant(participant, event);
 
         return participant;
     }
@@ -520,12 +519,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      *   adding partices to  an Event
      */
-    public List<Participant> createParticesUnderEvent(List<Participant> participants, Event event) {
+    public List<Participant> addParticesToEvent(List<Participant> participants, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         for (Participant participant : participants){
             participant.setEvent(event);
-            createPartic(participant);
+            addParticipant(participant);
         }
 
         return participants;

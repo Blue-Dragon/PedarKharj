@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     List<Event> events ;
     List<Integer> eventSpinerList;
     Map<Integer, Event> spinnerEventIdsMap;
+    Contact[] defContats;
 
     public static int lastSeenEventId;
     Context mContext = this;
@@ -295,14 +296,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         curEvent = event;
         setRecParticesUnderEvent(curEvent); //show recyclerView
         SharedPrefManager.getInstance(mContext).saveLastSeenEventId(curEvent.getId()); //save curEvent (as defEvent for next time) to SharedPref
-        initRectangleAbove();
-        //init Rectangle
-        int myExpenses = db.getAllParticExpensesByParticeId(1);
-        int myDebt = db.getAllParticDebtsByParticeId(1);
-        int allEventExpenses = db.getEventAllExpensesByEventId(event.getId());
-        tvL2.setText(String.valueOf(allEventExpenses));
-        tvC2.setText(String.valueOf(myExpenses));
-        tvR2.setText(String.valueOf(myExpenses - myDebt));
+        initRectangleAbove(curEvent);  //init Rectangle
+
+
 
     }
 
@@ -347,14 +343,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /*
          * adding partices and an event
          */
+        if (defContats == null || defContats.length < 1){
+            creatingDefContacts();
+        }
+        db.createNewEventWithPartices(new Event(eventName), defContats);
+
+    }
+
+    private void creatingDefContacts(){
         long contact_1 =  db.createContact(new Contact("Hamed"));
         long contact_2 = db.createContact(new Contact("Reza"));
         long contact_3 =  db.createContact(new Contact("Sadi"));
         long contact_4 = db.createContact(new Contact("Abbas"));
 
-        db.createNewEventWithPartices(new Event(eventName)
-                , new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2)
-                        ,db.getContactById(contact_3), db.getContactById(contact_4), });
+        defContats = new Contact[]{ db.getContactById(contact_1), db.getContactById(contact_2), db.getContactById(contact_3), db.getContactById(contact_4) };
     }
 
 
@@ -463,8 +465,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //todo: complete it
-    private void initRectangleAbove() {
-        tvL2.setText(String.valueOf(0));
+    private void initRectangleAbove(Event event) {
+//        tvL2.setText(String.valueOf(0));
+        List<Participant> participants = db.getAllParticeUnderEvent(event);
+        if (participants.size() > 0){
+            int myExpenses = db.getAllParticExpensesByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
+            int myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
+            int allEventExpenses = db.getEventAllExpensesByEventId(event.getId());
+            tvL2.setText(String.valueOf(allEventExpenses));
+            tvC2.setText(String.valueOf(myExpenses));
+            tvR2.setText(String.valueOf(myExpenses - myDebt));
+        }
 
     }
 

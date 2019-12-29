@@ -202,10 +202,10 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     /********************************************       Methods     ****************************************************/
 
-//    private void LOGPartices(List<Participant> participants) {
+//    private void LOGPartices(List<Participant> allContactsTo_participants) {
 //        StringBuilder builder = new StringBuilder();
 //        builder.append("Partices' names:\n");
-//        for (Participant participant1: participants){
+//        for (Participant participant1: allContactsTo_participants){
 //            builder.append(participant1.getName()+ "\n");
 //        }
 //        Log.d("Fuck010", builder.toString());
