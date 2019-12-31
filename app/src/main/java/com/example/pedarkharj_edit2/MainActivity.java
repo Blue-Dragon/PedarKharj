@@ -436,7 +436,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
 
-        if (sentEventId != 0){
+        if (sentEventId > 0){
             // if we aren't  get back to EventMngActivity
             super.onBackPressed();
         } else {

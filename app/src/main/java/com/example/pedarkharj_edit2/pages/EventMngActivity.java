@@ -134,13 +134,15 @@ public class EventMngActivity extends AppCompatActivity {
         }
 
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3, GridLayoutManager.VERTICAL, false);
+        //todo: flexible layout needed to be flexible
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setHasFixedSize(true); //doesn't work
         recyclerView.setLayoutManager(gridLayoutManager);
         //
         adaptor = new ParticipantAdapter(mContext);
         adaptor.setEvents(realEvents);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adaptor);
     }
 
@@ -266,7 +268,7 @@ public class EventMngActivity extends AppCompatActivity {
             selectionChangeColor(R.color.colorTransparent);
             setActionModeOff();
         }else {
-            startActivity(new Intent(mContext, MainActivity.class));
+//            startActivity(new Intent(mContext, MainActivity.class));
             finish();
         }
 

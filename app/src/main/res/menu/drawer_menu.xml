@@ -23,11 +23,11 @@
 
                 android:id="@+id/nav_our_number"
                 android:icon="@android:drawable/ic_menu_call"
-                android:title="our Number" />
+                android:title="تماس با ما" />
             <item
                 android:id="@+id/nav_our_email"
-                android:icon="@android:drawable/ic_menu_add"
-                android:title="our Email" />
+                android:icon="@android:drawable/sym_action_email"
+                android:title="ایمیل" />
         </menu>
     </item>
 

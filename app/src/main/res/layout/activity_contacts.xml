@@ -2,9 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layoutDirection="ltr"
-    android:layout_height="match_parent"
+    style="@style/activity_layout_style"
     tools:context=".pages.ContactsActivity">
 
 
@@ -73,14 +71,8 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|end"
-        android:layout_marginRight="14dp"
-        android:layout_marginBottom="14dp"
-        app:backgroundTint="#DCEDC8"
+        style="@style/fab_style"
+
         app:srcCompat="@android:drawable/ic_input_add" />
 
 </RelativeLayout>

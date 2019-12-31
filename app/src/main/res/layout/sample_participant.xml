@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:background="#45FFFDE7">
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/rl_prof_pic"
@@ -48,7 +48,6 @@
                 android:id="@+id/partic_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/tv_my_dong"
                 android:layout_marginBottom="-2dp"
                 android:fontFamily="@font/b_koodak"
                 android:gravity="center"
