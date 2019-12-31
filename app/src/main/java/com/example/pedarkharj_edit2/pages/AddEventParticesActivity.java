@@ -3,6 +3,7 @@ package com.example.pedarkharj_edit2.pages;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -34,6 +35,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
     List<Participant> allContactsTo_participants, selectedPartices;
     ParticipantAdapter adaptor, selectedAdaptor;
     DatabaseHelper db;
+    Event existedEvent;
 
     FloatingActionButton fab;
     boolean edit_mode;
@@ -72,6 +74,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         curEventId = getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
         if (curEventId > 0){
             edit_mode = true;
+            existedEvent = db.getEventById(curEventId);
             selectedPartices = db.getAllParticeUnderEvent(curEventId);
         }
         setSelectedRecView(selectedPartices);
@@ -84,8 +87,9 @@ public class AddEventParticesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 Participant participant = allContactsTo_participants.get(position);
-                selectedPartices.add(participant);
-                selectedAdaptor.notifyDataSetChanged(); //setSelectedRecView(selectedPartices);
+//                selectedPartices.add(participant);
+//                selectedAdaptor.notifyDataSetChanged(); //setSelectedRecView(selectedPartices);
+                addPartice(participant);
 
                 Log.d("recOnClick", participant.getName());
             }
@@ -103,9 +107,9 @@ public class AddEventParticesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view, int position) {
                 Participant participant = selectedPartices.get(position);
-                selectedPartices.remove(participant);
+                //remove partice from event
+                removePartice(participant);
 //                setSelectedRecView(selectedPartices);
-                selectedAdaptor.notifyDataSetChanged();
             }
 
             @Override
@@ -118,13 +122,10 @@ public class AddEventParticesActivity extends AppCompatActivity {
         fab = this.findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
 
-            if (edit_mode){
-                Event event = db.getEventById(curEventId);
-                event.se
-                db.updateEvent();
+            if (!edit_mode){
+                //get saved partices in tempEvent
+                Routines.addParticesToTempEvent(selectedPartices, db);
             }
-            //get saved partices in tempEvent
-            Routines.addParticesToTempEvent(selectedPartices, db);
 
             int[] ids = new int[selectedPartices.size()];
             int i = 0;
@@ -154,6 +155,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         //
         db.closeDB();
     }
+
 
     /***********************************       METHODS     ***********************************/
 
@@ -194,10 +196,30 @@ public class AddEventParticesActivity extends AppCompatActivity {
     }
 
 
+    private void removePartice(Participant participant) {
+        new AlertDialog.Builder(mContext)
+                .setTitle("Are you sure?")
+                .setMessage("All data will be lost")
+                .setPositiveButton("Yep", (dialogInterface, i) -> {
+                    selectedPartices.remove(participant);
+                    db.deletePartic(participant);
+                    selectedAdaptor.notifyDataSetChanged();
+                })
+                .setNegativeButton("No, wait!", (dialogInterface, i) -> {})
+                .show();
+    }
+
+    private void addPartice(Participant participant) {
+        selectedPartices.add(participant);
+        if (edit_mode) db.createParticipantUnderEvent(participant, existedEvent);
+        selectedAdaptor.notifyDataSetChanged();
+    }
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(mContext, MainActivity.class));
+//        startActivity(new Intent(mContext, MainActivity.class));
         finish();
     }
 

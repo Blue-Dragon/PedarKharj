@@ -462,9 +462,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // ------------------------ "partices" table methods ----------------//
 
     /**
-     *adding a participant
+     * adding a single new participant to an existing Event
+     * if the partice already have an event in it
      */
-    private void addParticipant(Participant participant) {
+    public void createParticipantUnderEvent(Participant participant) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -480,7 +481,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long id = db.insert(TABLE_PARTICES, null, values);
     }
-    private void addParticipant(Participant participant, Event event) {
+    /**
+     * adding a single new participant to an existing Event
+     */
+    public void createParticipantUnderEvent(Participant participant, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
         participant.setEvent(event);
 
@@ -499,10 +503,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * creating a new contact THEN a new participant
      * adding a participant to main table
      */
-    // creating a new contact THEN a new participant
-    public Participant addParticipant(String particeName, Event event) {
+    public Participant createContact_ParticipantUnderEvent(String particeName, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Contact contact0  = new Contact(particeName);
@@ -511,20 +515,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Participant participant = new Participant(particeName);
         participant.setContact(contact0);
         // add partice to main table
-        addParticipant(participant, event);
+        createParticipantUnderEvent(participant, event);
 
         return participant;
     }
 
     /**
-     *   adding new partices to an existing Event
+     *   adding new participants to an existing Event
      */
-    public List<Participant> addParticesToEvent(List<Participant> participants, Event event) {
+    public List<Participant> createAllParticesUnderEvent(List<Participant> participants, Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         for (Participant participant : participants){
             participant.setEvent(event);
-            addParticipant(participant);
+            createParticipantUnderEvent(participant);
         }
 
         return participants;

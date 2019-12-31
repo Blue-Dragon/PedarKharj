@@ -156,7 +156,7 @@ public class Routines {
         long id = db.createEvent(new Event(EVENT_TEMP_NAME));
         Event tempEvent = db.getEventById(id);
         Log.d("Fuck06", id +  "");
-        db.addParticesToEvent(participants, tempEvent);
+        db.createAllParticesUnderEvent(participants, tempEvent);
 
         return participants;
     }

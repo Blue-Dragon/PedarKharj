@@ -110,7 +110,7 @@ public class EventMngActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             startActivity(new Intent(mContext, AddEventParticesActivity.class));
-            finish();
+//            finish();
 //            showBuyerDialog();
         });
 
@@ -249,7 +249,7 @@ public class EventMngActivity extends AppCompatActivity {
                 Intent intent = new Intent(mContext, AddEventParticesActivity.class);
                 intent.putExtra(Routines.SEND_EVENT_ID_INTENT, selectedEventId);
                 startActivity(intent);
-                finish();
+//                finish();
                 break;
         }
 

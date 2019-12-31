@@ -72,21 +72,14 @@ public class AddEventFinalActivity extends AppCompatActivity {
         ImageView backBtn = findViewById(R.id.back_btn);
         backBtn.setOnClickListener(item -> onBackPressed());
 
-        edit_mode = getIntent().getBooleanExtra(Routines.EDIT_MODE, false);
-        if (edit_mode) {
-            ed.setText(event.getEventName());
-        }
-
         suddenly_stop = true;
         ed = findViewById(R.id.name_edt);
         eventId = getIntent().getIntExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, 0);
-        Log.d("Fuck09", "eventId_received: "+ eventId);
+        Log.d("fuck026", "eventId_received: "+ eventId);
         try {
-
             event = db.getEventById(eventId);
         }catch (Exception e){
-            Log.e("Fuck09", " "+ e);
-
+            Log.e("fuck026", " "+ e);
         }
 
 //        //back imageView btn
@@ -97,6 +90,13 @@ public class AddEventFinalActivity extends AppCompatActivity {
         eventPic.setOnClickListener(item -> changePic());
         changePic_bkg.setOnClickListener(item -> changePic());
         suddenly_stop = true;
+
+        //-----------------------------------------------------------------------------//
+
+        edit_mode = getIntent().getBooleanExtra(Routines.EDIT_MODE, false);
+        if (edit_mode) {
+            setEventInfos();
+        }
 
 
 
@@ -118,7 +118,27 @@ public class AddEventFinalActivity extends AppCompatActivity {
     }
 
 
+
+
     // ********************************  Methods  ******************************** //
+
+    private void setEventInfos() {
+        ed.setText(event.getEventName());
+
+        try {
+            if ( event.getBitmapStr() != null ){
+                Log.i("fuck026", "BitmapStr not null: \n"+ event.getBitmapStr() );
+
+                bitmap = Routines.decodeBase64(event.getBitmapStr());
+                resizedBitmap = Routines.resizeBitmap(bitmap);
+                eventPic.setImageBitmap(resizedBitmap);
+            }
+        }catch (Exception e){
+            Log.e("fuck026",  e.toString());
+
+        }
+
+    }
 
     private void changePic() {
         suddenly_stop = false;
@@ -145,7 +165,6 @@ public class AddEventFinalActivity extends AppCompatActivity {
         startActivity(new Intent(mContext, EventMngActivity.class));
         finish();
     }
-
 
     private void doRecyclerView() {
         int[] ids = getIntent().getIntArrayExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT);
