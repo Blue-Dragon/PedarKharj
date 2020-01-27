@@ -268,7 +268,7 @@ public class EventMngActivity extends AppCompatActivity {
             selectionChangeColor(R.color.colorTransparent);
             setActionModeOff();
         }else {
-//            startActivity(new Intent(mContext, MainActivity.class));
+            startActivity(new Intent(mContext, MainActivity.class));
             finish();
         }
 

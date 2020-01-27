@@ -46,9 +46,10 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        View.OnClickListener, AdapterView.OnItemSelectedListener {
     List<Participant> mParticipants;
-    List<Event> events ;
+    List<Event> events;
     List<Integer> eventSpinerList;
     Map<Integer, Event> spinnerEventIdsMap;
     Contact[] defContats;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle toggle;
-    ImageView menu;
+    ImageView menu, sync_iv;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
     //
     int sentEventId;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         sentEventId = getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
+        sync_iv = findViewById(R.id.sync);          sync_iv.setOnClickListener(this);
 
         //the rectangle above
         tvL1 = findViewById(R.id. tv_title_my_expense);
@@ -385,9 +387,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.nav_contacts:
                 startActivity(new Intent(mContext, ContactsActivity.class));
+                finish();
                 break;
             case R.id.nav_events:
                 startActivity(new Intent(mContext, EventMngActivity.class));
+                finish();
                 break;
 
             case R.id.nav_our_number:
@@ -413,6 +417,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (!drawerLayout.isDrawerOpen(GravityCompat.START)){
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
+                break;
+
+            case R.id.sync:
+                db.syncEvents();
                 break;
         }
     }

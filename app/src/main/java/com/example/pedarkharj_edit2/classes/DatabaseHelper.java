@@ -1005,4 +1005,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.close();
     }
 
+    public void syncEvents() {
+        //from SQLite to mySql
+        this.getAllEvents();
+
+    }
 }
