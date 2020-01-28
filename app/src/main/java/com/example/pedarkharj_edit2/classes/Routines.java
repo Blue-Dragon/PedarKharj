@@ -11,6 +11,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 
+import com.example.pedarkharj_edit2.classes.web_db_pref.DatabaseHelper;
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;

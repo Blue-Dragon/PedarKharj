@@ -1,10 +1,7 @@
-package com.example.pedarkharj_edit2.classes;
+package com.example.pedarkharj_edit2.classes.web_db_pref;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.widget.Toast;
 
 public class SharedPrefManager {
 

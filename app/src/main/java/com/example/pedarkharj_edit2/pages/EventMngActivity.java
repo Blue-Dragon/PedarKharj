@@ -2,14 +2,12 @@ package com.example.pedarkharj_edit2.pages;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,17 +21,15 @@ import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.MainActivity;
 import com.example.pedarkharj_edit2.R;
-import com.example.pedarkharj_edit2.classes.DatabaseHelper;
+import com.example.pedarkharj_edit2.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Event;
-import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
-import com.example.pedarkharj_edit2.classes.SharedPrefManager;
+import com.example.pedarkharj_edit2.classes.web_db_pref.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class EventMngActivity extends AppCompatActivity {
     RecyclerView recyclerView;

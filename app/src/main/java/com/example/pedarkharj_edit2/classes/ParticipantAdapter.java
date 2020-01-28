@@ -2,11 +2,8 @@ package com.example.pedarkharj_edit2.classes;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.pedarkharj_edit2.R;
+import com.example.pedarkharj_edit2.classes.web_db_pref.DatabaseHelper;
 
 import java.util.List;
 

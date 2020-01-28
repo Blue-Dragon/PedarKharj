@@ -28,14 +28,14 @@ import android.widget.Toast;
 
 import com.example.pedarkharj_edit2.classes.BuyerDialog;
 import com.example.pedarkharj_edit2.classes.Contact;
-import com.example.pedarkharj_edit2.classes.DatabaseHelper;
+import com.example.pedarkharj_edit2.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit2.classes.Event;
 import com.example.pedarkharj_edit2.classes.Expense;
 import com.example.pedarkharj_edit2.classes.Participant;
 import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
 import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit2.classes.Routines;
-import com.example.pedarkharj_edit2.classes.SharedPrefManager;
+import com.example.pedarkharj_edit2.classes.web_db_pref.SharedPrefManager;
 import com.example.pedarkharj_edit2.pages.ContactsActivity;
 import com.example.pedarkharj_edit2.pages.EventMngActivity;
 
