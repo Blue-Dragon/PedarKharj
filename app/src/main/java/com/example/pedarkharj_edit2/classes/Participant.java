@@ -1,10 +1,4 @@
-package com.example.pedarkharj_edit2.classes;
-
-import android.graphics.Bitmap;
-import android.widget.Button;
-import android.widget.EditText;
-
-import java.io.Serializable;
+package com.example.pedarkharj_edit3.classes;
 
 public class Participant  {
     //vital

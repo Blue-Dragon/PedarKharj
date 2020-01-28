@@ -1,4 +1,4 @@
-package com.example.pedarkharj_edit2.pages;
+package com.example.pedarkharj_edit3.pages;
 
 import android.app.Activity;
 import android.content.Context;
@@ -19,10 +19,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.pedarkharj_edit2.R;
-import com.example.pedarkharj_edit2.classes.Contact;
-import com.example.pedarkharj_edit2.classes.web_db_pref.DatabaseHelper;
-import com.example.pedarkharj_edit2.classes.Routines;
+import com.example.pedarkharj_edit3.R;
+import com.example.pedarkharj_edit3.classes.Contact;
+import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.classes.Routines;
 
 import java.io.IOException;
 

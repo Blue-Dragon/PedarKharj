@@ -1,4 +1,4 @@
-package com.example.pedarkharj_edit2.classes.web_db_pref;
+package com.example.pedarkharj_edit3.classes.web_db_pref;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,12 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.pedarkharj_edit2.classes.Contact;
-import com.example.pedarkharj_edit2.classes.Event;
-import com.example.pedarkharj_edit2.classes.Expense;
-import com.example.pedarkharj_edit2.classes.Participant;
-import com.example.pedarkharj_edit2.classes.PersianDate;
-import com.example.pedarkharj_edit2.classes.Routines;
+import com.example.pedarkharj_edit3.classes.Contact;
+import com.example.pedarkharj_edit3.classes.Event;
+import com.example.pedarkharj_edit3.classes.Expense;
+import com.example.pedarkharj_edit3.classes.Participant;
+import com.example.pedarkharj_edit3.classes.PersianDate;
+import com.example.pedarkharj_edit3.classes.Routines;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,4 @@
-package com.example.pedarkharj_edit2.classes;
-
-import android.graphics.Bitmap;
+package com.example.pedarkharj_edit3.classes;
 
 public class Contact {
 

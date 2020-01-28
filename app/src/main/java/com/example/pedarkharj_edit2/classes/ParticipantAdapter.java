@@ -1,4 +1,4 @@
-package com.example.pedarkharj_edit2.classes;
+package com.example.pedarkharj_edit3.classes;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,8 +17,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.pedarkharj_edit2.R;
-import com.example.pedarkharj_edit2.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.R;
+import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 
 import java.util.List;
 

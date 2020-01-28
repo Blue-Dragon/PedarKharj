@@ -1,4 +1,4 @@
-package com.example.pedarkharj_edit2.pages;
+package com.example.pedarkharj_edit3.pages;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,14 +19,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pedarkharj_edit2.MainActivity;
-import com.example.pedarkharj_edit2.R;
-import com.example.pedarkharj_edit2.classes.web_db_pref.DatabaseHelper;
-import com.example.pedarkharj_edit2.classes.Event;
-import com.example.pedarkharj_edit2.classes.ParticipantAdapter;
-import com.example.pedarkharj_edit2.classes.RecyclerTouchListener;
-import com.example.pedarkharj_edit2.classes.Routines;
-import com.example.pedarkharj_edit2.classes.web_db_pref.SharedPrefManager;
+import com.example.pedarkharj_edit3.MainActivity;
+import com.example.pedarkharj_edit3.R;
+import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.classes.Event;
+import com.example.pedarkharj_edit3.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
+import com.example.pedarkharj_edit3.classes.Routines;
+import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 
 import java.util.ArrayList;
 import java.util.List;

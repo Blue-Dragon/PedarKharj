@@ -1,4 +1,4 @@
-package com.example.pedarkharj_edit2.classes;
+package com.example.pedarkharj_edit3.classes;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Base64;
 import android.util.Log;
 
-import com.example.pedarkharj_edit2.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;

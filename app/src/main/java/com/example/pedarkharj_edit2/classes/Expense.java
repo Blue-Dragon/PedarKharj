@@ -1,6 +1,6 @@
-package com.example.pedarkharj_edit2.classes;
+package com.example.pedarkharj_edit3.classes;
 
-import com.example.pedarkharj_edit2.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;

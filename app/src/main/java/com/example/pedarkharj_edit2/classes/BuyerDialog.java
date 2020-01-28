@@ -1,4 +1,4 @@
-package com.example.pedarkharj_edit2.classes;
+package com.example.pedarkharj_edit3.classes;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
-import com.example.pedarkharj_edit2.R;
-import com.example.pedarkharj_edit2.classes.web_db_pref.DatabaseHelper;
-import com.example.pedarkharj_edit2.pages.AddExpenseActivity;
+import com.example.pedarkharj_edit3.R;
+import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.pages.AddExpenseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
