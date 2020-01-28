@@ -17,25 +17,40 @@ if (isset($_REQUEST['apicall'])) {
         //if clicked on sign up
         case 'count':
             //now send user info back to client
-            $usersCount = getUsersCount1($conn, 'users');
+            $usersCount = getUsersCount1($conn, 'contacts');
 
             $response['error'] = false;
             $response['message'] = "users num : " . $usersCount-> total_count;
             break;
 
         case 'add_user':
-            if (isset( $_REQUEST['name'])){
-                $name= $_REQUEST['name'];
-                //add user
-                $stmt = $conn->prepare("INSERT INTO users( name ) VALUES (?)");
+            $name ='name';
+            $img = 'img';
+            $created_at = 'created_at';
 
-                $msg = addUser(  $name);
-                $response['error'] = false;
-                $response['message'] = $msg ." -> " .$name;
+            if (areTheseParamsAvailable('contact_name', 'contact_img', 'created_at') ) {
+                $name= $_REQUEST['contact_name'];
+                $img= $_REQUEST['contact_img'];
+                $created_at= $_REQUEST['created_at'];
+
+                //add user
+                if ($name != null && $created_at != null){
+                    $stmt = $conn->prepare("INSERT INTO users( contact_name, contact_img, created_at) VALUES (???)");
+                    $msg = addUser($name, $img, $created_at);
+
+                    $response['error'] = false;
+                    $response['message'] = $msg ." ->  $name/ created at : $created_at";
+
+                }else {
+                    $response['error'] = true;
+                    $response['message'] = 'Failed - name or date is null';
+
+                    }
+
 
             }else {
                 $response['error'] = true;
-                $response['message'] = 'name needed';
+                $response['message'] = 'some args needed';
             }
 
             break;

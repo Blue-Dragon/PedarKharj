@@ -3,24 +3,27 @@
 //our boolean function
 function areTheseParamsAvailable($params){
     foreach ($params as $paramKey) {
-        if (!isset($_POST[$paramKey])) {
+        if (!isset($_REQUEST[$paramKey])) {
             return false;
         }
     }
     return true;
 }
 
-function addUser($name){
+function addUser($conn, $name, $img, $created_at ){
     global $stmt;
 
-    if (
-        $stmt &&
-        $stmt->bind_param("s", $name) &&
-        $stmt->execute()
-    ){
-        $msg = "user added";
+    if ($stmt){
+        if ( $stmt->bind_param('sss', $name, $img, $created_at)){
+            if ($stmt->execute()){
+                $msg = "user added";
+            } else $msg = "execute failed";
+        } else $msg = "bind_param failed";
+
     } else{
-        $msg = "fuck u looser!";
+        $msg = "stmt failed";
+        $msg = "ERROR:" . $conn -> errno . " - " . $conn -> error;
+
     };
 
 //    echo $msg ." -> " .$name. "<br>";
@@ -28,14 +31,15 @@ function addUser($name){
 
     return $msg;
 }
-function addUser_old($conn){
-    $sql =" INSERT INTO users( name ) VALUES ('".$_REQUEST["name"]."')";
-    if (mysqli_query($conn, $sql)){
-        $msg = "user added";
-    }else{
-        $msg = "fuck u looser!";
-    }
-}
+
+//function addUser_old($conn){
+//    $sql =" INSERT INTO users( name ) VALUES ('".$_REQUEST["name"]."')";
+//    if (mysqli_query($conn, $sql)){
+//        $msg = "user added";
+//    }else{
+//        $msg = "fuck u looser!";
+//    }
+//}
 
 //function getUsersCount($conn, $table){
 //    $result = mysqli_query($conn, "SELECT count(*) FROM $table");
@@ -43,12 +47,14 @@ function addUser_old($conn){
 //
 //    return  $row[0];
 //}
+
+
 function getUsersCount1($conn, $table)
 {
     $result = mysqli_query($conn, "SELECT count(*) AS total_count FROM $table") or exit(mysqli_error());
     $row = mysqli_fetch_object($result);
 //    return $row -> total_count;
-    return $row ;
+    return $row;
 }
 //function getUsersCount2($conn, $table)
 //{
