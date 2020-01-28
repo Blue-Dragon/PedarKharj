@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e868eb25-818a-4aee-a27a-94afc99762e6" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Routines.php" afterPath="$PROJECT_DIR$/Routines.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/connection.php" afterPath="$PROJECT_DIR$/connection.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/syncapi.php" afterPath="$PROJECT_DIR$/syncapi.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/temp.php" afterPath="$PROJECT_DIR$/temp.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,14 +45,14 @@
       <file leaf-file-name="temp.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/temp.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="72" column="119" lean-forward="false" selection-start-line="72" selection-start-column="119" selection-end-line="72" selection-end-column="119" />
+            <state relative-caret-position="440">
+              <caret line="83" column="68" lean-forward="false" selection-start-line="83" selection-start-column="68" selection-end-line="83" selection-end-column="68" />
               <folding>
                 <element signature="e#1066#1337#0#PHP" expanded="false" />
                 <element signature="e#1347#1582#0#PHP" expanded="false" />
-                <element signature="e#2748#2821#0#PHP" expanded="false" />
-                <element signature="e#2831#2915#0#PHP" expanded="false" />
-                <marker date="1580230499605" expanded="true" signature="2082:2159" ph="INSERT INTO contacts... " />
+                <element signature="e#2749#2822#0#PHP" expanded="false" />
+                <element signature="e#2832#2916#0#PHP" expanded="false" />
+                <marker date="1580231141036" expanded="true" signature="2082:2159" ph="INSERT INTO contacts... " />
               </folding>
             </state>
           </provider>
@@ -101,7 +98,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="533" />
     <option name="y" value="-19" />
     <option name="width" value="814" />
@@ -252,7 +249,7 @@
       <option name="presentableId" value="Default" />
       <updated>1580120420885</updated>
       <workItem from="1580120422235" duration="718000" />
-      <workItem from="1580226112273" duration="4526000" />
+      <workItem from="1580226112273" duration="5475000" />
     </task>
     <task id="LOCAL-00001" summary="001">
       <created>1580124119728</created>
@@ -261,14 +258,21 @@
       <option name="project" value="LOCAL" />
       <updated>1580124119728</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="002 - send a new contact">
+      <created>1580230664536</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1580230664536</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5244000" />
+    <option name="totallyTimeSpent" value="6193000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12210797" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -298,7 +302,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="001" />
-    <option name="LAST_COMMIT_MESSAGE" value="001" />
+    <MESSAGE value="002 - send a new contact" />
+    <option name="LAST_COMMIT_MESSAGE" value="002 - send a new contact" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -357,14 +362,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/temp.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="72" column="119" lean-forward="false" selection-start-line="72" selection-start-column="119" selection-end-line="72" selection-end-column="119" />
+        <state relative-caret-position="440">
+          <caret line="83" column="68" lean-forward="false" selection-start-line="83" selection-start-column="68" selection-end-line="83" selection-end-column="68" />
           <folding>
             <element signature="e#1066#1337#0#PHP" expanded="false" />
             <element signature="e#1347#1582#0#PHP" expanded="false" />
-            <element signature="e#2748#2821#0#PHP" expanded="false" />
-            <element signature="e#2831#2915#0#PHP" expanded="false" />
-            <marker date="1580230499605" expanded="true" signature="2082:2159" ph="INSERT INTO contacts... " />
+            <element signature="e#2749#2822#0#PHP" expanded="false" />
+            <element signature="e#2832#2916#0#PHP" expanded="false" />
+            <marker date="1580231141036" expanded="true" signature="2082:2159" ph="INSERT INTO contacts... " />
           </folding>
         </state>
       </provider>

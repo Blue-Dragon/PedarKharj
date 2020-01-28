@@ -81,7 +81,7 @@ if (isset($_REQUEST['apicall'])) {
 
             }else {
                 $response['error'] = true;
-                $response['message'] = 'Failed - some args needed';
+                $response['message'] = 'Failed - some args needed'; 
             }
 
             echo $response['message'];
