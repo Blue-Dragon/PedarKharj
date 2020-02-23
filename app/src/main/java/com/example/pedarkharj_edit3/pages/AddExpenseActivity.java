@@ -29,7 +29,7 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.Event;
 import com.example.pedarkharj_edit3.classes.Expense;
 import com.example.pedarkharj_edit3.classes.Participant;
-import com.example.pedarkharj_edit3.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.PersianDate;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
@@ -45,7 +45,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
     List<Participant> mParticipants;
     List<Participant> usersListPartices;
     List<Integer> expenseDebtsList;
-    ParticipantAdapter adapter;
+    MyAdapter adapter;
     LinearLayout calculator;
     Event curEvent;
     RecyclerTouchListener listener;
@@ -368,7 +368,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adapter = new ParticipantAdapter(mContext, R.layout.sample_contact, mParticipants);
+        adapter = new MyAdapter(mContext, R.layout.sample_contact, mParticipants);
         adapter.setSelectMode(selectMode);
         recyclerView.setAdapter(adapter);
     }

@@ -20,7 +20,7 @@ import com.example.pedarkharj_edit3.classes.Contact;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.Event;
 import com.example.pedarkharj_edit3.classes.Participant;
-import com.example.pedarkharj_edit3.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
 
@@ -32,7 +32,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
     RecyclerView recyclerView, selected_recView;
     List<Contact> contacts;
     List<Participant> allContactsTo_participants, selectedPartices;
-    ParticipantAdapter adaptor, selectedAdaptor;
+    MyAdapter adaptor, selectedAdaptor;
     DatabaseHelper db;
     Event existedEvent;
 
@@ -176,7 +176,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext, R.layout.sample_conntacts_horizental, allContactsTo_participants);
+        adaptor = new MyAdapter(mContext, R.layout.sample_conntacts_horizental, allContactsTo_participants);
         recyclerView.setAdapter(adaptor);
     }
 
@@ -188,7 +188,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         selected_recView.setLayoutManager(gridLayoutManager);
         //
-        selectedAdaptor = new ParticipantAdapter(mContext, R.layout.sample_contact, participants);
+        selectedAdaptor = new MyAdapter(mContext, R.layout.sample_contact, participants);
 //        recyclerView.smoothScrollToPosition( allContactsTo_participants.size() - 1 ); // focus on the End of the list
         selected_recView.setAdapter(selectedAdaptor);
 

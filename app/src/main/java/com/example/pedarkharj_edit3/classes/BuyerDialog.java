@@ -23,7 +23,7 @@ public class BuyerDialog extends Dialog {
     private Button yes, no;
     RecyclerView recyclerView;
     List<Participant> mParticipants;
-    ParticipantAdapter adapter;
+    MyAdapter adapter;
     DatabaseHelper db;
     Event event;
 
@@ -99,7 +99,7 @@ public class BuyerDialog extends Dialog {
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adapter = new ParticipantAdapter(mActivity, R.layout.sample_contact, mParticipants);
+        adapter = new MyAdapter(mActivity, R.layout.sample_contact, mParticipants);
         recyclerView.setAdapter(adapter);
 
     }

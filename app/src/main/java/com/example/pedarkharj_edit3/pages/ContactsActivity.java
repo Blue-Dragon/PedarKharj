@@ -16,7 +16,7 @@ import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.Contact;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.Participant;
-import com.example.pedarkharj_edit3.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.Routines;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class ContactsActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     DatabaseHelper db;
 
-    ParticipantAdapter adaptor;
+    MyAdapter adaptor;
     String newName;
     Context mContext = this;
     Activity mActivity = this;
@@ -71,7 +71,7 @@ public class ContactsActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
-        adaptor = new ParticipantAdapter(mContext, R.layout.sample_conntacts_horizental, participants);
+        adaptor = new MyAdapter(mContext, R.layout.sample_conntacts_horizental, participants);
         recyclerView.setAdapter(adaptor);
     }
 

@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.ViewHolder> implements View.OnClickListener {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener {
     final static boolean AMOUNT_MODE = true;
     final static boolean DONG_MODE = false;
 
@@ -38,7 +39,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     private short selectMode = 3;
     private int defaultDong;
     private Drawable drawable; //EventMng
-
+    private int widthSplit = 0;
     public boolean isAmountModeDong() {
         return amountModeDong;
     }
@@ -48,7 +49,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
 
     //------------------------------      Constructors       ---------------------------------/
     //EventMng Activity
-    public ParticipantAdapter(Context mContext) {
+    public MyAdapter(Context mContext) {
         this.mContext = mContext;
         this.mLayout = R.layout.sample_event;
     }
@@ -61,9 +62,12 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     public void setForeground(Drawable drawable) {
         this.drawable = drawable;
     }
+    public void setItemsInScreen(int itemsCount) {
+        this.widthSplit = itemsCount ;
+    }
 
     //Typical Activities
-    public ParticipantAdapter(Context mContext, int mLayout, List<Participant> participants) {
+    public MyAdapter(Context mContext, int mLayout, List<Participant> participants) {
         this.mContext = mContext;
         this.participants = participants;
         this.mLayout = mLayout;
@@ -81,7 +85,7 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
         this.defaultDong = defaultDong;
     }
 
-    public ParticipantAdapter(Activity mActivity, int mLayout, List<Participant> participants, boolean amountModeDong) {
+    public MyAdapter(Activity mActivity, int mLayout, List<Participant> participants, boolean amountModeDong) {
         this.mActivity = mActivity;
         this.participants = participants;
         this.mLayout = mLayout;
@@ -135,6 +139,13 @@ public class ParticipantAdapter extends RecyclerView.Adapter<ParticipantAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(mLayout, parent, false);
+        //screen_based width
+        if (widthSplit > 0){
+            GridLayoutManager.LayoutParams layoutParams = (GridLayoutManager.LayoutParams) view.getLayoutParams();
+            layoutParams.width = (parent.getMeasuredWidth() / 2) - (parent.getMeasuredWidth() / 20) ;
+//        int width = parent.getMeasuredWidth() / 3;
+//        view.setMinimumWidth(width);
+        }
         return new ViewHolder(view);
     }
 

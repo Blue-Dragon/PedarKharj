@@ -25,7 +25,7 @@ import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.Event;
 import com.example.pedarkharj_edit3.classes.Participant;
-import com.example.pedarkharj_edit3.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.Routines;
 
 import java.io.IOException;
@@ -40,7 +40,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
     Context mContext;
     Activity mActivity;
     ArrayList<Participant> mParticipants;
-    ParticipantAdapter adapter;
+    MyAdapter adapter;
     DatabaseHelper db;
 
     Bitmap bitmap;
@@ -178,7 +178,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3, GridLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adapter = new ParticipantAdapter(mContext, R.layout.sample_contact, mParticipants);
+        adapter = new MyAdapter(mContext, R.layout.sample_contact, mParticipants);
         recyclerView.setAdapter(adapter);
 
     }

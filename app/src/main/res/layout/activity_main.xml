@@ -19,7 +19,7 @@
                 android:id="@+id/menu"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:padding="13dp"
+                android:padding="12dp"
                 android:layout_marginLeft="-10dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
@@ -55,9 +55,9 @@
     <RelativeLayout
         android:id="@+id/rl_myresult"
         android:layout_below="@id/m_toolbar"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginTop="@dimen/m"
+        android:layout_marginLeft="@dimen/m"
+        android:layout_marginRight="@dimen/m"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <include layout="@layout/sample_my_result"/>
@@ -74,19 +74,17 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="@dimen/ss"
             android:layout_marginBottom="0dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="@dimen/m"
+            android:layout_marginRight="@dimen/m"
             android:layout_gravity="center_horizontal">
-
-
 
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_partice_expenses"
-                android:layout_marginTop="5dp"
-                android:paddingBottom="5dp"
+                android:layout_marginTop="@dimen/ss"
+                android:paddingBottom="@dimen/ss"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

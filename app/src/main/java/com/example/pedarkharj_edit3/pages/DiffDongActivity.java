@@ -26,7 +26,7 @@ import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.Event;
 import com.example.pedarkharj_edit3.classes.Participant;
-import com.example.pedarkharj_edit3.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
 
@@ -43,7 +43,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     List<Participant> usersList;
     Map<Integer, Integer> usersDongMap;
     DatabaseHelper db;
-    ParticipantAdapter adaptor;
+    MyAdapter adaptor;
     Context mContext = this;
     Activity mActivity = this;
     Event curEvent;
@@ -294,10 +294,10 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         recyclerView.setLayoutManager(linearLayoutManager);
         //dongNumber mode
         if (!cashMode) {
-            adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong__dong_mode, usersList);
+            adaptor = new MyAdapter(mActivity, R.layout.sample_diff_dong__dong_mode, usersList);
         }
         else {
-            adaptor = new ParticipantAdapter(mActivity, R.layout.sample_diff_dong__cash_mode, usersList);
+            adaptor = new MyAdapter(mActivity, R.layout.sample_diff_dong__cash_mode, usersList);
             adaptor.setDefaultDong(defDong);
         }
         recyclerView.setAdapter(adaptor);

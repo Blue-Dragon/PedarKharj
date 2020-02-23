@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/main"
     style="@style/activity_layout_style"
     android:layout_gravity="center_horizontal">
@@ -50,7 +49,6 @@
 
         </RelativeLayout>
 
-
     </android.support.v7.widget.Toolbar>
 
 
@@ -58,30 +56,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/m_toolbar"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="0dp"
         android:foregroundGravity="center_horizontal"
         android:layout_centerInParent="true">
 
-        <RelativeLayout
+
+
+        <com.google.android.flexbox.FlexboxLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="@dimen/m"
+            android:layout_marginRight="@dimen/m"
+            android:gravity="center_horizontal"
             android:layout_gravity="center_horizontal">
-
-
 
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv"
-                android:layout_marginTop="5dp"
-                android:paddingBottom="5dp"
+                android:layout_marginTop="@dimen/ss"
+                android:paddingBottom="@dimen/ss"
                 android:layout_width="match_parent"
+                android:foregroundGravity="center_horizontal"
+                android:layout_centerHorizontal="true"
                 android:layout_height="match_parent" />
 
-        </RelativeLayout>
+        </com.google.android.flexbox.FlexboxLayout>
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton

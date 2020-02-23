@@ -23,7 +23,7 @@ import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.Event;
-import com.example.pedarkharj_edit3.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
@@ -34,7 +34,7 @@ import java.util.List;
 public class EventMngActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     List<Event> mEvents;
-    ParticipantAdapter adaptor;
+    MyAdapter adaptor;
     //
     Context mContext = this;
     FloatingActionButton fab;
@@ -131,13 +131,14 @@ public class EventMngActivity extends AppCompatActivity {
 
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         //todo: flexible layout needed to be flexible
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false);
+        int itemsInScreen = 2;
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, itemsInScreen, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setHasFixedSize(true); //doesn't work
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext);
+        adaptor = new MyAdapter(mContext);
         adaptor.setEvents(realEvents);
+        adaptor.setItemsInScreen(itemsInScreen);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adaptor);
     }

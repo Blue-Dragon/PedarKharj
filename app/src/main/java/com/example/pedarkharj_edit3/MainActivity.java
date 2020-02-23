@@ -32,7 +32,7 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.Event;
 import com.example.pedarkharj_edit3.classes.Expense;
 import com.example.pedarkharj_edit3.classes.Participant;
-import com.example.pedarkharj_edit3.classes.ParticipantAdapter;
+import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static int lastSeenEventId;
     Context mContext = this;
     Activity mActivity = this;
-    ParticipantAdapter adaptor;
+    MyAdapter adaptor;
     Event curEvent;
     DatabaseHelper db;
     //
@@ -79,27 +79,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_layout);
 
-       Toolbar toolbar =  findViewById(R.id.m_toolbar);
+        Toolbar toolbar = findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
         mParticipants = new ArrayList<>();
         db = new DatabaseHelper(mContext);
-        events  = db.getAllEvents(); //for spinner && def partices
+        events = db.getAllEvents(); //for spinner && def partices
         eventSpinerList = new ArrayList<>();
-        spinnerEventIdsMap =  new HashMap<Integer, Event>();
+        spinnerEventIdsMap = new HashMap<Integer, Event>();
         lastSeenEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
 
 
         sentEventId = getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
-        sync_iv = findViewById(R.id.sync);          sync_iv.setOnClickListener(this);
+        sync_iv = findViewById(R.id.sync);
+        sync_iv.setOnClickListener(this);
 
         //the rectangle above
-        tvL1 = findViewById(R.id. tv_title_my_expense);
-        tvL2 = findViewById(R.id.tv_my_expense );
-        tvC1 = findViewById(R.id. tv_title_my_dong);
-        tvC2 = findViewById(R.id. tv_my_dong);
-        tvR1 = findViewById(R.id. tv_title_my_result);
-        tvR2 = findViewById(R.id. tv_my_result);
+        tvL1 = findViewById(R.id.tv_title_my_expense);
+        tvL2 = findViewById(R.id.tv_my_expense);
+        tvC1 = findViewById(R.id.tv_title_my_dong);
+        tvC2 = findViewById(R.id.tv_my_dong);
+        tvR1 = findViewById(R.id.tv_title_my_result);
+        tvR2 = findViewById(R.id.tv_my_result);
 
         /*-------------------------     RecView   --------------------------*/
 
@@ -133,14 +134,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-
         /* -------------------------     Spinner    -------------------------- */
         spinner = findViewById(R.id.spinner);
         List<String> list = new ArrayList<String>();
 
         int j = 0;
         events = db.getAllEvents();
-        for (Event event:events){
+        for (Event event : events) {
             if (!event.getEventName().equals(Routines.EVENT_TEMP_NAME)) {
                 list.add(event.getEventName());
                 eventSpinerList.add(j);
@@ -148,21 +148,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 spinnerEventIdsMap.put(j++, event);
             }
         }
-        if (events.size() == 0 ) createDefEvent();
+        if (events.size() == 0) createDefEvent();
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
 
 
-
         /**
          *  set the event to show as recView
          */
         // setting Cur Event
-        if (lastSeenEventId > 0 ){
+        if (lastSeenEventId > 0) {
             curEvent = db.getEventById(lastSeenEventId);
-        } else  curEvent = events.get(0);
+        } else curEvent = events.get(0);
 
 //        StringBuilder builder = new StringBuilder();
 //        builder.append(".\n");
@@ -177,15 +176,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
          * setting spinner to show lastSeenEvent items
          */
         int selectedEventSpinnerId = 0;
-        if (lastSeenEventId > 0){
-            for (int i=0; i<events.size(); i++){
-                if (events.get(i).getId() == lastSeenEventId ) {
+        if (lastSeenEventId > 0) {
+            for (int i = 0; i < events.size(); i++) {
+                if (events.get(i).getId() == lastSeenEventId) {
                     selectedEventSpinnerId = i;
                     break;
                 }
             }
         }
-
 
 
         SharedPrefManager.getInstance(mContext).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
@@ -196,19 +194,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
          * setting spinner to show lastSeenEvent items:
          * Here, if we have a chosen event already (by Intent)
          */
-        if ( sentEventId > 0  &&  sentEventId != lastSeenEventId) {
+        if (sentEventId > 0 && sentEventId != lastSeenEventId) {
 
-            for (int i=0; i<events.size(); i++){
-                if (events.get(i).getId() == sentEventId ) {
+            for (int i = 0; i < events.size(); i++) {
+                if (events.get(i).getId() == sentEventId) {
                     selectedEventSpinnerId = i;
                     break;
                 }
             }
         }
-        spinner.setSelection( selectedEventSpinnerId); //def event
+        spinner.setSelection(selectedEventSpinnerId); //def event
 
         spinner.setOnItemSelectedListener(this);
-        Log.i("fuck011", "saveLastSeenEventId: " + curEvent.getId()+ "");
+        Log.i("fuck011", "saveLastSeenEventId: " + curEvent.getId() + "");
 
 
         /**
@@ -221,21 +219,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view, int position) {
                 StringBuilder builder = new StringBuilder();
                 Participant participant = mParticipants.get(position);
-                Log.d("fuck023", "." );                Log.d("fuck023", "." );
+                Log.d("fuck023", ".");
+                Log.d("fuck023", ".");
 
                 Log.d("fuck023", "partic name: " + participant.getName());
 
 
-                int i =0;
-                for (Expense expense : expenseList){
+                int i = 0;
+                for (Expense expense : expenseList) {
 
                     List<Participant> users = expense.getUserPartics();
-                    for (Participant user: users){
+                    for (Participant user : users) {
 
                         if (user.getId() == participant.getId())
                             builder.append(expense.getCreated_at()).append("\n");
-                            if (expense.getBuyer().getId() == participant.getId()) builder.append(expense.getExpensePrice()).append(" طلب و");
-                            builder.append(expense.getExpenseDebts().get(0)).append(" بدهی از خرج: ").append(expense.getExpenseTitle()).append("\n\n");
+                        if (expense.getBuyer().getId() == participant.getId())
+                            builder.append(expense.getExpensePrice()).append(" طلب و");
+                        builder.append(expense.getExpenseDebts().get(0)).append(" بدهی از خرج: ").append(expense.getExpenseTitle()).append("\n\n");
                     }
                 }
 
@@ -262,15 +262,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-
-
         //drawerLayout
         createDrawer();
 
         //Close db
         db.closeDB();
     }
-
 
 
     /********************************************       Methods     ****************************************************/
@@ -283,7 +280,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         Event event = spinnerEventIdsMap.get(i);
-        if (event == null) event = events.get(0); //todo: change it. if we remove the last event, there shouldn't be any. dough!
+        if (event == null)
+            event = events.get(0); //todo: change it. if we remove the last event, there shouldn't be any. dough!
 //        Log.i("fuck025", ".");
 //        Log.i("fuck025", ".");
 //        Log.i("fuck025", ".");
@@ -301,9 +299,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initRectangleAbove(curEvent);  //init Rectangle
 
 
-
     }
-
 
 
     @Override
@@ -322,12 +318,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         //
-        adaptor = new ParticipantAdapter(mContext, R.layout.sample_participant,  mParticipants);
+        adaptor = new MyAdapter(mContext, R.layout.sample_participant, mParticipants);
         recyclerView.setAdapter(adaptor);
     }
 
     private void createDefEvent() {
-        if (events.size() < 1 ){
+        if (events.size() < 1) {
             /*
              * adding partices and an event
              */
@@ -345,26 +341,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /*
          * adding partices and an event
          */
-        if (defContats == null || defContats.length < 1){
+        if (defContats == null || defContats.length < 1) {
             creatingDefContacts();
         }
         db.createNewEventWithPartices(new Event(eventName), defContats);
 
     }
 
-    private void creatingDefContacts(){
-        long contact_1 =  db.createContact(new Contact("Hamed"));
+    private void creatingDefContacts() {
+        long contact_1 = db.createContact(new Contact("Hamed"));
         long contact_2 = db.createContact(new Contact("Reza"));
-        long contact_3 =  db.createContact(new Contact("Sadi"));
+        long contact_3 = db.createContact(new Contact("Sadi"));
         long contact_4 = db.createContact(new Contact("Abbas"));
 
-        defContats = new Contact[]{ db.getContactById(contact_1), db.getContactById(contact_2), db.getContactById(contact_3), db.getContactById(contact_4) };
+        defContats = new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2), db.getContactById(contact_3), db.getContactById(contact_4)};
     }
 
 
-//-------------------------     Drawer    --------------------------//
+    //-------------------------     Drawer    --------------------------//
     private void createDrawer() {
-        menu = findViewById(R.id.menu); menu.setOnClickListener(this);
+        menu = findViewById(R.id.menu);
+        menu.setOnClickListener(this);
         drawerLayout = findViewById(R.id.m_drawer);
 
         //Nav View
@@ -373,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         View mView = navigationView.getHeaderView(0);
         drawerProfPic = mView.findViewById(R.id.nav_profile_pic);
-        drawerProfPic.setImageBitmap(Routines.resizeBitmap(mContext, R.drawable.profile) ); //set a def pic for nav_view
+        drawerProfPic.setImageBitmap(Routines.resizeBitmap(mContext, R.drawable.profile)); //set a def pic for nav_view
 
         //toggle (it takes care of drawable methods)
         toggle = new ActionBarDrawerToggle(mActivity, drawerLayout, R.string.nav_drawer_open, R.string.nav_drawer_close);
@@ -414,7 +411,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.menu:
-                if (!drawerLayout.isDrawerOpen(GravityCompat.START)){
+                if (!drawerLayout.isDrawerOpen(GravityCompat.START)) {
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
                 break;
@@ -444,7 +441,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
 
-        if (sentEventId > 0){
+        if (sentEventId > 0) {
             // if we aren't  get back to EventMngActivity
             super.onBackPressed();
         } else {
@@ -463,7 +460,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                     @Override
                     public void run() {
-                        alreadyPressed=false;
+                        alreadyPressed = false;
                     }
                 }, 2000);
             }
@@ -476,7 +473,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initRectangleAbove(Event event) {
 //        tvL2.setText(String.valueOf(0));
         List<Participant> participants = db.getAllParticeUnderEvent(event);
-        if (participants.size() > 0){
+        if (participants.size() > 0) {
             int myExpenses = db.getAllParticExpensesByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
             int myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
             int allEventExpenses = db.getEventAllExpensesByEventId(event.getId());
