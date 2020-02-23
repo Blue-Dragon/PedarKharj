@@ -1,4 +1,11 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_margin_size">14dp</dimen>
+
+    <dimen name="ss">4dp</dimen>
+    <dimen name="s" tools:ignore="MissingDefaultResource">8dp</dimen>
+    <dimen name="m">16dp</dimen>
+    <dimen name="l">24dp</dimen>
+
+
 </resources>

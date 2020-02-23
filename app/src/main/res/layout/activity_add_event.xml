@@ -1,135 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout7"
     style="@style/activity_layout_style"
     tools:context=".pages.AddContactActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/m_toolbar"
-        style="@style/toolbar_style">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/back_btn"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="0dp"
-                android:src="@drawable/back" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerInParent="true"
-                android:foregroundGravity="center"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="ساخت رویداد جدید"
-                android:textColor="#868686"
-                android:textSize="24dp" />
-
-        </RelativeLayout>
-
-
-    </android.support.v7.widget.Toolbar>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/prof_pic"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_below="@id/m_toolbar"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="24dp"
-        app:civ_border_color="#9CCC65"
-        app:civ_border_width="2dp"
-        android:src="@drawable/bk1" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-    android:id="@+id/change_pic_bkg"
-    android:layout_width="55dp"
-    android:layout_height="55dp"
-    android:layout_below="@id/m_toolbar"
-    android:layout_alignEnd="@+id/prof_pic"
-    android:layout_centerVertical="true"
-    android:layout_marginTop="166dp"
-    android:layout_marginEnd="12dp"
-    android:src="#689F38"
-        app:civ_border_color="#00796B"
-        app:civ_border_width="1dp"/>
-
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/change_pic"
-        android:layout_width="43dp"
-        android:layout_height="43dp"
-        android:layout_alignStart="@+id/change_pic_bkg"
-        android:layout_alignEnd="@+id/change_pic_bkg"
-        android:layout_alignTop="@id/change_pic_bkg"
-        android:layout_alignBottom="@id/change_pic_bkg"
-        android:padding="7dp"
-        android:layout_marginTop="2dp"
-        app:srcCompat="@drawable/ic_camera_white" />
 
     <EditText
         android:id="@+id/name_edt"
         style="@style/medium_koodak"
-        android:layout_width="303dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/prof_pic"
-        android:layout_alignStart="@+id/prof_pic"
-        android:layout_alignEnd="@+id/prof_pic"
-        android:layout_marginTop="30dp"
+        android:layout_width="0dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="نام رویداد"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/prof_pic"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/prof_pic"
+        app:layout_constraintTop_toBottomOf="@+id/prof_pic" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_above="@id/scroll"
-        android:layout_marginTop="5dp"
-        android:background="#E6E6E6"/>
+        android:id="@+id/back_btn"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m"
+        android:src="@drawable/back"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
 
     <ScrollView
-        android:id="@+id/scroll"
-        android:layout_width="match_parent"
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="0dp"
-        android:background="#FEF2F2"
-        android:foregroundGravity="center_horizontal">
+        android:foregroundGravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <RelativeLayout
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="0dp">
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="5dp" />
 
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginTop="5dp"
-                android:paddingBottom="5dp" />
-
-        </RelativeLayout>
     </ScrollView>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="206dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="ساخت رویداد جدید"
+        android:textColor="#868686"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         style="@style/fab_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_check" />
 
-</RelativeLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/prof_pic"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/bk1"
+        app:civ_border_color="#9CCC65"
+        app:civ_border_width="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/change_pic_bkg"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+
+        android:src="#689F38"
+        app:layout_constraintBottom_toBottomOf="@+id/prof_pic"
+        app:layout_constraintEnd_toEndOf="@+id/prof_pic" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/change_pic"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:padding="14dp"
+        app:layout_constraintBottom_toBottomOf="@+id/change_pic_bkg"
+        app:layout_constraintEnd_toEndOf="@+id/change_pic_bkg"
+        app:layout_constraintStart_toStartOf="@+id/change_pic_bkg"
+        app:layout_constraintTop_toTopOf="@+id/change_pic_bkg"
+        app:srcCompat="@drawable/ic_camera_white" />
+
+
+</android.support.constraint.ConstraintLayout>

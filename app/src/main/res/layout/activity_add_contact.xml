@@ -1,111 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout2"
     style="@style/activity_layout_style"
     tools:context=".pages.AddContactActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/m_toolbar"
-        style="@style/toolbar_style">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/cancel_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="18dp"
-                android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_cancel" />
-
-            <ImageView
-                android:id="@+id/check_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                app:srcCompat="@drawable/ic_check" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerInParent="true"
-                android:foregroundGravity="center"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="مخاطبین"
-                android:textColor="#868686"
-                android:textSize="24dp" />
-
-        </RelativeLayout>
-
-
-    </android.support.v7.widget.Toolbar>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/prof_pic"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/m_toolbar"
-        android:layout_alignParentRight="true"
-        android:layout_alignBottom="@id/family_edt"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/profile" />
 
     <EditText
         android:id="@+id/name_edt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/prof_pic"
-        android:layout_marginTop="80dp"
-        android:ems="10"
-        android:inputType="textPersonName"
         style="@style/medium_koodak"
-        android:hint="نام" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/l"
+        android:layout_marginEnd="@dimen/l"
+        android:ems="10"
+        android:hint="نام"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toStartOf="@+id/prof_pic"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/prof_pic" />
 
     <EditText
         android:id="@+id/family_edt"
         style="@style/medium_koodak"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/name_edt"
-        android:layout_marginLeft="20dp"
-        android:layout_toLeftOf="@+id/prof_pic"
+        android:layout_marginTop="@dimen/s"
         android:ems="10"
+        android:hint="نام خانوادگی"
         android:inputType="textPersonName"
-        android:hint="نام خانوادگی" />
+        app:layout_constraintEnd_toEndOf="@+id/name_edt"
+        app:layout_constraintStart_toStartOf="@+id/name_edt"
+        app:layout_constraintTop_toBottomOf="@+id/name_edt" />
+
+
+    <ImageView
+        android:id="@+id/cancel_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m"
+        android:layout_marginEnd="@dimen/m"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cancel" />
+
+    <ImageView
+        android:id="@+id/check_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/m"
+        android:layout_marginTop="@dimen/m"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_check" />
 
     <RelativeLayout
         android:id="@+id/addFromContacts_btn"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@id/family_edt"
+        android:layout_width="364dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="@dimen/l"
         android:layout_marginTop="40dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="@dimen/l"
+        android:background="@drawable/selector_button_addcontact"
         android:clickable="true"
         android:focusable="true"
-        android:background="@drawable/selector_button_addcontact">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/family_edt">
 
         <TextView
+            style="@style/medium_koodak"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            style="@style/medium_koodak"
-            android:textColor="#2962FF"
-            android:text="افزودن از مخاطبین گوشی"
+            android:layout_centerInParent="true"
             android:gravity="center"
-            android:layout_centerInParent="true"/>
+            android:text="افزودن از مخاطبین گوشی"
+            android:textColor="#2962FF" />
 
     </RelativeLayout>
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/m"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="مخاطبین"
+        android:textColor="#868686"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/prof_pic"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="@dimen/l"
+        android:src="@drawable/profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+</android.support.constraint.ConstraintLayout>

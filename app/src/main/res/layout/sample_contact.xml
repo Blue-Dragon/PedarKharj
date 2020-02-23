@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_fuck"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center_horizontal"
@@ -8,61 +9,60 @@
     android:layoutDirection="ltr"
     android:layout_height="90dp">
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/base_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="7dp"
-        android:layout_marginRight="7dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/m"
+        android:layout_marginTop="@dimen/m"
         android:background="#00FFFFFF"
         android:gravity="center_horizontal">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/prof_pic"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/profile" />
-
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/sub_img"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_below="@+id/prof_pic"
-            android:layout_toRightOf="@id/prof_pic"
-            android:layout_marginLeft="-44dp"
-            android:layout_marginTop="-14dp"
-            app:srcCompat="@drawable/ic_check_2"
-            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/partic_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/b_koodak"
+            android:gravity="center_horizontal"
             android:maxWidth="50dp"
             android:maxLines="1"
-            android:layout_below="@+id/prof_pic"
-            android:fontFamily="@font/b_koodak"
             android:text="حامد گنجعلی"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_horizontal"
             android:textColor="#000000"
-            android:layout_marginTop="3dp"
             android:textSize="13sp"
-            android:ellipsize="end"
-            />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/prof_pic" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/sub_img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="-44dp"
+            android:layout_marginTop="-14dp"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toRightOf="@id/prof_pic"
+            app:layout_constraintTop_toBottomOf="@+id/prof_pic"
+            app:srcCompat="@drawable/ic_check_2" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/prof_pic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/profile"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-
-    </RelativeLayout>
-
+    </android.support.constraint.ConstraintLayout>
 
 
 </RelativeLayout>

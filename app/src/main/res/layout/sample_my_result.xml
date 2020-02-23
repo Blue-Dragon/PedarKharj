@@ -13,135 +13,127 @@
     card_view:cardCornerRadius="2dp">
 
 
-
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/rl_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:gravity="center">
 
 
         <ImageView
             android:id="@+id/sep1"
-            android:layout_width="70dp"
-            android:layout_height="44dp"
-            android:layout_marginTop="9dp"
-            android:layout_toLeftOf="@+id/rl_my_result"
-            android:layout_centerVertical="true"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:rotation="90"
             android:scaleY="0.2"
+            card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
+            card_view:layout_constraintEnd_toStartOf="@+id/tv_my_dong"
+            card_view:layout_constraintStart_toEndOf="@+id/tv_my_result"
+            card_view:layout_constraintTop_toBottomOf="@+id/tv_title_my_dong"
+            card_view:layout_constraintVertical_bias="1.0"
             card_view:srcCompat="@drawable/ic_remove_black_24dp" />
-
-        <RelativeLayout
-            android:id="@+id/rl_my_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:layout_centerVertical="true">
-            <TextView
-                android:id="@+id/tv_my_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/b_koodak"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:text="91"
-                android:textColor="#000000"
-                android:textSize="24sp" />
-            <TextView
-                android:id="@+id/tv_title_my_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/tv_my_result"
-                android:gravity="center"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="3dp"
-                android:text="حساب من"
-                android:fontFamily="@font/b_koodak"
-                android:textColor="#000000"
-                android:textSize="12sp" />
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/rl_my_dong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/sep1"
-            android:gravity="center"
-            android:layout_centerVertical="true">
-            <TextView
-                android:id="@+id/tv_my_dong"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/b_koodak"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:text="224"
-                android:textColor="#8C8C8C"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/tv_title_my_dong"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/tv_my_dong"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="3dp"
-                android:fontFamily="@font/b_koodak"
-                android:gravity="center"
-                android:text="خرج های من"
-                android:textColor="#8C8C8C"
-                android:textSize="12sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_my_expense"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/sep2"
-            android:gravity="center"
-            android:layout_centerVertical="true">
-            <TextView
-                android:id="@+id/tv_my_expense"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/b_koodak"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:text="438"
-                android:textColor="#8C8C8C"
-                android:textSize="24sp" />
-
-            <TextView
-                android:id="@+id/tv_title_my_expense"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/tv_my_expense"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="3dp"
-                android:fontFamily="@font/b_koodak"
-                android:gravity="center"
-                android:text="هزینه کل"
-                android:textColor="#8C8C8C"
-                android:textSize="12sp" />
-        </RelativeLayout>
-
-
 
         <ImageView
             android:id="@+id/sep2"
-            android:layout_width="70dp"
-            android:layout_height="44dp"
-            android:layout_toLeftOf="@id/rl_my_dong"
-            android:layout_centerVertical="true"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:rotation="90"
             android:scaleY="0.2"
+
+            card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
+            card_view:layout_constraintEnd_toStartOf="@+id/tv_my_expense"
+            card_view:layout_constraintStart_toEndOf="@+id/tv_my_dong"
+            card_view:layout_constraintTop_toTopOf="@+id/tv_my_dong"
             card_view:srcCompat="@drawable/ic_remove_black_24dp" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_title_my_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/b_koodak"
+            android:gravity="center"
+            android:text="حساب من"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            card_view:layout_constraintBottom_toBottomOf="@+id/tv_title_my_dong"
+            card_view:layout_constraintEnd_toEndOf="@+id/tv_my_result"
+            card_view:layout_constraintStart_toStartOf="@+id/tv_my_result"
+            card_view:layout_constraintTop_toTopOf="@+id/tv_title_my_dong" />
+
+
+        <TextView
+            android:id="@+id/tv_my_dong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/b_koodak"
+            android:text="224"
+            android:textColor="#8C8C8C"
+            android:textSize="24sp"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintHorizontal_bias="0.501"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@+id/tv_title_my_dong"
+            card_view:layout_constraintVertical_bias="0.615" />
+
+        <TextView
+            android:id="@+id/tv_title_my_dong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/b_koodak"
+            android:gravity="center"
+            android:text="خرج های من"
+            android:textColor="#8C8C8C"
+            android:textSize="12sp"
+            card_view:layout_constraintEnd_toEndOf="@+id/tv_my_dong"
+            card_view:layout_constraintStart_toStartOf="@+id/tv_my_dong"
+            card_view:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_my_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/b_koodak"
+            android:text="438"
+            android:textColor="#8C8C8C"
+            android:textSize="24sp"
+            card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintStart_toEndOf="@+id/tv_my_dong"
+            card_view:layout_constraintTop_toBottomOf="@+id/tv_title_my_dong" />
+
+        <TextView
+            android:id="@+id/tv_title_my_expense"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/b_koodak"
+            android:gravity="center"
+            android:text="هزینه کل"
+            android:textColor="#8C8C8C"
+            android:textSize="12sp"
+            card_view:layout_constraintBottom_toBottomOf="@+id/tv_title_my_dong"
+            card_view:layout_constraintEnd_toEndOf="@+id/tv_my_expense"
+            card_view:layout_constraintStart_toStartOf="@+id/tv_my_expense"
+            card_view:layout_constraintTop_toTopOf="@+id/tv_title_my_dong" />
+
+        <TextView
+            android:id="@+id/tv_my_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/b_koodak"
+            android:text="91"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
+            card_view:layout_constraintEnd_toStartOf="@+id/tv_my_dong"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintTop_toTopOf="@+id/tv_my_dong" />
+
+    </android.support.constraint.ConstraintLayout>
 
 
 

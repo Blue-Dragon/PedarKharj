@@ -17,6 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#45FFFDE7"
+        android:layout_marginLeft="@dimen/m"
+        android:layout_marginRight="@dimen/m"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -25,7 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="8dp"
             android:layout_centerVertical="true">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -48,8 +49,7 @@
                 android:id="@+id/partic_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/tv_my_dong"
-                android:layout_marginBottom="-2dp"
+                android:layout_alignParentBottom="true"
                 android:fontFamily="@font/b_koodak"
                 android:gravity="center"
                 android:text="ممد"

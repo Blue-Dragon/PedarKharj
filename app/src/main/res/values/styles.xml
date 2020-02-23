@@ -100,8 +100,8 @@
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_gravity">bottom|end</item>
-        <item name="android:layout_marginRight">@dimen/fab_margin_size</item>
-        <item name="android:layout_marginBottom">@dimen/fab_margin_size</item>
+        <item name="android:layout_marginRight">@dimen/l</item>
+        <item name="android:layout_marginBottom">@dimen/l</item>
 
         <item name="android:tint">#FFFADC</item>
         <item name="backgroundTint">@color/colorTransparent</item>
