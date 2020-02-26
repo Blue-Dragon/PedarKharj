@@ -64,10 +64,13 @@
                 android:id="@+id/rv_01"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
                 android:paddingBottom="5dp"
-                android:layout_gravity="center_horizontal"
-                />
+                tools:itemCount="4"
+                tools:layoutManager="GridLayoutManager"
+                tools:listitem="@layout/recycler_view_item_2"
+                tools:spanCount="5" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -102,10 +105,12 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:paddingBottom="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            tools:itemCount="18"
+            tools:listitem="@layout/recycler_view_item_1" />
 
     </RelativeLayout>
 </ScrollView>

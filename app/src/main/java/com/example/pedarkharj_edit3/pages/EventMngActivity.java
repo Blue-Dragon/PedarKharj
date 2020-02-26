@@ -27,6 +27,10 @@ import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.FlexDirection;
+import com.google.android.flexbox.FlexboxLayoutManager;
+import com.google.android.flexbox.JustifyContent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,14 +135,26 @@ public class EventMngActivity extends AppCompatActivity {
 
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         //todo: flexible layout needed to be flexible
+        /*
+        // Grid Layout Manager
         int itemsInScreen = 2;
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, itemsInScreen, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
+        */
+
+        // Flexbox Layout Manager
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.SPACE_BETWEEN);
+        layoutManager.setAlignItems(AlignItems.CENTER);
+        recyclerView.setLayoutManager(layoutManager);
+
+
         //
         adaptor = new MyAdapter(mContext);
         adaptor.setEvents(realEvents);
-        adaptor.setItemsInScreen(itemsInScreen);
+//        adaptor.setItemsInScreen(3);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adaptor);
     }

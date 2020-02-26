@@ -67,7 +67,10 @@
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/participants_RecView"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            tools:itemCount="5"
+                            tools:layoutManager="GridLayoutManager"
+                            tools:listitem="@layout/sample_contact">
 
                         </android.support.v7.widget.RecyclerView>
 

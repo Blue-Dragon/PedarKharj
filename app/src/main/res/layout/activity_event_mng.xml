@@ -56,31 +56,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/m_toolbar"
-        android:layout_marginTop="0dp"
-        android:foregroundGravity="center_horizontal"
-        android:layout_centerInParent="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="-1dp"
+        android:foregroundGravity="center_horizontal">
 
 
-
-        <com.google.android.flexbox.FlexboxLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/m"
             android:layout_marginRight="@dimen/m"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal">
+            android:gravity="center_vertical"
+            >
 
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv"
-                android:layout_marginTop="@dimen/ss"
-                android:paddingBottom="@dimen/ss"
                 android:layout_width="match_parent"
-                android:foregroundGravity="center_horizontal"
+                android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:layout_height="match_parent" />
+                android:layout_marginTop="@dimen/ss"
 
-        </com.google.android.flexbox.FlexboxLayout>
+                android:paddingBottom="@dimen/ss"
+                tools:layoutManager="GridLayoutManager"
+                tools:listitem="@layout/sample_event"
+                tools:spanCount="2" />
+
+        </RelativeLayout>
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton

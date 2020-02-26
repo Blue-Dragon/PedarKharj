@@ -5,7 +5,10 @@
     android:layout_width="120dp"
     android:layout_height="wrap_content"
     android:layoutDirection="ltr"
-    android:layout_marginBottom="@dimen/m"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     card_view:cardCornerRadius="10dp">
 
     <RelativeLayout
@@ -18,7 +21,7 @@
             android:layout_width="120dp"
             android:layout_height="100dp"
             android:scaleType="fitXY"
-            android:src="@drawable/w"
+            android:src="@drawable/bk1"
             />
 
 

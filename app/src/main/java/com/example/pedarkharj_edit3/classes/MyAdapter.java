@@ -99,7 +99,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         AppCompatImageView checkedImg;
         ImageView imageView;
         TextView nameTv, resultTxt;
-        RelativeLayout baseLayout;
+//        RelativeLayout baseLayout;
         CardView cardView; //EventMng
         //diff dong
         Button plusBtn, minusBtn;
@@ -114,7 +114,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             profImv = itemView.findViewById(R.id.prof_pic);
             nameTv = itemView.findViewById(R.id.partic_name);
             resultTxt = itemView.findViewById(R.id.result_txt);
-            baseLayout = itemView.findViewById(R.id.base_layout);
+//            baseLayout = itemView.findViewById(R.id.base_layout);
             //
             checkedImg = itemView.findViewById(R.id.sub_img);
             //dong
@@ -199,14 +199,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             } //else, keep going dude!
 
 
-            holder.baseLayout.setOnClickListener(item -> {
+      /*      holder.baseLayout.setOnClickListener(item -> {
                 DatabaseHelper db = new DatabaseHelper(mActivity);
 //                Intent intent = new Intent();
                 db.closeDB();
-            });
+            });*/
 
 
-            holder.baseLayout.setOnClickListener(this);
+//            holder.baseLayout.setOnClickListener(this);
 //            checkAsRadioBtn(holder);
         }
 
