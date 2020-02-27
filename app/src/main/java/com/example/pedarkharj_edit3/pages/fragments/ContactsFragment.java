@@ -36,23 +36,21 @@ public class ContactsFragment extends Fragment {
 
     MyAdapter adaptor;
     String newName;
-    Context mContext = getContext();
-    Activity mActivity = getActivity();
+    Context mContext;
+    Activity mActivity;
     FloatingActionButton fab;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
+        mContext = getContext();
+        mActivity = getActivity();
 
         Toolbar toolbar =  view.findViewById(R.id.m_toolbar);
-//        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar); //todo: not working. why?
+        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar); //todo: not working. why?
 
-//        db = new DatabaseHelper(mContext);
-        //todo: i feel this is gonna face u a nice bug. LOL!
-        new MainActivity();
-        db = MainActivity.db;
-
+        db = new DatabaseHelper(mContext);
 
         //back imageView btn
         ImageView backBtn = view.findViewById(R.id.back_btn);

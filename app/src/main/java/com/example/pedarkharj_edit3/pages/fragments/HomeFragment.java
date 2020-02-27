@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
@@ -52,8 +50,9 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     Contact[] defContats;
 
     public static int lastSeenEventId;
-    Context mContext = getContext();
-    Activity mActivity = getActivity();
+    Context mContext ;
+    Activity mActivity;
+    MainActivity mainActivity = new MainActivity();
     MyAdapter adaptor;
     Event curEvent;
     DatabaseHelper db;
@@ -62,9 +61,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     FloatingActionButton fab;
     Spinner spinner;
     CircleImageView drawerProfPic;
-    //    DrawerLayout drawerLayout;
-//    NavigationView navigationView;
-//    ActionBarDrawerToggle toggle;
     ImageView menu, sync_iv;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
     //
@@ -74,21 +70,21 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        mContext = getContext();
+        mActivity = getActivity();
 
         //-------------------------    inits    -------------------------- //
         Toolbar toolbar = view.findViewById(R.id.m_toolbar);
-//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);//todo: not working. why?
+        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);//todo: not working. why?
 
-//        db = new DatabaseHelper(mContext);
-        //todo: i feel this is gonna face u a nice bug. LOL!
-        new MainActivity();
-        db = MainActivity.db;
+        db = new DatabaseHelper(mContext);
+
 
         mParticipants = new ArrayList<>();
         events = db.getAllEvents(); //for spinner && def partices
         eventSpinerList = new ArrayList<>();
         spinnerEventIdsMap = new HashMap<Integer, Event>(); //todo: use `new sparseArray<Event>` instead
-        lastSeenEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
+        lastSeenEventId = SharedPrefManager.getInstance(getContext()).getDefEventId();
 
 
         sentEventId = mActivity.getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
@@ -187,7 +183,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         }
 
 
-        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
+        SharedPrefManager.getInstance(getContext()).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
         Log.i("fuck011", "lastSeenEventId: " + lastSeenEventId + "");
 
 
@@ -297,7 +293,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
         curEvent = event;
         setRecParticesUnderEvent(curEvent); //show recyclerView
-        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(curEvent.getId()); //save curEvent (as defEvent for next time) to SharedPref
+        SharedPrefManager.getInstance(getContext()).saveLastSeenEventId(curEvent.getId()); //save curEvent (as defEvent for next time) to SharedPref
         initRectangleAbove(curEvent);  //init Rectangle
 
 
