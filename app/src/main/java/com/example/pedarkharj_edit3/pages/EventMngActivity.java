@@ -8,8 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -27,6 +25,7 @@ import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
+import com.example.pedarkharj_edit3.pages.fragments.HomeFragment;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -55,7 +54,7 @@ public class EventMngActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_mng);
+        setContentView(R.layout.fragment_event_mng);
         toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
@@ -76,7 +75,7 @@ public class EventMngActivity extends AppCompatActivity {
         ImageView backBtn = findViewById(R.id.back_btn);
         backBtn.setOnClickListener(item -> onBackPressed());
 
-        /**
+        /*
          * recView onClick
          */
         Log.e("recOnClick", "onClick");
@@ -248,7 +247,7 @@ public class EventMngActivity extends AppCompatActivity {
                             for (Event event : selectionList){
                                 db.deleteEvent(event, true);
 //                                Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
-                                if (event.getId() == MainActivity.lastSeenEventId){
+                                if (event.getId() == HomeFragment.lastSeenEventId){
                                     SharedPrefManager.getInstance(mContext).clearShrdPref();
                                     Toast.makeText(mContext, "EventId : "+ event.getId() + "Deleted", Toast.LENGTH_SHORT).show();
                                 }

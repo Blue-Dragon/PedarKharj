@@ -4,4 +4,9 @@
 
     <string name="nav_drawer_open">Open Navigation Drawer</string>
     <string name="nav_drawer_close">Close Navigation Drawer</string>
+    <string name="homeBtn">خانه</string>
+    <string name="eventsBtn">رویداد ها</string>
+    <string name="contactsBtn">مخاطبین</string>
+    <string name="backBtnText">بازگشت</string>
+    <string name="eventsHeader">مدیریت رویداد ها</string>
 </resources>

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/activity_layout_style"
-    tools:context=".pages.ContactsActivity">
+    android:id="@+id/main"
+    android:layout_gravity="center_horizontal">
 
 
     <android.support.v7.widget.Toolbar
@@ -15,36 +16,48 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/back_btn"
+                android:id="@+id/menu"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
+                android:padding="12dp"
+                android:layout_marginLeft="-10dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="0dp"
-                android:src="@drawable/back" />
+                app:srcCompat="@drawable/ic_menu" />
 
-            <TextView
-                android:id="@+id/textView"
+
+            <Spinner
+                android:id="@+id/spinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerInParent="true"
-                android:foregroundGravity="center"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="مخاطبین"
-                android:textColor="#868686"
-                android:textSize="24dp" />
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center_vertical"
+                android:backgroundTint="#304FFE"
+                android:layout_marginRight="12dp" />
 
         </RelativeLayout>
 
 
     </android.support.v7.widget.Toolbar>
 
+
+
+    <RelativeLayout
+        android:id="@+id/rl_myresult"
+        android:layout_below="@id/m_toolbar"
+        android:layout_marginTop="@dimen/m"
+        android:layout_marginLeft="@dimen/m"
+        android:layout_marginRight="@dimen/m"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/sample_my_result"/>
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/m_toolbar"
+        android:layout_below="@id/rl_myresult"
         android:layout_marginTop="1dp"
         android:foregroundGravity="center_horizontal"
         android:layout_centerInParent="true">
@@ -52,29 +65,29 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="@dimen/ss"
             android:layout_marginBottom="0dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="@dimen/m"
+            android:layout_marginRight="@dimen/m"
             android:layout_gravity="center_horizontal">
 
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/contacts_recView"
+                android:id="@+id/rv_partice_expenses"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
-                android:paddingBottom="5dp"
-                tools:itemCount="20"
-                tools:listitem="@layout/sample_conntacts_horizental" />
+                android:layout_marginTop="@dimen/ss"
+                android:paddingBottom="@dimen/ss"
+                tools:listitem="@layout/sample_participant" />
 
         </RelativeLayout>
     </ScrollView>
 
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         style="@style/fab_style"
-
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        />
 
 </RelativeLayout>

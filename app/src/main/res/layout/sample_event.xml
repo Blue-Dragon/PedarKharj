@@ -7,8 +7,8 @@
     android:layoutDirection="ltr"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="8dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     card_view:cardCornerRadius="10dp">
 
     <RelativeLayout
@@ -22,6 +22,7 @@
             android:layout_height="100dp"
             android:scaleType="fitXY"
             android:src="@drawable/bk1"
+            android:contentDescription="pic"
             />
 
 
