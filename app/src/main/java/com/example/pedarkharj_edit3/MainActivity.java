@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        Toast.makeText(mContext, ""+selectedFragment.toString(), Toast.LENGTH_SHORT).show();
 
     }
 

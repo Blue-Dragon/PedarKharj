@@ -142,7 +142,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         //screen_based width
         if (widthSplit > 0){
             GridLayoutManager.LayoutParams layoutParams = (GridLayoutManager.LayoutParams) view.getLayoutParams();
-            layoutParams.width = (parent.getMeasuredWidth() / 2) - (parent.getMeasuredWidth() / 20) ;
+            int split = (parent.getMeasuredWidth() / widthSplit);
+            layoutParams.width = split - split/15 ;
+            layoutParams.height = (layoutParams.width) + (layoutParams.width / 3);
 //        int width = parent.getMeasuredWidth() / 3;
 //        view.setMinimumWidth(width);
         }

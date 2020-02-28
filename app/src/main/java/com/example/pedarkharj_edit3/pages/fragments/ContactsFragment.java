@@ -106,12 +106,5 @@ public class ContactsFragment extends Fragment {
             doRecyclerView();
         }
     }
-//
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        startActivity(new Intent(mContext, MainActivity.class));
-//        mActivity.finish();
-//    }
 
 }
