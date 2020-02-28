@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        //setting fragment container
+        //setting default fragment
         if (savedInstanceState == null ) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
         }
@@ -86,9 +86,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (selectedFragment.getId() == R.id.nav_home )
-//            Routines.
-            mActivity.finish();
+        if (navPosition == Routines.HOME )
+            super.onBackPressed();
         else
             findViewById(R.id.nav_home).callOnClick();
 
