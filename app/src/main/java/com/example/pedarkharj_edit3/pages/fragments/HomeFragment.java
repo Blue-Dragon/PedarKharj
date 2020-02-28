@@ -72,10 +72,11 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         mContext = getContext();
         mActivity = getActivity();
+        MainActivity.navPosition = Routines.HOME;
 
         //-------------------------    inits    -------------------------- //
         Toolbar toolbar = view.findViewById(R.id.m_toolbar);
-        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);//todo: not working. why?
+        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
 
         db = new DatabaseHelper(mContext);
 

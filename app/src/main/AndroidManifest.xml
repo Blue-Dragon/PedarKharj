@@ -36,10 +36,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".pages.ContactsActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-        <activity
             android:name=".classes.BuyerDialog"
             android:screenOrientation="portrait"/>
         <activity

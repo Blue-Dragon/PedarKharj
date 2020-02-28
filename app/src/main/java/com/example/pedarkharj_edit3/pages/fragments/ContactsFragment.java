@@ -38,19 +38,23 @@ public class ContactsFragment extends Fragment {
     String newName;
     Context mContext;
     Activity mActivity;
+    MainActivity mainActivity = new MainActivity();
     FloatingActionButton fab;
+    View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_contacts, container, false);
+        view = inflater.inflate(R.layout.fragment_contacts, container, false);
         mContext = getContext();
         mActivity = getActivity();
 
-        Toolbar toolbar =  view.findViewById(R.id.m_toolbar);
-        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar); //todo: not working. why?
-
         db = new DatabaseHelper(mContext);
+        MainActivity.navPosition = Routines.CONTACTS;
+
+        Toolbar toolbar =  view.findViewById(R.id.m_toolbar);
+        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
+
 
         //back imageView btn
         ImageView backBtn = view.findViewById(R.id.back_btn);
@@ -64,9 +68,9 @@ public class ContactsFragment extends Fragment {
 //            mActivity.finish();
         });
 
-        //recyclerView
-        recyclerView = view.findViewById(R.id.contacts_recView);
-        doRecyclerView();
+//        //recyclerView
+//        recyclerView = view.findViewById(R.id.contacts_recView);
+//        doRecyclerView();
 
         return view;
     }
@@ -92,13 +96,16 @@ public class ContactsFragment extends Fragment {
     }
 
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        //recyclerView
-//        recyclerView = findViewById(R.id.contacts_recView);
-//        doRecyclerView();
-//    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //recyclerView
+        if (view !=null){
+            recyclerView = view.findViewById(R.id.contacts_recView);
+            doRecyclerView();
+        }
+    }
 //
 //    @Override
 //    public void onBackPressed() {

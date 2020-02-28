@@ -36,7 +36,6 @@ public class Routines {
     public static final int PER_CODE_READ_CONTACTS = 2;
     public static final int GALLERY_INTENT = 3;
     public static final int CAMERA_INTENT = 4;
-
     //other stuff
     public static final String PARTICIPANT_INFO = "PARTICIPANT_INFO";
     public static final String EVENT_TEMP_NAME = "EVENT_TEMP";
@@ -44,9 +43,13 @@ public class Routines {
     public final static short UNSELECT_ALL = 0;
     public final static short SELECT_ALL = 1;
     public final static short NOT_SELECT_ALL = 2;
+    //Navigation buttons
+    public final static short HOME = 0;
+    public final static short EVENTS = 1;
+    public final static short CONTACTS = 2;
 
 
-//    Context mContext;
+    //    Context mContext;
     Activity mActivity;
 
 

@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.Contact;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
@@ -117,7 +118,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
 
         //add to db
         db.createContact(contact);
-        startActivity(new Intent(mContext, ContactsActivity.class));
+        startActivity(new Intent(mContext, MainActivity.class));
         finish();
     }
 
@@ -190,7 +191,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        startActivity(new Intent(mContext, ContactsActivity.class));
+        startActivity(new Intent(mContext, MainActivity.class));
         finish();
     }
 }
