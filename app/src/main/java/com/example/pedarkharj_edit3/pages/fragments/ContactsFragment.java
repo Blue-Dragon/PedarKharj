@@ -48,9 +48,9 @@ public class ContactsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_contacts, container, false);
         mContext = getContext();
         mActivity = getActivity();
+        MainActivity.navPosition = Routines.CONTACTS;
 
         db = new DatabaseHelper(mContext);
-        MainActivity.navPosition = Routines.CONTACTS;
 
         Toolbar toolbar =  view.findViewById(R.id.m_toolbar);
         ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);

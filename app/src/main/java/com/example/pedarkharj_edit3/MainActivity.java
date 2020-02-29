@@ -3,6 +3,7 @@ package com.example.pedarkharj_edit3;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.MutableContextWrapper;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.classes.Event;
+import com.example.pedarkharj_edit3.classes.IOnBackPressed;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
@@ -20,7 +22,7 @@ import com.example.pedarkharj_edit3.pages.fragments.ContactsFragment;
 import com.example.pedarkharj_edit3.pages.fragments.EventsFragment;
 import com.example.pedarkharj_edit3.pages.fragments.HomeFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IOnBackPressed {
 
     Context mContext = this;
     Activity mActivity = this;
@@ -96,7 +98,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
-        EventsFragment eventsFragment = new EventsFragment();
+        EventsFragment myEventsFragment = new EventsFragment();
+        Fragment eventsFragment = getSupportFragmentManager().findFragmentById(R.id.nav_events);
 
 //        if (count == 0){
 //            super.onBackPressed();
@@ -107,14 +110,41 @@ public class MainActivity extends AppCompatActivity {
 
         //if in Home page
         if (navPosition == Routines.HOME ){
-            super.onBackPressed();
+//            super.onBackPressed();
+            finish();
         }
-        //if in Even page, in menu mode
-        else if ( eventsFragment.is_in_action_mode){
-            eventsFragment.selectionChangeColor(R.color.colorTransparent);
-            eventsFragment.setActionModeOff();
+        //if in Even page, but not in menu mode
+//        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
+        else  if (navPosition == Routines.EVENTS ) {
+            Toast.makeText(mContext, "events back", Toast.LENGTH_SHORT).show();
+            myEventsFragment.onMyBackPressed(mContext);
+
+            //todo
+//            if ((eventsFragment instanceof IOnBackPressed)) {
+//                Toast.makeText(mContext, "instance true", Toast.LENGTH_SHORT).show();
+//                if ( ((IOnBackPressed) eventsFragment).onMyBackPressed(mContext)) {
+//                    Toast.makeText(mContext, "on back pressed", Toast.LENGTH_SHORT).show();
+//                }
+//            if (!(eventsFragment instanceof IOnBackPressed) || !((IOnBackPressed) eventsFragment).onMyBackPressed(mContext)) {
+//                Toast.makeText(mContext, "on back pressed", Toast.LENGTH_SHORT).show();
+//                super.onmBackPressed();
+//            }
+
+//            }else
+//                findViewById(R.id.nav_home).callOnClick();
+
         }
-        else
+        else{
             findViewById(R.id.nav_home).callOnClick();
+        }
+    }
+
+    @Override
+    public boolean onMyBackPressed(Context context) {
+        if (){
+
+        }else
+            return false;
+
     }
 }

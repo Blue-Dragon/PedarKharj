@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.Event;
+import com.example.pedarkharj_edit3.classes.IOnBackPressed;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
@@ -38,12 +40,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EventsFragment extends Fragment {
+public class EventsFragment extends Fragment implements IOnBackPressed {
     final public static int INTENT_CODE = 1;
     final public static String INTENT_MASSEGE = "NEW_NAME";
 
-    Context mContext = getContext();
-    Activity mActivity = getActivity();
+    Context mContext ;
+    Activity mActivity ;
     MainActivity mainActivity = new MainActivity();
     MyAdapter adaptor;
     DatabaseHelper db;
@@ -57,7 +59,7 @@ public class EventsFragment extends Fragment {
     List<Event> mEvents;
     List<Event> selectionList;
     String newName;
-    public boolean is_in_action_mode = false;
+    
     int counter, selectedEventId;
     //    boolean is_select_one = false;
 
@@ -67,9 +69,9 @@ public class EventsFragment extends Fragment {
         mView = inflater.inflate(R.layout.fragment_event_mng, container, false);
         mContext = getContext();
         mActivity = getActivity();
+        MainActivity.navPosition = Routines.EVENTS;
 
         db = new DatabaseHelper(mContext);
-        MainActivity.navPosition = Routines.CONTACTS;
 
         toolbar =  mView.findViewById(R.id.m_toolbar);
         ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
@@ -102,7 +104,7 @@ public class EventsFragment extends Fragment {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                if (is_in_action_mode){
+                if (Routines.is_events_in_action_mode){
                     prepareSelection(view, position);
 
                 } else {
@@ -116,7 +118,7 @@ public class EventsFragment extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-                if (!is_in_action_mode){
+                if (!Routines.is_events_in_action_mode){
                     setActionModeOn();
                 }
                 onClick(view, position);
@@ -190,7 +192,7 @@ public class EventsFragment extends Fragment {
         counter_text_view.setVisibility(View.VISIBLE); //make textView visible on it
 //        updateCounter(counter); //show textView with nothing selected by def
         title.setVisibility(View.GONE);
-        is_in_action_mode = true;
+        Routines.is_events_in_action_mode = true;
 //        adaptor.notifyDataSetChanged();//notify adapter about this  change
     }
 
@@ -200,17 +202,17 @@ public class EventsFragment extends Fragment {
         toolbar.inflateMenu(R.menu.menu_action_mode_2);//inflate action mode menu
         counter_text_view.setVisibility(View.VISIBLE); //make textView visible on it
         title.setVisibility(View.GONE);
-        is_in_action_mode = true;
+        Routines.is_events_in_action_mode = true;
         selectedEventId = 0;
 //        is_select_one = false;
     }
 
-    public void setActionModeOff() {
+    private void setActionModeOff() {
         toolbar.getMenu().clear();//clear activity menu
 //        toolbar.inflateMenu(R.menu.menu_action_mode);
         counter_text_view.setVisibility(View.GONE);
         title.setVisibility(View.VISIBLE);
-        is_in_action_mode = false;//make checkbox visible
+        Routines.is_events_in_action_mode = false;//make checkbox visible
         adaptor.notifyDataSetChanged();//notify adapter about this  change
         counter = 0;
         selectedEventId = 0;
@@ -254,7 +256,7 @@ public class EventsFragment extends Fragment {
         }
     }
 
-    public void selectionChangeColor(int id) {
+    private void selectionChangeColor(int id) {
         adaptor.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, id)));
     }
 
@@ -279,7 +281,7 @@ public class EventsFragment extends Fragment {
                                 }
                             }
 
-                            restartPage();
+                            restartPage(Routines.EVENTS);
 
                         })
                         .setNegativeButton("نه، بی خیال!", (dialogInterface, i1) -> {})
@@ -297,11 +299,13 @@ public class EventsFragment extends Fragment {
         return true;
     }
 
-    private void restartPage() {
-        MainActivity.navPosition = Routines.EVENTS;
+    private void restartPage(short page) {
+        MainActivity.navPosition = page;
         mActivity.finish();
         startActivity(mActivity.getIntent());
     }
+
+
 
 //-------------------------    other stuff    --------------------------//
 
@@ -309,7 +313,7 @@ public class EventsFragment extends Fragment {
 //    public void onBackPressed() {
 //
 //        //        super.onBackPressed();
-//        if (is_in_action_mode){
+//        if (Routines.is_events_in_action_mode){
 //            selectionChangeColor(R.color.colorTransparent);
 //            setActionModeOff();
 //        }else {
@@ -318,4 +322,19 @@ public class EventsFragment extends Fragment {
 //        }
 //
 //    }
+
+    @Override
+    public boolean onMyBackPressed(Context mContext) {
+
+        if (Routines.is_events_in_action_mode){
+//            selectionChangeColor(R.color.colorTransparent);
+            setActionModeOff();
+            Toast.makeText(mContext, "in_action_mode", Toast.LENGTH_SHORT).show();
+            return true;
+        }else{
+            Toast.makeText(mContext, "Fuck u looser!", Toast.LENGTH_SHORT).show();
+//            restartPage(Routines.HOME);
+            return false;
+        }
+    }
 }
