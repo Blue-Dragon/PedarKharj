@@ -327,14 +327,17 @@ public class EventsFragment extends Fragment implements IOnBackPressed {
     public boolean onMyBackPressed(Context mContext) {
 
         if (Routines.is_events_in_action_mode){
-//            selectionChangeColor(R.color.colorTransparent);
+            selectionChangeColor(R.color.colorTransparent);
             setActionModeOff();
-            Toast.makeText(mContext, "in_action_mode", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mContext, "in_action_mode", Toast.LENGTH_SHORT).show();
             return true;
         }else{
-            Toast.makeText(mContext, "Fuck u looser!", Toast.LENGTH_SHORT).show();
-//            restartPage(Routines.HOME);
+//            Toast.makeText(mContext, "Fuck u looser!", Toast.LENGTH_SHORT).show();
+            restartPage(Routines.HOME);
             return false;
         }
     }
+
+
+
 }

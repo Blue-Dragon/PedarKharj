@@ -2,22 +2,15 @@ package com.example.pedarkharj_edit3;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.MutableContextWrapper;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.pedarkharj_edit3.classes.Event;
 import com.example.pedarkharj_edit3.classes.IOnBackPressed;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
-import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
-import com.example.pedarkharj_edit3.pages.AddEventParticesActivity;
 import com.example.pedarkharj_edit3.pages.fragments.ContactsFragment;
 import com.example.pedarkharj_edit3.pages.fragments.EventsFragment;
 import com.example.pedarkharj_edit3.pages.fragments.HomeFragment;
@@ -29,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements IOnBackPressed {
     public static DatabaseHelper db;
     public static short navPosition;
     Fragment selectedFragment;
+    EventsFragment eventsFragment;
 
 
 
@@ -99,7 +93,8 @@ public class MainActivity extends AppCompatActivity implements IOnBackPressed {
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
         EventsFragment myEventsFragment = new EventsFragment();
-        Fragment eventsFragment = getSupportFragmentManager().findFragmentById(R.id.nav_events);
+        eventsFragment = (EventsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+//        eventsFragment =(EventsFragment) getFragmentManager().findFragmentById(R.id.activity_main);
 
 //        if (count == 0){
 //            super.onBackPressed();
@@ -112,12 +107,22 @@ public class MainActivity extends AppCompatActivity implements IOnBackPressed {
         if (navPosition == Routines.HOME ){
 //            super.onBackPressed();
             finish();
+//            eventsFragment.mToast(mContext, "Hi");
         }
         //if in Even page, but not in menu mode
 //        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
         else  if (navPosition == Routines.EVENTS ) {
-            Toast.makeText(mContext, "events back", Toast.LENGTH_SHORT).show();
-            myEventsFragment.onMyBackPressed(mContext);
+//            Toast.makeText(mContext, "events back - ", Toast.LENGTH_SHORT).show();
+//
+//            myEventsFragment.mToast( mContext, ";;;;dlslf");
+//
+            if (eventsFragment == null)
+                Toast.makeText(mContext, "  null ", Toast.LENGTH_SHORT).show();
+            else
+                eventsFragment.onMyBackPressed(mContext);
+
+//            myEventsFragment.onMyBackPressed(mContext);
+//            eventsFragment.mToast(mContext, "Hi/");
 
             //todo
 //            if ((eventsFragment instanceof IOnBackPressed)) {
@@ -141,9 +146,9 @@ public class MainActivity extends AppCompatActivity implements IOnBackPressed {
 
     @Override
     public boolean onMyBackPressed(Context context) {
-        if (){
-
-        }else
+//        if (){
+//
+//        }else
             return false;
 
     }

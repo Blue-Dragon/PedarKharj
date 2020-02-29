@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_contacts"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/activity_layout_style"
-    tools:context=".pages.ContactsActivity">
+    style="@style/activity_layout_style">
 
 
     <android.support.v7.widget.Toolbar
