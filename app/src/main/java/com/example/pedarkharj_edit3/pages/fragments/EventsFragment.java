@@ -32,12 +32,7 @@ import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
-import com.example.pedarkharj_edit3.pages.AddContactActivity;
 import com.example.pedarkharj_edit3.pages.AddEventParticesActivity;
-import com.google.android.flexbox.AlignItems;
-import com.google.android.flexbox.FlexDirection;
-import com.google.android.flexbox.FlexboxLayoutManager;
-import com.google.android.flexbox.JustifyContent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,43 +52,48 @@ public class EventsFragment extends Fragment {
     FloatingActionButton fab;
     Toolbar toolbar;
     TextView counter_text_view, title;
+    View mView;
     //Action mode
     List<Event> mEvents;
     List<Event> selectionList;
     String newName;
-    boolean is_in_action_mode = false;
+    public boolean is_in_action_mode = false;
     int counter, selectedEventId;
     //    boolean is_select_one = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_event_mng, container, false);
+        mView = inflater.inflate(R.layout.fragment_event_mng, container, false);
         mContext = getContext();
         mActivity = getActivity();
 
         db = new DatabaseHelper(mContext);
         MainActivity.navPosition = Routines.CONTACTS;
 
-        Toolbar toolbar =  view.findViewById(R.id.m_toolbar);
+        toolbar =  mView.findViewById(R.id.m_toolbar);
         ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
+
 
         mEvents = new ArrayList<>();
         //
         db = new DatabaseHelper(mContext);
-        setRecView(view); //show Events
+        setRecView(); //show Events
         //Action mode
         selectionList = new ArrayList<>();
-        counter_text_view = view.findViewById(R.id.tv_counter);
-        title = view.findViewById(R.id.textView);
+        counter_text_view = mView.findViewById(R.id.tv_counter);
+        title = mView.findViewById(R.id.textView);
         counter_text_view.setVisibility(View.GONE);
         title.setVisibility(View.VISIBLE);
         counter = 0;
 
 
         //back imageView btn
-        ImageView backBtn = view.findViewById(R.id.back_btn);
-//        backBtn.setOnClickListener(item -> onBackPressed());
+//        ImageView backBtn = mView.findViewById(R.id.back_btn);
+//        ImageView backBtn = mView.findViewById(R.id.back_btn);
+        ImageView backBtn = mView.findViewById(R.id.back_btn);
+        backBtn.setOnClickListener(item -> Toast.makeText(mContext, "back", Toast.LENGTH_SHORT).show());
+        setHasOptionsMenu(true); //for menu items in fragment (edit & delete)
 
         /*
          * recView onClick
@@ -125,7 +125,7 @@ public class EventsFragment extends Fragment {
         }));
 
         //-------------------------     Floating Btn    --------------------------//
-        fab = view.findViewById(R.id.fab);
+        fab = mView.findViewById(R.id.fab);
         fab.setOnClickListener(view0 -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             startActivity(new Intent(mContext, AddEventParticesActivity.class));
@@ -138,15 +138,15 @@ public class EventsFragment extends Fragment {
         db.closeDB();
 
 
-        return view;
+        return mView;
     }
 
 
 
     /***************************************     Methods     ******************************************/
     //-------------------------     RecyclerView    --------------------------//
-    private void setRecView(View view) {
-        recyclerView = view.findViewById(R.id.rv);
+    private void setRecView() {
+        recyclerView = mView.findViewById(R.id.rv);
 
         mEvents = db.getAllEvents();
         // Not letting TempEvents to be shown
@@ -156,7 +156,14 @@ public class EventsFragment extends Fragment {
         }
 
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        //todo: flexible layout needed to be flexible
+        /*
+         // Flexbox Layout Manager
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
+        layoutManager.setFlexDirection(FlexDirection.ROW);
+        layoutManager.setJustifyContent(JustifyContent.SPACE_BETWEEN);
+        layoutManager.setAlignItems(AlignItems.CENTER);
+        recyclerView.setLayoutManager(layoutManager);
+        */
 
         // Grid Layout Manager
         int itemsInScreen = 3;
@@ -164,19 +171,11 @@ public class EventsFragment extends Fragment {
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        // Flexbox Layout Manager
-        /*
-        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(mContext);
-        layoutManager.setFlexDirection(FlexDirection.ROW);
-        layoutManager.setJustifyContent(JustifyContent.SPACE_BETWEEN);
-        layoutManager.setAlignItems(AlignItems.CENTER);
-        recyclerView.setLayoutManager(layoutManager);
-        */
 
         //
         adaptor = new MyAdapter(mContext);
         adaptor.setEvents(realEvents);
-        adaptor.setItemsInScreen(itemsInScreen);
+        adaptor.setItemsInScreen(3);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adaptor);
     }
@@ -184,6 +183,7 @@ public class EventsFragment extends Fragment {
 
 
     //---------------    ActionMode (selection on longClick)    ----------------//
+    //Edit & Delete
     private void setActionModeOn() {
         toolbar.getMenu().clear();//clear activity menu
         toolbar.inflateMenu(R.menu.menu_action_mode);//inflate action mode menu
@@ -194,6 +194,7 @@ public class EventsFragment extends Fragment {
 //        adaptor.notifyDataSetChanged();//notify adapter about this  change
     }
 
+    //Delete only
     private void setActionMode2On() {
         toolbar.getMenu().clear();//clear activity menu
         toolbar.inflateMenu(R.menu.menu_action_mode_2);//inflate action mode menu
@@ -204,7 +205,7 @@ public class EventsFragment extends Fragment {
 //        is_select_one = false;
     }
 
-    private void setActionModeOff() {
+    public void setActionModeOff() {
         toolbar.getMenu().clear();//clear activity menu
 //        toolbar.inflateMenu(R.menu.menu_action_mode);
         counter_text_view.setVisibility(View.GONE);
@@ -253,7 +254,7 @@ public class EventsFragment extends Fragment {
         }
     }
 
-    private void selectionChangeColor(int id) {
+    public void selectionChangeColor(int id) {
         adaptor.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, id)));
     }
 
@@ -262,6 +263,8 @@ public class EventsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_delete:
+
+                Toast.makeText(mContext, "Del", Toast.LENGTH_SHORT).show();
 
                 new AlertDialog.Builder(mContext)
                         .setTitle("پاک کنم؟")
@@ -276,9 +279,7 @@ public class EventsFragment extends Fragment {
                                 }
                             }
 
-                            //restart the activity
-                            mainActivity.finish();
-                            startActivity(mActivity.getIntent());
+                            restartPage();
 
                         })
                         .setNegativeButton("نه، بی خیال!", (dialogInterface, i1) -> {})
@@ -296,9 +297,14 @@ public class EventsFragment extends Fragment {
         return true;
     }
 
+    private void restartPage() {
+        MainActivity.navPosition = Routines.EVENTS;
+        mActivity.finish();
+        startActivity(mActivity.getIntent());
+    }
+
 //-------------------------    other stuff    --------------------------//
 
-    //todo
 //    @Override
 //    public void onBackPressed() {
 //
@@ -307,8 +313,7 @@ public class EventsFragment extends Fragment {
 //            selectionChangeColor(R.color.colorTransparent);
 //            setActionModeOff();
 //        }else {
-//            //restart the activity
-//            mainActivity.finish();
+//            mActivity.finish();
 //            startActivity(mActivity.getIntent());
 //        }
 //

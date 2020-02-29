@@ -21,12 +21,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.Event;
 import com.example.pedarkharj_edit3.classes.Participant;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.Routines;
+import com.example.pedarkharj_edit3.pages.fragments.EventsFragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -162,7 +164,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
         if (resizedBitmap != null) event.setBitmapStr( Routines.encodeToBase64(resizedBitmap) );
         db.updateEvent(event);
 
-        startActivity(new Intent(mContext, EventMngActivity.class));
+        MainActivity.navPosition = Routines.EVENTS;
+        startActivity(new Intent(mContext, MainActivity.class));
         finish();
     }
 

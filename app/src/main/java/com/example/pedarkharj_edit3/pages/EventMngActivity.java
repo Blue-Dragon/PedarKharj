@@ -8,6 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -133,27 +135,26 @@ public class EventMngActivity extends AppCompatActivity {
         }
 
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        //todo: flexible layout needed to be flexible
         /*
-        // Grid Layout Manager
-        int itemsInScreen = 2;
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2, GridLayoutManager.VERTICAL, false);
-        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        */
-
-        // Flexbox Layout Manager
+         // Flexbox Layout Manager
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(this);
         layoutManager.setFlexDirection(FlexDirection.ROW);
         layoutManager.setJustifyContent(JustifyContent.SPACE_BETWEEN);
         layoutManager.setAlignItems(AlignItems.CENTER);
         recyclerView.setLayoutManager(layoutManager);
+        */
+
+        // Grid Layout Manager
+        int itemsInScreen = 3;
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, itemsInScreen, GridLayoutManager.VERTICAL, false);
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(gridLayoutManager);
 
 
         //
         adaptor = new MyAdapter(mContext);
         adaptor.setEvents(realEvents);
-//        adaptor.setItemsInScreen(3);
+        adaptor.setItemsInScreen(3);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adaptor);
     }

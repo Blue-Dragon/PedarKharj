@@ -2,14 +2,20 @@ package com.example.pedarkharj_edit3;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.pedarkharj_edit3.classes.Event;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
+import com.example.pedarkharj_edit3.pages.AddEventParticesActivity;
 import com.example.pedarkharj_edit3.pages.fragments.ContactsFragment;
 import com.example.pedarkharj_edit3.pages.fragments.EventsFragment;
 import com.example.pedarkharj_edit3.pages.fragments.HomeFragment;
@@ -76,7 +82,11 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (selectedFragment != null)
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container,selectedFragment)
+                            .addToBackStack(null) //so we can use `onBackPressed()` method in fragments
+                            .commit();
                 else
                     Toast.makeText(MainActivity.this, "Null Fragment called", Toast.LENGTH_SHORT).show();
 
@@ -85,10 +95,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (navPosition == Routines.HOME )
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        EventsFragment eventsFragment = new EventsFragment();
+
+//        if (count == 0){
+//            super.onBackPressed();
+//        }else {
+//            Toast.makeText(mContext, "count is: "+ count, Toast.LENGTH_SHORT).show();
+//            getSupportFragmentManager().popBackStack();
+//        }
+
+        //if in Home page
+        if (navPosition == Routines.HOME ){
             super.onBackPressed();
+        }
+        //if in Even page, in menu mode
+        else if ( eventsFragment.is_in_action_mode){
+            eventsFragment.selectionChangeColor(R.color.colorTransparent);
+            eventsFragment.setActionModeOff();
+        }
         else
             findViewById(R.id.nav_home).callOnClick();
-
     }
 }
