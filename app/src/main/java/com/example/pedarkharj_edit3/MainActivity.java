@@ -15,7 +15,7 @@ import com.example.pedarkharj_edit3.pages.fragments.ContactsFragment;
 import com.example.pedarkharj_edit3.pages.fragments.EventsFragment;
 import com.example.pedarkharj_edit3.pages.fragments.HomeFragment;
 
-public class MainActivity extends AppCompatActivity implements IOnBackPressed {
+public class MainActivity extends AppCompatActivity  {
 
     Context mContext = this;
     Activity mActivity = this;
@@ -92,8 +92,6 @@ public class MainActivity extends AppCompatActivity implements IOnBackPressed {
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
-        EventsFragment myEventsFragment = new EventsFragment();
-        eventsFragment = (EventsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 //        eventsFragment =(EventsFragment) getFragmentManager().findFragmentById(R.id.activity_main);
 
 //        if (count == 0){
@@ -105,51 +103,15 @@ public class MainActivity extends AppCompatActivity implements IOnBackPressed {
 
         //if in Home page
         if (navPosition == Routines.HOME ){
-//            super.onBackPressed();
             finish();
-//            eventsFragment.mToast(mContext, "Hi");
-        }
-        //if in Even page, but not in menu mode
-//        if (!(fragment instanceof IOnBackPressed) || !((IOnBackPressed) fragment).onBackPressed()) {
-        else  if (navPosition == Routines.EVENTS ) {
-//            Toast.makeText(mContext, "events back - ", Toast.LENGTH_SHORT).show();
-//
-//            myEventsFragment.mToast( mContext, ";;;;dlslf");
-//
-            if (eventsFragment == null)
-                Toast.makeText(mContext, "  null ", Toast.LENGTH_SHORT).show();
-            else
-                eventsFragment.onMyBackPressed(mContext);
 
-//            myEventsFragment.onMyBackPressed(mContext);
-//            eventsFragment.mToast(mContext, "Hi/");
+        }else  if (navPosition == Routines.EVENTS && Routines.is_events_in_action_mode) {
+            eventsFragment = (EventsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            eventsFragment.onMyBackPressed();
 
-            //todo
-//            if ((eventsFragment instanceof IOnBackPressed)) {
-//                Toast.makeText(mContext, "instance true", Toast.LENGTH_SHORT).show();
-//                if ( ((IOnBackPressed) eventsFragment).onMyBackPressed(mContext)) {
-//                    Toast.makeText(mContext, "on back pressed", Toast.LENGTH_SHORT).show();
-//                }
-//            if (!(eventsFragment instanceof IOnBackPressed) || !((IOnBackPressed) eventsFragment).onMyBackPressed(mContext)) {
-//                Toast.makeText(mContext, "on back pressed", Toast.LENGTH_SHORT).show();
-//                super.onmBackPressed();
-//            }
-
-//            }else
-//                findViewById(R.id.nav_home).callOnClick();
-
-        }
-        else{
+        }else{
             findViewById(R.id.nav_home).callOnClick();
         }
     }
 
-    @Override
-    public boolean onMyBackPressed(Context context) {
-//        if (){
-//
-//        }else
-            return false;
-
-    }
 }

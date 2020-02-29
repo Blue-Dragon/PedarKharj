@@ -22,16 +22,12 @@ import android.widget.Toast;
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
-import com.example.pedarkharj_edit3.classes.Event;
+import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 import com.example.pedarkharj_edit3.pages.fragments.HomeFragment;
-import com.google.android.flexbox.AlignItems;
-import com.google.android.flexbox.FlexDirection;
-import com.google.android.flexbox.FlexboxLayoutManager;
-import com.google.android.flexbox.JustifyContent;
 
 import java.util.ArrayList;
 import java.util.List;

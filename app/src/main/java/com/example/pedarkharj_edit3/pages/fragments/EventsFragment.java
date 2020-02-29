@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +26,7 @@ import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
-import com.example.pedarkharj_edit3.classes.Event;
+import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.IOnBackPressed;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
@@ -324,18 +323,14 @@ public class EventsFragment extends Fragment implements IOnBackPressed {
 //    }
 
     @Override
-    public boolean onMyBackPressed(Context mContext) {
+    public void onMyBackPressed() {
 
-        if (Routines.is_events_in_action_mode){
+//        if (Routines.is_events_in_action_mode){
             selectionChangeColor(R.color.colorTransparent);
             setActionModeOff();
-//            Toast.makeText(mContext, "in_action_mode", Toast.LENGTH_SHORT).show();
-            return true;
-        }else{
-//            Toast.makeText(mContext, "Fuck u looser!", Toast.LENGTH_SHORT).show();
-            restartPage(Routines.HOME);
-            return false;
-        }
+//        }else{
+//            restartPage(Routines.HOME);
+//        }
     }
 
 

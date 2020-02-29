@@ -1,5 +1,7 @@
-package com.example.pedarkharj_edit3.classes;
+package com.example.pedarkharj_edit3.classes.models;
 
+import com.example.pedarkharj_edit3.classes.models.Event;
+import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 
 import java.util.ArrayList;

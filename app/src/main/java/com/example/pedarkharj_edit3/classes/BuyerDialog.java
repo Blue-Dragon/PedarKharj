@@ -11,6 +11,8 @@ import android.view.Window;
 import android.widget.Button;
 
 import com.example.pedarkharj_edit3.R;
+import com.example.pedarkharj_edit3.classes.models.Event;
+import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.pages.AddExpenseActivity;
 

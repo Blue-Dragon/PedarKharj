@@ -1,4 +1,4 @@
-package com.example.pedarkharj_edit3.classes;
+package com.example.pedarkharj_edit3.classes.models;
 
 public class Participant  {
     //vital

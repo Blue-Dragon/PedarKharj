@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.example.pedarkharj_edit3.classes.Contact;
-import com.example.pedarkharj_edit3.classes.Event;
-import com.example.pedarkharj_edit3.classes.Expense;
-import com.example.pedarkharj_edit3.classes.Participant;
+import com.example.pedarkharj_edit3.classes.models.Contact;
+import com.example.pedarkharj_edit3.classes.models.Event;
+import com.example.pedarkharj_edit3.classes.models.Expense;
+import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.PersianDate;
 import com.example.pedarkharj_edit3.classes.Routines;
 
