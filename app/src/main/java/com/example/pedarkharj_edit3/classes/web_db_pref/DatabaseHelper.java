@@ -966,9 +966,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * getting a participant's all expenses in an event
+     * getting a participant's total expenses price in an event
      */
-    public int getAllParticExpensesByParticeId(int particId) {
+    public int getParticTotalExpensePriceByParticeId(int particId) {
         int debt = 0;
         String selectQuery = "SELECT  * FROM " + TABLE_PARTICES + " WHERE " + KEY_ID + " = " + particId;
         Log.e(LOG, selectQuery);
@@ -983,9 +983,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * getting an Event whole Expenses
+     * getting an Event total Expenses price
      */
-    public int getEventAllExpensesByEventId(int eventId) {
+    public int getEventTotalExpensesByEventId(int eventId) {
         int allExpenses = 0;
         String selectQuery = "SELECT  * FROM " + TABLE_PARTICES + " WHERE " + KEY_EVENT_ID + " = " + eventId;
         Log.e(LOG, selectQuery);

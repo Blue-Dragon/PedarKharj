@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     public void onBackPressed() {
-        int count = getSupportFragmentManager().getBackStackEntryCount();
+//        int count = getSupportFragmentManager().getBackStackEntryCount();
 //        eventsFragment =(EventsFragment) getFragmentManager().findFragmentById(R.id.activity_main);
 
 //        if (count == 0){
@@ -100,18 +100,15 @@ public class MainActivity extends AppCompatActivity  {
 //            Toast.makeText(mContext, "count is: "+ count, Toast.LENGTH_SHORT).show();
 //            getSupportFragmentManager().popBackStack();
 //        }
-
         //if in Home page
-        if (navPosition == Routines.HOME ){
+        if (navPosition == Routines.HOME )
             finish();
-
-        }else  if (navPosition == Routines.EVENTS && Routines.is_events_in_action_mode) {
+        else  if (navPosition == Routines.EVENTS && Routines.is_events_in_action_mode) {
             eventsFragment = (EventsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             eventsFragment.onMyBackPressed();
-
-        }else{
+        }else
             findViewById(R.id.nav_home).callOnClick();
-        }
+
     }
 
 }

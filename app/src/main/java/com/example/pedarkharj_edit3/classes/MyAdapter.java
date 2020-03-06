@@ -3,6 +3,7 @@ package com.example.pedarkharj_edit3.classes;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.models.Event;
+import com.example.pedarkharj_edit3.classes.models.Expense;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 
@@ -33,6 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
     private List<Participant> participants;
     private List<Event> events;
+    private List<Expense> expenseList;
     private Context mContext;
     private Activity mActivity;
     private int mLayout, maxCheckImg;
@@ -65,6 +68,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     }
     public void setItemsInScreen(int itemsCount) {
         this.widthSplit = itemsCount ;
+    }
+    //EventDetailActivity
+    public void setExpenseList(List<Expense> expenseList) {
+        this.expenseList = expenseList;
     }
 
     //Typical Activities
@@ -107,6 +114,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         TextView dongEtxt;
             //mode_02 amount
         EditText dongEtxtAmount;
+        // EventDetailed- ExpenseLists
+        TextView dateTv, priceTitleTv;
 
 
         ViewHolder(View itemView) {
@@ -124,7 +133,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             dongEtxt = itemView.findViewById(R.id.dong_Etxt2);
             dongEtxtAmount =  itemView.findViewById(R.id.dong_Etxt_amount); // dong mode_02 only
             //
-            cardView = itemView.findViewById(R.id.card_layout); //EventMng
+            cardView = itemView.findViewById(R.id.details_card_layout); //EventMng
+            // EventDetailed- ExpenseLists
+            dateTv = itemView.findViewById(R.id.tv_date);
+            priceTitleTv = itemView.findViewById(R.id.tv_price_title);
+
 
         }
 
@@ -155,11 +168,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
-        /**
-         * EventMngActivity
+        /*
+         * EventFragment
          */
-//        Log.e("E002",  String.valueOf(events) );
         if (events != null){
+            Log.i("positionCall", "Events recyclerView Call");
             Event event = events.get(position);
             DatabaseHelper db0 = new DatabaseHelper(mContext);
             int particNumber = db0.getAllParticeUnderEvent(event).size();
@@ -173,10 +186,41 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
             db0.closeDB();
         }
-        // </ EventMngActivity >
+        // </ EventFragment >
 
-        if (participants != null) {
-            Participant participant = participants.get(position);
+        /*
+         * EventDetailed- ExpenseLists
+         */
+        if (expenseList != null){
+            Log.i("positionCall", "ExpenseList recyclerView Call");
+            Expense expense = expenseList.get(position);
+            Participant buyer = expense.getBuyer();
+            DatabaseHelper db0 = new DatabaseHelper(mContext);
+
+            if (buyer.getName() != null && holder.nameTv != null)
+                holder.nameTv.setText(buyer.getName());
+            if (buyer.getBitmapStr() != null && holder.profImv != null)
+                holder.profImv.setImageBitmap(Routines.decodeBase64(buyer.getBitmapStr()));
+            if (buyer.getResult() != null && holder.resultTxt != null)
+                holder.resultTxt.setText(buyer.getResult());
+
+            if (holder.resultTxt != null)
+                holder.resultTxt.setText(expense.getExpensePrice());
+            if (holder.dateTv != null)
+                holder.dateTv.setText(expense.getCreated_at());
+            if (holder.priceTitleTv != null)
+                holder.priceTitleTv.setText(expense.getExpenseTitle());
+
+            db0.closeDB();
+        }
+        // </ EventDetailed- ExpenseLists >
+
+
+        if (participants != null ) {
+            Participant participant;
+
+                Log.i("positionCall", "Participants recyclerView Call");
+                participant = participants.get(position);
 
             if (participant.getName() != null && holder.nameTv != null)
                 holder.nameTv.setText(participant.getName());
@@ -185,10 +229,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             if (participant.getResult() != null && holder.resultTxt != null)
                 holder.resultTxt.setText(participant.getResult());
 
+
+
             //addExpenseActivity_ amountMode
             if (defaultDong > 0 && holder.dongEtxtAmount != null)
                 holder.dongEtxtAmount.setText(String.valueOf(defaultDong));
-
 
             /*
              * AddExpenseActivity_ selecting users
@@ -200,17 +245,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
                 //SelectAll
                 holder.checkedImg.setVisibility(View.VISIBLE);
             } //else, keep going dude!
-
-
-      /*      holder.baseLayout.setOnClickListener(item -> {
-                DatabaseHelper db = new DatabaseHelper(mActivity);
-//                Intent intent = new Intent();
-                db.closeDB();
-            });*/
-
-
-//            holder.baseLayout.setOnClickListener(this);
-//            checkAsRadioBtn(holder);
         }
 
     }

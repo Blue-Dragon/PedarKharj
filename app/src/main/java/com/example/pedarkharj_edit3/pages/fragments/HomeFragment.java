@@ -3,11 +3,13 @@ package com.example.pedarkharj_edit3.pages.fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +22,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
@@ -33,6 +36,7 @@ import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
+import com.example.pedarkharj_edit3.pages.EventDetailActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +46,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     List<Participant> mParticipants;
     List<Event> events;
     List<Integer> eventSpinerList;
@@ -57,14 +61,15 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     Event curEvent;
     DatabaseHelper db;
     //
+    CardView cardView;
     RecyclerView recyclerView;
-    FloatingActionButton fab;
     Spinner spinner;
+    FloatingActionButton fab;
     CircleImageView drawerProfPic;
     ImageView menu, sync_iv;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
     //
-    int sentEventId;
+//    int sentEventId;
 
     @Nullable
     @Override
@@ -85,10 +90,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         events = db.getAllEvents(); //for spinner && def partices
         eventSpinerList = new ArrayList<>();
         spinnerEventIdsMap = new HashMap<Integer, Event>(); //todo: use `new sparseArray<Event>` instead
-        lastSeenEventId = SharedPrefManager.getInstance(getContext()).getDefEventId();
+        lastSeenEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
+        cardView = view.findViewById(R.id.details_card_layout);         cardView.setOnClickListener(this);
 
-
-        sentEventId = mActivity.getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
+//        sentEventId = mActivity.getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
 //        sync_iv = findViewById(R.id.sync);
 //        sync_iv.setOnClickListener(this);
 
@@ -184,7 +189,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         }
 
 
-        SharedPrefManager.getInstance(getContext()).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
+        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
         Log.i("fuck011", "lastSeenEventId: " + lastSeenEventId + "");
 
 
@@ -192,15 +197,15 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
          * setting spinner to show lastSeenEvent items:
          * Here, if we have a chosen event already (by Intent)
          */
-        if (sentEventId > 0 && sentEventId != lastSeenEventId) {
-
-            for (int i = 0; i < events.size(); i++) {
-                if (events.get(i).getId() == sentEventId) {
-                    selectedEventSpinnerId = i;
-                    break;
-                }
-            }
-        }
+//        if (sentEventId > 0 && sentEventId != lastSeenEventId) {
+//
+//            for (int i = 0; i < events.size(); i++) {
+//                if (events.get(i).getId() == sentEventId) {
+//                    selectedEventSpinnerId = i;
+//                    break;
+//                }
+//            }
+//        }
         spinner.setSelection(selectedEventSpinnerId); //def event
 
         spinner.setOnItemSelectedListener(this);
@@ -294,7 +299,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
         curEvent = event;
         setRecParticesUnderEvent(curEvent); //show recyclerView
-        SharedPrefManager.getInstance(getContext()).saveLastSeenEventId(curEvent.getId()); //save curEvent (as defEvent for next time) to SharedPref
+        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(curEvent.getId()); //save curEvent (as defEvent for next time) to SharedPref
         initRectangleAbove(curEvent);  //init Rectangle
 
 
@@ -308,6 +313,22 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
 
     //-------------------------     RecyclerView    --------------------------//
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.details_card_layout:
+                Intent intent = new Intent(mContext, EventDetailActivity.class);
+                intent.putExtra(Routines.SEND_EVENT_ID_INTENT, curEvent.getId());
+                startActivity(intent);
+                break;
+
+            default:
+                Toast.makeText(mContext, "Wrong item clicked!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
     private void setRecParticesUnderEvent(Event curEvent) {
 
         //show partices of the Event
@@ -356,16 +377,14 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         defContats = new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2), db.getContactById(contact_3), db.getContactById(contact_4)};
     }
 
-
-
     //todo: complete it
     private void initRectangleAbove(Event event) {
 //        tvL2.setText(String.valueOf(0));
         List<Participant> participants = db.getAllParticeUnderEvent(event);
         if (participants.size() > 0) {
-            int myExpenses = db.getAllParticExpensesByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
+            int myExpenses = db.getParticTotalExpensePriceByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
             int myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
-            int allEventExpenses = db.getEventAllExpensesByEventId(event.getId());
+            int allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
             tvL2.setText(String.valueOf(allEventExpenses));
             tvC2.setText(String.valueOf(myExpenses));
             tvR2.setText(String.valueOf(myExpenses - myDebt));
