@@ -195,7 +195,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             Log.i("positionCall", "ExpenseList recyclerView Call");
             Expense expense = expenseList.get(position);
             Participant buyer = expense.getBuyer();
-            DatabaseHelper db0 = new DatabaseHelper(mContext);
 
             if (buyer.getName() != null && holder.nameTv != null)
                 holder.nameTv.setText(buyer.getName());
@@ -205,13 +204,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
                 holder.resultTxt.setText(buyer.getResult());
 
             if (holder.resultTxt != null)
-                holder.resultTxt.setText(expense.getExpensePrice());
+                holder.resultTxt.setText(String.valueOf(expense.getExpensePrice() ));
             if (holder.dateTv != null)
                 holder.dateTv.setText(expense.getCreated_at());
             if (holder.priceTitleTv != null)
                 holder.priceTitleTv.setText(expense.getExpenseTitle());
-
-            db0.closeDB();
         }
         // </ EventDetailed- ExpenseLists >
 
@@ -269,8 +266,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     public int getItemCount() {
         if (participants != null)
             return participants.size();
+
         else if (events != null)
             return events.size();
+
+        else if (expenseList != null)
+            return expenseList.size();
+
         else return 0;
     }
 }
