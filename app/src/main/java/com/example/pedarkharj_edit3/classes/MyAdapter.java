@@ -3,7 +3,6 @@ package com.example.pedarkharj_edit3.classes;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
@@ -35,6 +34,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     private List<Expense> expenseList;
     private Context mContext;
     private Activity mActivity;
+    private  Participant selectedPartic;
 
     private Drawable drawable; //EventMng
     private short selectMode = 3;
@@ -67,14 +67,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         this.widthSplit = itemsCount ;
     }
 
-    //EventDetailActivity (ExpenseList)
-    public void setExpenseList(List<Expense> expenseList) {
-        this.expenseList = expenseList;
-    }
-    public void setExpenseMode2(boolean expenseMode2) {
-        isExpenseMode2 = expenseMode2;
-    }
-
     //Typical Activities
     public MyAdapter(Context mContext, int mLayout, List<Participant> participants) {
         this.mContext = mContext;
@@ -104,6 +96,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         this.amountModeDong = amountModeDong; //if true, mode 2- amount
     }
 
+    //EventDetailActivity (ExpenseList)
+    public void setExpenseList(List<Expense> expenseList) {
+        this.expenseList = expenseList;
+    }
+    public void setExpenseMode2(boolean expenseMode2) {
+        isExpenseMode2 = expenseMode2;
+    }
+    public void setSelectedPartic(Participant selectedPartic) {
+        this.selectedPartic = selectedPartic;
+    }
 
     //------------------------------      ViewHolder innerClass       ---------------------------------/
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -191,13 +193,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
             db0.closeDB();
         }
-        // </ EventFragment >
+
+
 
         /*
          * EventDetailed- ExpenseLists
          */
         if (expenseList != null){
             Log.i("positionCall", "ExpenseList recyclerView Call");
+            DatabaseHelper db0 = new DatabaseHelper(mContext);
+
             Expense expense = expenseList.get(position);
             Participant buyer = expense.getBuyer();
 
@@ -216,17 +221,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             }
 
                 //if ExpenseMode2 (each person expenses)
-            if (isExpenseMode2){
-                int debt = expense.getExpenseDebts().get(0);
+            if (isExpenseMode2 && selectedPartic != null){
+                int debt = db0.getParticeDebt(expense.getExpenseId(), selectedPartic.getId());
+
                 if (holder.resultTxt != null)
                     holder.resultTxt.setText(String.valueOf(debt));
-                if (holder.resultTxtGreen != null)
-                    holder.resultTxtGreen.setText(String.valueOf(expense.getExpensePrice()));
+                if (holder.resultTxtGreen != null){
+                    int expense0 = buyer.getId() == selectedPartic.getId() ? expense.getExpensePrice() : 0;
+                    holder.resultTxtGreen.setText(String.valueOf(expense0));
+                }
+
             }
+
+            db0.closeDB();
         }
-        // </ EventDetailed- ExpenseLists >
 
-
+        /*
+         * others
+         */
         if (participants != null ) {
             Participant participant;
 

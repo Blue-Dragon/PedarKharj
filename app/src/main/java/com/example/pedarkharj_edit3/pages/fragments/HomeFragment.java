@@ -220,20 +220,23 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-//                StringBuilder builder = new StringBuilder();
                 Participant participant = mParticipants.get(position);
+
+//                Toast.makeText(mContext, ""+ db.?, Toast.LENGTH_SHORT).show();
+
                 Intent i = new Intent(mContext, ParticeResultActivity.class);
                 i.putExtra(Routines.SEND_PARTICIPANT_ID_INTENT, participant.getId());
                 i.putExtra(Routines.SEND_EVENT_ID_INTENT, curEvent.getId());
                 startActivity(i);
 
-
+//                StringBuilder builder = new StringBuilder();
+//
 //                Log.d("fuck023", ".");
 //                Log.d("fuck023", ".");
 //
 //                Log.d("fuck023", "partic name: " + participant.getName());
-
-
+//
+//
 //                int i = 0;
 //                for (Expense expense : expenseList) {
 //

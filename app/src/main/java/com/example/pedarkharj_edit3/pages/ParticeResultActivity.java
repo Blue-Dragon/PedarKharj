@@ -80,8 +80,7 @@ public class ParticeResultActivity extends AppCompatActivity {
 
             @Override
             public void onLongClick(View view, int position) {
-//                Participant participant = mParticipants.get(position);
-//                Log.d("recOnClick", participant.getResult());
+
             }
         }));
 
@@ -99,7 +98,10 @@ public class ParticeResultActivity extends AppCompatActivity {
         adaptor = new MyAdapter(mContext);
         adaptor.setLayout(R.layout.sample_each_expense_2);
         adaptor.setExpenseList(expenseList);
+        adaptor.setSelectedPartic(selectedPartic);
+
         adaptor.setExpenseMode2(true);
+
         recyclerView.setAdapter(adaptor);
     }
 

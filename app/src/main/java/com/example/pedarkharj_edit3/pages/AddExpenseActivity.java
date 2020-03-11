@@ -93,8 +93,6 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         particId = getIntent().getIntExtra(Routines.PARTICIPANT_INFO, 0);
         buyer = db.getParticeById(particId);
         curEvent = buyer.getEvent();
-//        expenseDebtsList = new  int[]{}; //by deff
-
 
         BuyerBtnTxt = findViewById(R.id.buyer_btn_txt);
 //        BuyerBtnTxt.setText(buyer.getName());
@@ -296,15 +294,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
         if (price > 0){
             String priceTitle = dongEText.getText().toString().trim();
 
-//            if (expenseDebtsList == null || expenseDebtsList.length < 1){
-//                //same debts
-//               expenseDebtsList = new int[usersListPartices.size()];
-//                for (int debt: expenseDebtsList){
-//                    debt = price/usersListPartices.size();
-//                    Log.i("Fuck012", debt+ "");
-//                 }
-//
-//            }
+            //we will need all users later, so we set debt = 0 fot non users here:
 
             Expense expense = new Expense();
             expense.setExpenseIdByOrder(db);
@@ -313,7 +303,9 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
             expense.setUserPartics(usersListPartices);
             expense.setExpenseTitle(priceTitle);
             expense.setExpensePrice(price);
-            if (expenseDebtsList == null || expenseDebtsList.size() < 1) expense.setExpenseDebts(price/usersListPartices.size());
+
+            if (expenseDebtsList == null || expenseDebtsList.size() < 1)
+                expense.setExpenseDebts(price/usersListPartices.size());
             else expense.setExpenseDebts(expenseDebtsList);
 
             db.addExpense(expense);
@@ -324,6 +316,7 @@ public class AddExpenseActivity extends AppCompatActivity implements View.OnClic
 
     }
 
+    //CALCULATOR
     // Writes numbers when calculator layout buttons clicked (method got used in XML layout)
     public void onCalcClick(View view) {
         Button b = mActivity.findViewById(view.getId() ) ;

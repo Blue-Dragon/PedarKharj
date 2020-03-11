@@ -816,8 +816,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         int lastId = 0;
 
-        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " ORDER BY " +
-                KEY_EXPENSE_ID + " DESC LIMIT 1" ;
+        String selectQuery =
+                "SELECT  * FROM " + TABLE_EXPENSES +
+                " ORDER BY " + KEY_EXPENSE_ID + " DESC LIMIT 1" ;
 
         Log.e(LOG, selectQuery);
 
@@ -827,6 +828,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return lastId;
     }
+
+
+    /**
+     * returns price of debt if the USER has participated in the EXPENSE.
+     * and -1 if user is not.
+     * @param expenseId : the id of the expense you are using.
+     * @param userId : the id of  the user you wanna know about.
+     */
+    public int getParticeDebt(int expenseId, int userId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES +
+                " WHERE " + KEY_EXPENSE_ID + " = " + expenseId +
+                " AND " + KEY_USER_ID + " = "+ userId;
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()){
+            return c.getInt(c.getColumnIndex(KEY_EXPENSE_DEBT));
+        }else return -1;
+    }
+
 
 
     /**
