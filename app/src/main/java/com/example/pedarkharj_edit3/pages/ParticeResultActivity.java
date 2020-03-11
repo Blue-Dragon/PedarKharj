@@ -20,6 +20,7 @@ import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Expense;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.pages.fragments.HomeFragment;
 
 import java.util.ArrayList;
 import java.util.IllegalFormatCodePointException;
@@ -67,8 +68,12 @@ public class ParticeResultActivity extends AppCompatActivity {
             selectedPartic = db.getParticeById(sentParticeId);
         if (sentEventId > 0)
             curEvent = db.getEventById(sentEventId);
-        if (curEvent != null)
-            expenseList = db.getAllExpensesOfEvent(curEvent);
+        if (curEvent != null){
+//            expenseList = db.getAllExpensesOfEvent(curEvent);
+
+            // not all expenses in expenseList are the ones our partice has participated in.
+            expenseList = HomeFragment.newExpenseList;
+        }
 
         recyclerView = findViewById(R.id.recycler_view);
         doRecyclerView();
@@ -97,6 +102,8 @@ public class ParticeResultActivity extends AppCompatActivity {
         //
         adaptor = new MyAdapter(mContext);
         adaptor.setLayout(R.layout.sample_each_expense_2);
+//        adaptor.setExpenseList(expenseList);
+
         adaptor.setExpenseList(expenseList);
         adaptor.setSelectedPartic(selectedPartic);
 

@@ -48,6 +48,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+    public static List<Expense> newExpenseList;
     List<Participant> mParticipants;
     List<Event> events;
     List<Integer> eventSpinerList;
@@ -86,6 +87,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
         db = new DatabaseHelper(mContext);
 
+//        newExpenseList = new ArrayList<>();
 
 //        mParticipants = new ArrayList<>();
         events = db.getAllEvents(); //for spinner && def partices
@@ -167,15 +169,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             curEvent = db.getEventById(lastSeenEventId);
         } else curEvent = events.get(0);
 
-//        StringBuilder builder = new StringBuilder();
-//        builder.append(".\n");
-//        builder.append(".\n");
-//        int i = 0;
-//        for (Event event: events){
-//            builder.append("No.").append(i++).append(" - ").append(event.getEventName()).append("\n");
-//        }
-//        Log.i("fuck024", builder.toString());
-
         /*
          * setting spinner to show lastSeenEvent items
          */
@@ -215,46 +208,24 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
 
         /* -------------------------     recView onClick    -------------------------- */
-//        List<Expense> expenseList = db.getAllExpensesOfEvent(curEvent);
-
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Participant participant = mParticipants.get(position);
+                List< Expense> expenseList = db.getAllExpensesOfEvent(curEvent);
 
-//                Toast.makeText(mContext, ""+ db.?, Toast.LENGTH_SHORT).show();
+                // not all expenses in expenseList are the ones our partice has participated in.
+                newExpenseList = new ArrayList<>();
+                for (Expense expense : expenseList){
+                    int debt = db.getParticeDebt(expense.getExpenseId(), participant.getId());
+                    if (debt > -1)
+                        newExpenseList.add(expense);
+                }
 
                 Intent i = new Intent(mContext, ParticeResultActivity.class);
                 i.putExtra(Routines.SEND_PARTICIPANT_ID_INTENT, participant.getId());
                 i.putExtra(Routines.SEND_EVENT_ID_INTENT, curEvent.getId());
                 startActivity(i);
-
-//                StringBuilder builder = new StringBuilder();
-//
-//                Log.d("fuck023", ".");
-//                Log.d("fuck023", ".");
-//
-//                Log.d("fuck023", "partic name: " + participant.getName());
-//
-//
-//                int i = 0;
-//                for (Expense expense : expenseList) {
-//
-//                    List<Participant> users = expense.getUserPartics();
-//                    for (Participant user : users) {
-//
-//                        if (user.getId() == participant.getId())
-//                            builder.append(expense.getCreated_at()).append("\n");
-//                        if (expense.getBuyer().getId() == participant.getId())
-//                            builder.append(expense.getExpensePrice()).append(" طلب و");
-//                        builder.append(expense.getExpenseDebts().get(0)).append(" بدهی از خرج: ").append(expense.getExpenseTitle()).append("\n\n");
-//                    }
-//                }
-//
-//                new AlertDialog.Builder(mContext)
-//                        .setTitle("خلاصه خرج ها:")
-//                        .setMessage(builder.toString())
-//                        .show();
             }
 
             @Override
@@ -296,12 +267,6 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         Event event = spinnerEventIdsMap.get(i);
         if (event == null)
             event = events.get(0); //todo: change it. if we remove the last event, there shouldn't be any. dough!
-//        Log.i("fuck025", ".");
-//        Log.i("fuck025", ".");
-//        Log.i("fuck025", ".");
-//
-//        Log.i("fuck025", "selected event: "+ event.getEventName());
-//        Log.i("fuck025", ".");
 
         for (Event event0 : events) {
             Log.i("fuck025", event0.getEventName());
