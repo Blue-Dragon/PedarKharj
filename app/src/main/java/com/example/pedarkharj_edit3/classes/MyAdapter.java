@@ -29,27 +29,24 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener {
-    final static boolean AMOUNT_MODE = true;
-    final static boolean DONG_MODE = false;
-
 
     private List<Participant> participants;
     private List<Event> events;
     private List<Expense> expenseList;
     private Context mContext;
     private Activity mActivity;
-    private int mLayout, maxCheckImg;
-    private boolean amountModeDong;
-    private short selectMode = 3;
-    private int defaultDong;
+
     private Drawable drawable; //EventMng
+    private short selectMode = 3;
+    private int mLayout, maxCheckImg;
+    private int defaultDong;
     private int widthSplit = 0;
+    private boolean amountModeDong;
+    private boolean isExpenseMode2;
     public boolean isAmountModeDong() {
         return amountModeDong;
     }
-    public void setAmountModeDong(boolean amountModeDong) {
-        this.amountModeDong = amountModeDong;
-    }
+
 
     //------------------------------      Constructors       ---------------------------------/
     //EventMng Activity
@@ -69,9 +66,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     public void setItemsInScreen(int itemsCount) {
         this.widthSplit = itemsCount ;
     }
-    //EventDetailActivity
+
+    //EventDetailActivity (ExpenseList)
     public void setExpenseList(List<Expense> expenseList) {
         this.expenseList = expenseList;
+    }
+    public void setExpenseMode2(boolean expenseMode2) {
+        isExpenseMode2 = expenseMode2;
     }
 
     //Typical Activities
@@ -92,6 +93,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     public void setDefaultDong(int defaultDong) {
         this.defaultDong = defaultDong;
     }
+    public void setAmountModeDong(boolean amountModeDong) {
+        this.amountModeDong = amountModeDong;
+    }
 
     public MyAdapter(Activity mActivity, int mLayout, List<Participant> participants, boolean amountModeDong) {
         this.mActivity = mActivity;
@@ -106,7 +110,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         CircleImageView profImv;
         AppCompatImageView checkedImg;
         ImageView imageView;
-        TextView nameTv, resultTxt;
+        TextView nameTv, resultTxt, resultTxtGreen ;
 //        RelativeLayout baseLayout;
         CardView cardView; //EventMng
         //diff dong
@@ -124,6 +128,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             profImv = itemView.findViewById(R.id.prof_pic);
             nameTv = itemView.findViewById(R.id.partic_name);
             resultTxt = itemView.findViewById(R.id.result_txt);
+            resultTxtGreen = itemView.findViewById(R.id.result_txt_green); //expenseMode2
 //            baseLayout = itemView.findViewById(R.id.base_layout);
             //
             checkedImg = itemView.findViewById(R.id.sub_img);
@@ -200,15 +205,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
                 holder.nameTv.setText(buyer.getName());
             if (buyer.getBitmapStr() != null && holder.profImv != null)
                 holder.profImv.setImageBitmap(Routines.decodeBase64(buyer.getBitmapStr()));
-            if (buyer.getResult() != null && holder.resultTxt != null)
-                holder.resultTxt.setText(buyer.getResult());
 
             if (holder.resultTxt != null)
                 holder.resultTxt.setText(String.valueOf(expense.getExpensePrice() ));
             if (holder.dateTv != null)
                 holder.dateTv.setText(expense.getCreated_at());
-            if (holder.priceTitleTv != null)
-                holder.priceTitleTv.setText(expense.getExpenseTitle());
+            if (holder.priceTitleTv != null){
+                String expenseTitle = expense.getExpenseTitle().length()>0 ? expense.getExpenseTitle() : "بدون عنوان" ;
+                holder.priceTitleTv.setText(expenseTitle);
+            }
+
+                //if ExpenseMode2 (each person expenses)
+            if (isExpenseMode2){
+                int debt = expense.getExpenseDebts().get(0);
+                if (holder.resultTxt != null)
+                    holder.resultTxt.setText(String.valueOf(debt));
+                if (holder.resultTxtGreen != null)
+                    holder.resultTxtGreen.setText(String.valueOf(expense.getExpensePrice()));
+            }
         }
         // </ EventDetailed- ExpenseLists >
 

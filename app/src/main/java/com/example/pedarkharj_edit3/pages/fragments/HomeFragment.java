@@ -37,6 +37,7 @@ import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 import com.example.pedarkharj_edit3.pages.EventDetailActivity;
+import com.example.pedarkharj_edit3.pages.ParticeResultActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +87,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         db = new DatabaseHelper(mContext);
 
 
-        mParticipants = new ArrayList<>();
+//        mParticipants = new ArrayList<>();
         events = db.getAllEvents(); //for spinner && def partices
         eventSpinerList = new ArrayList<>();
         spinnerEventIdsMap = new HashMap<Integer, Event>(); //todo: use `new sparseArray<Event>` instead
@@ -190,7 +191,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
 
         SharedPrefManager.getInstance(mContext).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
-        Log.i("fuck011", "lastSeenEventId: " + lastSeenEventId + "");
+//        Log.i("fuck011", "lastSeenEventId: " + lastSeenEventId + "");
 
 
         /*
@@ -209,42 +210,48 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         spinner.setSelection(selectedEventSpinnerId); //def event
 
         spinner.setOnItemSelectedListener(this);
-        Log.i("fuck011", "saveLastSeenEventId: " + curEvent.getId() + "");
+//        Log.i("fuck011", "saveLastSeenEventId: " + curEvent.getId() + "");
 
 
 
         /* -------------------------     recView onClick    -------------------------- */
-        List<Expense> expenseList = db.getAllExpensesOfEvent(curEvent);
+//        List<Expense> expenseList = db.getAllExpensesOfEvent(curEvent);
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                StringBuilder builder = new StringBuilder();
+//                StringBuilder builder = new StringBuilder();
                 Participant participant = mParticipants.get(position);
-                Log.d("fuck023", ".");
-                Log.d("fuck023", ".");
+                Intent i = new Intent(mContext, ParticeResultActivity.class);
+                i.putExtra(Routines.SEND_PARTICIPANT_ID_INTENT, participant.getId());
+                i.putExtra(Routines.SEND_EVENT_ID_INTENT, curEvent.getId());
+                startActivity(i);
 
-                Log.d("fuck023", "partic name: " + participant.getName());
+
+//                Log.d("fuck023", ".");
+//                Log.d("fuck023", ".");
+//
+//                Log.d("fuck023", "partic name: " + participant.getName());
 
 
-                int i = 0;
-                for (Expense expense : expenseList) {
-
-                    List<Participant> users = expense.getUserPartics();
-                    for (Participant user : users) {
-
-                        if (user.getId() == participant.getId())
-                            builder.append(expense.getCreated_at()).append("\n");
-                        if (expense.getBuyer().getId() == participant.getId())
-                            builder.append(expense.getExpensePrice()).append(" طلب و");
-                        builder.append(expense.getExpenseDebts().get(0)).append(" بدهی از خرج: ").append(expense.getExpenseTitle()).append("\n\n");
-                    }
-                }
-
-                new AlertDialog.Builder(mContext)
-                        .setTitle("خلاصه خرج ها:")
-                        .setMessage(builder.toString())
-                        .show();
+//                int i = 0;
+//                for (Expense expense : expenseList) {
+//
+//                    List<Participant> users = expense.getUserPartics();
+//                    for (Participant user : users) {
+//
+//                        if (user.getId() == participant.getId())
+//                            builder.append(expense.getCreated_at()).append("\n");
+//                        if (expense.getBuyer().getId() == participant.getId())
+//                            builder.append(expense.getExpensePrice()).append(" طلب و");
+//                        builder.append(expense.getExpenseDebts().get(0)).append(" بدهی از خرج: ").append(expense.getExpenseTitle()).append("\n\n");
+//                    }
+//                }
+//
+//                new AlertDialog.Builder(mContext)
+//                        .setTitle("خلاصه خرج ها:")
+//                        .setMessage(builder.toString())
+//                        .show();
             }
 
             @Override

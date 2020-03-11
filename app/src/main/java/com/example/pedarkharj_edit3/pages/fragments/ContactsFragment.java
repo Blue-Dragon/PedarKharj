@@ -34,8 +34,8 @@ public class ContactsFragment extends Fragment {
     RecyclerView recyclerView;
     static DatabaseHelper db;
 
-    MyAdapter adaptor;
     String newName;
+    MyAdapter adaptor;
     Context mContext;
     Activity mActivity;
     MainActivity mainActivity = new MainActivity();

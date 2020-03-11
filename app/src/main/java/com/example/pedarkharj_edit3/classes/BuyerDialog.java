@@ -40,7 +40,7 @@ public class BuyerDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_buyer_dialog);
+        setContentView(R.layout.dialog_buyer);
 
         db = new DatabaseHelper(mActivity);
 //        yes = (Button) findViewById(R.id.btn_yes);     yes.setOnClickListener(this);

@@ -21,7 +21,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
                 android:backgroundTint="#304FFE"
                 android:layout_marginRight="12dp" />
