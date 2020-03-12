@@ -17,7 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -49,7 +48,6 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     /*
      * Calculator
      */
-    private int openParenthesis = 0;
     private boolean dotUsed = false;
     private boolean equalClicked = false;
     private String lastExpression = "";
@@ -84,9 +82,10 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     /*
      * others
      */
-    List<Participant> mParticipants;
-    List<Participant> usersListPartices;
+    List<Participant> allParticipants;
+    List<Participant> selectedListPartices;
     List<Integer> expenseDebtsList;
+//    List<Participant> users;
     MyAdapter adapter;
     LinearLayout calculatorAboveBox;
     Event curEvent;
@@ -106,7 +105,6 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 
     int particId;
     Participant buyer;
-    List<Participant> users;
     DatabaseHelper db;
 
 
@@ -135,18 +133,18 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         listener = new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Participant participant = mParticipants.get(position);
+                Participant participant = allParticipants.get(position);
                 AppCompatImageView subImg = view.findViewById(R.id.sub_img);
 
                 // gather expense partices when clicked (check img code is in `aSwitch.setOnClickListener` Call)
                 if (subImg.getVisibility() != View.VISIBLE ) {
                     subImg.setVisibility(View.VISIBLE);
                     curChildCount++;
-                    usersListPartices.add(participant);
+                    selectedListPartices.add(participant);
                 } else{
                     subImg.setVisibility(View.INVISIBLE);
                     curChildCount--;
-                    if (usersListPartices.contains(participant)) usersListPartices.remove(participant);
+                    if (selectedListPartices.contains(participant)) selectedListPartices.remove(participant);
                 }
 
 
@@ -167,14 +165,14 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                 doRecyclerView(Routines.SELECT_ALL);
                 curChildCount = recyclerChildCount;
                 //add all as users
-                usersListPartices.clear();
-                for (Participant participant : mParticipants){
-                    usersListPartices.add(participant);
+                selectedListPartices.clear();
+                for (Participant participant : allParticipants){
+                    selectedListPartices.add(participant);
                 }
             }
             else {
                 doRecyclerView(Routines.UNSELECT_ALL);
-                usersListPartices.clear(); //remove all as users
+                selectedListPartices.clear(); //remove all as users
                 curChildCount = 0;
             }
         });
@@ -223,7 +221,8 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 
 
     private void saveExpense() {
-        int price = Integer.valueOf( textViewInputNumbers.getText().toString());
+        float f =  Float.valueOf( textViewInputNumbers.getText().toString());
+        int price = Math.round(f);
 
 
         if (price > 0){
@@ -235,12 +234,12 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
             expense.setExpenseIdByOrder(db);
             expense.setEvent(curEvent);
             expense.setBuyer(buyer);
-            expense.setUserPartics(usersListPartices);
+            expense.setUserPartics(selectedListPartices);
             expense.setExpenseTitle(priceTitle);
             expense.setExpensePrice(price);
 
             if (expenseDebtsList == null || expenseDebtsList.size() < 1)
-                expense.setExpenseDebts(price/usersListPartices.size());
+                expense.setExpenseDebts(price/ selectedListPartices.size());
             else expense.setExpenseDebts(expenseDebtsList);
 
             db.addExpense(expense);
@@ -293,14 +292,14 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
      */
     private void doRecyclerView(short selectMode) {
         //show partices of the Event
-        mParticipants = db.getAllParticeUnderEvent(curEvent);
-        recyclerChildCount = mParticipants.size();
+        allParticipants = db.getAllParticeUnderEvent(curEvent);
+        recyclerChildCount = allParticipants.size();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 4, GridLayoutManager.HORIZONTAL, false);
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
         recyclerView.setLayoutManager(gridLayoutManager);
         //
-        adapter = new MyAdapter(mContext, R.layout.sample_contact, mParticipants);
+        adapter = new MyAdapter(mContext, R.layout.sample_contact, allParticipants);
         adapter.setSelectMode(selectMode);
         recyclerView.setAdapter(adapter);
     }
@@ -321,13 +320,13 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     }
 
 
-    //------------------------  CALCULATOR  -------------------------//
+    //-------------------------------------------------------  CALCULATOR  ----------------------------------------------------------//
 
     private void initializeViewVariables(){
         mContext = this;
         mActivity = this;
-        mParticipants = new ArrayList<>();
-        usersListPartices = new ArrayList<>();
+        allParticipants = new ArrayList<>();
+        selectedListPartices = new ArrayList<>();
         expenseDebtsList = new ArrayList<>();
         db = new DatabaseHelper(mContext);
         todayDate = new PersianDate();
@@ -424,9 +423,9 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
             case R.id.custom_dong_btn:
                 int price = Integer.valueOf( textViewInputNumbers.getText().toString());
                 // expense users' ids
-                int[] usersIds = new int[usersListPartices.size()];
+                int[] usersIds = new int[selectedListPartices.size()];
                 int j = 0;
-                for (Participant participant: usersListPartices){
+                for (Participant participant: selectedListPartices){
                     usersIds[j++] = participant.getId();
                 }
                 if (price > 0){
@@ -506,27 +505,45 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                 }
                 else builder0.replace(0, 1, "0");
                 textViewInputNumbers.setText(builder0.toString());
-                openParenthesis = 0;
                 dotUsed = false;
                 equalClicked = false;
                 break;
 
             case R.id.done_btn:
-                //todo: check if it is Equal or Done btn
 
-                // expense users
-//                users = new Participant[usersListPartices.size()];
-//                for (int i = 0; i< usersListPartices.size(); i++){
-//                    users[i] = usersListPartices.get(i);
-//                }
-//                if (usersListPartices.size() > 0)     saveExpense();
-//                else                            Toast.makeText(mContext, "لطفا افراد شرکت کننده را انتخاب کنید.", Toast.LENGTH_SHORT).show();
+                //Equal Action
+                String s = textViewInputNumbers.getText().toString();
+                if (! isReadyToUse(s))
+                    calculate(s);
 
-                textViewInputNumbers.getText().toString();
-                if (!textViewInputNumbers.getText().toString().equals(""))
-                    calculate(textViewInputNumbers.getText().toString());
+                //Done Action
+                    //now we have a straig
+                else  {
+                    //check price
+                    if (Float.valueOf(s) <= 0){
+                        Toast.makeText(mContext, "قیمت اشتباه!", Toast.LENGTH_SHORT).show();
+                    }else {
+                        //check participants
+                        if (selectedListPartices.size() > 0)
+                            saveExpense();
+                        else
+                            Toast.makeText(mContext, "لطفا افراد شرکت کننده را انتخاب کنید.", Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+
                 break;
         }
+    }
+
+    private boolean isReadyToUse(String string) {
+        if (string.equals(""))
+            return false;
+
+        String s = string.substring(1);
+//        Toast.makeText(mContext, ""+ s, Toast.LENGTH_SHORT).show();
+        return  !string.contains("+") && !s.contains("-") && defineLastCharacter(string) != IS_DOT;
     }
 
 
@@ -582,7 +599,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 
             if ((lastInput.equals("+") || lastInput.equals("-") || lastInput.equals("*") || lastInput.equals("\u00F7") || lastInput.equals("%")))
             {
-                Toast.makeText(getApplicationContext(), "Wrong format", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "فرمت اشتباه", Toast.LENGTH_LONG).show();
             } else if (operand.equals("%") && defineLastCharacter(lastInput) == IS_NUMBER)
             {
                 textViewInputNumbers.setText(textViewInputNumbers.getText() + operand);
@@ -640,36 +657,43 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     }
 
 
-    private void calculate(String input)
-    {
-        String result;
+    private void calculate(String input){
+        String result = input;
+        String lastChar = result.substring(result.length()-1);
+
+         if (lastChar.equals("+") || lastChar.equals("-") ){
+            result = result.substring(0, result.length()-1);
+            textViewInputNumbers.setText(result);
+        }
+
         try{
+            result = "";
             String temp = input;
             if (equalClicked){
                 temp = input + lastExpression;
             } else{
                 saveLastExpression(input);
             }
+
             result = scriptEngine.eval(temp.replaceAll("%", "/100").replaceAll("x", "*").replaceAll("[^\\x00-\\x7F]", "/")).toString();
             BigDecimal decimal = new BigDecimal(result);
             result = decimal.setScale(8, BigDecimal.ROUND_HALF_UP).toPlainString();
             equalClicked = true;
 
-        } catch (Exception e)
-        {
-            Toast.makeText(getApplicationContext(), "Wrong Format", Toast.LENGTH_SHORT).show();
+        } catch (Exception e){
+//            Toast.makeText(getApplicationContext(), "Wrong Format", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (result.equals("Infinity"))
-        {
+        if (result.equals("Infinity")){
             Toast.makeText(getApplicationContext(), "Division by zero is not allowed", Toast.LENGTH_SHORT).show();
             textViewInputNumbers.setText(input);
 
-        } else if (result.contains("."))
-        {
+        } else if (result.contains(".")){
             result = result.replaceAll("\\.?0*$", "");
+            dotUsed = false;
             textViewInputNumbers.setText(result);
+
         }
     }
 

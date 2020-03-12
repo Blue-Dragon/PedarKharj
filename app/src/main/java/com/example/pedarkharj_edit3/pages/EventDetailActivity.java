@@ -167,7 +167,7 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
 
             @Override
             public void onLongClick(View view, int position) {
-//                Participant participant = mParticipants.get(position);
+//                Participant participant = allParticipants.get(position);
 //                Log.d("recOnClick", participant.getResult());
             }
         }));
