@@ -13,14 +13,17 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/back_btn"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="0dp"
-                android:src="@drawable/back" />
+            <Button
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:id="@+id/custom_dong_btn"
+                android:padding="6dp"
+                android:text="دنگ های متفاوت؟"
+                style="@style/calcAction"
+                android:textColor="#CC0707"
+                android:fontFamily="@font/b_koodak"
+                android:textSize="15dp"/>
+
 
             <Switch
                 android:id="@+id/switch1"
@@ -38,18 +41,12 @@
 
     </android.support.v7.widget.Toolbar>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?attr/actionBarSize">
-
-
             <RelativeLayout
                 android:id="@+id/downerPage_addExpense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#00FFFFFF">
+                android:background="#00FFFFFF"
+                android:layout_marginTop="?attr/actionBarSize">
 
                 <!-- categories -->
                 <HorizontalScrollView
@@ -122,7 +119,7 @@
                         android:gravity="center"
                         android:text="0"
                         android:textColor="#000"
-                        android:textSize="24sp"
+                        android:textSize="22sp"
                         android:textStyle="bold" />
 
                     <EditText
@@ -194,27 +191,10 @@
                             android:text="6"
                             android:id="@+id/b6"
                             style="@style/calcAction" />
-                        <RelativeLayout
+                        <Button
                             android:id="@+id/plus_btn"
-                            style="@style/calcAction"
-                            android:onClick="onClick"
-                            android:clickable="true"
-                            android:focusable="true">
-
-                            <TextView
-                                android:id="@+id/buyer_btn_txt"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginRight="7dp"
-                                android:layout_marginLeft="7dp"
-                                android:layout_centerVertical="true"
-                                android:text="+"
-                                android:gravity="center"
-                                style="@style/calcAction"
-                                android:background="@color/colorTransparent"/>
-
-                        </RelativeLayout>
-
+                            android:text="+"
+                            style="@style/calcAction"/>
 
                     </LinearLayout>
 
@@ -246,13 +226,9 @@
                         style="@style/calcHorizLayout">
                         <!-- Row 4 -->
                         <Button
-                            android:id="@+id/custom_dong_btn"
-                            android:padding="6dp"
-                            android:text="دنگ های متفاوت؟"
-                            style="@style/calcAction"
-                            android:textColor="#CC0707"
-                            android:fontFamily="@font/b_koodak"
-                            android:textSize="15dp"/>
+                            android:text="."
+                            android:id="@+id/button_dot"
+                            style="@style/calcAction"/>
 
                         <Button
                             android:text="0"
@@ -265,7 +241,6 @@
                             android:id="@+id/bkSpace"
                             style="@style/calcAction"/>
 
-
                         <Button
                             android:id="@+id/done_btn"
                             android:text="Done"
@@ -275,10 +250,5 @@
                 </LinearLayout>
 
             </RelativeLayout>
-
-
-
-
-        </LinearLayout>
 
 </RelativeLayout>
