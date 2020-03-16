@@ -1,7 +1,6 @@
 package com.example.pedarkharj_edit3.pages;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -39,12 +38,10 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
     List<Event> events;
     List<Integer> eventSpinerList;
     Map<Integer, Event> spinnerEventIdsMap;
-    Contact[] defContats;
 
     public static int lastSeenEventId;
     Context mContext ;
     Activity mActivity;
-    MainActivity mainActivity = new MainActivity();
     MyAdapter adaptor;
     Event curEvent;
     DatabaseHelper db;
@@ -57,7 +54,7 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_ddetail);
+        setContentView(R.layout.activity_event_detail);
         mContext = this;
         mActivity = this;
 
@@ -153,11 +150,10 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
 
             @Override
             public void onLongClick(View view, int position) {
-//                Participant participant = allParticipants.get(position);
-//                Log.d("recOnClick", participant.getResult());
             }
         }));
 
+        db.closeDB();
     }
 
     /********************************************       Methods     ****************************************************/
@@ -167,13 +163,6 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
         Event event = spinnerEventIdsMap.get(i);
         if (event == null)
             event = events.get(0); //todo: change it. if we remove the last event, there shouldn't be any. dough!
-//        Log.i("fuck025", ".");
-//        Log.i("fuck025", ".");
-//        Log.i("fuck025", ".");
-//
-//        Log.i("fuck025", "selected event: "+ event.getEventName());
-//        Log.i("fuck025", ".");
-
         for (Event event0 : events) {
             Log.i("fuck025", event0.getEventName());
         }
@@ -195,8 +184,6 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
     //-------------------------     RecyclerView    --------------------------//
     private void setRecyclerView(Event curEvent) {
         mExpenses = db.getAllExpensesOfEvent(curEvent);
-        Toast.makeText(mContext, ""+ curEvent.getEventName(), Toast.LENGTH_SHORT).show();
-        Toast.makeText(mContext, ""+ mExpenses.size(), Toast.LENGTH_SHORT).show();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

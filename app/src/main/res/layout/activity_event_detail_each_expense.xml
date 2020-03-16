@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".pages.EventDetailActivity">
-
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/m_toolbar"
         style="@style/toolbar_style">
@@ -54,51 +52,48 @@
 
     </android.support.v7.widget.Toolbar>
 
-
-    <ScrollView
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/rl_myresult"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="0dp"
-        android:foregroundGravity="center_horizontal">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/m"
+        android:layout_marginRight="@dimen/m"
+        android:layout_marginTop="@dimen/m"
+        android:layout_marginBottom="@dimen/m"
+        app:cardCornerRadius="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/m"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/rl1"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="0dp"
-                android:background="#B6C7A2">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/prof_pic"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="18dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/profile"/>
+                    android:layout_marginLeft="@dimen/s"
+                    android:layout_marginTop="@dimen/ss"
+                    android:layout_marginBottom="@dimen/ss"
+                    android:src="@drawable/profile" />
 
                 <TextView
                     android:id="@+id/partic_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="-2dp"
-                    android:fontFamily="@font/b_koodak"
-                    android:layout_toRightOf="@id/prof_pic"
-                    android:layout_marginLeft="12dp"
-                    android:gravity="center"
                     android:layout_centerVertical="true"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginBottom="-2dp"
+                    android:layout_toRightOf="@id/prof_pic"
+                    android:fontFamily="@font/b_koodak"
+                    android:gravity="center"
                     android:text="ممد"
                     android:textColor="#000000"
                     android:textSize="16sp" />
@@ -107,53 +102,132 @@
                     android:id="@+id/expense_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="12dp"
                     android:layout_marginBottom="-2dp"
                     android:fontFamily="@font/b_koodak"
-                    android:layout_marginRight="12dp"
                     android:gravity="center"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:text="ممد"
+                    android:text="گوجه"
                     android:textColor="#000000"
                     android:textSize="16sp" />
             </RelativeLayout>
-
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@id/prof_pic"
-                android:layout_toRightOf="@id/prof_pic"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
                 android:layout_marginTop="5dp"
-                android:background="#E6E6E6"/>
+                android:background="#E6E6E6" />
 
             <RelativeLayout
                 android:id="@+id/rl2"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="0dp"
-                android:background="#B6C7A2">
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
 
+                <TextView
+                    android:id="@+id/tv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/m"
+                    android:layout_marginTop="@dimen/m"
+                    android:fontFamily="@font/b_koodak"
+                    android:gravity="center"
+                    android:text="4000 تومان"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/m"
+                    android:layout_marginRight="@dimen/m"
+                    android:fontFamily="@font/b_koodak"
+                    android:gravity="center"
+                    android:text="هزینه:"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+                <TextView
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv1"
+                android:layout_marginLeft="@dimen/m"
+                android:layout_marginTop="@dimen/s"
+                android:fontFamily="@font/b_koodak"
+                android:gravity="center"
+                android:text="98/11/11"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tv4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv2"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/s"
+                    android:layout_marginRight="@dimen/m"
+                    android:fontFamily="@font/b_koodak"
+                    android:gravity="center"
+                    android:text="زمان:"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv3"
+                    android:layout_marginLeft="@dimen/m"
+                    android:layout_marginTop="@dimen/l"
+                    android:layout_marginBottom="@dimen/s"
+                    android:fontFamily="@font/b_koodak"
+                    android:gravity="center"
+                    android:text="شرکت کننده ها"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/tv6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv4"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/l"
+                    android:layout_marginRight="@dimen/m"
+                    android:fontFamily="@font/b_koodak"
+                    android:gravity="center"
+                    android:text="دونگ"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"
-                android:layout_marginTop="5dp"
-                android:background="#E6E6E6"/>
+                android:background="#E6E6E6" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/ss"
+                android:foregroundGravity="center_horizontal">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingBottom="@dimen/m"
+                    tools:listitem="@layout/sample_participant" />
+
+
+            </ScrollView>
 
         </LinearLayout>
+    </android.support.v7.widget.CardView>
 
 
 
-
-    </ScrollView>
 
 
 

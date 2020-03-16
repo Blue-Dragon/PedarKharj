@@ -35,6 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     private Context mContext;
     private Activity mActivity;
     private  Participant selectedPartic;
+    private Expense mExpense;
 
     private Drawable drawable; //EventMng
     private short selectMode = 3;
@@ -105,6 +106,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     }
     public void setSelectedPartic(Participant selectedPartic) {
         this.selectedPartic = selectedPartic;
+    }
+    //eachExpense
+    public void setExpense(Expense mExpense) {
+        this.mExpense = mExpense;
     }
 
     //------------------------------      ViewHolder innerClass       ---------------------------------/

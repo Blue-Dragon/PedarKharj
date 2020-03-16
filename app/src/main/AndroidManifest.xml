@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".pages.EventDetailEachExpenseActivity"></activity>
+        <activity android:name=".pages.EventDetailEachExpenseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".pages.ParticeResultActivity"
             android:screenOrientation="portrait"
