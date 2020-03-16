@@ -28,6 +28,7 @@ public class Routines {
     public static final String SEND_EVENT_ID_INTENT = "SEND_EVENT_ID_INTENT";
     public static final String SEND_PARTICIPANT_ID_INTENT = "SEND_PARTICIPANT_ID_INTENT";
     public static final String SEND_EXPENSE_INT_INTENT = "SEND_EXPENSE_INT_INTENT";
+    public static final String SEND_EXPENSE_ID_INTENT = "SEND_EXPENSE_ID_INTENT";
     public static final String SEND_USERS_INTENT = "SEND_USERS_INTENT";
     public static final String EDIT_MODE = "EDIT_MODE";
     public static final boolean IS_EDIT_MODE = true;

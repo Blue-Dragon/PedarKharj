@@ -3,6 +3,7 @@ package com.example.pedarkharj_edit3.pages;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -144,25 +145,10 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
                 StringBuilder builder = new StringBuilder();
                 Expense expense = expenseList.get(position);
 
+                Intent i = new Intent(mContext, EventDetailEachExpenseActivity.class);
+                i.putExtra(Routines.SEND_EXPENSE_ID_INTENT, expense.getId());
+                startActivity(i);
 
-//                int i = 0;
-//                for (Expense expense : expenseList) {
-//
-//                    List<Participant> users = expense.getUserPartics();
-//                    for (Participant user : users) {
-//
-//                        if (user.getId() == participant.getId())
-//                            builder.append(expense.getCreated_at()).append("\n");
-//                        if (expense.getBuyer().getId() == participant.getId())
-//                            builder.append(expense.getExpensePrice()).append(" طلب و");
-//                        builder.append(expense.getExpenseDebts().get(0)).append(" بدهی از خرج: ").append(expense.getExpenseTitle()).append("\n\n");
-//                    }
-//                }
-//
-//                new AlertDialog.Builder(mContext)
-//                        .setTitle("خلاصه خرج ها:")
-//                        .setMessage(builder.toString())
-//                        .show();
             }
 
             @Override
