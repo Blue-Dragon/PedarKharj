@@ -22,7 +22,7 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 
 import java.util.List;
 
-public class EventDetailEachExpenseActivity extends AppCompatActivity {
+public class EachExpenseDetailActivity extends AppCompatActivity {
     List<Participant> participantList;
     Context mContext ;
     Activity mActivity;
@@ -81,7 +81,7 @@ public class EventDetailEachExpenseActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         //
         adaptor = new MyAdapter(mContext);
-        adaptor.setLayout(R.layout.sample_conntacts_horizental);
+        adaptor.setLayout(R.layout.sample_partice_dong);
         adaptor.setParticipants(participantList);
         adaptor.setExpense(theExpense);
         recyclerView.setAdapter(adaptor);

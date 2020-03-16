@@ -257,6 +257,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             if (participant.getResult() != null && holder.resultTxt != null)
                 holder.resultTxt.setText(participant.getResult());
 
+            //EventDetailEachExpense Activity
+            if (mExpense !=null && holder.resultTxt != null){
+                DatabaseHelper db = new DatabaseHelper(mContext);
+                int debt = db.getParticeDebt(mExpense.getExpenseId(), participant.getId());
+                holder.resultTxt.setText(String.valueOf(debt));
+            }
+
 
 
             //addExpenseActivity_ amountMode
