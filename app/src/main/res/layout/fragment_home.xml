@@ -44,10 +44,7 @@
         android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="@dimen/m"
-
-        >
-
+        android:elevation="@dimen/m">
         <include layout="@layout/sample_my_result"/>
     </RelativeLayout>
 

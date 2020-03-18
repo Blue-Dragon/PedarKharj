@@ -54,7 +54,20 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <include layout="@layout/sample_event_details"/>
+    <RelativeLayout
+        android:id="@+id/rl_myresult"
+        android:layout_below="@id/m_toolbar"
+        android:layout_marginRight="@dimen/m"
+        android:layout_marginLeft="@dimen/m"
+        android:layout_marginTop="@dimen/m"
+        android:layout_marginBottom="@dimen/m"
+        android:clipToPadding="false"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/m">
+        <include layout="@layout/sample_my_result"/>
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
