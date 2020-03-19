@@ -70,32 +70,8 @@ public class BuyerDialog extends Dialog {
     }
 
 
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//
-//            case R.id.btn_yes:
-//                mActivity.startActivity(new Intent(mActivity, AddExpenseActivity.class));
-////                mActivity.finish();
-//                break;
-//
-//            case R.id.btn_no:
-//                mActivity.startActivity(new Intent(mActivity, ContactsActivity.class));
-////                mActivity.finish();
-//                break;
-//
-//            default:
-//                break;
-//        }
-//        dismiss();
-//    }
-
-
     private void doRecyclerView() {
-        mParticipants = new ArrayList<Participant>();
-        db.closeDB();
         //show partices of the Event
-
         mParticipants = db.getAllParticeUnderEvent(event);
 
         // Grid Layout Manager
@@ -104,8 +80,8 @@ public class BuyerDialog extends Dialog {
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-
         adapter = new MyAdapter(mActivity, R.layout.sample_contact, mParticipants);
+        adapter.setItemsInScreen(itemsInScreen);
         recyclerView.setAdapter(adapter);
 
     }

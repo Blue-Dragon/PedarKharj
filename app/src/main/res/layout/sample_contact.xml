@@ -5,9 +5,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center_horizontal"
     android:background="#00FFFFFF"
-    android:layout_width="90dp"
     android:layoutDirection="ltr"
-    android:layout_height="90dp">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/base_layout"
@@ -52,6 +52,7 @@
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/profile"
+            android:layout_marginTop="@dimen/ss"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -258,7 +259,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
 
     private void showBuyerDialog(Event curEvent) {
-        new BuyerDialog(mActivity, curEvent).show();
+        BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent);
+        Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        buyerDialog.show();
+
     }
 
     //-------------------------     Spinner    --------------------------//
