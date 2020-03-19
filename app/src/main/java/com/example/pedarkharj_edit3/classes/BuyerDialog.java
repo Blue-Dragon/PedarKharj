@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
@@ -97,10 +98,13 @@ public class BuyerDialog extends Dialog {
 
         mParticipants = db.getAllParticeUnderEvent(event);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, 4, GridLayoutManager.VERTICAL, false);
-//        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
+        // Grid Layout Manager
+        int itemsInScreen = 4;
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, itemsInScreen, GridLayoutManager.VERTICAL, false);
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
-        //
+
+
         adapter = new MyAdapter(mActivity, R.layout.sample_contact, mParticipants);
         recyclerView.setAdapter(adapter);
 

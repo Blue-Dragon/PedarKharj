@@ -35,11 +35,10 @@
             android:layout_height="0dp"
             android:rotation="90"
             android:scaleY="0.2"
-
             card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
             card_view:layout_constraintEnd_toStartOf="@+id/tv_my_expense"
             card_view:layout_constraintStart_toEndOf="@+id/tv_my_dong"
-            card_view:layout_constraintTop_toTopOf="@+id/tv_my_dong"
+            card_view:layout_constraintTop_toTopOf="@+id/sep1"
             card_view:srcCompat="@drawable/ic_remove_black_24dp" />
 
         <TextView
@@ -66,7 +65,7 @@
             android:fontFamily="@font/b_koodak"
             android:text="0"
             android:textColor="#8C8C8C"
-            android:textSize="24sp"
+            android:textSize="18sp"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintHorizontal_bias="0.501"
@@ -95,11 +94,11 @@
             android:fontFamily="@font/b_koodak"
             android:text="0"
             android:textColor="#8C8C8C"
-            android:textSize="24sp"
+            android:textSize="18sp"
             card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintStart_toEndOf="@+id/tv_my_dong"
-            card_view:layout_constraintTop_toBottomOf="@+id/tv_title_my_dong" />
+            card_view:layout_constraintTop_toTopOf="@+id/tv_my_dong" />
 
         <TextView
             android:id="@+id/tv_title_my_expense"
@@ -122,7 +121,7 @@
             android:fontFamily="@font/b_koodak"
             android:text="0"
             android:textColor="#000000"
-            android:textSize="24sp"
+            android:textSize="18sp"
             card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
             card_view:layout_constraintEnd_toStartOf="@+id/tv_my_dong"
             card_view:layout_constraintStart_toStartOf="parent"

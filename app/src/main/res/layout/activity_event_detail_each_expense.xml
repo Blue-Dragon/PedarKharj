@@ -75,8 +75,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/prof_pic"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/s"
@@ -96,7 +96,7 @@
                     android:gravity="center"
                     android:text="ممد"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/expense_price"
@@ -110,7 +110,7 @@
                     android:gravity="center"
                     android:text="گوجه"
                     android:textColor="#000000"
-                    android:textSize="16sp" />
+                    android:textSize="18sp" />
             </RelativeLayout>
             <ImageView
                 android:layout_width="match_parent"
