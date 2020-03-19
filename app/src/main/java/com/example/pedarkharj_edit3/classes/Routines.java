@@ -8,8 +8,10 @@ import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.pedarkharj_edit3.classes.models.Contact;
 import com.example.pedarkharj_edit3.classes.models.Event;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Routines {
+public class Routines  {
     //Intent extras
     public static final String NEW_EVENT_PARTIC_IDS_INTENT = "NEW_EVENT_PARTIC_IDS_INTENT";
     public static final String NEW_EVENT_PARTIC_EVENT_ID_INTENT = "NEW_EVENT_PARTIC_EVENT_ID_INTENT";
@@ -59,7 +61,9 @@ public class Routines {
 //    final static boolean EXPENSE_1 = false;
 
     //Not Final
-    public static boolean is_events_in_action_mode ;
+    public static boolean is_in_action_mode;
+    public static int counter, selectedItemId; //edit n' delete
+
 
     //    Context mContext;
     Activity mActivity;

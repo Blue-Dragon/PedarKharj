@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
+import com.example.pedarkharj_edit3.classes.IEditBar;
 import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.IOnBackPressed;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class EventsFragment extends Fragment implements IOnBackPressed {
+public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar {
     final public static int INTENT_CODE = 1;
     final public static String INTENT_MASSEGE = "NEW_NAME";
 
@@ -52,50 +53,25 @@ public class EventsFragment extends Fragment implements IOnBackPressed {
     RecyclerView recyclerView;
     FloatingActionButton fab;
     Toolbar toolbar;
-    TextView counter_text_view, title;
     View mView;
+    ImageView backBtn;
     //Action mode
+    TextView counter_text_view, title;
     List<Event> mEvents;
     List<Event> selectionList;
-    String newName;
-    
-    int counter, selectedEventId;
+
     //    boolean is_select_one = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_event_mng, container, false);
-        mContext = getContext();
-        mActivity = getActivity();
-        MainActivity.navPosition = Routines.EVENTS;
+        init();
 
-        db = new DatabaseHelper(mContext);
-
-        toolbar =  mView.findViewById(R.id.m_toolbar);
-        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
-
-
-        mEvents = new ArrayList<>();
-        //
-        db = new DatabaseHelper(mContext);
-        setRecView(); //show Events
-        //Action mode
-        selectionList = new ArrayList<>();
-        counter_text_view = mView.findViewById(R.id.tv_counter);
-        title = mView.findViewById(R.id.textView);
-        counter_text_view.setVisibility(View.GONE);
-        title.setVisibility(View.VISIBLE);
-        counter = 0;
-
-
-        //back imageView btn
-//        ImageView backBtn = mView.findViewById(R.id.back_btn);
-//        ImageView backBtn = mView.findViewById(R.id.back_btn);
-        ImageView backBtn = mView.findViewById(R.id.back_btn);
         backBtn.setOnClickListener(item -> Toast.makeText(mContext, "back", Toast.LENGTH_SHORT).show());
         setHasOptionsMenu(true); //for menu items in fragment (edit & delete)
 
+        setRecView(); //show Events
         /*
          * recView onClick
          */
@@ -103,7 +79,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                if (Routines.is_events_in_action_mode){
+                if (Routines.is_in_action_mode){
                     prepareSelection(view, position);
 
                 } else {
@@ -117,8 +93,8 @@ public class EventsFragment extends Fragment implements IOnBackPressed {
 
             @Override
             public void onLongClick(View view, int position) {
-                if (!Routines.is_events_in_action_mode){
-                    setActionModeOn();
+                if (!Routines.is_in_action_mode){
+                    setActionModeOn(toolbar, counter_text_view, title);
                 }
                 onClick(view, position);
 
@@ -144,11 +120,29 @@ public class EventsFragment extends Fragment implements IOnBackPressed {
 
 
 
+
     /***************************************     Methods     ******************************************/
+    private void init() {
+        mContext = getContext();
+        mActivity = getActivity();
+        MainActivity.navPosition = Routines.EVENTS;
+
+        toolbar =  mView.findViewById(R.id.m_toolbar);
+        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
+
+        db = new DatabaseHelper(mContext);
+        //Action mode
+        selectionList = new ArrayList<>();
+        counter_text_view = mView.findViewById(R.id.tv_counter);
+        title = mView.findViewById(R.id.textView);
+        initEditBar(counter_text_view, title);
+
+        backBtn = mView.findViewById(R.id.back_btn);
+        recyclerView = mView.findViewById(R.id.rv);
+    }
+
     //-------------------------     RecyclerView    --------------------------//
     private void setRecView() {
-        recyclerView = mView.findViewById(R.id.rv);
-
         mEvents = db.getAllEvents();
         // Not letting TempEvents to be shown
         List<Event> realEvents = new ArrayList<>();
@@ -184,47 +178,6 @@ public class EventsFragment extends Fragment implements IOnBackPressed {
 
 
     //---------------    ActionMode (selection on longClick)    ----------------//
-    //Edit & Delete
-    private void setActionModeOn() {
-        toolbar.getMenu().clear();//clear activity menu
-        toolbar.inflateMenu(R.menu.menu_action_mode);//inflate action mode menu
-        counter_text_view.setVisibility(View.VISIBLE); //make textView visible on it
-//        updateCounter(counter); //show textView with nothing selected by def
-        title.setVisibility(View.GONE);
-        Routines.is_events_in_action_mode = true;
-//        adaptor.notifyDataSetChanged();//notify adapter about this  change
-    }
-
-    //Delete only
-    private void setActionMode2On() {
-        toolbar.getMenu().clear();//clear activity menu
-        toolbar.inflateMenu(R.menu.menu_action_mode_2);//inflate action mode menu
-        counter_text_view.setVisibility(View.VISIBLE); //make textView visible on it
-        title.setVisibility(View.GONE);
-        Routines.is_events_in_action_mode = true;
-        selectedEventId = 0;
-//        is_select_one = false;
-    }
-
-    private void setActionModeOff() {
-        toolbar.getMenu().clear();//clear activity menu
-//        toolbar.inflateMenu(R.menu.menu_action_mode);
-        counter_text_view.setVisibility(View.GONE);
-        title.setVisibility(View.VISIBLE);
-        Routines.is_events_in_action_mode = false;//make checkbox visible
-        adaptor.notifyDataSetChanged();//notify adapter about this  change
-        counter = 0;
-        selectedEventId = 0;
-        selectionList.clear();
-    }
-
-    /*
-     * textview above
-     */
-    private void updateCounter(int counter) {
-        counter_text_view.setText(counter + " رویداد انتخاب شده");
-    }
-
     /*
      * on select/deselect methods
      */
@@ -233,31 +186,29 @@ public class EventsFragment extends Fragment implements IOnBackPressed {
         if (!selectionList.contains(event)) {
             selectionList.add(event);
             view.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, R.color.colorSelected) ));
-            updateCounter(++counter);
+            updateCounter(++Routines.counter, counter_text_view);
 
         }else {
             selectionList.remove(event);
             view.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, R.color.colorTransparent) ));
             if (selectionList.isEmpty()) {
-                setActionModeOff();
+                setActionModeOff(toolbar, counter_text_view, title, adaptor);
+                selectionList.clear();
             } else {
-                updateCounter(--counter);
+                updateCounter(--Routines.counter, counter_text_view);
             }
         }
 
         //edit & delete option be shown only if just ONE item is selected
         if (selectionList.size() > 1){
-            setActionMode2On();
+            setActionMode2On(toolbar, counter_text_view, title);
 
         } else if (selectionList.size() == 1){
-            setActionModeOn();
-            selectedEventId = selectionList.get(0).getId();
+            setActionModeOn(toolbar, counter_text_view, title);
+            Routines.selectedItemId = selectionList.get(0).getId();
         }
     }
 
-    private void selectionChangeColor(int id) {
-        adaptor.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, id)));
-    }
 
     int i =0;
     @Override
@@ -289,7 +240,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed {
 
             case R.id.item_edit:
                 Intent intent = new Intent(mContext, AddEventParticesActivity.class);
-                intent.putExtra(Routines.SEND_EVENT_ID_INTENT, selectedEventId);
+                intent.putExtra(Routines.SEND_EVENT_ID_INTENT, Routines.selectedItemId);
                 startActivity(intent);
 //                finish();
                 break;
@@ -312,7 +263,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed {
 //    public void onBackPressed() {
 //
 //        //        super.onBackPressed();
-//        if (Routines.is_events_in_action_mode){
+//        if (Routines.is_in_action_mode){
 //            selectionChangeColor(R.color.colorTransparent);
 //            setActionModeOff();
 //        }else {
@@ -325,9 +276,10 @@ public class EventsFragment extends Fragment implements IOnBackPressed {
     @Override
     public void onMyBackPressed() {
 
-//        if (Routines.is_events_in_action_mode){
-            selectionChangeColor(R.color.colorTransparent);
-            setActionModeOff();
+//        if (Routines.is_in_action_mode){
+            selectionChangeColor(mContext, R.color.colorTransparent, adaptor);
+            setActionModeOff(toolbar, counter_text_view, title, adaptor);
+            selectionList.clear();
 //        }else{
 //            restartPage(Routines.HOME);
 //        }

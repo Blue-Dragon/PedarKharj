@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pedarkharj_edit3.R;
+import com.example.pedarkharj_edit3.classes.models.Contact;
 import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Expense;
 import com.example.pedarkharj_edit3.classes.models.Participant;
@@ -32,6 +33,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     private List<Participant> participants;
     private List<Event> events;
     private List<Expense> expenseList;
+    private List<Contact> contactList;
     private Context mContext;
     private Activity mActivity;
     private  Participant selectedPartic;
@@ -95,6 +97,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         this.participants = participants;
         this.mLayout = mLayout;
         this.amountModeDong = amountModeDong; //if true, mode 2- amount
+    }
+
+    //Contacts
+    public void setContactList(List<Contact> contactList) {
+        this.contactList = contactList;
     }
 
     //EventDetailActivity (ExpenseList)
@@ -241,7 +248,22 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             db0.closeDB();
         }
 
+
         /*
+         * Contacts
+         */
+        if (contactList != null ) {
+            Contact contact;
+            Log.i("positionCall", "contacts recyclerView Call");
+            contact = contactList.get(position);
+            if (contact.getName() != null && holder.nameTv != null)
+                holder.nameTv.setText(contact.getName());
+            if (contact.getBitmapStr() != null && holder.profImv != null)
+                holder.profImv.setImageBitmap(Routines.decodeBase64(contact.getBitmapStr()));
+        }
+
+
+            /*
          * others
          */
         if (participants != null ) {
@@ -310,6 +332,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
         else if (expenseList != null)
             return expenseList.size();
+
+        else if (contactList != null)
+            return contactList.size();
 
         else return 0;
     }
