@@ -70,27 +70,6 @@ public class BuyerDialog extends Dialog {
     }
 
 
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//
-//            case R.id.btn_yes:
-//                mActivity.startActivity(new Intent(mActivity, AddExpenseActivity.class));
-////                mActivity.finish();
-//                break;
-//
-//            case R.id.btn_no:
-//                mActivity.startActivity(new Intent(mActivity, ContactsActivity.class));
-////                mActivity.finish();
-//                break;
-//
-//            default:
-//                break;
-//        }
-//        dismiss();
-//    }
-
-
     private void doRecyclerView() {
         mParticipants = new ArrayList<Participant>();
         db.closeDB();
