@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.pedarkharj_edit3.classes.IOnBackPressed;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.pages.fragments.ContactsFragment;
@@ -103,7 +102,7 @@ public class MainActivity extends AppCompatActivity  {
         //if in Home page
         if (navPosition == Routines.HOME )
             finish();
-        else  if (navPosition == Routines.EVENTS && Routines.is_events_in_action_mode) {
+        else  if (navPosition == Routines.EVENTS && Routines.is_in_action_mode) {
             eventsFragment = (EventsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             eventsFragment.onMyBackPressed();
         }else

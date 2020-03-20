@@ -71,10 +71,7 @@ public class BuyerDialog extends Dialog {
 
 
     private void doRecyclerView() {
-        mParticipants = new ArrayList<Participant>();
-        db.closeDB();
         //show partices of the Event
-
         mParticipants = db.getAllParticeUnderEvent(event);
 
         // Grid Layout Manager
@@ -83,8 +80,8 @@ public class BuyerDialog extends Dialog {
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-
         adapter = new MyAdapter(mActivity, R.layout.sample_contact, mParticipants);
+        adapter.setItemsInScreen(itemsInScreen);
         recyclerView.setAdapter(adapter);
 
     }

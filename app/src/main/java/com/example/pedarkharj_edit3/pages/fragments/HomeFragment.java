@@ -1,7 +1,6 @@
 package com.example.pedarkharj_edit3.pages.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pedarkharj_edit3.classes.IEditBar;
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.BuyerDialog;
@@ -43,11 +43,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener, IEditBar {
     public static List<Expense> newExpenseList;
     List<Participant> mParticipants;
     List<Event> events;
@@ -89,7 +90,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
 //        newExpenseList = new ArrayList<>();
 
-//        mParticipants = new ArrayList<>();
+//        participantList = new ArrayList<>();
         events = db.getAllEvents(); //for spinner && def partices
         eventSpinerList = new ArrayList<>();
         spinnerEventIdsMap = new HashMap<Integer, Event>(); //todo: use `new sparseArray<Event>` instead
@@ -258,7 +259,10 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
 
     private void showBuyerDialog(Event curEvent) {
-        new BuyerDialog(mActivity, curEvent).show();
+        BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent);
+        Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        buyerDialog.show();
+
     }
 
     //-------------------------     Spinner    --------------------------//
