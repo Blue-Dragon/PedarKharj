@@ -11,30 +11,40 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 import com.example.pedarkharj_edit3.pages.AddExpenseActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BuyerDialog extends Dialog {
     private Activity mActivity;
     public Dialog d;
     private Button yes, no;
-    RecyclerView recyclerView;
     List<Participant> mParticipants;
+    List<Event> eventList;
     MyAdapter adapter;
     DatabaseHelper db;
     Event event;
+    int layoutId = -1;
+    RecyclerView recyclerView;
 
 
     public BuyerDialog(Activity mActivity, Event event) {
         super(mActivity);
         this.mActivity = mActivity;
         this.event =event;
+    }
+
+    public BuyerDialog(Activity mActivity, Event event, int layoutId) {
+        super(mActivity);
+        this.mActivity = mActivity;
+        this.event =event;
+        this.layoutId = layoutId;
     }
 
     @Override
@@ -44,8 +54,6 @@ public class BuyerDialog extends Dialog {
         setContentView(R.layout.dialog_buyer);
 
         db = new DatabaseHelper(mActivity);
-//        yes = (Button) findViewById(R.id.btn_yes);     yes.setOnClickListener(this);
-//        no = (Button) findViewById(R.id.btn_no);        no.setOnClickListener(this);
         recyclerView = findViewById(R.id.chooseBuyer_RecView);
         doRecyclerView();
 
@@ -55,10 +63,16 @@ public class BuyerDialog extends Dialog {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mActivity, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Participant participant = mParticipants.get(position);
-                Intent intent =  new Intent(mActivity, AddExpenseActivity.class);
-                intent.putExtra(Routines.PARTICIPANT_INFO, participant.getId());
-                mActivity.startActivity(intent);
+                if (layoutId > 0 ){
+                    goToSelectedEvent();
+                }else {
+                    Participant participant = mParticipants.get(position);
+                    Intent intent =  new Intent(mActivity, AddExpenseActivity.class);
+                    intent.putExtra(Routines.PARTICIPANT_INFO, participant.getId());
+                    mActivity.startActivity(intent);
+//                mActivity.finish();
+                }
+
             }
 
             @Override
@@ -71,19 +85,37 @@ public class BuyerDialog extends Dialog {
 
 
     private void doRecyclerView() {
-        //show partices of the Event
-        mParticipants = db.getAllParticeUnderEvent(event);
-
-        // Grid Layout Manager
         int itemsInScreen = 4;
+
+        if (layoutId > 0){
+            eventList = db.getAllEvents();
+//            itemsInScreen = 3;
+            adapter = new MyAdapter(mActivity);
+            adapter.setLayout(layoutId);
+            adapter.setEvents(eventList);
+            adapter.setItemsInScreen(itemsInScreen);
+
+        }else {
+            //show partices of the Event
+            mParticipants = db.getAllParticeUnderEvent(event);
+//            itemsInScreen = 4;
+            adapter = new MyAdapter(mActivity, R.layout.sample_contact, mParticipants);
+            adapter.setItemsInScreen(itemsInScreen);
+        }
+        // Grid Layout Manager
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, itemsInScreen, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
 
-        adapter = new MyAdapter(mActivity, R.layout.sample_contact, mParticipants);
-        adapter.setItemsInScreen(itemsInScreen);
         recyclerView.setAdapter(adapter);
 
+    }
+
+    private void goToSelectedEvent() {
+        SharedPrefManager.getInstance(mActivity).saveLastSeenEventId(event.getId());
+        MainActivity.navPosition = Routines.HOME;
+        mActivity.finish();
+        mActivity.startActivity(mActivity.getIntent());
     }
 
 }

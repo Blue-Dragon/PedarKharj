@@ -66,6 +66,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_event_mng, container, false);
+        MainActivity.navPosition = Routines.EVENTS;
         init();
 
         backBtn.setOnClickListener(item -> Toast.makeText(mContext, "back", Toast.LENGTH_SHORT).show());
@@ -85,9 +86,14 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
                 } else {
                     //open MainActivity on this event
                     Event event = mEvents.get(position);
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    intent.putExtra(Routines.SEND_EVENT_ID_INTENT, event.getId());
-                    startActivity(intent);
+
+                    SharedPrefManager.getInstance(mContext).saveLastSeenEventId(event.getId());
+//                    Intent intent = new Intent(mContext, MainActivity.class);
+//                    intent.putExtra(Routines.SEND_EVENT_ID_INTENT, event.getId());
+//                    MainActivity.navPosition = Routines.HOME;
+//                    mActivity.finish();
+//                    startActivity(intent);
+                    restartPage(Routines.HOME);
                 }
             }
 
@@ -161,7 +167,8 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         */
 
         // Grid Layout Manager
-        int itemsInScreen = 3;
+        int itemsInScreen = 4
+                ;
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, itemsInScreen, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -170,7 +177,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         //
         adaptor = new MyAdapter(mContext);
         adaptor.setEvents(realEvents);
-        adaptor.setItemsInScreen(3);
+        adaptor.setItemsInScreen(itemsInScreen);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adaptor);
     }
@@ -285,6 +292,10 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
 //        }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
-
+        MainActivity.navPosition = Routines.EVENTS;
+    }
 }

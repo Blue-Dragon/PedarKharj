@@ -262,7 +262,12 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent);
         Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         buyerDialog.show();
+    }
 
+    private void showEventsDialog(Event curEvent) {
+        BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent, R.layout.sample_event);
+        Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        buyerDialog.show();
     }
 
     //-------------------------     Spinner    --------------------------//
