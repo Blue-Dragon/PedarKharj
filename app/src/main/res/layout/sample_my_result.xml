@@ -5,6 +5,7 @@
     android:layout_height="80dp"
     android:layoutDirection="ltr"
     android:elevation="8dp"
+    android:layout_margin="@dimen/m"
     card_view:cardCornerRadius="2dp">
 
 
@@ -22,10 +23,10 @@
             android:layout_height="0dp"
             android:rotation="90"
             android:scaleY="0.2"
-            card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
-            card_view:layout_constraintEnd_toStartOf="@+id/tv_my_dong"
-            card_view:layout_constraintStart_toEndOf="@+id/tv_my_result"
+            card_view:layout_constraintRight_toLeftOf="@+id/tv_my_dong"
+            card_view:layout_constraintLeft_toRightOf="@+id/tv_my_result"
             card_view:layout_constraintTop_toBottomOf="@+id/tv_title_my_dong"
+            card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
             card_view:layout_constraintVertical_bias="1.0"
             card_view:srcCompat="@drawable/ic_remove_black_24dp" />
 
@@ -35,10 +36,10 @@
             android:layout_height="0dp"
             android:rotation="90"
             android:scaleY="0.2"
-            card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
-            card_view:layout_constraintEnd_toStartOf="@+id/tv_my_expense"
-            card_view:layout_constraintStart_toEndOf="@+id/tv_my_dong"
+            card_view:layout_constraintRight_toLeftOf="@+id/tv_my_expense"
+            card_view:layout_constraintLeft_toRightOf="@+id/tv_my_dong"
             card_view:layout_constraintTop_toTopOf="@+id/sep1"
+            card_view:layout_constraintBottom_toBottomOf="@+id/sep1"
             card_view:srcCompat="@drawable/ic_remove_black_24dp" />
 
         <TextView
@@ -51,8 +52,8 @@
             android:textColor="#000000"
             android:textSize="12sp"
             card_view:layout_constraintBottom_toBottomOf="@+id/tv_title_my_dong"
-            card_view:layout_constraintEnd_toEndOf="@+id/tv_my_result"
-            card_view:layout_constraintStart_toStartOf="@+id/tv_my_result"
+            card_view:layout_constraintRight_toRightOf="@+id/tv_my_result"
+            card_view:layout_constraintLeft_toLeftOf="@+id/tv_my_result"
             card_view:layout_constraintTop_toTopOf="@+id/tv_title_my_dong" />
 
 
@@ -67,9 +68,9 @@
             android:textColor="#8C8C8C"
             android:textSize="18sp"
             card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintRight_toRightOf="parent"
             card_view:layout_constraintHorizontal_bias="0.501"
-            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintLeft_toLeftOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/tv_title_my_dong"
             card_view:layout_constraintVertical_bias="0.615" />
 
@@ -83,8 +84,8 @@
             android:text="خرج های من"
             android:textColor="#8C8C8C"
             android:textSize="12sp"
-            card_view:layout_constraintEnd_toEndOf="@+id/tv_my_dong"
-            card_view:layout_constraintStart_toStartOf="@+id/tv_my_dong"
+            card_view:layout_constraintRight_toRightOf="@+id/tv_my_dong"
+            card_view:layout_constraintLeft_toLeftOf="@+id/tv_my_dong"
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -96,8 +97,8 @@
             android:textColor="#8C8C8C"
             android:textSize="18sp"
             card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintStart_toEndOf="@+id/tv_my_dong"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintLeft_toRightOf="@+id/tv_my_dong"
             card_view:layout_constraintTop_toTopOf="@+id/tv_my_dong" />
 
         <TextView
@@ -110,8 +111,8 @@
             android:textColor="#8C8C8C"
             android:textSize="12sp"
             card_view:layout_constraintBottom_toBottomOf="@+id/tv_title_my_dong"
-            card_view:layout_constraintEnd_toEndOf="@+id/tv_my_expense"
-            card_view:layout_constraintStart_toStartOf="@+id/tv_my_expense"
+            card_view:layout_constraintRight_toRightOf="@+id/tv_my_expense"
+            card_view:layout_constraintLeft_toLeftOf="@+id/tv_my_expense"
             card_view:layout_constraintTop_toTopOf="@+id/tv_title_my_dong" />
 
         <TextView
@@ -123,8 +124,8 @@
             android:textColor="#000000"
             android:textSize="18sp"
             card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
-            card_view:layout_constraintEnd_toStartOf="@+id/tv_my_dong"
-            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintRight_toLeftOf="@+id/tv_my_dong"
+            card_view:layout_constraintLeft_toLeftOf="parent"
             card_view:layout_constraintTop_toTopOf="@+id/tv_my_dong" />
 
     </android.support.constraint.ConstraintLayout>

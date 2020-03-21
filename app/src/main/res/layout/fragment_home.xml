@@ -12,19 +12,30 @@
         style="@style/toolbar_style">
 
         <RelativeLayout
+            android:id="@+id/my_spinner"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/arrow_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/s"
+                app:srcCompat="@drawable/ic_keyboard_arrow_down_black_24dp" />
 
-            <Spinner
-                android:id="@+id/spinner"
+            <TextView
+                android:id="@+id/spinner_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:gravity="center_vertical"
-                android:backgroundTint="#304FFE"
-                android:layout_marginRight="12dp" />
+                android:layout_toLeftOf="@id/arrow_down"
+                android:layout_marginRight="@dimen/s"
+                android:gravity="center"
+                style="@style/small_koodak"
+                android:text="سفر شمال"
+                />
+
 
         </RelativeLayout>
 
@@ -36,10 +47,6 @@
     <RelativeLayout
         android:id="@+id/rl_myresult"
         android:layout_below="@id/m_toolbar"
-        android:layout_marginRight="@dimen/m"
-        android:layout_marginLeft="@dimen/m"
-        android:layout_marginTop="@dimen/m"
-        android:layout_marginBottom="@dimen/m"
         android:clipToPadding="false"
         android:clickable="true"
         android:layout_width="match_parent"

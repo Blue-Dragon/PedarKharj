@@ -18,8 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.Spinner;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,31 +44,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
-
-public class HomeFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener, IEditBar {
+public class HomeFragment extends Fragment implements View.OnClickListener, IEditBar {
     public static List<Expense> newExpenseList;
     List<Participant> mParticipants;
     List<Event> events;
-    List<Integer> eventSpinerList;
-    Map<Integer, Event> spinnerEventIdsMap;
     Contact[] defContats;
-
     public static int lastSeenEventId;
     Context mContext ;
     Activity mActivity;
-    MainActivity mainActivity = new MainActivity();
-    MyAdapter adaptor;
     Event curEvent;
+    MyAdapter adaptor;
     DatabaseHelper db;
     //
     CardView cardView;
     RecyclerView recyclerView;
-    Spinner spinner;
+    RelativeLayout mySpinner;
     FloatingActionButton fab;
-    CircleImageView drawerProfPic;
-    ImageView menu, sync_iv;
+    TextView spinnerTv;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
     //
 //    int sentEventId;
@@ -78,137 +70,19 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        mContext = getContext();
-        mActivity = getActivity();
-        MainActivity.navPosition = Routines.HOME;
 
-        //-------------------------    inits    -------------------------- //
-        Toolbar toolbar = view.findViewById(R.id.m_toolbar);
-        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
+        // inits
+        doInits(view);
+        doOnClicks();
+        createDefEvent(); // Setting default event and partices IF NOT EXIST
+        setCurEvent();
+        initRectangleAbove(curEvent);  //doInits Rectangle
 
-        db = new DatabaseHelper(mContext);
+//        Toast.makeText(mContext, "cur event: "  + curEvent.getEventName(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "last "  + lastSeenEventId, Toast.LENGTH_SHORT).show();
 
-//        newExpenseList = new ArrayList<>();
-
-//        participantList = new ArrayList<>();
-        events = db.getAllEvents(); //for spinner && def partices
-        eventSpinerList = new ArrayList<>();
-        spinnerEventIdsMap = new HashMap<Integer, Event>(); //todo: use `new sparseArray<Event>` instead
-        lastSeenEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
-        cardView = view.findViewById(R.id.details_card_layout);         cardView.setOnClickListener(this);
-
-//        sentEventId = mActivity.getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
-//        sync_iv = findViewById(R.id.sync);
-//        sync_iv.setOnClickListener(this);
-
-        //the rectangle above
-        tvL1 = view.findViewById(R.id.tv_title_my_expense);
-        tvL2 = view.findViewById(R.id.tv_my_expense);
-        tvC1 = view.findViewById(R.id.tv_title_my_dong);
-        tvC2 = view.findViewById(R.id.tv_my_dong);
-        tvR1 = view.findViewById(R.id.tv_title_my_result);
-        tvR2 = view.findViewById(R.id.tv_my_result);
-
-        /*-------------------------     RecView   --------------------------*/
-
-        /*
-         * Setting default event and partices
-         */
-        createDefEvent();
-
-        recyclerView = view.findViewById(R.id.rv_partice_expenses);
-
-        /*
-         * TODO: hide the fucking fab while scrolling
-         */
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (fab.getVisibility() != View.VISIBLE) fab.show();
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//
-//                while (dy == 0 && fab.getVisibility() == View.VISIBLE) fab.hide();
-//
-//
-//            }
-//        });
-        //
-
-
-
-        /* -------------------------     Spinner    -------------------------- */
-        spinner = view.findViewById(R.id.spinner);
-        List<String> list = new ArrayList<>();
-
-        int j = 0;
-        events = db.getAllEvents();
-        for (Event event : events) {
-            if (!event.getEventName().equals(Routines.EVENT_TEMP_NAME)) {
-                list.add(event.getEventName());
-                eventSpinerList.add(j);
-                //save spinner events by order ids
-                spinnerEventIdsMap.put(j++, event);
-            }
-        }
-        if (events.size() == 0) createDefEvent();
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-
-
-        /*
-         *  set the event to show as recView
-         */
-        // setting Cur Event
-        if (lastSeenEventId > 0) {
-            curEvent = db.getEventById(lastSeenEventId);
-        } else curEvent = events.get(0);
-
-        /*
-         * setting spinner to show lastSeenEvent items
-         */
-        int selectedEventSpinnerId = 0;
-        if (lastSeenEventId > 0) {
-            for (int i = 0; i < events.size(); i++) {
-                if (events.get(i).getId() == lastSeenEventId) {
-                    selectedEventSpinnerId = i;
-                    break;
-                }
-            }
-        }
-
-
-        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
-//        Log.i("fuck011", "lastSeenEventId: " + lastSeenEventId + "");
-
-
-        /*
-         * setting spinner to show lastSeenEvent items:
-         * Here, if we have a chosen event already (by Intent)
-         */
-//        if (sentEventId > 0 && sentEventId != lastSeenEventId) {
-//
-//            for (int i = 0; i < events.size(); i++) {
-//                if (events.get(i).getId() == sentEventId) {
-//                    selectedEventSpinnerId = i;
-//                    break;
-//                }
-//            }
-//        }
-        spinner.setSelection(selectedEventSpinnerId); //def event
-
-        spinner.setOnItemSelectedListener(this);
-//        Log.i("fuck011", "saveLastSeenEventId: " + curEvent.getId() + "");
-
-
-
-        /* -------------------------     recView onClick    -------------------------- */
+        // RecView
+        setRecView(curEvent);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -236,14 +110,34 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
             }
         }));
 
-        //-------------------------     Floating Btn    --------------------------//
-        fab = view.findViewById(R.id.fab);
-        fab.setOnClickListener(view0 -> {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-//            startActivity(new Intent(mContext, AddExpenseActivity.class));
+        // Floating Btn
+        fab.setOnClickListener(view0 ->showBuyerDialog(curEvent));
 
-            showBuyerDialog(curEvent);
-        });
+        //MySpinner
+        mySpinner.setOnClickListener(x -> showEventsDialog(curEvent));
+
+        /*
+         * TODO: hide the fucking fab while scrolling
+         */
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                if (fab.getVisibility() != View.VISIBLE) fab.show();
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//
+//                while (dy == 0 && fab.getVisibility() == View.VISIBLE) fab.hide();
+//
+//
+//            }
+//        });
+        //
+
+
 
 
         //drawerLayout
@@ -251,12 +145,66 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
 
         //Close db
         db.closeDB();
-
         return view;
     }
 
+
     /********************************************       Methods     ****************************************************/
 
+    /**
+     *  set the event to show as recView
+     */
+    private void setCurEvent() {
+
+        if (events.size() > 0){
+            if (lastSeenEventId > 0) {
+                curEvent = db.getEventById(lastSeenEventId);
+            }
+            else curEvent = events.get(0);
+
+            lastSeenEventId = curEvent.getId();
+            SharedPrefManager.getInstance(mContext).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
+            spinnerTv.setText(curEvent.getEventName());
+        }
+        else {
+            createDefEvent();
+            setCurEvent();
+        }
+    }
+
+    private void doOnClicks() {
+        cardView.setOnClickListener(this);
+        mySpinner.setOnClickListener(this);
+    }
+
+    private void doInits(View view) {
+        mContext = getContext();
+        mActivity = getActivity();
+        MainActivity.navPosition = Routines.HOME;
+
+        Toolbar toolbar = view.findViewById(R.id.m_toolbar);
+        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
+
+        db = new DatabaseHelper(mContext);
+
+        events = db.getAllEvents(); //for spinner && def partices
+        lastSeenEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
+        cardView = view.findViewById(R.id.details_card_layout);
+        mySpinner = view.findViewById(R.id.my_spinner);
+        recyclerView = view.findViewById(R.id.rv_partice_expenses);
+        spinnerTv  = view.findViewById(R.id.spinner_tv);
+
+        fab = view.findViewById(R.id.fab);
+
+
+        //the rectangle above
+        tvL1 = view.findViewById(R.id.tv_title_my_expense);
+        tvL2 = view.findViewById(R.id.tv_my_expense);
+        tvC1 = view.findViewById(R.id.tv_title_my_dong);
+        tvC2 = view.findViewById(R.id.tv_my_dong);
+        tvR1 = view.findViewById(R.id.tv_title_my_result);
+        tvR2 = view.findViewById(R.id.tv_my_result);
+    }
 
     private void showBuyerDialog(Event curEvent) {
         BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent);
@@ -271,29 +219,28 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     }
 
     //-------------------------     Spinner    --------------------------//
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Event event = spinnerEventIdsMap.get(i);
-        if (event == null)
-            event = events.get(0); //todo: change it. if we remove the last event, there shouldn't be any. dough!
+//    @Override
+//    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//        Event event = spinnerEventIdsMap.get(i);
+//        if (event == null)
+//            event = events.get(0); //todo: change it. if we remove the last event, there shouldn't be any. dough!
+//
+//        for (Event event0 : events) {
+//            Log.i("fuck025", event0.getEventName());
+//        }
+//
+//        curEvent = event;
+//        setRecView(curEvent); //show recyclerView
+//        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(curEvent.getId()); //save curEvent (as defEvent for next time) to SharedPref
+//        initRectangleAbove(curEvent);  //doInits Rectangle
+//
+//    }
 
-        for (Event event0 : events) {
-            Log.i("fuck025", event0.getEventName());
-        }
-
-        curEvent = event;
-        setRecParticesUnderEvent(curEvent); //show recyclerView
-        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(curEvent.getId()); //save curEvent (as defEvent for next time) to SharedPref
-        initRectangleAbove(curEvent);  //init Rectangle
-
-
-    }
-
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
+//
+//    @Override
+//    public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//    }
 
 
     //-------------------------     RecyclerView    --------------------------//
@@ -313,7 +260,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
     }
 
 
-    private void setRecParticesUnderEvent(Event curEvent) {
+    private void setRecView(Event curEvent) {
 
         //show partices of the Event
         mParticipants = db.getAllParticeUnderEvent(curEvent);
@@ -326,6 +273,7 @@ public class HomeFragment extends Fragment implements AdapterView.OnItemSelected
         recyclerView.setAdapter(adaptor);
     }
 
+    //todo: def event should be one and make sense
     private void createDefEvent() {
         if (events.size() < 1) {
             /*

@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
@@ -64,7 +66,10 @@ public class BuyerDialog extends Dialog {
             @Override
             public void onClick(View view, int position) {
                 if (layoutId > 0 ){
-                    goToSelectedEvent();
+                    //Event Mode
+                    Event event = eventList.get(position);
+                    goToSelectedEvent(event);
+
                 }else {
                     Participant participant = mParticipants.get(position);
                     Intent intent =  new Intent(mActivity, AddExpenseActivity.class);
@@ -111,7 +116,7 @@ public class BuyerDialog extends Dialog {
 
     }
 
-    private void goToSelectedEvent() {
+    private void goToSelectedEvent(Event event) {
         SharedPrefManager.getInstance(mActivity).saveLastSeenEventId(event.getId());
         MainActivity.navPosition = Routines.HOME;
         mActivity.finish();
