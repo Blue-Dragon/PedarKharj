@@ -109,10 +109,10 @@ public class MainActivity extends AppCompatActivity  {
             eventsFragment.onMyBackPressed();
         }
 
-        else  if (navPosition == Routines.CONTACTS && Routines.is_in_action_mode) {
-            contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            contactsFragment.onMyBackPressed();
-        }
+//        else  if (navPosition == Routines.CONTACTS && Routines.is_in_action_mode) {
+//            contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+//            contactsFragment.onMyBackPressed();
+//        }
 
         else
             findViewById(R.id.nav_home).callOnClick();

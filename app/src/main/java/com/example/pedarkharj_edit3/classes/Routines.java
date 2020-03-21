@@ -28,6 +28,7 @@ public class Routines  {
     public static final String NEW_EVENT_PARTIC_IDS_INTENT = "NEW_EVENT_PARTIC_IDS_INTENT";
     public static final String NEW_EVENT_PARTIC_EVENT_ID_INTENT = "NEW_EVENT_PARTIC_EVENT_ID_INTENT";
     public static final String SEND_EVENT_ID_INTENT = "SEND_EVENT_ID_INTENT";
+    public static final String SEND_CONTACT_ID_INTENT = "SEND_CONTACT_ID_INTENT";
     public static final String SEND_PARTICIPANT_ID_INTENT = "SEND_PARTICIPANT_ID_INTENT";
     public static final String SEND_EXPENSE_INT_INTENT = "SEND_EXPENSE_INT_INTENT";
     public static final String SEND_EXPENSE_ID_INTENT = "SEND_EXPENSE_ID_INTENT";

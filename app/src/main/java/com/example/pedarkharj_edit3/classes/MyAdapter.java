@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.pedarkharj_edit3.R;
@@ -126,6 +127,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         ImageView imageView;
         TextView nameTv, resultTxt, resultTxtGreen ;
 //        RelativeLayout baseLayout;
+        RelativeLayout relativeLayout;
         CardView cardView; //EventMng
         //diff dong
         Button plusBtn, minusBtn;
@@ -144,6 +146,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             resultTxt = itemView.findViewById(R.id.result_txt);
             resultTxtGreen = itemView.findViewById(R.id.result_txt_green); //expenseMode2
 //            baseLayout = itemView.findViewById(R.id.base_layout);
+            relativeLayout = itemView.findViewById(R.id.fu);
+
             //
             checkedImg = itemView.findViewById(R.id.sub_img);
             //dong
@@ -260,6 +264,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
                 holder.nameTv.setText(contact.getName());
             if (contact.getBitmapStr() != null && holder.profImv != null)
                 holder.profImv.setImageBitmap(Routines.decodeBase64(contact.getBitmapStr()));
+
+            if (drawable != null && holder.relativeLayout != null) holder.relativeLayout.setForeground(drawable); //onLongClick color changing
+
         }
 
 
