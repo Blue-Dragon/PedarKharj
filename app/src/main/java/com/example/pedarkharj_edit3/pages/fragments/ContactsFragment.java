@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.IEditBar;
+import com.example.pedarkharj_edit3.classes.IOnBackPressed;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.models.Contact;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ContactsFragment extends Fragment implements IEditBar {
+public class ContactsFragment extends Fragment implements IOnBackPressed, IEditBar {
     final public static int INTENT_CODE = 1;
     final public static String INTENT_MASSEGE = "NEW_NAME";
     RecyclerView recyclerView;
@@ -213,7 +214,14 @@ public class ContactsFragment extends Fragment implements IEditBar {
         startActivity(mActivity.getIntent());
     }
 
+    @Override
+    public void onMyBackPressed() {
 
+//        if (Routines.is_in_action_mode){
+        selectionChangeColor(mContext, R.color.colorTransparent, adaptor);
+        setActionModeOff(toolbar, counter_text_view, title, adaptor);
+        selectionList.clear();
+    }
 
 
 }

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
@@ -21,19 +22,24 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 import com.example.pedarkharj_edit3.pages.AddExpenseActivity;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class BuyerDialog extends Dialog {
+
+    BuyerDialog buyerDialog = this;
     private Activity mActivity;
-    public Dialog d;
-    private Button yes, no;
     List<Participant> mParticipants;
     List<Event> eventList;
     MyAdapter adapter;
     DatabaseHelper db;
     Event event;
     int layoutId = -1;
+
     RecyclerView recyclerView;
+    TextView title;
 
 
     public BuyerDialog(Activity mActivity, Event event) {
@@ -57,7 +63,12 @@ public class BuyerDialog extends Dialog {
 
         db = new DatabaseHelper(mActivity);
         recyclerView = findViewById(R.id.chooseBuyer_RecView);
+        title = findViewById(R.id.dialog_title);
         doRecyclerView();
+
+        if (layoutId > 0)
+            title.setText("کدوم رویداد رو میخوای؟");
+
 
         /**
          * recView onClick
@@ -68,6 +79,7 @@ public class BuyerDialog extends Dialog {
                 if (layoutId > 0 ){
                     //Event Mode
                     Event event = eventList.get(position);
+                    buyerDialog.cancel(); // same as dismiss();
                     goToSelectedEvent(event);
 
                 }else {
@@ -94,19 +106,21 @@ public class BuyerDialog extends Dialog {
 
         if (layoutId > 0){
             eventList = db.getAllEvents();
-//            itemsInScreen = 3;
+            Collections.reverse(eventList);
+
+            itemsInScreen = 3;
             adapter = new MyAdapter(mActivity);
             adapter.setLayout(layoutId);
             adapter.setEvents(eventList);
-            adapter.setItemsInScreen(itemsInScreen);
-
         }else {
             //show partices of the Event
             mParticipants = db.getAllParticeUnderEvent(event);
-//            itemsInScreen = 4;
             adapter = new MyAdapter(mActivity, R.layout.sample_contact, mParticipants);
             adapter.setItemsInScreen(itemsInScreen);
         }
+
+        adapter.setItemsInScreen(itemsInScreen);
+
         // Grid Layout Manager
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, itemsInScreen, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -119,8 +133,10 @@ public class BuyerDialog extends Dialog {
     private void goToSelectedEvent(Event event) {
         SharedPrefManager.getInstance(mActivity).saveLastSeenEventId(event.getId());
         MainActivity.navPosition = Routines.HOME;
-        mActivity.finish();
-        mActivity.startActivity(mActivity.getIntent());
+        mActivity.recreate();
+//        mActivity.finish();
+//        mActivity.startActivity(mActivity.getIntent());
+//        mActivity.overridePendingTransition(0, 0);
     }
 
 }

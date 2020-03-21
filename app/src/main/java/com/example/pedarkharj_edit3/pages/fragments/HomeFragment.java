@@ -59,8 +59,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
     //
     CardView cardView;
     RecyclerView recyclerView;
-    RelativeLayout mySpinner;
     FloatingActionButton fab;
+    RelativeLayout mySpinner;
     TextView spinnerTv;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
     //
@@ -77,9 +77,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         createDefEvent(); // Setting default event and partices IF NOT EXIST
         setCurEvent();
         initRectangleAbove(curEvent);  //doInits Rectangle
-
-//        Toast.makeText(mContext, "cur event: "  + curEvent.getEventName(), Toast.LENGTH_SHORT).show();
-//        Toast.makeText(mContext, "last "  + lastSeenEventId, Toast.LENGTH_SHORT).show();
 
         // RecView
         setRecView(curEvent);
@@ -190,8 +187,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         events = db.getAllEvents(); //for spinner && def partices
         lastSeenEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
         cardView = view.findViewById(R.id.details_card_layout);
-        mySpinner = view.findViewById(R.id.my_spinner);
         recyclerView = view.findViewById(R.id.rv_partice_expenses);
+        mySpinner = view.findViewById(R.id.my_spinner);
         spinnerTv  = view.findViewById(R.id.spinner_tv);
 
         fab = view.findViewById(R.id.fab);
@@ -217,30 +214,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
         buyerDialog.show();
     }
-
-    //-------------------------     Spinner    --------------------------//
-//    @Override
-//    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//        Event event = spinnerEventIdsMap.get(i);
-//        if (event == null)
-//            event = events.get(0); //todo: change it. if we remove the last event, there shouldn't be any. dough!
-//
-//        for (Event event0 : events) {
-//            Log.i("fuck025", event0.getEventName());
-//        }
-//
-//        curEvent = event;
-//        setRecView(curEvent); //show recyclerView
-//        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(curEvent.getId()); //save curEvent (as defEvent for next time) to SharedPref
-//        initRectangleAbove(curEvent);  //doInits Rectangle
-//
-//    }
-
-//
-//    @Override
-//    public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//    }
 
 
     //-------------------------     RecyclerView    --------------------------//

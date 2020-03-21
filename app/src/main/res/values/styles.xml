@@ -18,6 +18,11 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- Animation / transition -->
+    <style name="noAnimTheme" parent="android:Theme">
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
     <!-- calculator -->
     <style name="calcAction">
         <item name="android:layout_height">match_parent</item>
@@ -92,6 +97,14 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/activity_bk_color</item>
     </style>
+
+    <style name="activity_layout_style_noAnim">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/activity_bk_color</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
 
     <!--  fab -->
     <style name="fab_style" parent="Widget.Design.FloatingActionButton">

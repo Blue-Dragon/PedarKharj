@@ -32,10 +32,8 @@
                 android:layout_toLeftOf="@id/arrow_down"
                 android:layout_marginRight="@dimen/s"
                 android:gravity="center"
-                style="@style/small_koodak"
-                android:text="سفر شمال"
-                />
-
+                style="@style/medium_koodak"
+                android:text="سفر شمال"/>
 
         </RelativeLayout>
 

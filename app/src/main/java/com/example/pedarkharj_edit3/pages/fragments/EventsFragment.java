@@ -37,6 +37,7 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 import com.example.pedarkharj_edit3.pages.AddEventParticesActivity;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -150,6 +151,8 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
     //-------------------------     RecyclerView    --------------------------//
     private void setRecView() {
         mEvents = db.getAllEvents();
+        Collections.reverse(mEvents);
+
         // Not letting TempEvents to be shown
         List<Event> realEvents = new ArrayList<>();
         for (Event event : mEvents){
@@ -258,8 +261,10 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
 
     private void restartPage(short page) {
         MainActivity.navPosition = page;
+//        mActivity.recreate();
         mActivity.finish();
         startActivity(mActivity.getIntent());
+        mActivity.overridePendingTransition(0, 0);
     }
 
 

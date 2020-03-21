@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity  {
     public static short navPosition;
     Fragment selectedFragment;
     EventsFragment eventsFragment;
+    ContactsFragment contactsFragment;
 
 
 
@@ -102,10 +103,18 @@ public class MainActivity extends AppCompatActivity  {
         //if in Home page
         if (navPosition == Routines.HOME )
             finish();
+
         else  if (navPosition == Routines.EVENTS && Routines.is_in_action_mode) {
             eventsFragment = (EventsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             eventsFragment.onMyBackPressed();
-        }else
+        }
+
+        else  if (navPosition == Routines.CONTACTS && Routines.is_in_action_mode) {
+            contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            contactsFragment.onMyBackPressed();
+        }
+
+        else
             findViewById(R.id.nav_home).callOnClick();
 
     }

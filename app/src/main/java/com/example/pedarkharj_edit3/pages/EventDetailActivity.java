@@ -8,14 +8,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.pedarkharj_edit3.R;
+import com.example.pedarkharj_edit3.classes.BuyerDialog;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
@@ -25,16 +23,12 @@ import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 
-public class EventDetailActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    List<Expense> mExpenses;
+public class EventDetailActivity extends AppCompatActivity  {
+    List<Expense> expenseList;
     List<Event> events;
-    List<Integer> eventSpinerList;
-    Map<Integer, Event> spinnerEventIdsMap;
 
     public static int lastSeenEventId;
     Context mContext ;
@@ -43,8 +37,9 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
     Event curEvent;
     DatabaseHelper db;
     //
+    RelativeLayout mySpinner;
+    TextView spinnerTv;
     RecyclerView recyclerView;
-    Spinner spinner;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
 
 
@@ -52,87 +47,15 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
-        mContext = this;
-        mActivity = this;
 
-        //-------------------------    inits    -------------------------- //
-        Toolbar toolbar = findViewById(R.id.m_toolbar);
-        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
-
-        db = new DatabaseHelper(mContext);
-
-        mExpenses = new ArrayList<>();
-        events = db.getAllEvents(); //for spinner && def partices
-        eventSpinerList = new ArrayList<>();
-        spinnerEventIdsMap = new HashMap<Integer, Event>(); //todo: use `new sparseArray<Event>` instead
-        lastSeenEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
-
-        //the rectangle above
-        tvL1 = findViewById(R.id.tv_title_my_expense);
-        tvL2 = findViewById(R.id.tv_my_expense);
-        tvC1 = findViewById(R.id.tv_title_my_dong);
-        tvC2 = findViewById(R.id.tv_my_dong);
-        tvR1 = findViewById(R.id.tv_title_my_result);
-        tvR2 = findViewById(R.id.tv_my_result);
+        // inits
+        doInits();
+        setCurEvent();
+        initRectangleAbove(curEvent);  //doInits Rectangle
 
 
-        /*
-         * Setting default event and partices
-         */
-        recyclerView = findViewById(R.id.recycler_view);
-
-        /* -------------------------     Spinner    -------------------------- */
-        spinner = findViewById(R.id.spinner);
-        List<String> list = new ArrayList<>();
-
-        int j = 0;
-        events = db.getAllEvents();
-        for (Event event : events) {
-            if (!event.getEventName().equals(Routines.EVENT_TEMP_NAME)) {
-                list.add(event.getEventName());
-                eventSpinerList.add(j);
-                //save spinner events by order ids
-                spinnerEventIdsMap.put(j++, event);
-            }
-        }
-
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-
-
-        /*
-         *  set the event to show as recView
-         */
-        // setting Cur Event
-        if (lastSeenEventId > 0) {
-            curEvent = db.getEventById(lastSeenEventId);
-        } else curEvent = events.get(0);
-
-        /*
-         * setting spinner to show lastSeenEvent items
-         */
-        int selectedEventSpinnerId = 0;
-        if (lastSeenEventId > 0) {
-            for (int i = 0; i < events.size(); i++) {
-                if (events.get(i).getId() == lastSeenEventId) {
-                    selectedEventSpinnerId = i;
-                    break;
-                }
-            }
-        }
-
-        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
-        Log.i("fuck011", "lastSeenEventId: " + lastSeenEventId + "");
-
-        spinner.setSelection(selectedEventSpinnerId); //def event
-
-        spinner.setOnItemSelectedListener(this);
-        Log.i("fuck011", "saveLastSeenEventId: " + curEvent.getId() + "");
-
-        /* -------------------------     recView onClick    -------------------------- */
-        List<Expense> expenseList = db.getAllExpensesOfEvent(curEvent);
-
+        // RecView
+        setRecView(curEvent);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -149,37 +72,64 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
             }
         }));
 
+
+        //MySpinner
+        mySpinner.setOnClickListener(x -> showEventsDialog(curEvent));
+
         db.closeDB();
     }
 
+
+
+
     /********************************************       Methods     ****************************************************/
-    //-------------------------     Spinner    --------------------------//
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        Event event = spinnerEventIdsMap.get(i);
-        if (event == null)
-            event = events.get(0); //todo: change it. if we remove the last event, there shouldn't be any. dough!
-        for (Event event0 : events) {
-            Log.i("fuck025", event0.getEventName());
+    /**
+     *  set the event to show as recView
+     */
+    private void setCurEvent() {
+        if (lastSeenEventId > 0) {
+            curEvent = db.getEventById(lastSeenEventId);
         }
+        else curEvent = events.get(0);
 
-        curEvent = event;
-        setRecyclerView(curEvent); //show recyclerView
-        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(curEvent.getId()); //save curEvent (as defEvent for next time) to SharedPref
-        initRectangleAbove(curEvent);  //init Rectangle
-
-
+        lastSeenEventId = curEvent.getId();
+        SharedPrefManager.getInstance(mContext).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
+        spinnerTv.setText(curEvent.getEventName());
     }
 
+    private void doInits() {
+        mContext = this;
+        mActivity = this;
+        db = new DatabaseHelper(mContext);
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+        Toolbar toolbar = findViewById(R.id.m_toolbar);
+        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
+        events = db.getAllEvents(); //for spinner && def partices
+        lastSeenEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
 
+        //the rectangle above
+        tvL1 = findViewById(R.id.tv_title_my_expense);
+        tvL2 = findViewById(R.id.tv_my_expense);
+        tvC1 = findViewById(R.id.tv_title_my_dong);
+        tvC2 = findViewById(R.id.tv_my_dong);
+        tvR1 = findViewById(R.id.tv_title_my_result);
+        tvR2 = findViewById(R.id.tv_my_result);
+
+        recyclerView = findViewById(R.id.recycler_view);
+        mySpinner = findViewById(R.id.my_spinner);
+        spinnerTv  = findViewById(R.id.spinner_tv);
     }
+
+    private void showEventsDialog(Event curEvent) {
+        BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent, R.layout.sample_event);
+        Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        buyerDialog.show();
+    }
+
 
     //-------------------------     RecyclerView    --------------------------//
-    private void setRecyclerView(Event curEvent) {
-        mExpenses = db.getAllExpensesOfEvent(curEvent);
+    private void setRecView(Event curEvent) {
+        expenseList = db.getAllExpensesOfEvent(curEvent);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -187,7 +137,7 @@ public class EventDetailActivity extends AppCompatActivity implements AdapterVie
         //
         adaptor = new MyAdapter(mContext);
         adaptor.setLayout(R.layout.sample_each_expense);
-        adaptor.setExpenseList(mExpenses);
+        adaptor.setExpenseList(expenseList);
         recyclerView.setAdapter(adaptor);
     }
 
