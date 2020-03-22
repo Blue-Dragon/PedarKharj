@@ -25,12 +25,10 @@ import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
-import com.example.pedarkharj_edit3.classes.IEditBar;
-import com.example.pedarkharj_edit3.classes.IOnBackPressed;
+
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.models.Contact;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
-import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.pages.AddContactActivity;
