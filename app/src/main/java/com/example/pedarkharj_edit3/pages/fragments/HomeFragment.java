@@ -74,8 +74,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         // inits
         doInits(view);
         doOnClicks();
-        createDefEvent(); // Setting default event and partices IF NOT EXIST
-        setCurEvent();
+        setCurEvent(); //and Setting default event and partices IF NOT EXIST
         initRectangleAbove(curEvent);  //doInits Rectangle
 
         // RecView
@@ -152,12 +151,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
      *  set the event to show as recView
      */
     private void setCurEvent() {
-
         if (events.size() > 0){
             if (lastSeenEventId > 0) {
                 curEvent = db.getEventById(lastSeenEventId);
             }
             else curEvent = events.get(0);
+
+            Log.d("mID", "cur event id: "+ curEvent.getId());
+
 
             lastSeenEventId = curEvent.getId();
             SharedPrefManager.getInstance(mContext).saveLastSeenEventId(lastSeenEventId); //save  lastSeenEventId in SharedPref
@@ -252,16 +253,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
             /*
              * adding partices and an event
              */
-            createEvent("سفر شمال");
+            lastSeenEventId = (int) createEvent("سفر شمال");
             createEvent("سفر 2");
             createEvent("سفر 3");
             createEvent("سفر 4");
             createEvent("سفر 5");
 
+            events = db.getAllEvents();
         }
     }
 
-    private void createEvent(String eventName) {
+    private long createEvent(String eventName) {
 
         /*
          * adding partices and an event
@@ -269,7 +271,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         if (defContats == null || defContats.length < 1) {
             creatingDefContacts();
         }
-        db.createNewEventWithPartices(new Event(eventName), defContats);
+        return db.createNewEventWithPartices(new Event(eventName), defContats);
 
     }
 
