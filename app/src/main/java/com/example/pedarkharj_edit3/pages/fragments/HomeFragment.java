@@ -281,7 +281,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
 
     //todo: complete it
     private void initRectangleAbove(Event event) {
-//        tvL2.setText(String.valueOf(0));
+
         List<Participant> participants = db.getAllParticeUnderEvent(event);
         if (participants.size() > 0) {
             int myExpenses = db.getParticTotalExpensePriceByParticeId(participants.get(0).getId()); //it is me. 1st partice of all

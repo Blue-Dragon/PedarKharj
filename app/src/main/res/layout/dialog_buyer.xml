@@ -48,7 +48,6 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_marginRight="2dp"
-            android:layout_marginBottom="@dimen/ss"
             android:layout_below="@+id/m_toolbar">
 
             <android.support.v7.widget.RecyclerView

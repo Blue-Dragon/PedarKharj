@@ -1,71 +1,70 @@
 package com.example.pedarkharj_edit3.pages.fragments;
 
 import android.app.Activity;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.Build;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
+import com.example.pedarkharj_edit3.classes.IEditBar;
+import com.example.pedarkharj_edit3.classes.IOnBackPressed;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.models.Contact;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
+import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.pages.AddContactActivity;
+import com.example.pedarkharj_edit3.pages.AddEventParticesActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static android.Manifest.permission.READ_CONTACTS;
 
-
-public class ContactsFragment extends Fragment implements IContacts, View.OnClickListener {
-    List<Contact> contactList;
+public class ContactsFragment extends Fragment implements IOnBackPressed, IEditBar {
+    final public static int INTENT_CODE = 1;
+    final public static String INTENT_MASSEGE = "NEW_NAME";
+    RecyclerView recyclerView;
     static DatabaseHelper db;
+
     MyAdapter adaptor;
     Context mContext;
     Activity mActivity;
-    boolean isHeIntoIt;
-    boolean firstTime;
-
-    RecyclerView recyclerView;
+    MainActivity mainActivity = new MainActivity();
     FloatingActionButton fab;
     Toolbar toolbar;
     View mView;
     ImageView backBtn;
-    Button getBtn;
 
+    //Action mode
+    TextView counter_text_view, title;
+    List<Contact> contactList;
+    List<Contact> selectionList;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_contacts, container, false);
         init();
-        getBtn.setOnClickListener(this);
-
-        /*
-         * get system contacts
-         */
-//        checkIfHeLikesIt();
-
 
         backBtn.setOnClickListener(item -> Toast.makeText(mContext, "back", Toast.LENGTH_SHORT).show());
         setHasOptionsMenu(true); //for menu items in fragment (edit & delete)
@@ -85,69 +84,50 @@ public class ContactsFragment extends Fragment implements IContacts, View.OnClic
          */
         Log.e("recOnClick", "onClick");
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
-
-
             @Override
             public void onClick(View view, int position) {
+                if (Routines.is_in_action_mode){
+                    prepareSelection(view, position);
+                }
             }
 
             @Override
             public void onLongClick(View view, int position) {
+                if (!Routines.is_in_action_mode){
+                    setActionModeOn(toolbar, counter_text_view, title);
+                }
+                onClick(view, position);
+
             }
-
-
-
         }));
-
 
         return mView;
     }
-
-//    private void checkIfHeLikesIt() {
-//        new AlertDialog.Builder(mContext)
-//                .setTitle("مخاطبین گوشی رو اضافه کنم؟")
-//                .setMessage("اینطوری کارت راحت تر میشه. البته  برای این کار به \"مجوز دسترسی به مخاطبین\" نیاز دارم.")
-//                .setPositiveButton("افزودن مخاطبین", (dialogInterface, i1) -> {
-//                    isHeIntoIt = true;
-//
-////                    int permissionContact = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
-//
-//                    if (Build.VERSION.SDK_INT >= 23 ){
-//                        Routines.requestPermissions(mActivity, new String[]{ READ_CONTACTS}, Routines.PER_CODE_READ_CONTACTS);
-//                        Toast.makeText(mContext, "0", Toast.LENGTH_SHORT).show();
-//                    }
-//                    else{
-//                        readContacts(mContext);
-//                        Toast.makeText(mContext, "1", Toast.LENGTH_SHORT).show();
-//                    }
-//                })
-//
-//                .setNegativeButton("نه، بی خیال!", (dialogInterface, i1) -> {
-//                    isHeIntoIt = false;
-//                })
-//                .show();
-//    }
 
     /********************************************       Methods     ****************************************************/
     private void init() {
         mContext = getContext();
         mActivity = getActivity();
-        MainActivity.navPosition = Routines.CONTACTS;
+        MainActivity.navPosition = Routines.EVENTS;
 
         toolbar =  mView.findViewById(R.id.m_toolbar);
         ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
 
         db = new DatabaseHelper(mContext);
+        //Action mode
+        selectionList = new ArrayList<>();
+        counter_text_view = mView.findViewById(R.id.tv_counter);
+        title = mView.findViewById(R.id.textView);
+        initEditBar(counter_text_view, title);
 
         backBtn = mView.findViewById(R.id.back_btn);
         recyclerView = mView.findViewById(R.id.recycler_view);
-        getBtn = mView.findViewById(R.id.get);
-
     }
 
 
     private void setRecView() {
         contactList = db.getAllContacts();
+//        List<Participant> participants = Routines.contactToPartic(mContacts0);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -159,99 +139,89 @@ public class ContactsFragment extends Fragment implements IContacts, View.OnClic
     }
 
     //---------------    ActionMode (selection on longClick)    ----------------//
+    /*
+     * on select/deselect methods
+     */
+    private void prepareSelection(View view, int position) {
+//        Participant participant = participantList.get(position);
+        Contact contact = contactList.get(position);
 
-//    private void restartPage(short page) {
-//        MainActivity.navPosition = page;
-//        mActivity.finish();
-//        startActivity(mActivity.getIntent());
-//    }
+        if (!selectionList.contains(contact)) {
+            selectionList.add(contact);
+            view.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, R.color.colorSelected) ));
+            updateCounter(++Routines.counter, counter_text_view);
 
-
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-
-            case R.id.get:
-                if (Build.VERSION.SDK_INT >= 23)
-                    Routines.requestPermissions(mActivity, new String[]{READ_CONTACTS}, Routines.PER_CODE_READ_CONTACTS);
-                else
-                    Toast.makeText(mContext, "heY UI", Toast.LENGTH_SHORT).show();
-                break;
-        }
-    }
-
-    @Override
-    public void readSystemContacts() {
-        int count = 0;
-        StringBuilder builder = new StringBuilder();
-        builder.append("Hey bitch!\n");
-
-        ContentResolver cr = mContext.getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
-                null, null, null, null);
-
-        if (cur.getCount() > 0) {
-            while (cur.moveToNext()) {
-                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                count++;
-
-                if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-//                    System.out.println("name : " + name + ", ID : " + id);
-                    //
-                    builder.append("ID." + id).append(":\n" + name+"\n");
-
-                    // get the phone number
-                    Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",
-                            new String[]{id}, null);
-                    while (pCur.moveToNext()) {
-                        String phone = pCur.getString(
-                                pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        System.out.println("phone" + phone);
-                        builder.append("phone: " + phone+ "\n");
-                    }
-                    pCur.close();
-
-
-                    // get email and type
-                    Cursor emailCur = cr.query(
-                            ContactsContract.CommonDataKinds.Email.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = ?",
-                            new String[]{id}, null);
-                    while (emailCur.moveToNext()) {
-                        // This would allow you get several email addresses
-                        // if the email addresses were stored in an array
-                        String email = emailCur.getString(
-                                emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-                        String emailType = emailCur.getString(
-                                emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.TYPE));
-
-                        System.out.println("Email " + email + " Email Type : " + emailType);
-                        builder.append("Email " + email + " Email Type : " + emailType+ "\n");
-                    }
-                    emailCur.close();
-
-                    // Get note.......
-                    String noteWhere = ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?";
-                    String[] noteWhereParams = new String[]{id,
-                            ContactsContract.CommonDataKinds.Note.CONTENT_ITEM_TYPE};
-                    Cursor noteCur = cr.query(ContactsContract.Data.CONTENT_URI, null, noteWhere, noteWhereParams, null);
-                    if (noteCur.moveToFirst()) {
-                        String note = noteCur.getString(noteCur.getColumnIndex(ContactsContract.CommonDataKinds.Note.NOTE));
-                        System.out.println("Note " + note);
-                        builder.append("Note " + note+  "\n");
-
-                    }
-                    noteCur.close();
-
-                }
+        }else {
+            selectionList.remove(contact);
+            view.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, R.color.colorTransparent) ));
+            if (selectionList.isEmpty()) {
+                setActionModeOff(toolbar, counter_text_view, title, adaptor);
+                selectionList.clear();
+            } else {
+                updateCounter(--Routines.counter, counter_text_view);
             }
         }
 
-        Log.d("contact_info", count + "") ;
-        Log.d("contact_info", builder.toString()) ;
+        //edit & delete option be shown only if just ONE item is selected
+        if (selectionList.size() > 1){
+            setActionMode2On(toolbar, counter_text_view, title);
+
+        } else if (selectionList.size() == 1){
+            setActionModeOn(toolbar, counter_text_view, title);
+            Routines.selectedItemId = (int) selectionList.get(0).getId();
+        }
     }
+
+
+    int i =0;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_delete:
+
+                Toast.makeText(mContext, "Del", Toast.LENGTH_SHORT).show();
+
+                new AlertDialog.Builder(mContext)
+                        .setTitle("پاک کنم؟")
+                        .setMessage("این اطلاعات از دم نیست و نابود میشن هااا !")
+                        .setPositiveButton("پاک کن بره داداچ", (dialogInterface, i1) -> {
+                            for (Contact contact : selectionList){
+                                db.deleteContact(contact.getId());
+                                Toast.makeText(mContext, "EventId : "+ contact.getId() + " Deleted", Toast.LENGTH_SHORT).show();
+                            }
+
+                            restartPage(Routines.CONTACTS);
+
+                        })
+                        .setNegativeButton("نه، بی خیال!", (dialogInterface, i1) -> {})
+                        .show();
+                break;
+
+            case R.id.item_edit:
+                Intent intent = new Intent(mContext, AddEventParticesActivity.class);
+                intent.putExtra(Routines.SEND_EVENT_ID_INTENT, Routines.selectedItemId);
+                startActivity(intent);
+//                finish();
+                break;
+        }
+
+        return true;
+    }
+
+    private void restartPage(short page) {
+        MainActivity.navPosition = page;
+        mActivity.finish();
+        startActivity(mActivity.getIntent());
+    }
+
+    @Override
+    public void onMyBackPressed() {
+
+//        if (Routines.is_in_action_mode){
+        selectionChangeColor(mContext, R.color.colorTransparent, adaptor);
+        setActionModeOff(toolbar, counter_text_view, title, adaptor);
+        selectionList.clear();
+    }
+
+
 }

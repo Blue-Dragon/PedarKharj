@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
