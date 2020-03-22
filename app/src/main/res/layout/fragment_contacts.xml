@@ -48,6 +48,14 @@
                 android:textColor="#868686"
                 android:textSize="24sp" />
 
+            <Button
+                android:id="@+id/get"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="get"
+                />
+
         </RelativeLayout>
 
 
@@ -66,7 +74,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
-
             android:layout_gravity="center_horizontal">
 
 

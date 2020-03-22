@@ -26,9 +26,7 @@ import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
-import com.example.pedarkharj_edit3.classes.IEditBar;
 import com.example.pedarkharj_edit3.classes.models.Event;
-import com.example.pedarkharj_edit3.classes.IOnBackPressed;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
@@ -287,7 +285,6 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
 
     @Override
     public void onMyBackPressed() {
-
 //        if (Routines.is_in_action_mode){
             selectionChangeColor(mContext, R.color.colorTransparent, adaptor);
             setActionModeOff(toolbar, counter_text_view, title, adaptor);

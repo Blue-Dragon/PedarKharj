@@ -16,13 +16,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.pedarkharj_edit3.classes.IEditBar;
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.BuyerDialog;
@@ -39,9 +36,7 @@ import com.example.pedarkharj_edit3.pages.EventDetailActivity;
 import com.example.pedarkharj_edit3.pages.ParticeResultActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 

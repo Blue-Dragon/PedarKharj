@@ -1,4 +1,4 @@
-package com.example.pedarkharj_edit3.classes;
+package com.example.pedarkharj_edit3.pages.fragments;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.pedarkharj_edit3.R;
+import com.example.pedarkharj_edit3.classes.MyAdapter;
+import com.example.pedarkharj_edit3.classes.Routines;
 
 public interface IEditBar {
 

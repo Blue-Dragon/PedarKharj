@@ -2,6 +2,8 @@ package com.example.pedarkharj_edit3;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity  {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
+
         //setting default fragment
         if (savedInstanceState == null ) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
@@ -59,6 +62,25 @@ public class MainActivity extends AppCompatActivity  {
 
 
     /********************************************       Methods     ****************************************************/
+
+    //-------------------------      permission stuff      --------------------------//
+    // Routines.requestPermissions...
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean permissionContact = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+
+        if (grantResults.length > 0 && permissionContact) {
+            Toast.makeText(mActivity, "مجوز دسترسی contacts داده شد", Toast.LENGTH_SHORT).show();
+            if (navPosition == Routines.CONTACTS ) {
+                contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                contactsFragment.readSystemContacts();
+            }
+        } else {
+            Toast.makeText(mActivity, "مجوز دسترسی contacts داده نشد", Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     //-------------------------     Fragments    --------------------------//
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -91,15 +113,6 @@ public class MainActivity extends AppCompatActivity  {
 
     @Override
     public void onBackPressed() {
-//        int count = getSupportFragmentManager().getBackStackEntryCount();
-//        eventsFragment =(EventsFragment) getFragmentManager().findFragmentById(R.id.activity_main);
-
-//        if (count == 0){
-//            super.onBackPressed();
-//        }else {
-//            Toast.makeText(mContext, "count is: "+ count, Toast.LENGTH_SHORT).show();
-//            getSupportFragmentManager().popBackStack();
-//        }
         //if in Home page
         if (navPosition == Routines.HOME )
             finish();
@@ -109,10 +122,10 @@ public class MainActivity extends AppCompatActivity  {
             eventsFragment.onMyBackPressed();
         }
 
-        else  if (navPosition == Routines.CONTACTS && Routines.is_in_action_mode) {
-            contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            contactsFragment.onMyBackPressed();
-        }
+//        else  if (navPosition == Routines.CONTACTS && Routines.is_in_action_mode) {
+//            contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+//            contactsFragment.onMyBackPressed();
+//        }
 
         else
             findViewById(R.id.nav_home).callOnClick();

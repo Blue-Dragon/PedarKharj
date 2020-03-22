@@ -30,17 +30,17 @@ import java.io.IOException;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_CONTACTS;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class AddContactActivity extends AppCompatActivity implements View.OnClickListener {
     private Context mContext;
     private Activity mActivity;
-    String name, family;
     EditText nameEdt, familyEdt;
-    RelativeLayout fromContactsBtn;
     ImageView cancelImg, doneImg;
     DatabaseHelper db;
 
+    RelativeLayout fromContactsBtn;
     Bitmap bitmap;
     Bitmap resizedBitmap;
     CircleImageView profPic;
@@ -54,10 +54,6 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
-//        //back imageView btn
-//        ImageView backBtn = findViewById(R.id.back_btn);
-//        backBtn.setOnClickListener(item -> finish());
-
         mActivity =this;
         mContext = this;
         newImg = false;
@@ -68,6 +64,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         doneImg = findViewById(R.id.check_img);                                  doneImg.setOnClickListener(this);
         nameEdt = findViewById(R.id.name_edt);
         familyEdt = findViewById(R.id.family_edt);
+        fromContactsBtn = findViewById(R.id.addFromContacts_btn);   fromContactsBtn.setOnClickListener(this);
 //
         db.closeDB();
     }
@@ -86,6 +83,12 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                     Routines.chooseCameraGallery(mActivity);
                 break;
 
+            case R.id.addFromContacts_btn:
+                if (Build.VERSION.SDK_INT >= 23)
+                    Routines.requestPermissions(mActivity, new String[]{READ_CONTACTS}, Routines.PER_CODE_READ_CONTACTS);
+                else
+                    Toast.makeText(mContext, "heY UI", Toast.LENGTH_SHORT).show();
+                break;
 
             case R.id.check_img:
                 addNewContact();
@@ -124,7 +127,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
 
 
 
-    /*       permission stuff        */
+    //-------------------------      permission stuff      --------------------------//
     // Routines.requestPermissions...
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -146,6 +149,8 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 boolean permissionContact = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 if (grantResults.length > 0 && permissionContact) {
                     Toast.makeText(mActivity, "مجوز دسترسی contacts داده شد", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "heY UI", Toast.LENGTH_SHORT).show();
+
                 } else {
                     Toast.makeText(mActivity, "مجوز دسترسی contacts داده نشد", Toast.LENGTH_SHORT).show();
                 }
@@ -153,6 +158,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+    //-------------------------      ACTIVITY RESULT       --------------------------//
     //get pic options (camera or gallery)
     //Routines.chooseCameraGallery...
     @Override
