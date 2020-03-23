@@ -130,7 +130,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
             if ( event.getBitmapStr() != null ){
                 Log.i("fuck026", "BitmapStr not null: \n"+ event.getBitmapStr() );
 
-                bitmap = Routines.StringToBitmap(event.getBitmapStr());
+                bitmap = Routines.stringToBitmap(event.getBitmapStr());
                 resizedBitmap = Routines.resizeBitmap(bitmap);
                 eventPic.setImageBitmap(resizedBitmap);
             }

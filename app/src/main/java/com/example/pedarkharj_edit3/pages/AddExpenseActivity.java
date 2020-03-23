@@ -367,7 +367,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
             dongEText.setHint("خب... " +buyer.getName() + " چی خریده؟");
             //if buyer has no pic, put a default pic
             Bitmap defPic = Routines.resizeBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile) ) ;
-            Bitmap bitmap = buyer.getBitmapStr() != null ? Routines.StringToBitmap(buyer.getBitmapStr() ) : defPic;
+            Bitmap bitmap = buyer.getBitmapStr() != null ? Routines.stringToBitmap(buyer.getBitmapStr() ) : defPic;
             circleImageView.setImageBitmap( bitmap );
         }
     }

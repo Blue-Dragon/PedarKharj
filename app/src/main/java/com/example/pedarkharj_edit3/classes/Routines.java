@@ -155,7 +155,7 @@ public class Routines  {
     /**
      * String to Bitmap
      */
-    public static Bitmap StringToBitmap(String input) {
+    public static Bitmap stringToBitmap(String input) {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory
                 .decodeByteArray(decodedByte, 0, decodedByte.length);
@@ -224,7 +224,7 @@ public class Routines  {
         if (cur != null && cur.getCount() > 0) {
 
 
-            while (cur.moveToNext() && i < 10) {
+            while (cur.moveToNext() ) {
                 Bitmap bitmap = null;
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
                 String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));

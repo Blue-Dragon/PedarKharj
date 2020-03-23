@@ -2,7 +2,9 @@ package com.example.pedarkharj_edit3.classes;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.models.Contact;
@@ -201,7 +204,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             int particNumber = db0.getAllParticeUnderEvent(event).size();
 
             if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
-/* pic */ if ( event.getBitmapStr() != null  && holder.imageView != null)       holder.imageView.setImageBitmap(Routines.StringToBitmap(event.getBitmapStr()));
+/* pic */ if ( event.getBitmapStr() != null  && holder.imageView != null)       holder.imageView.setImageBitmap(Routines.stringToBitmap(event.getBitmapStr()));
             if (particNumber > 0 && holder.resultTxt != null)      holder.resultTxt.setText(particNumber + " عضو");
             else Log.e("E002",  particNumber + "" );
 
@@ -225,7 +228,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             if (buyer.getName() != null && holder.nameTv != null)
                 holder.nameTv.setText(buyer.getName());
             if (buyer.getBitmapStr() != null && holder.profImv != null)
-                holder.profImv.setImageBitmap(Routines.StringToBitmap(buyer.getBitmapStr()));
+                holder.profImv.setImageBitmap(Routines.stringToBitmap(buyer.getBitmapStr()));
 
             if (holder.resultTxt != null)
                 holder.resultTxt.setText(String.valueOf(expense.getExpensePrice() ));
@@ -262,15 +265,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             contact = contactList.get(position);
             if (contact.getName() != null && holder.nameTv != null)
                 holder.nameTv.setText(contact.getName());
-            if (contact.getBitmapStr() != null && holder.profImv != null)
-                holder.profImv.setImageBitmap(Routines.StringToBitmap(contact.getBitmapStr()));
+
+            //get img later. no hurry bro!
+            if (contact.getBitmapStr() != null && holder.profImv != null){
+                ContactAndHolder container = new ContactAndHolder();
+                container.contact = contact;
+                container.holder = holder;
+                LoadImgATask aTask = new LoadImgATask();
+                aTask.execute(container);
+//                holder.profImv.setImageBitmap(Routines.stringToBitmap(contact.getBitmapStr()));
+            }
 
             if (drawable != null && holder.relativeLayout != null) holder.relativeLayout.setForeground(drawable); //onLongClick color changing
 
         }
 
 
-            /*
+        /*
          * others
          */
         if (participants != null ) {
@@ -282,7 +293,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             if (participant.getName() != null && holder.nameTv != null)
                 holder.nameTv.setText(participant.getName());
             if (participant.getBitmapStr() != null && holder.profImv != null)
-                holder.profImv.setImageBitmap(Routines.StringToBitmap(participant.getBitmapStr()));
+                holder.profImv.setImageBitmap(Routines.stringToBitmap(participant.getBitmapStr()));
             if (participant.getResult() != null && holder.resultTxt != null)
                 holder.resultTxt.setText(participant.getResult());
 
@@ -344,5 +355,33 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             return contactList.size();
 
         else return 0;
+    }
+
+    class ContactAndHolder {
+        Contact contact;
+        ViewHolder holder;
+        Bitmap bitmap;
+    }
+
+    class LoadImgATask extends AsyncTask<ContactAndHolder, Void, ContactAndHolder>{
+
+        @Override
+        protected ContactAndHolder doInBackground(ContactAndHolder... contactAndViews) {
+
+            ContactAndHolder contactAndView = contactAndViews[0];
+            contactAndView.bitmap = Routines.stringToBitmap(contactAndView.contact.getBitmapStr());
+            return contactAndView;
+        }
+
+        @Override
+        protected void onPostExecute(ContactAndHolder contactAndView) {
+            if (contactAndView !=null) {
+                ViewHolder holder = contactAndView.holder;
+                Bitmap bitmap = contactAndView.bitmap;
+                Log.d("bitmapString", Routines.bitmapToString(bitmap));
+                holder.profImv.setImageBitmap(bitmap);
+            }
+            super.onPostExecute(contactAndView);
+        }
     }
 }

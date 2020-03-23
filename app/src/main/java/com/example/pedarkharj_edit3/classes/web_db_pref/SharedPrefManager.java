@@ -91,7 +91,7 @@ public class SharedPrefManager {
 //        return new Participant(
 //                sharedPreferences.getInt(KEY_ID, -1),
 //                sharedPreferences.getString(KEY_NAME, null),
-//                Routines.StringToBitmap(sharedPreferences.getString(KEY_BITMAP_STRING, null))
+//                Routines.stringToBitmap(sharedPreferences.getString(KEY_BITMAP_STRING, null))
 //        );
 //    }
 
