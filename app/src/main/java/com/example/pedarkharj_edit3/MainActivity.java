@@ -76,7 +76,8 @@ public class MainActivity extends AppCompatActivity  {
                 contactsFragment.readSystemContacts();
 //            }
         } else {
-            Toast.makeText(mActivity, "مجوز دسترسی contacts داده نشد", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mActivity, "مجوز دسترسی contacts داده نشد", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, "برای اتقال مخاطبین گوشی به اینجا به ابن  مجوز دسترسی نیاز داریم!", Toast.LENGTH_SHORT).show();
         }
 
     }

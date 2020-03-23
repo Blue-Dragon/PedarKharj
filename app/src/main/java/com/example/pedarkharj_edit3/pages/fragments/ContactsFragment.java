@@ -1,5 +1,6 @@
 package com.example.pedarkharj_edit3.pages.fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ContentResolver;
@@ -14,6 +15,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -44,7 +46,9 @@ import com.example.pedarkharj_edit3.pages.AddEventParticesActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 
 public class ContactsFragment extends Fragment implements IContacts, View.OnClickListener {
@@ -131,20 +135,27 @@ public class ContactsFragment extends Fragment implements IContacts, View.OnClic
     }
 
 
+    @Override
+    public void onClick(View view) {
+        int permission = ContextCompat.checkSelfPermission(mContext, READ_CONTACTS);
+
+        if (Build.VERSION.SDK_INT >= 23 && permission != PackageManager.PERMISSION_GRANTED) {
+//            // Should we show an explanation?
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, READ_CONTACTS))
+//                Toast.makeText(mActivity, "Camera Permission is required for this app to run", Toast.LENGTH_SHORT).show();
+            Routines.requestPermissions(mActivity, new String[]{READ_CONTACTS}, Routines.PER_CODE_CAMERA_READexSTG);
+        }
+        else
+            readSystemContacts();
+    }
 
     @Override
     public void readSystemContacts() {
 
-            Routines.getContact(mContext);
-            adaptor.notifyDataSetChanged();
-            mActivity.recreate();
+        Routines.getContact(mContext);
+        adaptor.notifyDataSetChanged();
+        mActivity.recreate();
     }
-
-    @Override
-    public void onClick(View view) {
-        readSystemContacts();
-    }
-
 
 //    public void readContacts(){
 //        ContentResolver cr = mContext.getContentResolver();
