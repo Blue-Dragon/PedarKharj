@@ -87,7 +87,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 if (Build.VERSION.SDK_INT >= 23)
                     Routines.requestPermissions(mActivity, new String[]{READ_CONTACTS}, Routines.PER_CODE_READ_CONTACTS);
                 else
-                    Toast.makeText(mContext, "heY UI", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "heY UI", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.check_img:
@@ -112,12 +112,12 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 return;
             }
 
-//        String imgString = Routines.encodeToBase64(mContext, participant);
+//        String imgString = Routines.bitmapToString(mContext, participant);
 
         //creating a new Contact object
         Contact contact = new Contact();
         contact.setName(fullName);
-        if (newImg) contact.setBitmapStr(Routines.encodeToBase64(resizedBitmap));  //see if we have any images
+        if (newImg) contact.setBitmapStr(Routines.bitmapToString(resizedBitmap));  //see if we have any images
 
         //add to db
         db.createContact(contact);

@@ -71,11 +71,10 @@ public class MainActivity extends AppCompatActivity  {
         boolean permissionContact = grantResults[0] == PackageManager.PERMISSION_GRANTED;
 
         if (grantResults.length > 0 && permissionContact) {
-            Toast.makeText(mActivity, "مجوز دسترسی contacts داده شد", Toast.LENGTH_SHORT).show();
-            if (navPosition == Routines.CONTACTS ) {
+//            if (navPosition == Routines.CONTACTS ) {
                 contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                 contactsFragment.readSystemContacts();
-            }
+//            }
         } else {
             Toast.makeText(mActivity, "مجوز دسترسی contacts داده نشد", Toast.LENGTH_SHORT).show();
         }

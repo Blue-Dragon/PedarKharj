@@ -1,10 +1,15 @@
 package com.example.pedarkharj_edit3.classes;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
@@ -12,14 +17,17 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.classes.models.Contact;
 import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -122,8 +130,10 @@ public class Routines  {
         return bitmap;
     }
 
-    //Bitmap to string
-    public static String encodeToBase64(Bitmap bitmap) {
+    /**
+     * Bitmap  to String
+     */
+    public static String bitmapToString(Bitmap bitmap) {
         String profPicString = null;
 
         if (bitmap != null) {
@@ -135,8 +145,17 @@ public class Routines  {
         return profPicString;
     }
 
-    // String to Bitmap
-    public static Bitmap decodeBase64(String input) {
+//    /**
+//     * byteArray to Bitmap
+//     */
+    public static Bitmap  byteArrayToBitmap(byte[] decodedByte) {
+        return  BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
+
+    /**
+     * String to Bitmap
+     */
+    public static Bitmap StringToBitmap(String input) {
         byte[] decodedByte = Base64.decode(input, 0);
         return BitmapFactory
                 .decodeByteArray(decodedByte, 0, decodedByte.length);
@@ -194,6 +213,49 @@ public class Routines  {
     /****************************************
      *
      */
+    public static void getContact(Context mContext) {
+        int i = 0;
+//        StringBuilder builder = new StringBuilder();
 
+        DatabaseHelper db = new DatabaseHelper(mContext);
+        ContentResolver cr = mContext.getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+
+        if (cur != null && cur.getCount() > 0) {
+
+
+            while (cur.moveToNext() && i < 10) {
+                Bitmap bitmap = null;
+                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+//                builder.append(name + "\n");
+
+                ///---------   get photo   --------
+                Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(id));
+                Uri photoUri = Uri.withAppendedPath(contactUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
+                Cursor cursor = mContext.getContentResolver().query(photoUri,
+                        new String[]{ContactsContract.Contacts.Photo.PHOTO}, null, null, null);
+
+                if (cursor != null && cursor.moveToFirst()) {
+                    byte[] data = cursor.getBlob(0);
+                    if (data != null) {
+                        bitmap = byteArrayToBitmap(data);
+//                        builder.append(bitmapToString(bitmap) + "\n\n");
+//                    new ByteArrayInputStream(data);
+                    }
+                    cursor.close();
+                }
+                ///-----------------
+
+                db.createContact(new Contact(name, bitmapToString(bitmap)));
+                i++;
+            }
+
+
+//            Log.d("img_string", builder.toString());
+            cur.close();
+            db.closeDB();
+        }
+    }
 
 }

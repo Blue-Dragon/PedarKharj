@@ -73,7 +73,7 @@ public class SharedPrefManager {
 //            editor.putInt(KEY_ID, participant.getId());
 //            editor.putString(KEY_NAME, participant.getName());
 //            //TODOthing: bellow code should not be deleted, but debugged!
-////            String bitmapString = Routines.encodeToBase64(mContext, participant);
+////            String bitmapString = Routines.bitmapToString(mContext, participant);
 ////            if (!bitmapString.isEmpty())    editor.putString(KEY_BITMAP_STRING, bitmapString);
 //            editor.apply();
 //        }
@@ -91,7 +91,7 @@ public class SharedPrefManager {
 //        return new Participant(
 //                sharedPreferences.getInt(KEY_ID, -1),
 //                sharedPreferences.getString(KEY_NAME, null),
-//                Routines.decodeBase64(sharedPreferences.getString(KEY_BITMAP_STRING, null))
+//                Routines.StringToBitmap(sharedPreferences.getString(KEY_BITMAP_STRING, null))
 //        );
 //    }
 

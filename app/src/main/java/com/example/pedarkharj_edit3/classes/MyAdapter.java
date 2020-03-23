@@ -201,7 +201,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             int particNumber = db0.getAllParticeUnderEvent(event).size();
 
             if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
-/* pic */ if ( event.getBitmapStr() != null  && holder.imageView != null)       holder.imageView.setImageBitmap(Routines.decodeBase64(event.getBitmapStr()));
+/* pic */ if ( event.getBitmapStr() != null  && holder.imageView != null)       holder.imageView.setImageBitmap(Routines.StringToBitmap(event.getBitmapStr()));
             if (particNumber > 0 && holder.resultTxt != null)      holder.resultTxt.setText(particNumber + " عضو");
             else Log.e("E002",  particNumber + "" );
 
@@ -225,7 +225,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             if (buyer.getName() != null && holder.nameTv != null)
                 holder.nameTv.setText(buyer.getName());
             if (buyer.getBitmapStr() != null && holder.profImv != null)
-                holder.profImv.setImageBitmap(Routines.decodeBase64(buyer.getBitmapStr()));
+                holder.profImv.setImageBitmap(Routines.StringToBitmap(buyer.getBitmapStr()));
 
             if (holder.resultTxt != null)
                 holder.resultTxt.setText(String.valueOf(expense.getExpensePrice() ));
@@ -263,7 +263,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             if (contact.getName() != null && holder.nameTv != null)
                 holder.nameTv.setText(contact.getName());
             if (contact.getBitmapStr() != null && holder.profImv != null)
-                holder.profImv.setImageBitmap(Routines.decodeBase64(contact.getBitmapStr()));
+                holder.profImv.setImageBitmap(Routines.StringToBitmap(contact.getBitmapStr()));
 
             if (drawable != null && holder.relativeLayout != null) holder.relativeLayout.setForeground(drawable); //onLongClick color changing
 
@@ -282,7 +282,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             if (participant.getName() != null && holder.nameTv != null)
                 holder.nameTv.setText(participant.getName());
             if (participant.getBitmapStr() != null && holder.profImv != null)
-                holder.profImv.setImageBitmap(Routines.decodeBase64(participant.getBitmapStr()));
+                holder.profImv.setImageBitmap(Routines.StringToBitmap(participant.getBitmapStr()));
             if (participant.getResult() != null && holder.resultTxt != null)
                 holder.resultTxt.setText(participant.getResult());
 

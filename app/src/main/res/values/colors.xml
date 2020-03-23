@@ -7,8 +7,20 @@
     -->
 
     <color name="colorPrimary">#3B7A01</color>
+    <color name="colorPrimaryLight">#6abf69</color>
     <color name="colorPrimaryDark">#015C06</color>
-    <color name="colorAccent">#E64A19</color>
+    <!--    <color name="colorAccent">#E64A19</color>-->
+
+
+<!--    <color name="colorAccent">#d81b60</color>-->
+<!--    <color name="colorAccentLight">#ff5c8d</color>-->
+<!--    <color name="colorAccentDark">#a00037</color>-->
+
+    <color name="colorAccent">#8e24aa</color>
+    <color name="colorAccentLight">#c158dc</color>
+    <color name="colorAccentDark">#5c007a</color>
+    <color name="primaryTextColor">#000000</color>
+    <color name="secondaryTextColor">#ffffff</color>
 
 
     <color name="colorWhite">#FFFFFF</color>

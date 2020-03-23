@@ -130,7 +130,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
             if ( event.getBitmapStr() != null ){
                 Log.i("fuck026", "BitmapStr not null: \n"+ event.getBitmapStr() );
 
-                bitmap = Routines.decodeBase64(event.getBitmapStr());
+                bitmap = Routines.StringToBitmap(event.getBitmapStr());
                 resizedBitmap = Routines.resizeBitmap(bitmap);
                 eventPic.setImageBitmap(resizedBitmap);
             }
@@ -160,7 +160,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
         }
 
         event.setEventName(eventName);
-        if (resizedBitmap != null) event.setBitmapStr( Routines.encodeToBase64(resizedBitmap) );
+        if (resizedBitmap != null) event.setBitmapStr( Routines.bitmapToString(resizedBitmap) );
         db.updateEvent(event);
 
         MainActivity.navPosition = Routines.EVENTS;
