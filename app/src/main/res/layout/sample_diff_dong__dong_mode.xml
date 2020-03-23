@@ -52,7 +52,7 @@
                 android:layout_marginBottom="-2dp"
                 android:fontFamily="@font/b_koodak"
                 android:gravity="center"
-                android:text="ممد"
+                android:text=""
                 android:textColor="#000000"
                 android:textSize="16sp" />
         </RelativeLayout>
@@ -93,7 +93,7 @@
                 android:inputType="number"
                 android:maxLines="1"
                 android:paddingBottom="6dp"
-                android:text="1" />
+                android:text="" />
 
             <Button
                 android:id="@+id/plus_btn"

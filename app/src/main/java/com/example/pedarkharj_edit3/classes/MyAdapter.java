@@ -263,18 +263,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             Contact contact;
             Log.i("positionCall", "contacts recyclerView Call");
             contact = contactList.get(position);
-            if (contact.getName() != null && holder.nameTv != null)
-                holder.nameTv.setText(contact.getName());
 
-            //get img later. no hurry bro!
-            if (contact.getBitmapStr() != null && holder.profImv != null){
+            //get info later. no hurry bro !
+            if (contact.getName() != null && holder.nameTv != null){
+//                holder.nameTv.setText(contact.getName());
                 ContactAndHolder container = new ContactAndHolder();
                 container.contact = contact;
                 container.holder = holder;
                 LoadImgATask aTask = new LoadImgATask();
                 aTask.execute(container);
-//                holder.profImv.setImageBitmap(Routines.stringToBitmap(contact.getBitmapStr()));
             }
+
+
+//            if (contact.getBitmapStr() != null && holder.profImv != null){
+//                ContactAndHolder container = new ContactAndHolder();
+//                container.contact = contact;
+//                container.holder = holder;
+//                LoadImgATask aTask = new LoadImgATask();
+//                aTask.execute(container);
+////                holder.profImv.setImageBitmap(Routines.stringToBitmap(contact.getBitmapStr()));
+//            }
 
             if (drawable != null && holder.relativeLayout != null) holder.relativeLayout.setForeground(drawable); //onLongClick color changing
 
@@ -357,10 +365,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         else return 0;
     }
 
+
     class ContactAndHolder {
         Contact contact;
         ViewHolder holder;
         Bitmap bitmap;
+        String name;
     }
 
     class LoadImgATask extends AsyncTask<ContactAndHolder, Void, ContactAndHolder>{
@@ -369,7 +379,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         protected ContactAndHolder doInBackground(ContactAndHolder... contactAndViews) {
 
             ContactAndHolder contactAndView = contactAndViews[0];
-            contactAndView.bitmap = Routines.stringToBitmap(contactAndView.contact.getBitmapStr());
+            String bitmapString = (contactAndView.contact.getBitmapStr());
+            if (bitmapString != null && bitmapString.length() > 0){
+                contactAndView.bitmap = Routines.stringToBitmap(bitmapString);
+            }
+            contactAndView.name = contactAndView.contact.getName();
             return contactAndView;
         }
 
@@ -377,9 +391,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         protected void onPostExecute(ContactAndHolder contactAndView) {
             if (contactAndView !=null) {
                 ViewHolder holder = contactAndView.holder;
+                Contact contact = contactAndView.contact;
                 Bitmap bitmap = contactAndView.bitmap;
-                Log.d("bitmapString", Routines.bitmapToString(bitmap));
-                holder.profImv.setImageBitmap(bitmap);
+                String name = contactAndView.name;
+
+                holder.nameTv.setText(name);
+                if (bitmap != null && holder.profImv != null){
+                    holder.profImv.setImageBitmap(bitmap);
+                }
             }
             super.onPostExecute(contactAndView);
         }

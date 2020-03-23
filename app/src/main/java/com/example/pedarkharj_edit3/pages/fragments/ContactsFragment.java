@@ -29,8 +29,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.pedarkharj_edit3.MainActivity;
@@ -52,44 +54,39 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 
 public class ContactsFragment extends Fragment implements IContacts, View.OnClickListener {
-    RecyclerView recyclerView;
-    static DatabaseHelper db;
-
-    MyAdapter adaptor;
-    Context mContext;
+    List<Contact> contactList;
     Activity mActivity;
+    Context mContext;
+    DatabaseHelper db;
+    MyAdapter adaptor;
+    LinearLayoutManager linearLayoutManager;
+    boolean isScrolling = false;
+    int currentItems, totalItems, scrollOutItems;
+
+    RecyclerView recyclerView;
     FloatingActionButton fab;
     Toolbar toolbar;
     View mView;
     ImageView backBtn;
     Button getBtn;
+    ProgressBar progressBar;
 
-    List<Contact> contactList;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_contacts, container, false);
+
         init();
-
-        getBtn.setOnClickListener(this);
-
-        backBtn.setOnClickListener(item -> Toast.makeText(mContext, "back", Toast.LENGTH_SHORT).show());
-        setHasOptionsMenu(true); //for menu items in fragment (edit & delete)
+        doOnClicks();
 
         //Floating Btn
-        fab = mView.findViewById(R.id.fab);
         fab.setOnClickListener(view0 -> {
-//            startActivityForResult(new Intent(mContext, AddContactActivity.class), INTENT_CODE);
             startActivity(new Intent(getActivity(), AddContactActivity.class));
-//            mActivity.finish();
         });
 
-//        //recyclerView
+        // -------  recyclerView  -------//
         setRecView();
-        /*
-         * recView onClick
-         */
         Log.e("recOnClick", "onClick");
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
@@ -100,9 +97,35 @@ public class ContactsFragment extends Fragment implements IContacts, View.OnClic
             public void onLongClick(View view, int position) {
             }
         }));
+        //
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState  == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+                    isScrolling = true;
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                currentItems = linearLayoutManager.getChildCount();
+                totalItems = linearLayoutManager.getItemCount();
+                scrollOutItems = linearLayoutManager.findFirstVisibleItemPosition();
+
+                if (isScrolling && (currentItems + scrollOutItems) == totalItems){
+                    //data fetch
+                    isScrolling = false;
+                    fetchData();
+                }
+
+            }
+        });
 
         return mView;
     }
+
+
 
     /********************************************       Methods     ****************************************************/
     private void init() {
@@ -118,14 +141,20 @@ public class ContactsFragment extends Fragment implements IContacts, View.OnClic
         backBtn = mView.findViewById(R.id.back_btn);
         recyclerView = mView.findViewById(R.id.recycler_view);
         getBtn = mView.findViewById(R.id.get);
+        fab = mView.findViewById(R.id.fab);
     }
 
+    private void doOnClicks() {
+        getBtn.setOnClickListener(this);
+        backBtn.setOnClickListener(item -> Toast.makeText(mContext, "back", Toast.LENGTH_SHORT).show());
+        setHasOptionsMenu(true); //for menu items in fragment (edit & delete)
+    }
 
     private void setRecView() {
         contactList = db.getAllContacts();
 //        List<Participant> participants = Routines.contactToPartic(mContacts0);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+        linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         adaptor = new MyAdapter(mContext);
@@ -133,7 +162,6 @@ public class ContactsFragment extends Fragment implements IContacts, View.OnClic
         adaptor.setContactList(contactList);
         recyclerView.setAdapter(adaptor);
     }
-
 
     @Override
     public void onClick(View view) {
@@ -270,4 +298,18 @@ public class ContactsFragment extends Fragment implements IContacts, View.OnClic
 //            }
 //        }
 //    }
+
+    /**
+     *  lazy loading
+     */
+    private void fetchData() {
+        progressBar = new ProgressBar(mContext);
+        progressBar.setVisibility( View.VISIBLE);
+
+        for (int i=0 ; i<10; i++){
+
+        }
+
+    }
+
 }

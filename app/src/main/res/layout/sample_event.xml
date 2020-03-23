@@ -45,7 +45,7 @@
                 android:ellipsize="end"
                 android:gravity="right|center_vertical"
                 android:maxLines="1"
-                android:text="HappyCoding"
+                android:text=""
                 android:textColor="#DADADA" />
 
             <TextView
@@ -59,7 +59,7 @@
                 android:ellipsize="end"
                 android:gravity="right|top"
                 android:maxLines="1"
-                android:text="HappyCoding"
+                android:text=""
                 android:textColor="#DADADA" />
         </LinearLayout>
 
