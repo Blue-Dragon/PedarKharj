@@ -6,7 +6,7 @@
     tools:context=".pages.DiffDongActivity">
 
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/m_toolbar"
         style="@style/toolbar_style">
 
@@ -50,7 +50,7 @@
         </RelativeLayout>
 
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
         android:id="@+id/rl_myresult"
@@ -82,7 +82,7 @@
             android:layout_marginBottom="0dp">
 
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/diff_dong_recView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -94,7 +94,7 @@
     </ScrollView>
 
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         style="@style/fab_style"
 

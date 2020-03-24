@@ -1,4 +1,4 @@
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/details_card_layout"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
     card_view:cardCornerRadius="2dp">
 
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/rl_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -128,8 +128,8 @@
             card_view:layout_constraintLeft_toLeftOf="parent"
             card_view:layout_constraintTop_toTopOf="@+id/tv_my_dong" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

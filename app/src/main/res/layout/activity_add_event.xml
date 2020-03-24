@@ -40,7 +40,7 @@
 
 
 
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_weight="7">
@@ -66,7 +66,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/prof_pic"
         app:layout_constraintEnd_toEndOf="@+id/prof_pic" />
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/change_pic"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -90,7 +90,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/prof_pic"
         app:layout_constraintTop_toBottomOf="@+id/prof_pic" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
@@ -105,7 +105,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -117,7 +117,7 @@
 
     </ScrollView>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         style="@style/fab_style"
         android:layout_width="wrap_content"

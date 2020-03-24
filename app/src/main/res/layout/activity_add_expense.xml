@@ -5,7 +5,7 @@
     style="@style/activity_layout_style"
     tools:context=".pages.AddExpenseActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/m_toolbar"
         style="@style/toolbar_style">
 
@@ -39,7 +39,7 @@
         </RelativeLayout>
 
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
             <RelativeLayout
                 android:id="@+id/downerPage_addExpense"
@@ -61,7 +61,7 @@
                         android:layout_height="match_parent"
                         android:background="#00FFFFFF">
 
-                        <android.support.v7.widget.RecyclerView
+                        <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/participants_RecView"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -69,7 +69,7 @@
                             tools:layoutManager="GridLayoutManager"
                             tools:listitem="@layout/sample_contact">
 
-                        </android.support.v7.widget.RecyclerView>
+                        </androidx.recyclerview.widget.RecyclerView>
 
                     </RelativeLayout>
 
