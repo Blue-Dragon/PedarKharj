@@ -1,6 +1,6 @@
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:id="@+id/details_card_layout"
     android:layout_width="100dp"
     android:layout_height="133dp"
@@ -34,15 +34,16 @@
             android:layout_weight="32"
             android:paddingLeft="@dimen/s"
             android:paddingRight="@dimen/s"
+            android:gravity="center_vertical"
             android:background="#74000000">
 
 
-            <TextView
+            <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                 android:id="@+id/partic_name"
-                style="@style/large_koodak"
-                android:textSize="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/medium_koodak"
+                app:autoSizeMinTextSize="16sp"
                 android:layout_gravity="right"
                 android:ellipsize="end"
                 android:gravity="right|center_vertical"
@@ -50,13 +51,13 @@
                 android:text=""
                 android:textColor="#DADADA" />
 
-            <TextView
+            <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                 android:id="@+id/result_txt"
-                style="@style/small_koodak"
-                android:textSize="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-8dp"
+                style="@style/koodak"
+                app:autoSizeMinTextSize="12sp"
+                android:layout_marginTop="-5dp"
                 android:layout_marginBottom="2dp"
                 android:layout_gravity="right|center_vertical"
                 android:ellipsize="end"
@@ -64,6 +65,8 @@
                 android:maxLines="1"
                 android:text=""
                 android:textColor="#DADADA" />
+
+
         </LinearLayout>
 
     </LinearLayout>
