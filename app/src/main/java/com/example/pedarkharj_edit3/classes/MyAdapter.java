@@ -186,7 +186,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             GridLayoutManager.LayoutParams layoutParams = (GridLayoutManager.LayoutParams) view.getLayoutParams();
             int split = (parent.getMeasuredWidth() / widthSplit);
             layoutParams.width = split - split/12 ;
-            layoutParams.height = (layoutParams.width) + (layoutParams.width / 3);
+            layoutParams.height = 4*(layoutParams.width)/3;
 //        int width = parent.getMeasuredWidth() / 3;
 //        view.setMinimumWidth(width);
         }
@@ -206,13 +206,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             int particNumber = db0.getAllParticeUnderEvent(event).size();
 
             if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
-//            /* pic */ if ( event.getBitmapStr() != null  && holder.imageView != null)
-//                holder.imageView.setImageBitmap(Routines.stringToBitmap(event.getBitmapStr()));
+            /* pic */ if ( event.getBitmapStr() != null  && holder.imageView != null)
+                holder.imageView.setImageBitmap(Routines.stringToBitmap(event.getBitmapStr()));
 
-            /* back  ground */ if ( event.getBitmapStr() != null  && holder.bkGrndLayout != null) {
-                Drawable drawable = new BitmapDrawable(mContext.getResources(), Routines.stringToBitmap(event.getBitmapStr()) );
-                holder.bkGrndLayout.setBackground(drawable);
-            }
+//            /* back  ground */ if ( event.getBitmapStr() != null  && holder.bkGrndLayout != null) {
+//                Drawable drawable = new BitmapDrawable(mContext.getResources(), Routines.stringToBitmap(event.getBitmapStr()) );
+//                holder.bkGrndLayout.setBackground(drawable);
+//            }
             if (particNumber > 0 && holder.resultTxt != null)      holder.resultTxt.setText(particNumber + " عضو");
             else Log.e("E002",  particNumber + "" );
 

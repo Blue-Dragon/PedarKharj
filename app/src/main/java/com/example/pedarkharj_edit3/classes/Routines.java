@@ -172,7 +172,7 @@ public class Routines  {
     public static void startCrop(Activity mActivity, Uri imageUri, int x, int y) {
         CropImage.activity(imageUri)
                 .setGuidelines(CropImageView.Guidelines.ON)
-                .setMultiTouchEnabled(true)
+                .setMultiTouchEnabled(false)
                 .setAspectRatio(x, y)
                 .start(mActivity);
     }

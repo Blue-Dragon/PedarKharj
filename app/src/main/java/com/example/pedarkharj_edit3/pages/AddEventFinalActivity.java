@@ -252,12 +252,12 @@ public class AddEventFinalActivity extends AppCompatActivity {
                 boolean permissioncamera = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 boolean permissiongallery = grantResults[1] == PackageManager.PERMISSION_GRANTED;
                 if (grantResults.length > 0 && permissioncamera && permissiongallery) {
-                    Toast.makeText(mActivity, "مجوز دسترسی داده شد", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mActivity, "مجوز دسترسی داده شد", Toast.LENGTH_SHORT).show();
 //                    Routines.chooseCameraGallery(mActivity);
                     CropImage.startPickImageActivity(mActivity);
 
                 } else {
-                    Toast.makeText(mActivity, "مجوز دسترسی داده نشد", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, "برای وارد کردن عکس از دوربین یا گالری به این دسترسی نیاز داریم.", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
