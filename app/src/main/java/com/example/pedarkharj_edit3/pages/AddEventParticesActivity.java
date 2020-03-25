@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.R;
@@ -28,17 +29,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddEventParticesActivity extends AppCompatActivity {
-    Context mContext;
-    RecyclerView recyclerView, selected_recView;
     List<Contact> contacts;
     List<Participant> allContactsTo_participants, selectedPartices;
+    Context mContext;
     MyAdapter adaptor, selectedAdaptor;
     DatabaseHelper db;
     Event existedEvent;
 
-    FloatingActionButton fab;
-    boolean edit_mode;
     int curEventId;
+    boolean edit_mode;
+    RecyclerView recyclerView, selected_recView;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

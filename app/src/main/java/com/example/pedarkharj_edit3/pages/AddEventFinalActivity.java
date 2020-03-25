@@ -1,5 +1,6 @@
 package com.example.pedarkharj_edit3.pages;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,8 @@ import android.os.Build;
 import android.provider.MediaStore;
 import androidx.annotation.NonNull;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -28,8 +31,8 @@ import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.Routines;
+import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -47,7 +50,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
     Bitmap bitmap;
     Bitmap resizedBitmap;
     boolean newImg, edit_mode;
-    CircleImageView eventPic, changePic_bkg;
+    CircleImageView eventPic, changePic_bkg; //todo : change in ti rectangle
 
     boolean suddenly_stop;
     int eventId;
@@ -55,11 +58,12 @@ public class AddEventFinalActivity extends AppCompatActivity {
     EditText ed;
     RecyclerView recyclerView;
     FloatingActionButton fab;
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_event);
+        setContentView(R.layout.activity_add_event_final);
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
@@ -187,6 +191,56 @@ public class AddEventFinalActivity extends AppCompatActivity {
     }
 
 
+
+
+    //-------------------------      ACTIVITY RESULT       --------------------------//
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Uri imageUri = CropImage.getPickImageResultUri(mContext, data);
+
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE){
+            if (CropImage.isReadExternalStoragePermissionsRequired(mContext, imageUri)){
+                uri = imageUri;
+                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},  0);
+            } else Routines.startCrop(mActivity, imageUri, 3, 4);
+        }
+
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK){
+                if (result != null) {
+//                    profPic.setImageURI(result.getUri());
+                    /* *********   setting bitmap   ***********/
+                    try {
+                        Uri imgUri = result.getUri();
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
+
+                        if (bitmap != null){
+//                            eventPic.setImageBitmap(bitmap);
+                            //resizing image
+//                        resizedBitmap = Routines.resizeBitmap(bitmap);
+                            resizedBitmap = Routines.convertBitmapThumbnail(bitmap);
+                            eventPic.setImageBitmap(resizedBitmap);
+//                        profPic.setImageBitmap(resizedBitmap);
+                            newImg = true;
+                        }
+
+                    } catch (Exception e) {
+                        Log.e("bitmapErr", e.toString());
+                    }
+
+                    /* **********************/
+//                    Toast.makeText(mContext, "yeeeeees", Toast.LENGTH_SHORT).show();
+                }else   Toast.makeText(mContext, "Null result", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+    }
+
     /*       permission stuff        */
     // Routines.requestPermissions...
     @Override
@@ -199,7 +253,9 @@ public class AddEventFinalActivity extends AppCompatActivity {
                 boolean permissiongallery = grantResults[1] == PackageManager.PERMISSION_GRANTED;
                 if (grantResults.length > 0 && permissioncamera && permissiongallery) {
                     Toast.makeText(mActivity, "مجوز دسترسی داده شد", Toast.LENGTH_SHORT).show();
-                    Routines.chooseCameraGallery(mActivity);
+//                    Routines.chooseCameraGallery(mActivity);
+                    CropImage.startPickImageActivity(mActivity);
+
                 } else {
                     Toast.makeText(mActivity, "مجوز دسترسی داده نشد", Toast.LENGTH_SHORT).show();
                 }
@@ -208,60 +264,26 @@ public class AddEventFinalActivity extends AppCompatActivity {
         }
     }
 
-    //get pic options (camera or gallery)
-    //Routines.chooseCameraGallery...
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //gallery image
-        if (requestCode == Routines.GALLERY_INTENT && resultCode == RESULT_OK) {
-            Uri uri = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                if (bitmap != null){
-                    //resizing image
-//                    resizedBitmap = Routines.resizeBitmap(bitmap);
-                    resizedBitmap = Routines.convertBitmapThumbnail(bitmap);
-                    eventPic.setImageBitmap(resizedBitmap);
-                    newImg = true;
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            //camera image
-            if (data!=null && data.getExtras()!=null) {
-                bitmap = (Bitmap) data.getExtras().get("data") ;
-                if (bitmap != null) {
-//                    resizedBitmap = Routines.resizeBitmap(bitmap);
-                    resizedBitmap = Routines.convertBitmapThumbnail(bitmap);
-                    eventPic.setImageBitmap(resizedBitmap);
-                    newImg = true;
-                }
-            }
-        }
-    }
-
     /**/
 
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        suddenlyStopedTask();
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        suddenlyStopedTask();
+//    }
+//
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        suddenlyStopedTask();
+//    }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        suddenlyStopedTask();
-    }
-
-    private void suddenlyStopedTask() {
-        if (suddenly_stop) {
-            if (edit_mode) updateEvent();
-            else Routines.deleteTempEvent(mContext, eventId);
-            Log.d("Fuck07", "onStop");
-        }
-    }
+//    private void suddenlyStopedTask() {
+//        if (suddenly_stop) {
+//            if (edit_mode) updateEvent();
+//            else Routines.deleteTempEvent(mContext, eventId);
+//            Log.d("Fuck07", "onStop");
+//        }
+//    }
 }

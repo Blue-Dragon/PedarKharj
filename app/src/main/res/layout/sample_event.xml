@@ -12,6 +12,7 @@
     card_view:cardCornerRadius="10dp">
 
     <LinearLayout
+        android:id="@+id/image_event_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bk1"
@@ -39,6 +40,7 @@
             <TextView
                 android:id="@+id/partic_name"
                 style="@style/large_koodak"
+                android:textSize="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -51,6 +53,7 @@
             <TextView
                 android:id="@+id/result_txt"
                 style="@style/small_koodak"
+                android:textSize="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-8dp"

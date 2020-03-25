@@ -3,6 +3,7 @@ package com.example.pedarkharj_edit3.classes;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -42,7 +44,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     private  Participant selectedPartic;
     private Expense mExpense;
 
-    private Drawable drawable; //EventMng
     private short selectMode = 3;
     private int mLayout, maxCheckImg;
     private int defaultDong;
@@ -52,6 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     public boolean isAmountModeDong() {
         return amountModeDong;
     }
+    private Drawable drawable; //EventMng
 
 
     //------------------------------      Constructors       ---------------------------------/
@@ -128,16 +130,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         AppCompatImageView checkedImg;
         ImageView imageView;
         TextView nameTv, resultTxt, resultTxtGreen ;
-//        RelativeLayout baseLayout;
         RelativeLayout relativeLayout;
         CardView cardView; //EventMng
         //diff dong
         Button plusBtn, minusBtn;
         TextView dongEtxt;
-            //mode_02 amount
-        EditText dongEtxtAmount;
-        // EventDetailed- ExpenseLists
-        TextView dateTv, priceTitleTv;
+        EditText dongEtxtAmount;//mode_02 amount
+        TextView dateTv, priceTitleTv;  // EventDetailed- ExpenseLists
+        private LinearLayout bkGrndLayout; //Event recView
+
 
 
         ViewHolder(View itemView) {
@@ -149,6 +150,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             resultTxtGreen = itemView.findViewById(R.id.result_txt_green); //expenseMode2
 //            baseLayout = itemView.findViewById(R.id.base_layout);
             relativeLayout = itemView.findViewById(R.id.fu);
+            bkGrndLayout = itemView.findViewById(R.id.image_event_ll);
 
             //
             checkedImg = itemView.findViewById(R.id.sub_img);
@@ -202,8 +204,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             DatabaseHelper db0 = new DatabaseHelper(mContext);
             int particNumber = db0.getAllParticeUnderEvent(event).size();
 
-            if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
-/* pic */ if ( event.getBitmapStr() != null  && holder.imageView != null)       holder.imageView.setImageBitmap(Routines.stringToBitmap(event.getBitmapStr()));
+//            if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
+//            /* pic */ if ( event.getBitmapStr() != null  && holder.imageView != null)
+//                holder.imageView.setImageBitmap(Routines.stringToBitmap(event.getBitmapStr()));
+
+            /* back  ground */ if ( event.getBitmapStr() != null  && holder.bkGrndLayout != null) {
+                Drawable drawable = new BitmapDrawable(mContext.getResources(), Routines.stringToBitmap(event.getBitmapStr()) );
+                holder.bkGrndLayout.setBackground(drawable);
+            }
             if (particNumber > 0 && holder.resultTxt != null)      holder.resultTxt.setText(particNumber + " عضو");
             else Log.e("E002",  particNumber + "" );
 

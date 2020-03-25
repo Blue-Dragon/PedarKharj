@@ -168,7 +168,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         */
 
         // Grid Layout Manager
-        int itemsInScreen = 4
+        int itemsInScreen = 3
                 ;
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, itemsInScreen, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);

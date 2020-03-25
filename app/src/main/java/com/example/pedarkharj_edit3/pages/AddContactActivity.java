@@ -176,11 +176,11 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                         bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
 
                         if (bitmap != null){
-                            Toast.makeText(mContext, "Pk", Toast.LENGTH_SHORT).show();
-                            profPic.setImageBitmap(bitmap);
+//                            profPic.setImageBitmap(bitmap);
                             //resizing image
 //                        resizedBitmap = Routines.resizeBitmap(bitmap);
                             resizedBitmap = Routines.convertBitmapThumbnail(bitmap);
+                            profPic.setImageBitmap(resizedBitmap);
 //                        profPic.setImageBitmap(resizedBitmap);
                             newImg = true;
                         }
