@@ -20,6 +20,7 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 import com.example.pedarkharj_edit3.pages.AddExpenseActivity;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -104,10 +105,16 @@ public class BuyerDialog extends Dialog {
             eventList = db.getAllEvents();
             Collections.reverse(eventList);
 
+            // Not letting TempEvents to be shown
+            List<Event> realEvents = new ArrayList<>();
+            for (Event event : eventList){
+                if (!event.getEventName().equals(Routines.EVENT_TEMP_NAME)) realEvents.add(event);
+            }
+
             itemsInScreen = 3;
             adapter = new MyAdapter(mActivity);
             adapter.setLayout(layoutId);
-            adapter.setEvents(eventList);
+            adapter.setEvents(realEvents);
         }else {
             //show partices of the Event
             mParticipants = db.getAllParticeUnderEvent(event);

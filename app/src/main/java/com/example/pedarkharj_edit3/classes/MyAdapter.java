@@ -1,16 +1,11 @@
 package com.example.pedarkharj_edit3.classes;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +26,12 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener {
@@ -40,7 +41,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     private List<Expense> expenseList;
     private List<Contact> contactList;
     private Context mContext;
-    private Activity mActivity;
+    private AppCompatActivity mActivity;
     private  Participant selectedPartic;
     private Expense mExpense;
 
@@ -97,7 +98,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         this.amountModeDong = amountModeDong;
     }
 
-    public MyAdapter(Activity mActivity, int mLayout, List<Participant> participants, boolean amountModeDong) {
+    public MyAdapter(AppCompatActivity mActivity, int mLayout, List<Participant> participants, boolean amountModeDong) {
         this.mActivity = mActivity;
         this.participants = participants;
         this.mLayout = mLayout;
@@ -204,7 +205,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             DatabaseHelper db0 = new DatabaseHelper(mContext);
             int particNumber = db0.getAllParticeUnderEvent(event).size();
 
-//            if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
+            if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
 //            /* pic */ if ( event.getBitmapStr() != null  && holder.imageView != null)
 //                holder.imageView.setImageBitmap(Routines.stringToBitmap(event.getBitmapStr()));
 
@@ -307,8 +308,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
             if (participant.getName() != null && holder.nameTv != null)
                 holder.nameTv.setText(participant.getName());
-            if (participant.getBitmapStr() != null && holder.profImv != null)
-                holder.profImv.setImageBitmap(Routines.stringToBitmap(participant.getBitmapStr()));
+            if ( holder.profImv != null){
+                if (participant.getBitmapStr() != null)
+                    holder.profImv.setImageBitmap(Routines.stringToBitmap(participant.getBitmapStr()));
+                else{
+                    Bitmap b = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile);
+                    holder.profImv.setImageBitmap( Routines.convertBitmapThumbnail(b));
+                }
+            }
             if (participant.getResult() != null && holder.resultTxt != null)
                 holder.resultTxt.setText(participant.getResult());
 
