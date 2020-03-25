@@ -64,6 +64,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="@dimen/l"
         android:background="@drawable/selector_button_addcontact"
+        android:visibility="gone"
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"

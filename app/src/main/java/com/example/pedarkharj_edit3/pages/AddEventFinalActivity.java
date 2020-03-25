@@ -131,7 +131,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
                 Log.i("fuck026", "BitmapStr not null: \n"+ event.getBitmapStr() );
 
                 bitmap = Routines.stringToBitmap(event.getBitmapStr());
-                resizedBitmap = Routines.resizeBitmap(bitmap);
+//                resizedBitmap = Routines.resizeBitmap(bitmap);
+                resizedBitmap = Routines.convertBitmapThumbnail(bitmap);
                 eventPic.setImageBitmap(resizedBitmap);
             }
         }catch (Exception e){
@@ -219,7 +220,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 if (bitmap != null){
                     //resizing image
-                    resizedBitmap = Routines.resizeBitmap(bitmap);
+//                    resizedBitmap = Routines.resizeBitmap(bitmap);
+                    resizedBitmap = Routines.convertBitmapThumbnail(bitmap);
                     eventPic.setImageBitmap(resizedBitmap);
                     newImg = true;
                 }
@@ -231,7 +233,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
             if (data!=null && data.getExtras()!=null) {
                 bitmap = (Bitmap) data.getExtras().get("data") ;
                 if (bitmap != null) {
-                    resizedBitmap = Routines.resizeBitmap(bitmap);
+//                    resizedBitmap = Routines.resizeBitmap(bitmap);
+                    resizedBitmap = Routines.convertBitmapThumbnail(bitmap);
                     eventPic.setImageBitmap(resizedBitmap);
                     newImg = true;
                 }

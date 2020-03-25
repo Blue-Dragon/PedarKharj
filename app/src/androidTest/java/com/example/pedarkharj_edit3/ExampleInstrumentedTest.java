@@ -20,7 +20,7 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
 //        Context appContext = InstrumentationRegistry.getTargetContext();
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext(); //Android X
 
         assertEquals("com.example.pedarkharj_edit2", appContext.getPackageName());
     }

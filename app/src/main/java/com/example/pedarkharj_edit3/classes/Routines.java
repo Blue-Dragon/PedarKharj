@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
@@ -21,8 +22,11 @@ import com.example.pedarkharj_edit3.classes.models.Contact;
 import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,13 +85,7 @@ public class Routines  {
 
     /********************************************       Methods     ****************************************************/
 
-    /**
-     *  Permissions
-     */
-    public static void requestPermissions(Activity mActivity, String[] strings, int permissionCode) {
-        ActivityCompat.requestPermissions(mActivity, strings, permissionCode);
-    }
-
+    // ----------------------    Photo Stuff   ------------------------- //
     //get pic options
     public static void chooseCameraGallery(Activity mActivity) {
         AlertDialog.Builder al = new AlertDialog.Builder(mActivity);
@@ -106,20 +104,31 @@ public class Routines  {
                 .show();
     }
 
+    //-------   Deprecated ! use `convertBitmapThumbnail`, instead.
+//    /**
+//     *   Bitmap smaller
+//     */
+//    public static Bitmap resizeBitmap(Bitmap bitmap) {
+//
+//        while (bitmap.getHeight() * bitmap.getWidth() > 25000){
+//            bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*0.8), (int) (bitmap.getHeight()*0.8), true);
+//        }
+//        return bitmap;
+//    }
+//
+//    public static Bitmap resizeBitmap(Context context, int bitmapId) {
+//        return resizeBitmap( BitmapFactory.decodeResource(context.getResources(), bitmapId) );
+//    }
     /**
-     *  Bitmap
+     *   Bitmap to thumbnail
      */
-    public static Bitmap resizeBitmap(Bitmap bitmap) {
-
-        while (bitmap.getHeight() * bitmap.getWidth() > 25000){
-            bitmap = Bitmap.createScaledBitmap(bitmap, (int) (bitmap.getWidth()*0.8), (int) (bitmap.getHeight()*0.8), true);
-        }
-        return bitmap;
+    public static Bitmap convertBitmapThumbnail(Bitmap bitmap) {
+        Bitmap b = null;
+        if (bitmap != null)
+            b =ThumbnailUtils.extractThumbnail(bitmap, 150, 150);
+        return b;
     }
 
-    public static Bitmap resizeBitmap(Context context, int bitmapId) {
-        return resizeBitmap( BitmapFactory.decodeResource(context.getResources(), bitmapId) );
-    }
 
     public static Bitmap drawableToBitmap(Context mContext, int drawable){
         Bitmap bitmap = BitmapFactory.decodeResource(mContext.getResources(), drawable);
@@ -157,9 +166,27 @@ public class Routines  {
                 .decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
-//    public static int newContactId(Context mContext){
-//        return  MydbHelper.getInstance(mContext).getRowsCount();
-//    }
+    /**
+     * shows Cropping photo screen in given x and y
+     */
+    public static void startCrop(Activity mActivity, Uri imageUri, int x, int y) {
+        CropImage.activity(imageUri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setMultiTouchEnabled(true)
+                .setAspectRatio(x, y)
+                .start(mActivity);
+    }
+
+
+    // ----------------------   others   ------------------------- //
+
+    /**
+     *  Permissions
+     */
+    public static void requestPermissions(Activity mActivity, String[] strings, int permissionCode) {
+        ActivityCompat.requestPermissions(mActivity, strings, permissionCode);
+    }
+
 
     /**
      * Contacts to Prtices
@@ -185,10 +212,7 @@ public class Routines  {
 
     // add to db
     public static List<Participant> addParticesToTempEvent (List<Participant> participants, DatabaseHelper db){
-
         //add partices to db
-
-
         //add an Event to these partices
         long id = db.createEvent(new Event(EVENT_TEMP_NAME));
         Event tempEvent = db.getEventById(id);
@@ -206,8 +230,8 @@ public class Routines  {
         db.closeDB();
     }
 
-    /****************************************
-     *
+    /**
+     * Transfers all contacts of device to the app
      */
     public static void getContact(Context mContext) {
         int i = 0;
