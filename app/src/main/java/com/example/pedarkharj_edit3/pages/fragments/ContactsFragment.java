@@ -7,7 +7,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.pedarkharj_edit3.classes.models.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
@@ -18,7 +21,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -40,8 +47,9 @@ import java.util.List;
 import static android.Manifest.permission.READ_CONTACTS;
 
 
-public class ContactsFragment extends Fragment implements IContacts, View.OnClickListener {
+public class ContactsFragment extends Fragment implements IContacts, IEditBar, View.OnClickListener {
     List<Contact> contactList;
+    Contact pressedContact;
     Activity mActivity;
     Context mContext;
     DatabaseHelper db;
@@ -82,6 +90,9 @@ public class ContactsFragment extends Fragment implements IContacts, View.OnClic
 
             @Override
             public void onLongClick(View view, int position) {
+                pressedContact = contactList.get(position);
+                Toast.makeText(mActivity, ""+ pressedContact.getName(), Toast.LENGTH_SHORT).show();
+                registerForContextMenu(view); // floating context menu
             }
         }));
         //
@@ -123,12 +134,13 @@ public class ContactsFragment extends Fragment implements IContacts, View.OnClic
         toolbar =  mView.findViewById(R.id.m_toolbar);
         ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
 
-        db = new DatabaseHelper(mContext);
-
         backBtn = mView.findViewById(R.id.back_btn);
         recyclerView = mView.findViewById(R.id.recycler_view);
         getBtn = mView.findViewById(R.id.get);
         fab = mView.findViewById(R.id.fab);
+
+        db = new DatabaseHelper(mContext);
+        pressedContact = null;
     }
 
     private void doOnClicks() {
@@ -298,5 +310,52 @@ public class ContactsFragment extends Fragment implements IContacts, View.OnClic
         }
 
     }
+    // --------------------    floating context menu    --------------------//
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = mActivity.getMenuInflater();
+        inflater.inflate(R.menu.menu_context_floating, menu);
+    }
 
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_delete:
+                List<Event> particedEvents = db.getAllEventsUnderContact(pressedContact);
+                if (particedEvents.size() > 0){
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
+                    dialog.setTitle("خطا!");
+                    dialog.setMessage("تا زمانی که نام این مخاطب در رویدادی ثبت شده باشد، امکان حذفش وجود ندارد.");
+                    dialog.setNeutralButton("باشه!", (dialog1, which) ->{});
+                    dialog.show();
+                }
+                else {
+                    deleteContect(pressedContact);
+                }
+                pressedContact = null;
+                break;
+
+            case R.id.item_edit:
+                break;
+        }
+
+        return super.onContextItemSelected(item);
+    }
+
+    private void deleteContect(Contact pressedContact) {
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext, android.app.AlertDialog.THEME_HOLO_LIGHT);
+                builder.setTitle("اخطار!")
+                .setMessage("مطئنی که پاک بشه؟")
+                .setPositiveButton("اره", (dialog1, which) ->{
+                    db.deleteContact(pressedContact);
+//                    adaptor.notifyDataSetChanged();
+                    restartPage(mActivity, Routines.CONTACTS);
+                    Toast.makeText(mActivity, "مخاطب با موفقیت حذف شد.", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("نه", (dialog1, which) ->{})
+                .show();
+
+
+    }
 }

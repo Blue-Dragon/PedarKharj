@@ -1,5 +1,6 @@
 package com.example.pedarkharj_edit3.pages.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import androidx.core.content.ContextCompat;
@@ -7,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.Routines;
@@ -67,5 +69,13 @@ public interface IEditBar {
 
     default void selectionChangeColor(Context mContext, int id, MyAdapter adaptor) {
         adaptor.setForeground( new ColorDrawable(ContextCompat.getColor(mContext, id)));
+    }
+
+    default void restartPage(Activity mActivity, short page) {
+        MainActivity.navPosition = page;
+//        mActivity.recreate();
+        mActivity.finish();
+        mActivity.startActivity(mActivity.getIntent());
+        mActivity.overridePendingTransition(0, 0);
     }
 }

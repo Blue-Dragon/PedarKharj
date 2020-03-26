@@ -92,7 +92,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
 //                    MainActivity.navPosition = Routines.HOME;
 //                    mActivity.finish();
 //                    startActivity(intent);
-                    restartPage(Routines.HOME);
+                    restartPage(mActivity, Routines.HOME);
                 }
             }
 
@@ -239,7 +239,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
                                 }
                             }
 
-                            restartPage(Routines.EVENTS);
+                            restartPage(mActivity, Routines.EVENTS);
 
                         })
                         .setNegativeButton("نه، بی خیال!", (dialogInterface, i1) -> {})
@@ -256,15 +256,6 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
 
         return true;
     }
-
-    private void restartPage(short page) {
-        MainActivity.navPosition = page;
-//        mActivity.recreate();
-        mActivity.finish();
-        startActivity(mActivity.getIntent());
-        mActivity.overridePendingTransition(0, 0);
-    }
-
 
 
 //-------------------------    other stuff    --------------------------//
