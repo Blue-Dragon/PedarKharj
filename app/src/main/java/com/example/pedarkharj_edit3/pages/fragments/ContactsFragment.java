@@ -83,18 +83,18 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         // -------  recyclerView  -------//
         setRecView();
         Log.e("recOnClick", "onClick");
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-                pressedContact = contactList.get(position);
-                Toast.makeText(mActivity, ""+ pressedContact.getName(), Toast.LENGTH_SHORT).show();
-                registerForContextMenu(view); // floating context menu
-            }
-        }));
+//        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+//            @Override
+//            public void onClick(View view, int position) {
+//            }
+//
+//            @Override
+//            public void onLongClick(View view, int position) {
+//                pressedContact = contactList.get(position);
+//                Toast.makeText(mActivity, ""+ pressedContact.getName(), Toast.LENGTH_SHORT).show();
+//                registerForContextMenu(view); // floating context menu
+//            }
+//        }));
         //
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -157,6 +157,7 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         adaptor = new MyAdapter(mContext);
+        adaptor.setActivity(mActivity);
         adaptor.setLayout(R.layout.sample_conntacts_horizental);
         adaptor.setContactList(contactList);
         recyclerView.setAdapter(adaptor);
@@ -310,38 +311,7 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         }
 
     }
-    // --------------------    floating context menu    --------------------//
-    @Override
-    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = mActivity.getMenuInflater();
-        inflater.inflate(R.menu.menu_context_floating, menu);
-    }
 
-    @Override
-    public boolean onContextItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item_delete:
-                List<Event> particedEvents = db.getAllEventsUnderContact(pressedContact);
-                if (particedEvents.size() > 0){
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
-                    dialog.setTitle("خطا!");
-                    dialog.setMessage("تا زمانی که نام این مخاطب در رویدادی ثبت شده باشد، امکان حذفش وجود ندارد.");
-                    dialog.setNeutralButton("باشه!", (dialog1, which) ->{});
-                    dialog.show();
-                }
-                else {
-                    deleteContect(pressedContact);
-                }
-                pressedContact = null;
-                break;
-
-            case R.id.item_edit:
-                break;
-        }
-
-        return super.onContextItemSelected(item);
-    }
 
     private void deleteContect(Contact pressedContact) {
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext, android.app.AlertDialog.THEME_HOLO_LIGHT);

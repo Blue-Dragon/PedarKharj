@@ -1,5 +1,6 @@
 package com.example.pedarkharj_edit3.classes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,7 +8,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,6 +31,8 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.cardview.widget.CardView;
@@ -41,7 +47,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     private List<Expense> expenseList;
     private List<Contact> contactList;
     private Context mContext;
-    private AppCompatActivity mActivity;
+    private Activity mActivity;
     private  Participant selectedPartic;
     private Expense mExpense;
 
@@ -58,6 +64,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
 
     //------------------------------      Constructors       ---------------------------------/
+    public void setContext(Context mContext) {
+        this.mContext = mContext;
+    }
+    public void setActivity(Activity mActivity) {
+        this.mActivity = mActivity;
+    }
+
     //EventMng Activity
     public MyAdapter(Context mContext) {
         this.mContext = mContext;
@@ -126,7 +139,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     }
 
     //------------------------------      ViewHolder innerClass       ---------------------------------/
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
         CircleImageView profImv;
         AppCompatImageView checkedImg;
         ImageView imageView;
@@ -150,7 +163,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             resultTxt = itemView.findViewById(R.id.result_txt);
             resultTxtGreen = itemView.findViewById(R.id.result_txt_green); //expenseMode2
 //            baseLayout = itemView.findViewById(R.id.base_layout);
-            relativeLayout = itemView.findViewById(R.id.fu);
             bkGrndLayout = itemView.findViewById(R.id.image_event_ll);
 
             //
@@ -166,12 +178,47 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             dateTv = itemView.findViewById(R.id.tv_date);
             priceTitleTv = itemView.findViewById(R.id.tv_price_title);
 
+            relativeLayout = itemView.findViewById(R.id.fu);
 
+            if (mLayout == R.layout.sample_conntacts_horizental){
+                relativeLayout.setOnCreateContextMenuListener(this);
+            }
         }
 
         @Override
         public void onClick(View view) {
         }
+        // --------------------    floating context menu    --------------------//
+        @Override
+        public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+            MenuInflater inflater = mActivity.getMenuInflater();
+            inflater.inflate(R.menu.menu_context_floating, menu);
+        }
+
+//        @Override
+//        public boolean onContextItemSelected(@NonNull MenuItem item) {
+//            switch (item.getItemId()){
+//                case R.id.item_delete:
+//                    List<Event> particedEvents = db.getAllEventsUnderContact(pressedContact);
+//                    if (particedEvents.size() > 0){
+//                        AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
+//                        dialog.setTitle("خطا!");
+//                        dialog.setMessage("تا زمانی که نام این مخاطب در رویدادی ثبت شده باشد، امکان حذفش وجود ندارد.");
+//                        dialog.setNeutralButton("باشه!", (dialog1, which) ->{});
+//                        dialog.show();
+//                    }
+//                    else {
+//                        deleteContect(pressedContact);
+//                    }
+//                    pressedContact = null;
+//                    break;
+//
+//                case R.id.item_edit:
+//                    break;
+//            }
+//
+//            return super.onContextItemSelected(item);
+//        }
     }
 
 
