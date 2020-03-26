@@ -4,23 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.models.Contact;
@@ -33,14 +22,9 @@ import com.example.pedarkharj_edit3.pages.fragments.ContactsFragment;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.OnClickListener {
 
@@ -142,9 +126,8 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
     /**
      * it handles the contact delete
-     * @param item
      */
-    public void doDeleteStuff(Activity mActivity, MenuItem item, Contact pressedContact) {
+    public void doDeleteStuff(Activity mActivity, Contact pressedContact) {
         DatabaseHelper db = new DatabaseHelper(mActivity);
 
         List<Event> particedEvents = db.getAllEventsUnderContact(pressedContact);
@@ -172,7 +155,12 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 //        int width = parent.getMeasuredWidth() / 3;
 //        view.setMinimumWidth(width);
         }
-        return new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view);
+        if (mActivity != null)
+            holder.setActivity(mActivity);
+        if (mContext != null)
+            holder.setContext(mContext);
+        return holder;
     }
 
 

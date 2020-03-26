@@ -66,7 +66,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Table Create Statements
     // Contact table create statement
     private static final String CREATE_TABLE_CONTACT = "CREATE TABLE IF NOT EXISTS "
-            + TABLE_CONTACTS + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
+            + TABLE_CONTACTS
+            + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_CONTACT_NAME+ " TEXT,"
             + KEY_BMP_STR + " TEXT,"
             + KEY_CREATED_AT+ " DATETIME" + ")";
@@ -84,9 +85,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_PARTICES = "CREATE TABLE IF NOT EXISTS "
             + TABLE_PARTICES
             + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
-            + KEY_EVENT_NAME + " TEXT,"
+            + KEY_EVENT_NAME + " TEXT," //todo: redundant! may cuase bugs
             + KEY_EVENT_ID + " INTEGER,"
-            + KEY_PARTICE_NAME + " TEXT,"
+            + KEY_PARTICE_NAME + " TEXT," //todo: redundant! may cuase bugs
             + KEY_CONTACT_ID + " INTEGER,"
             + KEY_PARTICE_EXPENSE + " INTEGER,"
             + KEY_PARTICE_DEBT + " INTEGER,"
@@ -233,6 +234,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * getting Events under a specific Contact
+     * */
+    public List<Event> getAllEventsUnderContact(Contact contact) {
+        List<Event> events = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM "
+                + TABLE_PARTICES +  " event_partice, "
+                + TABLE_EVENTS + " events"
+                + " WHERE event_partice. " + KEY_CONTACT_ID + " = '" + contact.getId() + "' "
+                + "And events." + KEY_ID + " = " + "event_partice." + KEY_EVENT_ID;
+
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()){
+            do {
+                Event event = new Event();
+                event.setId(c.getInt(c.getColumnIndex(KEY_EVENT_ID)));
+                event.setEventName((c.getString(c.getColumnIndex(KEY_EVENT_NAME))));
+                event.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+
+                events.add(event);
+            }while (c.moveToNext());
+        }
+
+        Log.e("EventMaker ", "Events Under contact  "+ contact.getName() + "\n");
+        for (Event event0 : events){
+            Log.e("EventMaker ", "Event "+ event0.getId() + ": "+ event0.getEventName()+"\n");
+        }
+
+
+        return events;
+    }
+
+    /**
      * Updating a contact
      */
     public void updateContact(Contact contact) {
@@ -241,7 +279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_CONTACT_NAME, contact.getName());
         values.put(KEY_BMP_STR, contact.getBitmapStr());
-        values.put(KEY_CREATED_AT, contact.getCreated_at());
+//        values.put(KEY_CREATED_AT, contact.getCreated_at());
         // updating TABLE_CONTACTS table row
         db.update(TABLE_CONTACTS, values, KEY_ID + " = ?", new String[] { String.valueOf(contact.getId()) });
 
@@ -252,13 +290,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //todo: Update -> do sth so we wouldn't need a loop anymore
         for (Participant participant0 : participants){
+            values0.put(KEY_CONTACT_ID,contact.getId());
             values0.put(KEY_PARTICE_NAME, contact.getName());
             values0.put(KEY_PARTICE_EXPENSE, participant0.getExpense());
             values0.put(KEY_PARTICE_DEBT, participant0.getDebt());
             values0.put(KEY_EVENT_ID, participant0.getEvent().getId());
-            values0.put(KEY_CONTACT_ID, contact.getId());
             // updating TABLE_PARTICES table row
-            db.update(TABLE_PARTICES, values0, KEY_CONTACT_ID + " = ?", new String[] { String.valueOf(contact.getId()) });
+            db.update(TABLE_PARTICES, values0, KEY_ID + " = ?", new String[] { String.valueOf(participant0.getId()) });
         }
 
     }
@@ -556,9 +594,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Participant participant = new Participant();
         participant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-        participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
-        participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
         participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
+        participant.setName(participant.getContact().getName());
+        participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
         participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
         participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
         participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
@@ -583,9 +621,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 Participant participant = new Participant();
                 participant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-                participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
-                participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
+                participant.setName(participant.getContact().getName());
+                participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
                 participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
                 participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
                 participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
@@ -597,43 +635,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return participants;
-    }
-
-    /**
-     * getting Events under a specific Contact
-     * */
-    public List<Event> getAllEventsUnderContact(Contact contact) {
-        List<Event> events = new ArrayList<>();
-
-        String selectQuery = "SELECT  * FROM "
-                + TABLE_PARTICES +  " event_partice, "
-                + TABLE_EVENTS + " events"
-                + " WHERE event_partice. " + KEY_CONTACT_ID + " = '" + contact.getId() + "' "
-                + "And events." + KEY_ID + " = " + "event_partice." + KEY_EVENT_ID;
-
-        Log.e(LOG, selectQuery);
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery(selectQuery, null);
-
-        if (c.moveToFirst()){
-            do {
-                Event event = new Event();
-                event.setId(c.getInt(c.getColumnIndex(KEY_EVENT_ID)));
-                event.setEventName((c.getString(c.getColumnIndex(KEY_EVENT_NAME))));
-                event.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
-
-                events.add(event);
-            }while (c.moveToNext());
-        }
-
-        Log.e("EventMaker ", "Events Under contact  "+ contact.getName() + "\n");
-        for (Event event0 : events){
-            Log.e("EventMaker ", "Event "+ event0.getId() + ": "+ event0.getEventName()+"\n");
-        }
-
-
-        return events;
     }
 
     /**
@@ -653,9 +654,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 Participant participant = new Participant();
                 participant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-                participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
-                participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
+                participant.setName(participant.getContact().getName());
+                participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
                 participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
                 participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
                 participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
@@ -684,9 +685,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             do {
                 Participant participant = new Participant();
                 participant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-                participant.setName(c.getString(c.getColumnIndex(KEY_PARTICE_NAME)));
-                participant.setEvent( this.getEventById(eventId) );
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
+                participant.setName(participant.getContact().getName());
+                participant.setEvent( this.getEventById(eventId) );
                 participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
                 participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
                 participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));

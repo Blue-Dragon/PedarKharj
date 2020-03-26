@@ -1,5 +1,7 @@
 package com.example.pedarkharj_edit3.classes;
 
+import android.app.Activity;
+import android.content.Context;
 import android.view.ContextMenu;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener, View.OnLongClickListener {
     MyLongClickListener myLongClickListener;
+    Context mContext;
+    Activity mActivity;
 
     CircleImageView profImv;
     AppCompatImageView checkedImg;
@@ -70,6 +74,13 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         }
     }
 
+    public void setContext(Context mContext) {
+        this.mContext = mContext;
+    }
+
+    public void setActivity(Activity mActivity) {
+        this.mActivity = mActivity;
+    }
 
     // --------------------    floating context menu    --------------------//
     /*
@@ -77,8 +88,9 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
      */
     @Override
     public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-//            MenuInflater inflater = mActivity.getMenuInflater();
-//            inflater.inflate(R.menu.menu_context_floating, menu);
+//        if (mActivity != null)
+//            mActivity.getMenuInflater().inflate(R.menu.menu_context_floating, menu);
+
         menu.setHeaderTitle(ContactsFragment.pressedContact.getName());
         menu.add(this.getAdapterPosition(), 100, 0, "ویرایش");
         menu.add(this.getAdapterPosition(), 101, 1, "حذف");

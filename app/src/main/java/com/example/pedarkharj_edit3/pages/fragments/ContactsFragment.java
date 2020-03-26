@@ -10,26 +10,20 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.pedarkharj_edit3.classes.models.Event;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.core.app.ActivityCompat;
+
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -330,12 +324,17 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         switch (item.getItemId()){
                 //Edit
             case 100:
+                Intent i = new Intent(mActivity, AddContactActivity.class);
+                int id = (int) ContactsFragment.pressedContact.getId();
+                i.putExtra(Routines.EDIT_MODE, Routines.EDIT_MODE_TRUE);
+                i.putExtra(Routines.SEND_CONTACT_ID_INTENT, id);
+//                mActivity.finish();
+                startActivity(i);
                return true;
 
             //Delete
             case 101:
-//                ContactsFragment.pressedContact =
-                adaptor.doDeleteStuff(mActivity, item, ContactsFragment.pressedContact);
+                adaptor.doDeleteStuff(mActivity, ContactsFragment.pressedContact);
                 return true;
 
 

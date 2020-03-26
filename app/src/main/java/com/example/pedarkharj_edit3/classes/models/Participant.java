@@ -42,7 +42,7 @@ public class Participant  {
         return id;
     }
     public String getName() {
-        return name;
+        return contact.getName();
     }
     public String getBitmapStr() {
         return contact.getBitmapStr();

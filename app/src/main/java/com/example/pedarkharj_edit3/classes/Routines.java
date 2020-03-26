@@ -44,7 +44,7 @@ public class Routines  {
     public static final String SEND_EXPENSE_ID_INTENT = "SEND_EXPENSE_ID_INTENT";
     public static final String SEND_USERS_INTENT = "SEND_USERS_INTENT";
     public static final String EDIT_MODE = "EDIT_MODE";
-    public static final boolean IS_EDIT_MODE = true;
+    public static final boolean EDIT_MODE_TRUE = true;
     //forResult
     public static final String RESULT = "RESULT";
     public static final int RESULT_OK = 1;

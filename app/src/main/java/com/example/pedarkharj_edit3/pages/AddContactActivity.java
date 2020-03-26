@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -30,8 +29,6 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.Routines;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.IOException;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.Manifest.permission.CAMERA;
@@ -50,7 +47,9 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
     Bitmap resizedBitmap;
     CircleImageView profPic;
     boolean newImg;
+    boolean isEditMode;
     private Uri uri;
+    int editContactId;
 
 
     @Override
@@ -76,6 +75,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         mActivity =this;
         mContext = this;
         newImg = false;
+        isEditMode = false;
         db = new DatabaseHelper(mContext);
 
         profPic = findViewById(R.id.prof_pic);
@@ -84,6 +84,20 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         nameEdt = findViewById(R.id.name_edt);
         familyEdt = findViewById(R.id.family_edt);
         fromContactsBtn = findViewById(R.id.addFromContacts_btn);
+
+        //Edit Mode
+        isEditMode = getIntent().getBooleanExtra(Routines.EDIT_MODE, false);
+        editContactId = getIntent().getIntExtra(Routines.SEND_CONTACT_ID_INTENT, 0);
+        if (isEditMode && editContactId > 0){
+            Contact contact = db.getContactById( editContactId );
+            Bitmap bitmap;
+
+            if (contact.getBitmapStr()!=null && contact.getBitmapStr().length() > 0){
+                bitmap = Routines.stringToBitmap(contact.getBitmapStr());
+                profPic.setImageBitmap(bitmap);
+            }
+            nameEdt.setText(contact.getName());
+        }
     }
 
     private void onClicks() {
@@ -113,19 +127,21 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 break;
 
             case R.id.check_img:
-                addNewContact();
+                addOrEditContact();
                 break;
 
             case R.id.cancel_img:
                 finish();
+                startActivity(new Intent(mContext, MainActivity.class));
                 break;
         }
     }
 
 
     //
-    private void addNewContact() {
-            final String fullName = nameEdt.getText().toString().trim() + familyEdt.getText().toString().trim();
+    private void addOrEditContact() {
+        Contact contact;
+        final String fullName = nameEdt.getText().toString().trim() + " " + familyEdt.getText().toString().trim();
 
             //first we will do the validations (name)
             if (TextUtils.isEmpty(fullName)) {
@@ -133,18 +149,23 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 nameEdt.requestFocus();
                 return;
             }
+        //creating a new Contact object / Editing
+        if (isEditMode && editContactId>0)
+            contact = db.getContactById( editContactId );
+        else
+            contact = new Contact();
 
-//        String imgString = Routines.bitmapToString(mContext, participant);
 
-        //creating a new Contact object
-        Contact contact = new Contact();
         contact.setName(fullName);
         if (newImg) contact.setBitmapStr(Routines.bitmapToString(resizedBitmap));  //see if we have any images
 
-        //add to db
-        db.createContact(contact);
-        startActivity(new Intent(mContext, MainActivity.class));
+
+        if (isEditMode && editContactId>0)
+            db.updateContact(contact);
+        else
+            db.createContact(contact);//add to db
         finish();
+        startActivity(new Intent(mContext, MainActivity.class));
     }
 
 
@@ -209,7 +230,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
                 boolean permissioncamera = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 boolean permissiongallery = grantResults[1] == PackageManager.PERMISSION_GRANTED;
                 if (grantResults.length > 0 && permissioncamera && permissiongallery) {
-                    Toast.makeText(mActivity, "مجوز دسترسی داده شد", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mActivity, "مجوز دسترسی داده شد", Toast.LENGTH_SHORT).show();
 //                    Routines.chooseCameraGallery(mActivity);
                     CropImage.startPickImageActivity(mActivity);
                 } else {

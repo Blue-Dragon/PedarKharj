@@ -15,7 +15,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.R;
@@ -143,7 +142,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
                 Intent intent = new Intent(mContext, AddEventFinalActivity.class);
                 if (edit_mode){
                     eventId = curEventId;
-                    intent.putExtra(Routines.EDIT_MODE, Routines.IS_EDIT_MODE);
+                    intent.putExtra(Routines.EDIT_MODE, Routines.EDIT_MODE_TRUE);
                 }
                 intent.putExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT, ids);
                 intent.putExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, eventId);
