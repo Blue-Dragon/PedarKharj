@@ -27,6 +27,7 @@ import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Expense;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.pages.fragments.ContactsFragment;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener {
+public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.OnClickListener {
 
     private List<Participant> participants;
     private List<Event> events;
@@ -138,88 +139,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         this.mExpense = mExpense;
     }
 
-    //------------------------------      ViewHolder innerClass       ---------------------------------/
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
-        CircleImageView profImv;
-        AppCompatImageView checkedImg;
-        ImageView imageView;
-        TextView nameTv, resultTxt, resultTxtGreen ;
-        RelativeLayout relativeLayout;
-        CardView cardView; //EventMng
-        //diff dong
-        Button plusBtn, minusBtn;
-        TextView dongEtxt;
-        EditText dongEtxtAmount;//mode_02 amount
-        TextView dateTv, priceTitleTv;  // EventDetailed- ExpenseLists
-        private LinearLayout bkGrndLayout; //Event recView
-
-
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.imageview_event);
-            profImv = itemView.findViewById(R.id.prof_pic);
-            nameTv = itemView.findViewById(R.id.partic_name);
-            resultTxt = itemView.findViewById(R.id.result_txt);
-            resultTxtGreen = itemView.findViewById(R.id.result_txt_green); //expenseMode2
-//            baseLayout = itemView.findViewById(R.id.base_layout);
-            bkGrndLayout = itemView.findViewById(R.id.image_event_ll);
-
-            //
-            checkedImg = itemView.findViewById(R.id.sub_img);
-            //dong
-            plusBtn = itemView.findViewById(R.id.plus_btn);
-            minusBtn = itemView.findViewById(R.id.minus_btn);
-            dongEtxt = itemView.findViewById(R.id.dong_Etxt2);
-            dongEtxtAmount =  itemView.findViewById(R.id.dong_Etxt_amount); // dong mode_02 only
-            //
-            cardView = itemView.findViewById(R.id.details_card_layout); //EventMng
-            // EventDetailed- ExpenseLists
-            dateTv = itemView.findViewById(R.id.tv_date);
-            priceTitleTv = itemView.findViewById(R.id.tv_price_title);
-
-            relativeLayout = itemView.findViewById(R.id.fu);
-
-            if (mLayout == R.layout.sample_conntacts_horizental){
-                relativeLayout.setOnCreateContextMenuListener(this);
-            }
-        }
-
-        @Override
-        public void onClick(View view) {
-        }
-        // --------------------    floating context menu    --------------------//
-        @Override
-        public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-            MenuInflater inflater = mActivity.getMenuInflater();
-            inflater.inflate(R.menu.menu_context_floating, menu);
-        }
-
-//        @Override
-//        public boolean onContextItemSelected(@NonNull MenuItem item) {
-//            switch (item.getItemId()){
-//                case R.id.item_delete:
-//                    List<Event> particedEvents = db.getAllEventsUnderContact(pressedContact);
-//                    if (particedEvents.size() > 0){
-//                        AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
-//                        dialog.setTitle("خطا!");
-//                        dialog.setMessage("تا زمانی که نام این مخاطب در رویدادی ثبت شده باشد، امکان حذفش وجود ندارد.");
-//                        dialog.setNeutralButton("باشه!", (dialog1, which) ->{});
-//                        dialog.show();
-//                    }
-//                    else {
-//                        deleteContect(pressedContact);
-//                    }
-//                    pressedContact = null;
-//                    break;
-//
-//                case R.id.item_edit:
-//                    break;
-//            }
-//
-//            return super.onContextItemSelected(item);
-//        }
-    }
+    /**
+     * it handles the contact delete
+     * @param item
+     */
+//    public void doDeleteStuff(MenuItem item) {
+//        List<Event> particedEvents = db.getAllEventsUnderContact(pressedContact);
+//        if (particedEvents.size() > 0)
+//            showDialog();
+//        else
+//            deleteContect(pressedContact);
+//    }
 
 
     //------------------------------      Interface Methods       ---------------------------------/
@@ -239,6 +169,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
         }
         return new ViewHolder(view);
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
@@ -318,6 +249,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
             Contact contact;
             Log.i("positionCall", "contacts recyclerView Call");
             contact = contactList.get(position);
+            ContactsFragment.pressedContact = contact; //this is for the ContextMenu (edit/delete)
 
             //get info later. no hurry bro !
             if (contact.getName() != null && holder.nameTv != null){
@@ -395,20 +327,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
 
 
-    /**************************************      other Methods       **************************************/
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.base_layout:
-//                if (mContext != null)
-//                    Toast.makeText(mContext, " max CheckImg: " + maxCheckImg, Toast.LENGTH_SHORT).show();
-                break;
-
-        }
-    }
-
-
     @Override
     public int getItemCount() {
         if (participants != null)
@@ -425,6 +343,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
         else return 0;
     }
+
+    /**************************************      other Methods       **************************************/
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.base_layout:
+//                if (mContext != null)
+//                    Toast.makeText(mContext, " max CheckImg: " + maxCheckImg, Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+    }
+
 
 
     class ContactAndHolder {

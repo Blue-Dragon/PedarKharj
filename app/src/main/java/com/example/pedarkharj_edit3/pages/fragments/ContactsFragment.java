@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -48,8 +49,8 @@ import static android.Manifest.permission.READ_CONTACTS;
 
 
 public class ContactsFragment extends Fragment implements IContacts, IEditBar, View.OnClickListener {
+    public static Contact pressedContact;
     List<Contact> contactList;
-    Contact pressedContact;
     Activity mActivity;
     Context mContext;
     DatabaseHelper db;
@@ -83,42 +84,49 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         // -------  recyclerView  -------//
         setRecView();
         Log.e("recOnClick", "onClick");
-//        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
-//            @Override
-//            public void onClick(View view, int position) {
-//            }
-//
-//            @Override
-//            public void onLongClick(View view, int position) {
+        /**
+         *  onCLICK
+         */
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
 //                pressedContact = contactList.get(position);
 //                Toast.makeText(mActivity, ""+ pressedContact.getName(), Toast.LENGTH_SHORT).show();
 //                registerForContextMenu(view); // floating context menu
+            }
+        }));
+
+
+        /**
+         *  SCROLLING
+         */
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                if (newState  == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
+//                    isScrolling = true;
 //            }
-//        }));
-        //
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState  == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL)
-                    isScrolling = true;
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                currentItems = linearLayoutManager.getChildCount();
-                totalItems = linearLayoutManager.getItemCount();
-                scrollOutItems = linearLayoutManager.findFirstVisibleItemPosition();
-
-                if (isScrolling && (currentItems + scrollOutItems) == totalItems){
-                    //data fetch
-                    isScrolling = false;
-                    fetchData();
-                }
-
-            }
-        });
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                currentItems = linearLayoutManager.getChildCount();
+//                totalItems = linearLayoutManager.getItemCount();
+//                scrollOutItems = linearLayoutManager.findFirstVisibleItemPosition();
+//
+//                if (isScrolling && (currentItems + scrollOutItems) == totalItems){
+//                    //data fetch
+//                    isScrolling = false;
+//                    fetchData();
+//                }
+//
+//            }
+//        });
 
         return mView;
     }
@@ -140,7 +148,7 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         fab = mView.findViewById(R.id.fab);
 
         db = new DatabaseHelper(mContext);
-        pressedContact = null;
+//        pressedContact = null;
     }
 
     private void doOnClicks() {
@@ -156,6 +164,8 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         adaptor = new MyAdapter(mContext);
         adaptor.setActivity(mActivity);
         adaptor.setLayout(R.layout.sample_conntacts_horizental);
@@ -310,6 +320,37 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
 
         }
 
+    }
+
+    /**
+     * ContextMenu (Edit/Delete)
+     */
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+                //Edit
+            case 100:
+               return true;
+
+            //Delete
+            case 101:
+//                adaptor.doDeleteStuff(item);
+                return true;
+
+
+               default:
+                   return super.onContextItemSelected(item);
+
+        }
+
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
+        dialog.setTitle("خطا!");
+        dialog.setMessage("تا زمانی که نام این مخاطب در رویدادی ثبت شده باشد، امکان حذفش وجود ندارد.");
+        dialog.setNeutralButton("باشه!", (dialog1, which) ->{});
+        dialog.show();
     }
 
 

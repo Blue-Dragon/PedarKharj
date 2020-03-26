@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -165,6 +166,8 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         layoutManager.setJustifyContent(JustifyContent.SPACE_BETWEEN);
         layoutManager.setAlignItems(AlignItems.CENTER);
         recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         */
 
         // Grid Layout Manager
@@ -173,6 +176,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, itemsInScreen, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
         //

@@ -6,6 +6,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -176,6 +178,8 @@ public class AddEventParticesActivity extends AppCompatActivity {
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         //
         adaptor = new MyAdapter(mContext, R.layout.sample_conntacts_horizental, allContactsTo_participants);
         recyclerView.setAdapter(adaptor);

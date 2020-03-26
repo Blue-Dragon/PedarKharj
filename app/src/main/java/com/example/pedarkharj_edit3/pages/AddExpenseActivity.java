@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -298,6 +299,8 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 4, GridLayoutManager.HORIZONTAL, false);
 //        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
         recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         //
         adapter = new MyAdapter(mContext, R.layout.sample_contact, allParticipants);
         adapter.setSelectMode(selectMode);

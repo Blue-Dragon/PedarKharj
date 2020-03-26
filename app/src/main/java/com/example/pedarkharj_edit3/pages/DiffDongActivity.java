@@ -6,6 +6,8 @@ import android.content.Intent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -292,6 +294,8 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         //dongNumber mode
         if (!cashMode) {
             adaptor = new MyAdapter(mActivity, R.layout.sample_diff_dong__dong_mode, usersList);

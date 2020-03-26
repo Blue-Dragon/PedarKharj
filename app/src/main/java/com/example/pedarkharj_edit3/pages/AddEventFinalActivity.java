@@ -15,6 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -184,6 +186,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3, GridLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+
         //
         adapter = new MyAdapter(mContext, R.layout.sample_contact, mParticipants);
         recyclerView.setAdapter(adapter);
