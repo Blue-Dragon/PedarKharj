@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener, View.OnLongClickListener {
+    MyLongClickListener myLongClickListener;
+
     CircleImageView profImv;
     AppCompatImageView checkedImg;
     ImageView imageView;
@@ -87,8 +89,16 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     public void onClick(View view) {
     }
 
+
+    /**
+     * that's becaure we can't directly implement `onLongClickListener` in ViewHolder
+     */
+    public void setOnMyLongClickListener(MyLongClickListener myLongClickListener) {
+        this.myLongClickListener = myLongClickListener;
+    }
     @Override
     public boolean onLongClick(View v) {
+        this.myLongClickListener.onMyItemLongClickListener(getLayoutPosition());
         return false;
     }
 }

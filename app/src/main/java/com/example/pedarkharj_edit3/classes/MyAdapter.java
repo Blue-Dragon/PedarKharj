@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.models.Contact;
@@ -143,13 +144,17 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
      * it handles the contact delete
      * @param item
      */
-//    public void doDeleteStuff(MenuItem item) {
-//        List<Event> particedEvents = db.getAllEventsUnderContact(pressedContact);
-//        if (particedEvents.size() > 0)
-//            showDialog();
-//        else
-//            deleteContect(pressedContact);
-//    }
+    public void doDeleteStuff(Activity mActivity, MenuItem item, Contact pressedContact) {
+        DatabaseHelper db = new DatabaseHelper(mActivity);
+
+        List<Event> particedEvents = db.getAllEventsUnderContact(pressedContact);
+        if (particedEvents.size() > 0)
+            Routines.showDialog(mActivity);
+        else
+            Routines.deleteContect(mActivity, pressedContact);
+
+        db.closeDB();
+    }
 
 
     //------------------------------      Interface Methods       ---------------------------------/
@@ -246,10 +251,14 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
          * Contacts
          */
         if (contactList != null ) {
+            holder.setOnMyLongClickListener(position1 -> {
+                ContactsFragment.pressedContact = contactList.get(position1); //this is for the ContextMenu (edit/delete)
+            });
+
             Contact contact;
             Log.i("positionCall", "contacts recyclerView Call");
             contact = contactList.get(position);
-            ContactsFragment.pressedContact = contact; //this is for the ContextMenu (edit/delete)
+
 
             //get info later. no hurry bro !
             if (contact.getName() != null && holder.nameTv != null){
@@ -356,7 +365,6 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
         }
     }
-
 
 
     class ContactAndHolder {

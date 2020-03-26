@@ -94,7 +94,7 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
 
             @Override
             public void onLongClick(View view, int position) {
-//                pressedContact = contactList.get(position);
+                pressedContact = contactList.get(position);
 //                Toast.makeText(mActivity, ""+ pressedContact.getName(), Toast.LENGTH_SHORT).show();
 //                registerForContextMenu(view); // floating context menu
             }
@@ -334,7 +334,8 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
 
             //Delete
             case 101:
-//                adaptor.doDeleteStuff(item);
+//                ContactsFragment.pressedContact =
+                adaptor.doDeleteStuff(mActivity, item, ContactsFragment.pressedContact);
                 return true;
 
 
@@ -345,28 +346,6 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
 
     }
 
-    private void showDialog() {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(mActivity);
-        dialog.setTitle("خطا!");
-        dialog.setMessage("تا زمانی که نام این مخاطب در رویدادی ثبت شده باشد، امکان حذفش وجود ندارد.");
-        dialog.setNeutralButton("باشه!", (dialog1, which) ->{});
-        dialog.show();
-    }
 
 
-    private void deleteContect(Contact pressedContact) {
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(mContext, android.app.AlertDialog.THEME_HOLO_LIGHT);
-                builder.setTitle("اخطار!")
-                .setMessage("مطئنی که پاک بشه؟")
-                .setPositiveButton("اره", (dialog1, which) ->{
-                    db.deleteContact(pressedContact);
-//                    adaptor.notifyDataSetChanged();
-                    restartPage(mActivity, Routines.CONTACTS);
-                    Toast.makeText(mActivity, "مخاطب با موفقیت حذف شد.", Toast.LENGTH_SHORT).show();
-                })
-                .setNegativeButton("نه", (dialog1, which) ->{})
-                .show();
-
-
-    }
 }
