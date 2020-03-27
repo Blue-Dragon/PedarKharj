@@ -9,7 +9,6 @@
     android:layout_marginTop="@dimen/s_m"
     android:layout_marginRight="@dimen/s_m"
     android:layout_marginLeft="@dimen/s_m"
-
     card_view:cardCornerRadius="2dp">
 
 
@@ -18,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/m"
-        android:layout_marginBottom="@dimen/m"
+        android:paddingTop="@dimen/m"
+        android:paddingBottom="@dimen/m"
         android:background="@color/white"
         android:gravity="center">
 

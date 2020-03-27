@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
@@ -50,12 +51,16 @@ public class EachExpenseDetailActivity extends AppCompatActivity {
         Intent i = getIntent();
         expenseId = i.getIntExtra(Routines.SEND_EXPENSE_ID_INTENT, 0);
         if (expenseId > 0)
-            theExpense = db.getExpenseByExpenseId(expenseId);
+            theExpense = db.getExpenseByExpenseId(expenseId); //todo: bug
 
         if (theExpense !=null ){
             participantList = theExpense.getUserPartics();
             setRecyclerView();
+
+            //todo: bug
+            Toast.makeText(mContext, "exp id: "+expenseId+ "\n exp id: "+ theExpense.getId(), Toast.LENGTH_SHORT).show();
         }
+
 
         /* -------------------------     recView onClick    -------------------------- */
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {

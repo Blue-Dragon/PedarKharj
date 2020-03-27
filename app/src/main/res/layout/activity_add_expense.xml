@@ -22,7 +22,7 @@
                 android:padding="6dp"
                 android:text="دونگ های متفاوت؟"
                 android:background="@drawable/selector_button_dong"
-                android:textColor="#CC0707"
+                android:textColor="@color/colorAccentDark"
                 android:fontFamily="@font/b_koodak"
                 android:textSize="15dp"/>
 

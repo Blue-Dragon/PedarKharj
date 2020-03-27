@@ -9,6 +9,7 @@
     android:layout_marginRight="@dimen/s_m"
     android:layout_marginLeft="@dimen/s_m"
     android:layoutDirection="ltr"
+    android:background="@color/back_ground_lemon"
     card_view:cardCornerRadius="25dp">
 
     <de.hdodenhof.circleimageview.CircleImageView

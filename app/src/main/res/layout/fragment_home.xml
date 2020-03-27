@@ -5,6 +5,7 @@
     style="@style/activity_layout_style"
     android:id="@+id/fragment_home"
     android:clipToPadding="false"
+    android:background="@color/back_groung_lime"
     android:layout_gravity="center_horizontal">
 
 

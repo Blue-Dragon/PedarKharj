@@ -30,11 +30,11 @@
                 android:layout_toRightOf="@id/prof_pic"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/b_koodak"
-                android:layout_marginLeft="@dimen/ss"
+                android:layout_marginLeft="@dimen/s"
                 android:gravity="center"
                 android:text=""
                 android:textColor="#000000"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/result_txt"
@@ -46,7 +46,7 @@
                 android:layout_centerVertical="true"
                 android:text=""
                 android:textColor="#000000"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
     </RelativeLayout>
 
