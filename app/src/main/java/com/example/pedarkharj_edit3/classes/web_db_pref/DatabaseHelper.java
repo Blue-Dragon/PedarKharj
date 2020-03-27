@@ -367,6 +367,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Participant createEventNewPartice(Event event, Contact contact) {
         SQLiteDatabase db = this.getWritableDatabase();
         Participant participant = new Participant(contact.getName());
+        participant.setContact(contact);
 
         ContentValues values = new ContentValues();
         values.put(KEY_EVENT_NAME, event.getEventName());

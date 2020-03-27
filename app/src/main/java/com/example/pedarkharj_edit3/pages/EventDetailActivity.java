@@ -109,6 +109,10 @@ public class EventDetailActivity extends AppCompatActivity  {
         events = db.getAllEvents(); //for spinner && def partices
         lastSeenEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
 
+        recyclerView = findViewById(R.id.recycler_view);
+        mySpinner = findViewById(R.id.my_spinner);
+        spinnerTv  = findViewById(R.id.spinner_tv);
+
         //the rectangle above
         tvL1 = findViewById(R.id.tv_title_my_expense);
         tvL2 = findViewById(R.id.tv_my_expense);
@@ -117,9 +121,14 @@ public class EventDetailActivity extends AppCompatActivity  {
         tvR1 = findViewById(R.id.tv_title_my_result);
         tvR2 = findViewById(R.id.tv_my_result);
 
-        recyclerView = findViewById(R.id.recycler_view);
-        mySpinner = findViewById(R.id.my_spinner);
-        spinnerTv  = findViewById(R.id.spinner_tv);
+        tvR1.setTextColor(getResources().getColor(R.color.grayTextColor));
+        tvR2.setTextColor(getResources().getColor(R.color.grayTextColor));
+        tvL1.setTextColor(getResources().getColor(R.color.primaryTextColor));
+        tvL2.setTextColor(getResources().getColor(R.color.primaryTextColor));
+        tvR1.setText("خرج های من");
+        tvC1.setText("دونگ های من");
+        tvL1.setText("حساب من");
+
     }
 
     private void showEventsDialog(Event curEvent) {
@@ -153,12 +162,11 @@ public class EventDetailActivity extends AppCompatActivity  {
         if (participants.size() > 0) {
             int myExpenses = db.getParticTotalExpensePriceByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
             int myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
-            int allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
-            tvL2.setText(String.valueOf(allEventExpenses));
-            tvC2.setText(String.valueOf(myExpenses));
-            tvR2.setText(String.valueOf(myExpenses - myDebt));
+//            int allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
+            tvR2.setText(String.valueOf(myExpenses));
+            tvC2.setText(String.valueOf(myDebt));
+            tvL2.setText(String.valueOf(myExpenses - myDebt));
         }
-
     }
 
 

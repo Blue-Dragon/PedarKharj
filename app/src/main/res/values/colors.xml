@@ -21,6 +21,8 @@
     <color name="colorAccentDark">#5c007a</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>
+    <color name="grayTextColor">#8C8C8C</color>
+    8C8C8C
 
 
     <color name="colorWhite">#FFFFFF</color>

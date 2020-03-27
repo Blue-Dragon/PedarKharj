@@ -198,6 +198,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         tvC2 = view.findViewById(R.id.tv_my_dong);
         tvR1 = view.findViewById(R.id.tv_title_my_result);
         tvR2 = view.findViewById(R.id.tv_my_result);
+
+        tvR1.setTextColor(getResources().getColor(R.color.grayTextColor));
+        tvR2.setTextColor(getResources().getColor(R.color.grayTextColor));
+        tvL1.setTextColor(getResources().getColor(R.color.primaryTextColor));
+        tvL2.setTextColor(getResources().getColor(R.color.primaryTextColor));
+        tvR1.setText("خرج من");
+        tvC1.setText("دونگ من");
+        tvL1.setText("حساب من");
     }
 
     private void showBuyerDialog(Event curEvent) {
@@ -282,19 +290,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         defContats = new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2), db.getContactById(contact_3), db.getContactById(contact_4)};
     }
 
-    //todo: complete it
     private void initRectangleAbove(Event event) {
-
         List<Participant> participants = db.getAllParticeUnderEvent(event);
         if (participants.size() > 0) {
             int myExpenses = db.getParticTotalExpensePriceByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
             int myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
-            int allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
-            tvL2.setText(String.valueOf(allEventExpenses));
-            tvC2.setText(String.valueOf(myExpenses));
-            tvR2.setText(String.valueOf(myExpenses - myDebt));
+//            int allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
+            tvR2.setText(String.valueOf(myExpenses));
+            tvC2.setText(String.valueOf(myDebt));
+            tvL2.setText(String.valueOf(myExpenses - myDebt));
         }
-
     }
 
 

@@ -63,6 +63,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     Spinner spinner;
     // the rectangle above
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2;
+    ImageView backBtn;
 
 
     @Override
@@ -72,54 +73,11 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
-        usersList = new ArrayList<Participant>();
-        usersDongMap = new HashMap<Integer, Integer>();
-        db = new DatabaseHelper(mContext);
-        curEvent = db.getEventById( getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 1) );
-        layoutMode = DONG_MODE; //by default
-        defDong = 1;//by default
-
-        expense = getIntent().getIntExtra(Routines.SEND_EXPENSE_INT_INTENT, 0);
-        countedExpenses = 0; //By def; we'll set it after Spinner to count the exact thing
-        usersIds = getIntent().getIntArrayExtra(Routines.SEND_USERS_INTENT);
-        dongsNumber = usersIds.length;
-        eachDongAmount = expense/dongsNumber;
-
-        //the rectangle above
-        tvL1 = findViewById(R.id. tv_title_my_expense);
-        tvL2 = findViewById(R.id.tv_my_expense );
-        tvC1 = findViewById(R.id. tv_title_my_dong);
-        tvC2 = findViewById(R.id. tv_my_dong);
-        tvR1 = findViewById(R.id. tv_title_my_result);
-        tvR2 = findViewById(R.id. tv_my_result);
-
-        //back imageView btn
-        ImageView backBtn = findViewById(R.id.back_btn);
-        backBtn.setOnClickListener(item -> onBackPressed());
-
-        //recyclerView
-        recyclerView = findViewById(R.id.diff_dong_recView);
-//        doRecyclerView(DONG_MODE); //not needed
-
-        /*
-         * Spinner
-         */
-        spinner = findViewById(R.id.spinner);
-        List<String> list = new ArrayList<String>();
-        list.add("تعداد دنگ");
-        list.add("مقداد دنگ");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(dataAdapter);
-        //
-        spinner.setOnItemSelectedListener(this);
+        inits();
+        onClicks();
 
 
-
-
-        /*
-         * recView onClick
-         */
+        // recView onClick
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -214,21 +172,14 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
             }
         }));
 
-
-        /*
-         * the rectangle above
-         */
+        // the rectangle above
         initRectangleAbove();
 
-
-        /*
-         * Floating Btn
-         */
-        fab = this.findViewById(R.id.fab);
+        // Floating Btn
         fab.setOnClickListener(view -> {
             countedExpenses = reGetCountedExpenses();
             if (layoutMode == CASH_MODE && (expense - countedExpenses) != 0){
-//                Toast.makeText(mContext, "Fuck u", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "مبلغ ها صحیح نیستند! باقی مانده باید صفر باشد.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -261,7 +212,57 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
 
 
+
     /********************************************       Methods     ****************************************************/
+    private void inits() {
+        usersList = new ArrayList<Participant>();
+        usersDongMap = new HashMap<Integer, Integer>();
+        db = new DatabaseHelper(mContext);
+        curEvent = db.getEventById( getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 1) );
+        layoutMode = DONG_MODE; //by default
+        defDong = 1;//by default
+
+        expense = getIntent().getIntExtra(Routines.SEND_EXPENSE_INT_INTENT, 0);
+        countedExpenses = 0; //By def; we'll set it after Spinner to count the exact thing
+        usersIds = getIntent().getIntArrayExtra(Routines.SEND_USERS_INTENT);
+        dongsNumber = usersIds.length;
+        eachDongAmount = expense/dongsNumber;
+
+        //the rectangle above
+        tvR1 = findViewById(R.id. tv_title_my_expense);
+        tvR2 = findViewById(R.id.tv_my_expense );
+        tvC1 = findViewById(R.id. tv_title_my_dong);
+        tvC2 = findViewById(R.id. tv_my_dong);
+        tvL1 = findViewById(R.id. tv_title_my_result);
+        tvL2 = findViewById(R.id. tv_my_result);
+        tvL1.setTextColor(getResources().getColor(R.color.grayTextColor));
+        tvL2.setTextColor(getResources().getColor(R.color.grayTextColor));
+        tvR1.setTextColor(getResources().getColor(R.color.primaryTextColor));
+        tvR2.setTextColor(getResources().getColor(R.color.primaryTextColor));
+
+        //back imageView btn
+        backBtn = findViewById(R.id.back_btn);
+        fab = this.findViewById(R.id.fab);
+
+        //recyclerView
+        recyclerView = findViewById(R.id.diff_dong_recView);
+        /*
+         * Spinner
+         */
+        spinner = findViewById(R.id.spinner);
+        List<String> list = new ArrayList<String>();
+        list.add("تعداد دنگ");
+        list.add("مقداد دنگ");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+    }
+
+    private void onClicks() {
+        backBtn.setOnClickListener(item -> onBackPressed());
+        spinner.setOnItemSelectedListener(this);
+    }
+
     private int reGetCountedExpenses() {
         int countedExpenses = 0;
         for (Participant user : usersList) {
@@ -352,7 +353,6 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
             tvR1.setText("هزینه باقی مانده");
             int theRest = expense - countedExpenses;
-//            Log.i("fuck018", "2- expense: " + expense + " \n"+ " countedExpenses: "+ countedExpenses);
             tvR2.setText(String.valueOf(theRest));
         }
     }

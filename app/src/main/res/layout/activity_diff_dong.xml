@@ -55,8 +55,7 @@
     <RelativeLayout
         android:id="@+id/rl_myresult"
         android:layout_below="@id/m_toolbar"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
+
         android:layout_marginRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -75,11 +74,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="0dp">
+            android:layout_gravity="center_horizontal">
 
 
             <androidx.recyclerview.widget.RecyclerView

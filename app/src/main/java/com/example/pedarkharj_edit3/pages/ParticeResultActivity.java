@@ -36,6 +36,7 @@ public class ParticeResultActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
+    TextView toolbarTitle;
 
 
     @Override
@@ -52,14 +53,6 @@ public class ParticeResultActivity extends AppCompatActivity {
 
         db = new DatabaseHelper(mContext);
 
-        //the rectangle above
-        tvL1 = findViewById(R.id.tv_title_my_expense);
-        tvL2 = findViewById(R.id.tv_my_expense);
-        tvC1 = findViewById(R.id.tv_title_my_dong);
-        tvC2 = findViewById(R.id.tv_my_dong);
-        tvR1 = findViewById(R.id.tv_title_my_result);
-        tvR2 = findViewById(R.id.tv_my_result);
-
         Intent data = getIntent();
         int sentEventId = data.getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
         int sentParticeId = data.getIntExtra(Routines.SEND_PARTICIPANT_ID_INTENT, 0);
@@ -69,9 +62,32 @@ public class ParticeResultActivity extends AppCompatActivity {
             curEvent = db.getEventById(sentEventId);
         if (curEvent != null){
 //            expenseList = db.getAllExpensesOfEvent(curEvent);
-
             // not all expenses in expenseList are the ones our partice has participated in.
             expenseList = HomeFragment.newExpenseList;
+
+            toolbarTitle = findViewById(R.id.textView);
+
+            //the rectangle above
+        tvL1 = findViewById(R.id.tv_title_my_expense);
+        tvL2 = findViewById(R.id.tv_my_expense);
+        tvC1 = findViewById(R.id.tv_title_my_dong);
+        tvC2 = findViewById(R.id.tv_my_dong);
+        tvR1 = findViewById(R.id.tv_title_my_result);
+        tvR2 = findViewById(R.id.tv_my_result);
+        tvR1.setTextColor(getResources().getColor(R.color.grayTextColor));
+        tvR2.setTextColor(getResources().getColor(R.color.grayTextColor));
+        tvL1.setTextColor(getResources().getColor(R.color.primaryTextColor));
+        tvL2.setTextColor(getResources().getColor(R.color.primaryTextColor));
+
+        toolbarTitle.setText("جزئیات حساب " + selectedPartic.getName());
+        tvR1.setText("خرج ها" );
+        tvC1.setText("دونگ ها");
+        tvL1.setText("حساب نهایی");
+
+
+
+
+
         }
 
         recyclerView = findViewById(R.id.recycler_view);

@@ -2,133 +2,131 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/details_card_layout"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="90dp"
     android:layoutDirection="ltr"
     android:elevation="8dp"
-    android:layout_margin="@dimen/m"
+    android:layout_marginBottom="@dimen/s_m"
+    android:layout_marginTop="@dimen/s_m"
+    android:layout_marginRight="@dimen/s_m"
+    android:layout_marginLeft="@dimen/s_m"
+
     card_view:cardCornerRadius="2dp">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/rl_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/m"
+        android:layout_marginBottom="@dimen/m"
         android:background="@color/white"
         android:gravity="center">
 
 
-        <ImageView
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:layout_weight="30"
+           android:gravity="center"
+           android:orientation="vertical">
+
+           <TextView
+               android:id="@+id/tv_title_my_result"
+               style="@style/triangle_textview"
+               android:textColor="#000000"
+               android:text="حساب من"
+               />
+           <Space
+               android:layout_width="match_parent"
+               android:layout_height="@dimen/ss"/>
+           <TextView
+               android:id="@+id/tv_my_result"
+               style="@style/triangle_textview_2"
+               android:text="0"
+               android:textColor="#000000"
+               />
+
+       </LinearLayout>
+        <View
             android:id="@+id/sep1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:rotation="90"
-            android:scaleY="0.2"
-            card_view:layout_constraintRight_toLeftOf="@+id/tv_my_dong"
-            card_view:layout_constraintLeft_toRightOf="@+id/tv_my_result"
-            card_view:layout_constraintTop_toBottomOf="@+id/tv_title_my_dong"
-            card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
-            card_view:layout_constraintVertical_bias="1.0"
-            card_view:srcCompat="@drawable/ic_remove_black_24dp" />
+            android:layout_width="1dp"
+            android:scaleX="0.6"
+            android:layout_height="24dp"
+            android:background="#1F1F1F"
+            android:orientation="vertical" />
 
-        <ImageView
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title_my_dong"
+                style="@style/triangle_textview"
+                android:textColor="#8C8C8C"
+                android:text="خرج های من"
+                />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ss"/>
+            <TextView
+                android:id="@+id/tv_my_dong"
+                style="@style/triangle_textview_2"
+                android:textColor="#8C8C8C"
+                android:text="0"
+                />
+
+        </LinearLayout>
+        <View
             android:id="@+id/sep2"
+            android:layout_width="1dp"
+            android:scaleX="0.6"
+            android:layout_height="24dp"
+            android:background="#1F1F1F"
+            android:orientation="vertical" />
+
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_weight="30"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:rotation="90"
-            android:scaleY="0.2"
-            card_view:layout_constraintRight_toLeftOf="@+id/tv_my_expense"
-            card_view:layout_constraintLeft_toRightOf="@+id/tv_my_dong"
-            card_view:layout_constraintTop_toTopOf="@+id/sep1"
-            card_view:layout_constraintBottom_toBottomOf="@+id/sep1"
-            card_view:srcCompat="@drawable/ic_remove_black_24dp" />
-
-        <TextView
-            android:id="@+id/tv_title_my_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/b_koodak"
             android:gravity="center"
-            android:text="حساب من"
-            android:textColor="#000000"
-            android:textSize="12sp"
-            card_view:layout_constraintBottom_toBottomOf="@+id/tv_title_my_dong"
-            card_view:layout_constraintRight_toRightOf="@+id/tv_my_result"
-            card_view:layout_constraintLeft_toLeftOf="@+id/tv_my_result"
-            card_view:layout_constraintTop_toTopOf="@+id/tv_title_my_dong" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title_my_expense"
+                style="@style/triangle_textview"
+                android:text="هزینه کل"
+                android:textColor="#8C8C8C"
+                />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ss"/>
+            <TextView
+                android:id="@+id/tv_my_expense"
+                style="@style/triangle_textview_2"
+                android:text="0"
+                android:textColor="#8C8C8C"
+                />
+        </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/tv_my_dong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            android:fontFamily="@font/b_koodak"
-            android:text="0"
-            android:textColor="#8C8C8C"
-            android:textSize="18sp"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintRight_toRightOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.501"
-            card_view:layout_constraintLeft_toLeftOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@+id/tv_title_my_dong"
-            card_view:layout_constraintVertical_bias="0.615" />
 
-        <TextView
-            android:id="@+id/tv_title_my_dong"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/b_koodak"
-            android:gravity="center"
-            android:text="خرج های من"
-            android:textColor="#8C8C8C"
-            android:textSize="12sp"
-            card_view:layout_constraintRight_toRightOf="@+id/tv_my_dong"
-            card_view:layout_constraintLeft_toLeftOf="@+id/tv_my_dong"
-            card_view:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tv_my_expense"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/b_koodak"
-            android:text="0"
-            android:textColor="#8C8C8C"
-            android:textSize="18sp"
-            card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
-            card_view:layout_constraintRight_toRightOf="parent"
-            card_view:layout_constraintLeft_toRightOf="@+id/tv_my_dong"
-            card_view:layout_constraintTop_toTopOf="@+id/tv_my_dong" />
 
-        <TextView
-            android:id="@+id/tv_title_my_expense"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/b_koodak"
-            android:gravity="center"
-            android:text="هزینه کل"
-            android:textColor="#8C8C8C"
-            android:textSize="12sp"
-            card_view:layout_constraintBottom_toBottomOf="@+id/tv_title_my_dong"
-            card_view:layout_constraintRight_toRightOf="@+id/tv_my_expense"
-            card_view:layout_constraintLeft_toLeftOf="@+id/tv_my_expense"
-            card_view:layout_constraintTop_toTopOf="@+id/tv_title_my_dong" />
 
-        <TextView
-            android:id="@+id/tv_my_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/b_koodak"
-            android:text="0"
-            android:textColor="#000000"
-            android:textSize="18sp"
-            card_view:layout_constraintBottom_toBottomOf="@+id/tv_my_dong"
-            card_view:layout_constraintRight_toLeftOf="@+id/tv_my_dong"
-            card_view:layout_constraintLeft_toLeftOf="parent"
-            card_view:layout_constraintTop_toTopOf="@+id/tv_my_dong" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+    </LinearLayout>
 
 
 

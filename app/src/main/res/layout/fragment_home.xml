@@ -66,8 +66,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ss"
             android:layout_marginBottom="0dp"
-            android:layout_marginLeft="@dimen/m"
-            android:layout_marginRight="@dimen/m"
             android:layout_gravity="center_horizontal">
 
 
