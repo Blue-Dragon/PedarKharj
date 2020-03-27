@@ -37,7 +37,9 @@
                 android:gravity="center"
                 android:text="خرج ها"
                 android:textColor="#868686"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+
+                style="@style/toolbar_text_style"/>
 
             <Spinner
                 android:id="@+id/spinner"
@@ -47,7 +49,7 @@
                 android:layout_alignParentEnd="true"
                 android:gravity="center_vertical"
                 android:backgroundTint="#304FFE"
-                android:layout_marginRight="12dp" />
+                android:layout_marginRight="@dimen/m" />
 
         </RelativeLayout>
 
@@ -62,6 +64,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="@dimen/m">
+
+
         <include layout="@layout/sample_my_result"/>
     </RelativeLayout>
 

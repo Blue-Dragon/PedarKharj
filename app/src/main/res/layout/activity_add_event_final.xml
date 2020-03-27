@@ -70,7 +70,7 @@
         android:id="@+id/change_pic"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:padding="14dp"
+        android:padding="13dp"
         app:layout_constraintBottom_toBottomOf="@+id/change_pic_bkg"
         app:layout_constraintEnd_toEndOf="@+id/change_pic_bkg"
         app:layout_constraintStart_toStartOf="@+id/change_pic_bkg"
@@ -81,13 +81,12 @@
         android:id="@+id/name_edt"
         style="@style/medium_koodak"
         android:layout_width="0dp"
-        android:layout_height="51dp"
+        android:layout_height="52dp"
         android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="نام رویداد"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/prof_pic"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/prof_pic"
         app:layout_constraintTop_toBottomOf="@+id/prof_pic" />
 </androidx.constraintlayout.widget.ConstraintLayout>

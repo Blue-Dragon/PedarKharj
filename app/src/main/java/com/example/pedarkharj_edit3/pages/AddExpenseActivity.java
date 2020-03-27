@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
@@ -296,13 +297,16 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         allParticipants = db.getAllParticeUnderEvent(curEvent);
         recyclerChildCount = allParticipants.size();
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 4, GridLayoutManager.HORIZONTAL, false);
-//        gridLayoutManager.setOrientation(gridLayoutManager.scrollHorizontallyBy(3));
+        int items = 5;
+        // Grid Layout Manager
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mActivity, items, GridLayoutManager.VERTICAL, false);
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //
         adapter = new MyAdapter(mContext, R.layout.sample_contact, allParticipants);
+        adapter.setItemsInScreen(items);
         adapter.setSelectMode(selectMode);
         recyclerView.setAdapter(adapter);
     }

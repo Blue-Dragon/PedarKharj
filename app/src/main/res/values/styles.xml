@@ -114,9 +114,8 @@
     <style name="toolbar_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:layout_alignParentStart">true</item>
         <item name="android:layout_alignParentTop">true</item>
-        <item name="android:background">#FFFFFF</item>
+        <item name="android:background">@color/white</item>
         <item name="android:elevation">2dp</item>
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="android:popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
@@ -158,12 +157,25 @@
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_gravity">bottom|end</item>
-        <item name="android:layout_marginRight">@dimen/l</item>
-        <item name="android:layout_marginBottom">@dimen/l</item>
+        <item name="android:layout_marginRight">@dimen/m</item>
+        <item name="android:layout_marginBottom">@dimen/m</item>
 
         <item name="android:tint">#FFFADC</item>
         <item name="backgroundTint">@color/colorTransparent</item>
         <item name="android:backgroundTint">@color/colorAccentLight</item>
+    </style>
+
+
+    <!--  partic cardView -->
+    <style name="partic_card_style" >
+        <item name="android:layout_height">52dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layoutDirection">ltr</item>
+        <item name="android:layout_marginBottom">@dimen/s</item>
+        <item name="android:layout_marginTop">@dimen/s</item>
+        <item name="android:layout_marginRight">@dimen/s_m</item>
+        <item name="android:layout_marginLeft">@dimen/s_m</item>
+
     </style>
 
 </resources>

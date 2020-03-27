@@ -6,6 +6,7 @@
     android:gravity="center_horizontal"
     android:background="#00FFFFFF"
     android:layoutDirection="ltr"
+    android:layout_marginTop="2dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -38,11 +39,10 @@
             android:id="@+id/sub_img"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginLeft="-44dp"
-            android:layout_marginTop="-14dp"
             android:visibility="invisible"
-            app:layout_constraintLeft_toRightOf="@id/prof_pic"
-            app:layout_constraintTop_toBottomOf="@+id/prof_pic"
+
+            app:layout_constraintBottom_toBottomOf="@+id/prof_pic"
+            app:layout_constraintEnd_toEndOf="@+id/prof_pic"
             app:srcCompat="@drawable/ic_check_2" />
 
         <de.hdodenhof.circleimageview.CircleImageView

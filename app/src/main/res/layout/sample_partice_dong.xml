@@ -16,7 +16,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="18dp"
+        android:layout_marginLeft="@dimen/m"
         android:layout_centerVertical="true"
         android:src="@drawable/profile"/>
 
@@ -27,7 +27,7 @@
         android:layout_marginBottom="-2dp"
         android:fontFamily="@font/b_koodak"
         android:layout_toRightOf="@id/prof_pic"
-        android:layout_marginLeft="12dp"
+        android:layout_marginLeft="@dimen/s_m"
         android:gravity="center"
         android:layout_centerVertical="true"
         android:text=""

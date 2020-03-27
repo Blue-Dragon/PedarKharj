@@ -17,9 +17,11 @@
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:id="@+id/custom_dong_btn"
+                android:layout_marginTop="@dimen/s"
+                android:layout_marginBottom="@dimen/s"
                 android:padding="6dp"
-                android:text="دنگ های متفاوت؟"
-                style="@style/calcAction"
+                android:text="دونگ های متفاوت؟"
+                android:background="@drawable/selector_button_dong"
                 android:textColor="#CC0707"
                 android:fontFamily="@font/b_koodak"
                 android:textSize="15dp"/>
@@ -32,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="12dp"
+                android:layout_marginRight="@dimen/m"
                 android:text="انتخاب همه" />
 
 
@@ -41,45 +43,64 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-            <RelativeLayout
-                android:id="@+id/downerPage_addExpense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#00FFFFFF"
-                android:layout_marginTop="?attr/actionBarSize">
+    <LinearLayout
+        android:id="@+id/downerPage_addExpense"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#00FFFFFF"
+        android:layout_marginTop="?attr/actionBarSize">
 
-                <!-- categories -->
-                <HorizontalScrollView
+
+        <!-- result of calc -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="65">
+
+            <RelativeLayout
+                android:id="@+id/upperPage_addExpense"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#00FFFFFF">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/participants_RecView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignBottom="@id/addDigit_addExpense"
-                    android:layout_marginBottom="50dp">
+                    tools:itemCount="5"
+                    tools:layoutManager="GridLayoutManager"
+                    tools:listitem="@layout/sample_contact">
 
-                    <RelativeLayout
-                        android:id="@+id/upperPage_addExpense"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="#00FFFFFF">
+                </androidx.recyclerview.widget.RecyclerView>
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/participants_RecView"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            tools:itemCount="5"
-                            tools:layoutManager="GridLayoutManager"
-                            tools:listitem="@layout/sample_contact">
+            </RelativeLayout>
 
-                        </androidx.recyclerview.widget.RecyclerView>
+        </ScrollView>
 
-                    </RelativeLayout>
+        <!-- calculator -->
+        <LinearLayout
+            android:id="@+id/calculator"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="35"
+            android:visibility="visible">
 
-                </HorizontalScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/addDigit_addExpense"
+                android:layout_above="@+id/calculator"
+                android:background="@drawable/bkg_field"
+                android:gravity="center_vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:visibility="visible">
 
-
-
-                <!-- result of calc -->
                 <RelativeLayout
-                    android:id="@+id/addDigit_addExpense"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_above="@+id/calculator"
@@ -95,7 +116,7 @@
                         android:layout_height="35dp"
                         android:src="@drawable/profile"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="@dimen/ss"
                         android:layout_centerVertical="true"
                         />
 
@@ -115,7 +136,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="@dimen/m"
                         android:gravity="center"
                         android:text="0"
                         android:textColor="#000"
@@ -133,8 +154,8 @@
                         android:layout_toLeftOf= "@+id/write_img"
                         android:layout_toRightOf="@+id/price_txt"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="25dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="@dimen/l"
+                        android:layout_marginRight="@dimen/l"
                         android:paddingBottom="6dp"
                         android:hint="چی خریده؟"
                         android:backgroundTint="#00FFFFFF"
@@ -143,112 +164,107 @@
 
                 </RelativeLayout>
 
-                <!-- calculator -->
-                <LinearLayout
-                    android:id="@+id/calculator"
-                    android:layout_alignParentBottom="true"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="210dp"
-                    android:visibility="visible">
+
+            </LinearLayout>
 
 
-                    <LinearLayout
-                        style="@style/calcHorizLayout">
-                        <!-- Row 1 -->
-                        <Button
-                            android:text="7"
-                            android:id="@+id/b7"
-                            style="@style/calcAction"/>
-                        <Button
-                            android:text="8"
-                            android:id="@+id/b8"
-                            style="@style/calcAction"/>
-                        <Button
-                            android:text="9"
-                            android:id="@+id/b9"
-                            style="@style/calcAction" />
-                        <Button
-                            android:id="@+id/date_btn"
-                            android:text="Today\n8/16"
-                            android:textSize="14dp"
-                            style="@style/calcAction" />
-                    </LinearLayout>
+            <LinearLayout
+                style="@style/calcHorizLayout">
+                <!-- Row 1 -->
+                <Button
+                    android:text="7"
+                    android:id="@+id/b7"
+                    style="@style/calcAction"/>
+                <Button
+                    android:text="8"
+                    android:id="@+id/b8"
+                    style="@style/calcAction"/>
+                <Button
+                    android:text="9"
+                    android:id="@+id/b9"
+                    style="@style/calcAction" />
+                <Button
+                    android:id="@+id/date_btn"
+                    android:text="Today\n8/16"
+                    android:textSize="14dp"
+                    style="@style/calcAction" />
+            </LinearLayout>
 
-                    <LinearLayout
-                        style="@style/calcHorizLayout">
-                        <!-- Row 2 -->
-                        <Button
-                            android:text="4"
-                            android:id="@+id/b4"
-                            style="@style/calcAction" />
+            <LinearLayout
+                style="@style/calcHorizLayout">
+                <!-- Row 2 -->
+                <Button
+                    android:text="4"
+                    android:id="@+id/b4"
+                    style="@style/calcAction" />
 
-                        <Button
-                            style="@style/calcAction"
-                            android:id="@+id/b5"
-                            android:text="5" />
-                        <Button
-                            android:text="6"
-                            android:id="@+id/b6"
-                            style="@style/calcAction" />
-                        <Button
-                            android:id="@+id/plus_btn"
-                            android:text="+"
-                            style="@style/calcAction"/>
+                <Button
+                    style="@style/calcAction"
+                    android:id="@+id/b5"
+                    android:text="5" />
+                <Button
+                    android:text="6"
+                    android:id="@+id/b6"
+                    style="@style/calcAction" />
+                <Button
+                    android:id="@+id/plus_btn"
+                    android:text="+"
+                    style="@style/calcAction"/>
 
-                    </LinearLayout>
+            </LinearLayout>
 
-                    <LinearLayout
-                        style="@style/calcHorizLayout">
-                        <!-- Row 3 -->
-                        <Button
-                            android:text="1"
-                            android:id="@+id/b1"
-                            style="@style/calcAction" />
-                        <Button
-                            android:text="2"
-                            android:id="@+id/b2"
-                            style="@style/calcAction"/>
-                        <Button
-                            android:text="3"
-                            android:id="@+id/b3"
-                            style="@style/calcAction" />
+            <LinearLayout
+                style="@style/calcHorizLayout">
+                <!-- Row 3 -->
+                <Button
+                    android:text="1"
+                    android:id="@+id/b1"
+                    style="@style/calcAction" />
+                <Button
+                    android:text="2"
+                    android:id="@+id/b2"
+                    style="@style/calcAction"/>
+                <Button
+                    android:text="3"
+                    android:id="@+id/b3"
+                    style="@style/calcAction" />
 
-                        <Button
-                            android:text="-"
-                            android:id="@+id/minus_btn"
-                            style="@style/calcAction" />
+                <Button
+                    android:text="-"
+                    android:id="@+id/minus_btn"
+                    style="@style/calcAction" />
 
 
-                    </LinearLayout>
+            </LinearLayout>
 
-                    <LinearLayout
-                        style="@style/calcHorizLayout">
-                        <!-- Row 4 -->
-                        <Button
-                            android:text="."
-                            android:id="@+id/button_dot"
-                            style="@style/calcAction"/>
+            <LinearLayout
+                style="@style/calcHorizLayout">
+                <!-- Row 4 -->
+                <Button
+                    android:text="."
+                    android:id="@+id/button_dot"
+                    style="@style/calcAction"/>
 
-                        <Button
-                            android:text="0"
-                            android:id="@+id/b0"
-                            style="@style/calcAction"/>
+                <Button
+                    android:text="0"
+                    android:id="@+id/b0"
+                    style="@style/calcAction"/>
 
-                        <Button
-                            android:text=' del '
-                            android:fontFamily="@font/b_koodak"
-                            android:id="@+id/bkSpace"
-                            style="@style/calcAction"/>
+                <Button
+                    android:text=' del '
+                    android:fontFamily="@font/b_koodak"
+                    android:id="@+id/bkSpace"
+                    style="@style/calcAction"/>
 
-                        <Button
-                            android:id="@+id/done_btn"
-                            android:text="Done"
-                            style="@style/calcDoneBtn"
-                            android:onClick="onClick"/>
-                    </LinearLayout>
-                </LinearLayout>
+                <Button
+                    android:id="@+id/done_btn"
+                    android:text="Done"
+                    style="@style/calcDoneBtn"
+                    android:onClick="onClick"/>
+            </LinearLayout>
+        </LinearLayout>
 
-            </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
