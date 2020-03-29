@@ -63,6 +63,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
                 android:paddingTop="2dp"
+                android:paddingLeft="@dimen/s_m"
                 android:paddingBottom="2dp"
                 tools:itemCount="4"
                 tools:layoutManager="GridLayoutManager"

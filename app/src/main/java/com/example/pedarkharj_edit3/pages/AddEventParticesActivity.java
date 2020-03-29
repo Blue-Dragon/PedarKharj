@@ -3,7 +3,7 @@ package com.example.pedarkharj_edit3.pages;
 import android.content.Context;
 import android.content.Intent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.appcompat.app.AlertDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -32,6 +32,7 @@ import java.util.List;
 public class AddEventParticesActivity extends AppCompatActivity {
     List<Contact> contacts;
     List<Participant> allContactsTo_participants, selectedPartices;
+    List<Integer> ids;
     Context mContext;
     MyAdapter adaptor, selectedAdaptor;
     DatabaseHelper db;
@@ -41,6 +42,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
     boolean edit_mode;
     RecyclerView recyclerView, selected_recView;
     FloatingActionButton fab;
+    ImageView backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,48 +51,27 @@ public class AddEventParticesActivity extends AppCompatActivity {
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
-        mContext = this;
-//        edit_mode = false;
-
-        //back imageView btn
-        ImageView backBtn = findViewById(R.id.back_btn);
-        backBtn.setOnClickListener(item -> onBackPressed());
+        inits();
+        onClicks();
 
 
-        /**
-         * RecView & DB
-         */
-        db = new DatabaseHelper(mContext);
-        allContactsTo_participants = new ArrayList<>();
-        selectedPartices = new ArrayList<>();
+        //-----------     RecView    -----------//
 
-
-        //-------------------------     RecView    --------------------------//
-        recyclerView = findViewById(R.id.rv);
-        selected_recView = findViewById(R.id.rv_01);
         setRecView(); //show contacts (allContactsTo_participants) and init selectedPartices
-        /*
-         * init selectedPartice if we are in edit mode
-         */
-        curEventId = getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
-        if (curEventId > 0){
-            edit_mode = true;
-            existedEvent = db.getEventById(curEventId);
-            selectedPartices = db.getAllParticeUnderEvent(curEventId);
-        }
-        setSelectedRecView(selectedPartices);
+        setSelectedRecView(selectedPartices); //setting selectedPartice if we are in edit mode
 
-        /*
-         * onClick
-         */
+         // onClick
         Log.e("recOnClick", "onClick");
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Participant participant = allContactsTo_participants.get(position);
-//                selectedPartices.add(participant);
-//                selectedAdaptor.notifyDataSetChanged(); //setSelectedRecView(selectedPartices);
-                addPartice(participant);
+
+                //checking if already selected
+//                if (checkIfAlreadySelected(participant)){
+//                    removePartice(participant);
+//                }else
+                    addPartice(participant);
 
                 Log.d("recOnClick", participant.getName());
             }
@@ -100,9 +81,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
             }
         }));
 
-        /*
-         * onClick selected
-         */
+         // onClick selected
         Log.e("Selected_RecOnClick", "onClick");
         selected_recView.addOnItemTouchListener(new RecyclerTouchListener(mContext, selected_recView, new RecyclerTouchListener.ClickListener() {
             @Override
@@ -119,8 +98,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
             }
         }));
 
-        //-------------------------     Floating Btn    --------------------------//
-        fab = this.findViewById(R.id.fab);
+        //------------     Floating Btn    ------------//
         fab.setOnClickListener(view -> {
 
             if (!edit_mode){
@@ -158,7 +136,39 @@ public class AddEventParticesActivity extends AppCompatActivity {
     }
 
 
+
     /***********************************       METHODS     ***********************************/
+    private void inits() {
+        mContext = this;
+//        edit_mode = false;
+
+        backBtn = findViewById(R.id.back_btn);
+        recyclerView = findViewById(R.id.rv);
+        selected_recView = findViewById(R.id.rv_01);
+        fab = this.findViewById(R.id.fab);
+
+
+        db = new DatabaseHelper(mContext);
+        contacts = db.getAllContacts();
+        selectedPartices = new ArrayList<>();
+        allContactsTo_participants = Routines.contactToPartic(contacts);
+        ids = new ArrayList<>();
+
+        /*
+         * init selectedPartice if we are in edit mode
+         */
+        curEventId = getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 0);
+        if (curEventId > 0){
+            edit_mode = true;
+            existedEvent = db.getEventById(curEventId);
+            selectedPartices = db.getAllParticeUnderEvent(curEventId);
+        }
+
+    }
+    private void onClicks() {
+        backBtn.setOnClickListener(item -> onBackPressed());
+
+    }
 
     //-------------------------     RecyclerView    --------------------------//
     private void setRecView() {
@@ -171,8 +181,8 @@ public class AddEventParticesActivity extends AppCompatActivity {
          * I'm forming Contacts as Participants, so I won't need to create another
          * adaptor or even edit that. change this shit later in order not to get fucked up!
          */
-        contacts = db.getAllContacts();
-        allContactsTo_participants = Routines.contactToPartic(contacts);
+//        contacts = db.getAllContacts();
+//        allContactsTo_participants = Routines.contactToPartic(contacts);
 
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false);
@@ -185,6 +195,9 @@ public class AddEventParticesActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * setting selectedPartice if we are in edit mode
+     */
     private void setSelectedRecView(List<Participant> participants){
 
         GridLayoutManager gridLayoutManager =
@@ -200,22 +213,24 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
 
     private void removePartice(Participant participant) {
-        new AlertDialog.Builder(mContext)
-                .setTitle("Are you sure?")
-                .setMessage("All data will be lost")
-                .setPositiveButton("Yep", (dialogInterface, i) -> {
-                    selectedPartices.remove(participant);
-                    db.deletePartic(participant);
-                    selectedAdaptor.notifyDataSetChanged();
-                })
-                .setNegativeButton("No, wait!", (dialogInterface, i) -> {})
-                .show();
+        selectedPartices.remove(participant);
+        db.deletePartic(participant);
+        selectedAdaptor.notifyDataSetChanged();
     }
 
     private void addPartice(Participant participant) {
         selectedPartices.add(participant);
         if (edit_mode) db.createParticipantUnderEvent(participant, existedEvent);
         selectedAdaptor.notifyDataSetChanged();
+    }
+
+    private boolean checkIfAlreadySelected(Participant participant) {
+        //ids of all selected partices
+        ids.clear();
+        for (int i=0; i<selectedPartices.size(); i++){
+            ids.add(i, (int) selectedPartices.get(i).getContact().getId());
+        }
+        return ids.contains(participant.getId());
     }
 
 

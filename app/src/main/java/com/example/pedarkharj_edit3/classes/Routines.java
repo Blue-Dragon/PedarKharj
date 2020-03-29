@@ -256,7 +256,7 @@ public class Routines  {
         for (Contact c : mContacts0){
             Participant participant = new Participant();
             participant.setContact(c);
-            if (c.getId() > 0) participant.setId((int) c.getId());
+            if (c.getId() > 0) participant.setId((int) c.getId()); //todo: WHY the hell?
             participant.setName(c.getName());
             participants.add(participant);
 //
