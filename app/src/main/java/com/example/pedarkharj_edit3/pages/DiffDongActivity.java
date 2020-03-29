@@ -225,7 +225,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 //        defDongAmount = 1;//by default
         defDongNumber = 1;//by default
 
-        expense = getIntent().getFloatExtra(Routines.SEND_EXPENSE_INT_INTENT, 0);
+        expense = getIntent().getFloatExtra(Routines.SEND_EXPENSE_FLOAT_INTENT, 0);
         countedExpenses = 0; //By def; we'll set it after Spinner to count the exact thing
         usersIds = getIntent().getIntArrayExtra(Routines.SEND_USERS_INTENT);
         dongsNumber = usersIds.length;

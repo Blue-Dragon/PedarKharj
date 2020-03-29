@@ -428,7 +428,14 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         switch (view.getId()){
 
             case R.id.custom_dong_btn:
-                int price = Integer.valueOf( textViewInputNumbers.getText().toString());
+                //Equal Action
+                String s0 = textViewInputNumbers.getText().toString();
+                if (! isReadyToUse(s0))
+                    calculate(s0);
+
+                //Done Action
+                //now we have a straig
+                float price = Float.valueOf( textViewInputNumbers.getText().toString());
                 // expense users' ids
                 int[] usersIds = new int[selectedListPartices.size()];
                 int j = 0;
@@ -439,7 +446,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                     if (usersIds.length > 0)  {
                         Intent intent = new Intent(mContext,  DiffDongActivity.class);
                         intent.putExtra(Routines.SEND_EVENT_ID_INTENT, curEvent.getId());
-                        intent.putExtra(Routines.SEND_EXPENSE_INT_INTENT, price);
+                        intent.putExtra(Routines.SEND_EXPENSE_FLOAT_INTENT, price);
                         intent.putExtra(Routines.SEND_USERS_INTENT, usersIds);
                         startActivityForResult(intent, Routines.RESULT_OK);
                     }
@@ -517,7 +524,6 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                 break;
 
             case R.id.done_btn:
-
                 //Equal Action
                 String s = textViewInputNumbers.getText().toString();
                 if (! isReadyToUse(s))
@@ -782,6 +788,13 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     }
 
 
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+    MainActivity.navPosition =Routines.HOME;
+    finish();
+    startActivity(new Intent(mActivity, MainActivity.class));
+//    mActivity.overridePendingTransition(100, -100);
 
-
+    }
 }
