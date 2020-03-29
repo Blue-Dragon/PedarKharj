@@ -16,8 +16,8 @@ public class Expense {
     private List<Participant> userPartics;
     private String expenseTitle;
     //money
-    private int expensePrice;
-    private List<Integer> expenseDebts;
+    private float expensePrice;
+    private List<Float> expenseDebts;
 
     private String created_at;
 
@@ -41,7 +41,7 @@ public class Expense {
 //    }
 
     public Expense(int expenseId ,Event event, Participant buyer, List<Participant> userPartics,
-                   String expenseTitle, int expensePrice, List<Integer> expenseDebts) {
+                   String expenseTitle, float expensePrice, List<Float> expenseDebts) {
         this.expenseId = expenseId;
         this.event = buyer.getEvent();
         this.buyer = buyer;
@@ -66,10 +66,10 @@ public class Expense {
     public String getExpenseTitle() {
         return expenseTitle;
     }
-    public int getExpensePrice() {
+    public float getExpensePrice() {
         return expensePrice;
     }
-    public List<Integer> getExpenseDebts() { //todo: should be Map
+    public List<Float> getExpenseDebts() { //todo: should be Map
         return expenseDebts;
     }
     public String getCreated_at() {
@@ -95,17 +95,17 @@ public class Expense {
     public void setExpenseTitle(String expenseTitle) {
         this.expenseTitle = expenseTitle;
     }
-    public void setExpensePrice(int expensePrice) {
+    public void setExpensePrice(float expensePrice) {
         this.expensePrice = expensePrice;
     }
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
 
-    public void setExpenseDebts(List<Integer> expenseDebt) {
+    public void setExpenseDebts(List<Float> expenseDebt) {
         this.expenseDebts = expenseDebt;
     }
-    public void setExpenseDebts(int expenseDebt) {
+    public void setExpenseDebts(float expenseDebt) {
         this.expenseDebts = new ArrayList<>();
 
         for (Participant ignored : this.userPartics){

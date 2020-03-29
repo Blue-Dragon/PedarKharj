@@ -39,7 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
     private short selectMode = 3;
     private int mLayout, maxCheckImg;
-    private int defaultDong;
+    private float defaultDongAmount;
     private int widthSplit = 0;
     private boolean amountModeDong;
     private boolean isExpenseMode2;
@@ -90,8 +90,9 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
     public void setSelectMode(short selectMode){
         this.selectMode = selectMode;
     }
-    public void setDefaultDong(int defaultDong) {
-        this.defaultDong = defaultDong;
+
+    public void setDefaultDongAmount(float defaultDongAmount) {
+        this.defaultDongAmount = defaultDongAmount;
     }
     public void setAmountModeDong(boolean amountModeDong) {
         this.amountModeDong = amountModeDong;
@@ -210,7 +211,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
                 holder.profImv.setImageBitmap(Routines.stringToBitmap(buyer.getBitmapStr()));
 
             if (holder.resultTxt != null)
-                holder.resultTxt.setText(String.valueOf(expense.getExpensePrice() ));
+                holder.resultTxt.setText(Routines.getRoundFloatString(expense.getExpensePrice()) );
             if (holder.dateTv != null)
                 holder.dateTv.setText(expense.getCreated_at());
             if (holder.priceTitleTv != null){
@@ -220,13 +221,13 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
                 //if ExpenseMode2 (each person expenses)
             if (isExpenseMode2 && selectedPartic != null){
-                int debt = db0.getParticeDebt(expense.getExpenseId(), selectedPartic.getId());
+                float debt = db0.getParticeDebt(expense.getExpenseId(), selectedPartic.getId());
 
-                if (holder.resultTxt != null)
-                    holder.resultTxt.setText(String.valueOf(debt));
-                if (holder.resultTxtGreen != null){
-                    int expense0 = buyer.getId() == selectedPartic.getId() ? expense.getExpensePrice() : 0;
-                    holder.resultTxtGreen.setText(String.valueOf(expense0));
+                if (holder.resultTxt != null) //Red/ debt
+                    holder.resultTxt.setText(Routines.getRoundFloatString(debt));
+                if (holder.resultTxtGreen != null){ //Green/ expense
+                    float expense0 = buyer.getId() == selectedPartic.getId() ? expense.getExpensePrice() : 0f;
+                    holder.resultTxtGreen.setText(Routines.getRoundFloatString(expense0));
                 }
 
             }
@@ -298,15 +299,15 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
             //EventDetailEachExpense Activity
             if (mExpense !=null && holder.resultTxt != null){
                 DatabaseHelper db = new DatabaseHelper(mContext);
-                int debt = db.getParticeDebt(mExpense.getExpenseId(), participant.getId());
-                holder.resultTxt.setText(String.valueOf(debt));
+                float debt = db.getParticeDebt(mExpense.getExpenseId(), participant.getId());
+                holder.resultTxt.setText(Routines.getRoundFloatString(debt));
             }
 
 
 
             //addExpenseActivity_ amountMode
-            if (defaultDong > 0 && holder.dongEtxtAmount != null)
-                holder.dongEtxtAmount.setText(String.valueOf(defaultDong));
+            if (defaultDongAmount > 0 && holder.dongEtxtAmount != null)
+                holder.dongEtxtAmount.setText(Routines.getRoundFloatString(defaultDongAmount));
 
             /*
              * AddExpenseActivity_ selecting users

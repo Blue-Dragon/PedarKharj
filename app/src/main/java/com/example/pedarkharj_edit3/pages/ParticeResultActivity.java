@@ -133,12 +133,12 @@ public class ParticeResultActivity extends AppCompatActivity {
 //        tvL2.setText(String.valueOf(0));
         List<Participant> participants = db.getAllParticeUnderEvent(event);
         if (participants.size() > 0) {
-            int myExpenses = db.getParticTotalExpensePriceByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
-            int myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
-            int allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
-            tvL2.setText(String.valueOf(allEventExpenses));
-            tvC2.setText(String.valueOf(myExpenses));
-            tvR2.setText(String.valueOf(myExpenses - myDebt));
+            float myExpenses = db.getParticTotalExpensePriceByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
+            float myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
+            float allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
+            tvL2.setText(Routines.getRoundFloatString(allEventExpenses));
+            tvC2.setText(Routines.getRoundFloatString(myExpenses));
+            tvR2.setText(Routines.getRoundFloatString(myExpenses - myDebt));
         }
 
     }

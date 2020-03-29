@@ -1,5 +1,7 @@
 package com.example.pedarkharj_edit3.classes.models;
 
+import com.example.pedarkharj_edit3.classes.Routines;
+
 public class Participant  {
     //vital
     private int id;
@@ -7,8 +9,8 @@ public class Participant  {
     private Event event;
     private Contact contact;
     //money
-    private int expense;
-    private int debt;
+    private float expense;
+    private float debt;
     //
     private boolean chkImg;
     private String created_at;
@@ -50,10 +52,10 @@ public class Participant  {
     public boolean isChkImg() {
         return chkImg;
     }
-    public int getExpense() {
+    public float getExpense() {
         return expense;
     }
-    public int getDebt() {
+    public float getDebt() {
         return debt;
     }
     public Event getEvent() {
@@ -81,10 +83,10 @@ public class Participant  {
     public void setChkImg(boolean chkImg) {
         this.chkImg = chkImg;
     }
-    public void setExpense(int expense) {
+    public void setExpense(float expense) {
         this.expense = expense;
     }
-    public void setDebt(int debt) {
+    public void setDebt(float debt) {
         this.debt = debt;
     }
     public void setEvent(Event event) {
@@ -101,8 +103,8 @@ public class Participant  {
 
     public String getResult() {
         if (expense-debt > 0)
-            return "+ "+ (expense-debt);
-        else  return String.valueOf(expense-debt);
+            return "+"+ (Routines.getRoundFloatString(expense-debt));
+        else  return Routines.getRoundFloatString(expense-debt);
     }
 
 }

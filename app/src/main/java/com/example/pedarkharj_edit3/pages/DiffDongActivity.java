@@ -43,7 +43,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
     RecyclerView recyclerView;
     List<Participant> usersList;
-    Map<Integer, Integer> usersDongMap;
+    Map<Integer, Float> usersDongMap;
     DatabaseHelper db;
     MyAdapter adaptor;
     Context mContext = this;
@@ -51,11 +51,12 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     Event curEvent;
 
     int[] usersIds;
-    int userDong;
+    float userDong;
     boolean layoutMode;
-    int defDong;
-    int    dongsNumber,
-            eachDongAmount,
+    float defDongAmount;
+    int defDongNumber;
+    int    dongsNumber;
+    float eachDongAmount,
             expense,
             countedExpenses;
 
@@ -183,11 +184,12 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                 return;
             }
 
-            int dongAmountUnit = Integer.valueOf(tvR2.getText().toString().trim());
-            int[] expenseDongs = new int[usersList.size()];
+            float dongAmountUnit = Float.valueOf(tvR2.getText().toString().trim());
+            dongAmountUnit = Routines.getRoundFloat(dongAmountUnit);
+            float[] expenseDongs = new float[usersList.size()];
 
             int i = 0;
-            int userDong;
+            float userDong;
             Log.i("fuck014", ". \n\n" );
 
             for (Participant user : usersList){
@@ -216,17 +218,18 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     /********************************************       Methods     ****************************************************/
     private void inits() {
         usersList = new ArrayList<Participant>();
-        usersDongMap = new HashMap<Integer, Integer>();
+        usersDongMap = new HashMap<Integer, Float>();
         db = new DatabaseHelper(mContext);
         curEvent = db.getEventById( getIntent().getIntExtra(Routines.SEND_EVENT_ID_INTENT, 1) );
         layoutMode = DONG_MODE; //by default
-        defDong = 1;//by default
+//        defDongAmount = 1;//by default
+        defDongNumber = 1;//by default
 
-        expense = getIntent().getIntExtra(Routines.SEND_EXPENSE_INT_INTENT, 0);
+        expense = getIntent().getFloatExtra(Routines.SEND_EXPENSE_INT_INTENT, 0);
         countedExpenses = 0; //By def; we'll set it after Spinner to count the exact thing
         usersIds = getIntent().getIntArrayExtra(Routines.SEND_USERS_INTENT);
         dongsNumber = usersIds.length;
-        eachDongAmount = expense/dongsNumber;
+        eachDongAmount = Routines.getRoundFloat(expense/dongsNumber);
 
         //the rectangle above
         tvR1 = findViewById(R.id. tv_title_my_expense);
@@ -263,15 +266,15 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         spinner.setOnItemSelectedListener(this);
     }
 
-    private int reGetCountedExpenses() {
-        int countedExpenses = 0;
+    private float reGetCountedExpenses() {
+        float countedExpenses = 0;
         for (Participant user : usersList) {
             countedExpenses += usersDongMap.get(user.getId());
         }
         return countedExpenses;
     }
 
-    void  doDongStuff(Participant user, int userDong, int allDongsNum){
+    void  doDongStuff(Participant user, float userDong, float allDongsNum){
         /*
          * Map: to save each dongNumber
          * todo: update -> replace Map with SparseIntArray (for less memory)
@@ -280,16 +283,16 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         Log.i("fuck015", "usersDongMap id: "+ user.getId()+ " : "+ userDong);
         //
         if (layoutMode == DONG_MODE)    {
-            eachDongAmount = expense/allDongsNum;
+            eachDongAmount = Routines.getRoundFloat(expense/allDongsNum);
             tvR2.setText(String.valueOf(eachDongAmount));
         }
     }
 
-    private void doRecyclerView(boolean cashMode) {
+    private void doRecyclerView(boolean mode) {
         usersList.clear();
         for (int i : usersIds){
             usersList.add(db.getParticeById(i));
-            usersDongMap.put(i, defDong);
+            usersDongMap.put(i, defDongAmount);
         }
         //
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
@@ -298,12 +301,12 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //dongNumber mode
-        if (!cashMode) {
+        if (mode == DONG_MODE) {
             adaptor = new MyAdapter(mActivity, R.layout.sample_diff_dong__dong_mode, usersList);
         }
         else {
             adaptor = new MyAdapter(mActivity, R.layout.sample_diff_dong__cash_mode, usersList);
-            adaptor.setDefaultDong(defDong);
+            adaptor.setDefaultDongAmount(Routines.getRoundFloat(defDongAmount));
         }
         recyclerView.setAdapter(adaptor);
     }
@@ -317,11 +320,11 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
         if (selectedIten.equals("تعداد دنگ")){
             tvC2.setText(String.valueOf(dongsNumber));
-            defDong = 1;
+            defDongAmount = 1;
             layoutMode = DONG_MODE;
             doRecyclerView(DONG_MODE);
         }else{
-            defDong = eachDongAmount; //change diffDong to cash
+            defDongAmount = eachDongAmount; //change diffDong to cash
             layoutMode = CASH_MODE;
             doRecyclerView(CASH_MODE);
 
@@ -338,22 +341,22 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
     private void initRectangleAbove() {
         tvL1.setText("مبلغ خرج");
-        tvL2.setText(String.valueOf(expense));
+        tvL2.setText(Routines.getRoundFloatString(expense));
 
         if (layoutMode == DONG_MODE){
             tvC1.setText("تعداد دنگ ها");
-            tvC2.setText(String.valueOf(dongsNumber));
+            tvC2.setText(String.valueOf( dongsNumber));
 
             tvR1.setText("قیمت هر دنگ");
-            tvR2.setText(String.valueOf(eachDongAmount));
+            tvR2.setText(Routines.getRoundFloatString(eachDongAmount));
 
         }else {
             tvC1.setText("قیمت هر دنگ");
-            tvC2.setText(String.valueOf(eachDongAmount));
+            tvC2.setText(Routines.getRoundFloatString(eachDongAmount));
 
             tvR1.setText("هزینه باقی مانده");
-            int theRest = expense - countedExpenses;
-            tvR2.setText(String.valueOf(theRest));
+            float theRest = Routines.getRoundFloat(expense - countedExpenses);
+            tvR2.setText(Routines.getRoundFloatString(theRest));
         }
     }
 

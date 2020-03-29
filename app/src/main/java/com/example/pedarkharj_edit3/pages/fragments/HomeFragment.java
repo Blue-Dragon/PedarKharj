@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 // not all expenses in expenseList are the ones our partice has participated in.
                 newExpenseList = new ArrayList<>();
                 for (Expense expense : expenseList){
-                    int debt = db.getParticeDebt(expense.getExpenseId(), participant.getId());
+                    float debt = db.getParticeDebt(expense.getExpenseId(), participant.getId());
                     if (debt > -1)
                         newExpenseList.add(expense);
                 }
@@ -293,12 +293,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
     private void initRectangleAbove(Event event) {
         List<Participant> participants = db.getAllParticeUnderEvent(event);
         if (participants.size() > 0) {
-            int myExpenses = db.getParticTotalExpensePriceByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
-            int myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
+            float myExpenses = db.getParticTotalExpensePriceByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
+            float myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
 //            int allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
-            tvR2.setText(String.valueOf(myExpenses));
-            tvC2.setText(String.valueOf(myDebt));
-            tvL2.setText(String.valueOf(myExpenses - myDebt));
+            tvR2.setText(Routines.getRoundFloatString(myExpenses));
+            tvC2.setText(Routines.getRoundFloatString(myDebt));
+            tvL2.setText(Routines.getRoundFloatString(myExpenses - myDebt));
         }
     }
 

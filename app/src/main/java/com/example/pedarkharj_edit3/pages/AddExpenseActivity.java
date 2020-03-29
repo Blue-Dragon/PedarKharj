@@ -86,12 +86,12 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
      */
     List<Participant> allParticipants;
     List<Participant> selectedListPartices;
-    List<Integer> expenseDebtsList;
+    List<Float> expenseDebtsList;
 //    List<Participant> users;
     MyAdapter adapter;
     LinearLayout calculatorAboveBox;
     Event curEvent;
-    RecyclerTouchListener listener;
+//    RecyclerTouchListener listener;
     int recyclerChildCount, curChildCount;
 
     RecyclerView recyclerView;
@@ -132,7 +132,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
          * recView onClick
          */
         Log.e("recOnClick", "onClick");
-        listener = new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+        recyclerView.addOnItemTouchListener( new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Participant participant = allParticipants.get(position);
@@ -155,10 +155,8 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
             }
             @Override
             public void onLongClick(View view, int position) {}
-        });
+        }));
 
-
-        recyclerView.addOnItemTouchListener(listener);
         /*
          * CheckAll
          */
@@ -205,13 +203,13 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Routines.RESULT_OK) {
             if(resultCode == Activity.RESULT_OK){
-                int[] intArrayExtra = data.getIntArrayExtra(Routines.RESULT);
-                for (int i : intArrayExtra){
-                    expenseDebtsList.add(i);
+                float[] floatArrayExtra = data.getFloatArrayExtra(Routines.RESULT);
+                for (float f : floatArrayExtra){
+                    expenseDebtsList.add(f);
                 }
             }
 //            if (resultCode == Activity.RESULT_CANCELED) {
@@ -224,7 +222,8 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 
     private void saveExpense() {
         float f =  Float.valueOf( textViewInputNumbers.getText().toString());
-        int price = Math.round(f);
+//        int price = Math.round(f);
+        float price = Routines.getRoundFloat(f);
 
 
         if (price > 0){
@@ -240,9 +239,9 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
             expense.setExpenseTitle(priceTitle);
             expense.setExpensePrice(price);
 
-            if (expenseDebtsList == null || expenseDebtsList.size() < 1)
-                expense.setExpenseDebts(price/ selectedListPartices.size());
-            else expense.setExpenseDebts(expenseDebtsList);
+            if (expenseDebtsList == null || expenseDebtsList.size() < 1) //regular mode
+                expense.setExpenseDebts(Routines.getRoundFloat(price/ selectedListPartices.size()));
+            else expense.setExpenseDebts(Routines.getRoundFloatList(expenseDebtsList));  //diff dong mode
 
             db.addExpense(expense);
             startActivity(new Intent(mContext,  MainActivity.class));

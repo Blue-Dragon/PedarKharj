@@ -89,8 +89,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_EVENT_ID + " INTEGER,"
             + KEY_PARTICE_NAME + " TEXT," //todo: redundant! may cuase bugs
             + KEY_CONTACT_ID + " INTEGER,"
-            + KEY_PARTICE_EXPENSE + " INTEGER,"
-            + KEY_PARTICE_DEBT + " INTEGER,"
+            + KEY_PARTICE_EXPENSE + " REAL,"
+            + KEY_PARTICE_DEBT + " REAL,"
             + KEY_CREATED_AT+ " DATETIME" + ")";
 
 
@@ -103,8 +103,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + KEY_BUYER_ID + " INTEGER,"
             + KEY_USER_ID + " INTEGER,"
             + KEY_EXPENSE_TITLE+ " TEXT,"
-            + KEY_EXPENSE_PRICE+ " INTEGER,"
-            + KEY_EXPENSE_DEBT+ " INTEGER,"
+            + KEY_EXPENSE_PRICE+ " REAL,"
+            + KEY_EXPENSE_DEBT+ " REAL,"
             + KEY_CREATED_AT + " DATETIME" + ")";
 
     /*******************************          Methods          ********************************/
@@ -598,8 +598,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
         participant.setName(participant.getContact().getName());
         participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
-        participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
-        participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
+        participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
+        participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
         participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
         return participant;
@@ -625,8 +625,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
                 participant.setName(participant.getContact().getName());
                 participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
-                participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
-                participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
+                participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
+                participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
                 participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
 
@@ -658,8 +658,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
                 participant.setName(participant.getContact().getName());
                 participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
-                participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
-                participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
+                participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
+                participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
                 participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
 
@@ -689,8 +689,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
                 participant.setName(participant.getContact().getName());
                 participant.setEvent( this.getEventById(eventId) );
-                participant.setExpense((c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
-                participant.setDebt(c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT)));
+                participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
+                participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
                 participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
 
                 // adding to participants list
@@ -772,7 +772,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.e("fuck020", isBuyerIn + "");
 
         int i =0;
-        List<Integer> expenseDebts = expense.getExpenseDebts();
+        List<Float> expenseDebts = expense.getExpenseDebts();
         //get users as an array
         int userId;
         for (Participant user : userPartics){
@@ -838,7 +838,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param expenseId : the id of the expense you are using.
      * @param userId : the id of  the user you wanna know about.
      */
-    public int getParticeDebt(int expenseId, int userId){
+    public float getParticeDebt(float expenseId, float userId){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES +
@@ -848,7 +848,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c.moveToFirst()){
-            return c.getInt(c.getColumnIndex(KEY_EXPENSE_DEBT));
+            return c.getFloat(c.getColumnIndex(KEY_EXPENSE_DEBT));
         }else return -1;
     }
 
@@ -898,11 +898,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (c.moveToFirst()){
             int expenseId = c.getInt(c.getColumnIndex(KEY_EXPENSE_ID));
-            int price;
+            float price;
 
             do {
                 //todo: fuck ur code! that's bullshit, yet it works for now
-                price = c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE));
+                price = c.getFloat(c.getColumnIndex(KEY_EXPENSE_PRICE));
             }while (price <= 0 && c.moveToNext());
 
                     expense.setId(c.getInt(c.getColumnIndex(KEY_ID)));
@@ -937,8 +937,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * getting everyone's debt as a list (in an Expense)
      */
-    private List<Integer> getAllDebtsByExpense(int expenseId) {
-        List<Integer> expenseDebts = new ArrayList<>();
+    private List<Float> getAllDebtsByExpense(int expenseId) {
+        List<Float> expenseDebts = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_EXPENSE_ID + " = " + expenseId;
         Log.e(LOG, selectQuery);
 
@@ -947,7 +947,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (c.moveToFirst()){
             do {
-                expenseDebts.add( c.getInt(c.getColumnIndex(KEY_EXPENSE_DEBT)) );
+                expenseDebts.add( c.getFloat(c.getColumnIndex(KEY_EXPENSE_DEBT)) );
             }while (c.moveToNext());
         }
         return expenseDebts;
@@ -974,10 +974,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * getting a participant's all debts in an event
+     * getting a participant's all debts amount in an event
      */
-    public int getAllParticDebtsByParticeId(int particId) {
-        int debt = 0;
+    public float getAllParticDebtsByParticeId(int particId) {
+        float debt = 0f;
         String selectQuery = "SELECT  * FROM " + TABLE_PARTICES + " WHERE " + KEY_ID + " = " + particId;
         Log.e(LOG, selectQuery);
 
@@ -985,7 +985,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(selectQuery, null);
 
         if (c.moveToFirst()){
-            debt = c.getInt(c.getColumnIndex(KEY_PARTICE_DEBT));
+            debt = c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT));
         }
         return debt;
     }
@@ -993,8 +993,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * getting a participant's total expenses price in an event
      */
-    public int getParticTotalExpensePriceByParticeId(int particId) {
-        int debt = 0;
+    public float getParticTotalExpensePriceByParticeId(int particId) {
+        float debt = 0f;
         String selectQuery = "SELECT  * FROM " + TABLE_PARTICES + " WHERE " + KEY_ID + " = " + particId;
         Log.e(LOG, selectQuery);
 
@@ -1002,7 +1002,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery(selectQuery, null);
 
         if (c.moveToFirst()){
-            debt = c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE));
+            debt = c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE));
         }
         return debt;
     }
@@ -1010,8 +1010,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * getting an Event total Expenses price
      */
-    public int getEventTotalExpensesByEventId(int eventId) {
-        int allExpenses = 0;
+    public float getEventTotalExpensesByEventId(int eventId) {
+        float allExpenses = 0f;
         String selectQuery = "SELECT  * FROM " + TABLE_PARTICES + " WHERE " + KEY_EVENT_ID + " = " + eventId;
         Log.e(LOG, selectQuery);
 
@@ -1021,7 +1021,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (c.moveToFirst()){
             do {
-                allExpenses += c.getInt(c.getColumnIndex(KEY_PARTICE_EXPENSE));
+                allExpenses += c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE));
             } while (c.moveToNext());
         }
         return allExpenses;

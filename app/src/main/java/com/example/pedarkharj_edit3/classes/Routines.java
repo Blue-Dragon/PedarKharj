@@ -29,6 +29,7 @@ import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -312,4 +313,22 @@ public class Routines  {
     }
 
 
+    public static float getRoundFloat(float f) {
+        return f;
+    }
+
+    public static List<Float> getRoundFloatList(List<Float> floatList) {
+        return floatList;
+    }
+
+    public static String getRoundFloatString(float f) {
+        String s;
+
+        DecimalFormat format  = new DecimalFormat("###.#");
+        f =  Float.valueOf(format.format(f));
+
+        DecimalFormat format0  = new DecimalFormat("0.#");
+        s =  format0.format(f);
+        return s;
+    }
 }

@@ -5,7 +5,6 @@ public class Contact {
     int id;
     String bitmapStr;
     String name;
-
     String created_at;
 
     // constructors
