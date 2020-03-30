@@ -238,7 +238,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        super.onBackPressed();
 //        startActivity(new Intent(mContext, MainActivity.class));
         finish();
     }

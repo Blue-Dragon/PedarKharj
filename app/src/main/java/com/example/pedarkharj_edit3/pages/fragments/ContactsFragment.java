@@ -165,6 +165,8 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         adaptor.setLayout(R.layout.sample_conntacts_horizental);
         adaptor.setContactList(contactList);
         recyclerView.setAdapter(adaptor);
+
+        backBtn.setOnClickListener(item -> mActivity.onBackPressed());
     }
 
     @Override
@@ -344,7 +346,6 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         }
 
     }
-
 
 
 }

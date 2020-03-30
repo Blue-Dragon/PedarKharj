@@ -69,7 +69,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         MainActivity.navPosition = Routines.EVENTS;
         init();
 
-        backBtn.setOnClickListener(item -> Toast.makeText(mContext, "back", Toast.LENGTH_SHORT).show());
+        backBtn.setOnClickListener(item -> mActivity.onBackPressed());
         setHasOptionsMenu(true); //for menu items in fragment (edit & delete)
 
         setRecView(); //show Events

@@ -5,8 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center_horizontal"
     android:background="#00FFFFFF"
-    android:layout_marginLeft="@dimen/s"
-    android:layout_marginRight="@dimen/s"
+
     android:layoutDirection="ltr"
     android:layout_marginTop="2dp"
     android:layout_width="wrap_content"
@@ -33,24 +32,16 @@
             android:text=""
             android:textColor="#000000"
             android:textSize="13sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/prof_pic" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/sub_img"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:visibility="invisible"
 
-            app:layout_constraintBottom_toBottomOf="@+id/prof_pic"
-            app:layout_constraintEnd_toEndOf="@+id/prof_pic"
-            app:srcCompat="@drawable/ic_check_2" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/prof_pic"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/s"
+            android:layout_marginRight="@dimen/s"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/profile"
@@ -59,6 +50,17 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/sub_img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="24dp"
+
+            android:layout_marginTop="24dp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@+id/prof_pic"
+            app:layout_constraintTop_toTopOf="@+id/prof_pic"
+            app:srcCompat="@drawable/ic_check_2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

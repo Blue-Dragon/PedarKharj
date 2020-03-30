@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity  {
             eventsFragment = (EventsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             eventsFragment.onMyBackPressed();
         }
-
 //        else  if (navPosition == Routines.CONTACTS && Routines.is_in_action_mode) {
 //            contactsFragment = (ContactsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 //            contactsFragment.onMyBackPressed();

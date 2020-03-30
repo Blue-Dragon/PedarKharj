@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.R;
@@ -32,20 +33,19 @@ public class EachExpenseDetailActivity extends AppCompatActivity {
     DatabaseHelper db;
 
     RecyclerView recyclerView;
+    ImageView backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail_each_expense);
-        mContext = this;
-        mActivity = this;
-
-        //-------------------------    inits    -------------------------- //
         Toolbar toolbar = findViewById(R.id.m_toolbar);
         ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
 
-        db = new DatabaseHelper(mContext);
-        recyclerView = findViewById(R.id.recycler_view);
+        inits();
+
+        backBtn.setOnClickListener(item -> onBackPressed());
+
 
         int expenseId;
         Intent i = getIntent();
@@ -78,7 +78,17 @@ public class EachExpenseDetailActivity extends AppCompatActivity {
     }
 
 
+
+
     /********************************************       Methods     ****************************************************/
+    private void inits() {
+        mContext = this;
+        mActivity = this;
+
+        recyclerView = findViewById(R.id.recycler_view);
+        backBtn = findViewById(R.id.back_btn);
+    }
+
     //-------------------------     RecyclerView    --------------------------//
     private void setRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);

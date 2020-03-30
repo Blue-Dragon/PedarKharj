@@ -38,18 +38,7 @@
                 android:text="خرج ها"
                 android:textColor="#868686"
                 android:textSize="16dp"
-
                 style="@style/toolbar_text_style"/>
-
-            <Spinner
-                android:id="@+id/spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:gravity="center_vertical"
-                android:backgroundTint="#304FFE"
-                android:layout_marginRight="@dimen/m" />
 
         </RelativeLayout>
 

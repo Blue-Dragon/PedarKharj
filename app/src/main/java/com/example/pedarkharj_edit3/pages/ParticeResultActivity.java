@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.pedarkharj_edit3.R;
@@ -37,20 +38,39 @@ public class ParticeResultActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
     TextView toolbarTitle;
+    ImageView backBtn;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partice_result);
-
-        mContext = this;
-        mActivity = this;
-
-        //-------------------------    inits    -------------------------- //
         Toolbar toolbar = findViewById(R.id.m_toolbar);
         ((AppCompatActivity) mActivity).setSupportActionBar(toolbar);
 
+        inits();
+        backBtn.setOnClickListener(item -> onBackPressed());
+
+        doRecyclerView();
+        initRectangleAbove(curEvent);  //init Rectangle
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
+        db.closeDB();
+    }
+
+    private void inits() {
+        mContext = this;
+        mActivity = this;
         db = new DatabaseHelper(mContext);
 
         Intent data = getIntent();
@@ -68,43 +88,24 @@ public class ParticeResultActivity extends AppCompatActivity {
             toolbarTitle = findViewById(R.id.textView);
 
             //the rectangle above
-        tvL1 = findViewById(R.id.tv_title_my_expense);
-        tvL2 = findViewById(R.id.tv_my_expense);
-        tvC1 = findViewById(R.id.tv_title_my_dong);
-        tvC2 = findViewById(R.id.tv_my_dong);
-        tvR1 = findViewById(R.id.tv_title_my_result);
-        tvR2 = findViewById(R.id.tv_my_result);
-        tvR1.setTextColor(getResources().getColor(R.color.grayTextColor));
-        tvR2.setTextColor(getResources().getColor(R.color.grayTextColor));
-        tvL1.setTextColor(getResources().getColor(R.color.primaryTextColor));
-        tvL2.setTextColor(getResources().getColor(R.color.primaryTextColor));
+            tvL1 = findViewById(R.id.tv_title_my_expense);
+            tvL2 = findViewById(R.id.tv_my_expense);
+            tvC1 = findViewById(R.id.tv_title_my_dong);
+            tvC2 = findViewById(R.id.tv_my_dong);
+            tvR1 = findViewById(R.id.tv_title_my_result);
+            tvR2 = findViewById(R.id.tv_my_result);
+            tvR1.setTextColor(getResources().getColor(R.color.grayTextColor));
+            tvR2.setTextColor(getResources().getColor(R.color.grayTextColor));
+            tvL1.setTextColor(getResources().getColor(R.color.primaryTextColor));
+            tvL2.setTextColor(getResources().getColor(R.color.primaryTextColor));
 
-        toolbarTitle.setText("جزئیات حساب " + selectedPartic.getName());
-        tvR1.setText("خرج ها" );
-        tvC1.setText("دونگ ها");
-        tvL1.setText("حساب نهایی");
-
-
-
-
-
+            toolbarTitle.setText("جزئیات حساب " + selectedPartic.getName());
+            tvR1.setText("خرج ها" );
+            tvC1.setText("دونگ ها");
+            tvL1.setText("حساب نهایی");
         }
 
         recyclerView = findViewById(R.id.recycler_view);
-        doRecyclerView();
-        initRectangleAbove(curEvent);  //init Rectangle
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
-            @Override
-            public void onClick(View view, int position) {
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-
-        db.closeDB();
     }
 
     /********************************************       Methods     ****************************************************/

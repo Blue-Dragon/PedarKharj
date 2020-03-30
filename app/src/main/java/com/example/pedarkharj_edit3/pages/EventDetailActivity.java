@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -43,6 +44,7 @@ public class EventDetailActivity extends AppCompatActivity  {
     TextView spinnerTv;
     RecyclerView recyclerView;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
+    ImageView  backBtn;
 
 
     @Override
@@ -52,6 +54,7 @@ public class EventDetailActivity extends AppCompatActivity  {
 
         // inits
         doInits();
+        onClicks();
         setCurEvent();
         initRectangleAbove(curEvent);  //doInits Rectangle
 
@@ -74,9 +77,6 @@ public class EventDetailActivity extends AppCompatActivity  {
             }
         }));
 
-
-        //MySpinner
-        mySpinner.setOnClickListener(x -> showEventsDialog(curEvent));
 
         db.closeDB();
     }
@@ -120,6 +120,7 @@ public class EventDetailActivity extends AppCompatActivity  {
         tvC2 = findViewById(R.id.tv_my_dong);
         tvR1 = findViewById(R.id.tv_title_my_result);
         tvR2 = findViewById(R.id.tv_my_result);
+        backBtn = findViewById(R.id.back_btn);
 
         tvR1.setTextColor(getResources().getColor(R.color.grayTextColor));
         tvR2.setTextColor(getResources().getColor(R.color.grayTextColor));
@@ -131,6 +132,11 @@ public class EventDetailActivity extends AppCompatActivity  {
 
     }
 
+    private void onClicks() {
+        mySpinner.setOnClickListener(x -> showEventsDialog(curEvent));
+
+        backBtn.setOnClickListener(item -> onBackPressed());
+    }
     private void showEventsDialog(Event curEvent) {
         BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent, R.layout.sample_event);
         Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
@@ -169,5 +175,9 @@ public class EventDetailActivity extends AppCompatActivity  {
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        finish();
+    }
 }

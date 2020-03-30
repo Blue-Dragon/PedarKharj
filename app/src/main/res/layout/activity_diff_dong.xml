@@ -37,6 +37,8 @@
                 android:textColor="#868686"
                 android:textSize="16dp" />
 
+
+
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="wrap_content"
@@ -45,7 +47,9 @@
                 android:layout_alignParentEnd="true"
                 android:gravity="center_vertical"
                 android:backgroundTint="#304FFE"
-                android:layout_marginRight="12dp" />
+                android:layout_marginRight="12dp"
+                android:dropDownVerticalOffset="44dp"
+                />
 
         </RelativeLayout>
 

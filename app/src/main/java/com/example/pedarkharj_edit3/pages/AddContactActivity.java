@@ -39,7 +39,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
     private Context mContext;
     private Activity mActivity;
     EditText nameEdt, familyEdt;
-    ImageView cancelImg, doneImg;
+    ImageView cancelImg, doneImg, backBtn;
     DatabaseHelper db;
 
     RelativeLayout fromContactsBtn;
@@ -58,6 +58,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_add_contact);
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
+
 
         inits();
         onClicks();
@@ -84,7 +85,6 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         nameEdt = findViewById(R.id.name_edt);
         familyEdt = findViewById(R.id.family_edt);
         fromContactsBtn = findViewById(R.id.addFromContacts_btn);
-
         //Edit Mode
         isEditMode = getIntent().getBooleanExtra(Routines.EDIT_MODE, false);
         editContactId = getIntent().getIntExtra(Routines.SEND_CONTACT_ID_INTENT, 0);
