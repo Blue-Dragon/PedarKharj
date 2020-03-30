@@ -200,7 +200,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
 //                            profPic.setImageBitmap(bitmap);
                             //resizing image
 //                        resizedBitmap = Routines.resizeBitmap(bitmap);
-                            resizedBitmap = Routines.convertBitmapThumbnail(bitmap);
+                            resizedBitmap = Routines.convertBitmapThumbnail1x1(bitmap);
                             profPic.setImageBitmap(resizedBitmap);
 //                        profPic.setImageBitmap(resizedBitmap);
                             newImg = true;

@@ -290,7 +290,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
                     holder.profImv.setImageBitmap(Routines.stringToBitmap(participant.getBitmapStr()));
                 else{
                     Bitmap b = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile);
-                    holder.profImv.setImageBitmap( Routines.convertBitmapThumbnail(b));
+                    holder.profImv.setImageBitmap( Routines.convertBitmapThumbnail1x1(b));
                 }
             }
             if (participant.getResult() != null && holder.resultTxt != null)

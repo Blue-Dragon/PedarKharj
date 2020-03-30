@@ -107,7 +107,7 @@ public class Routines  {
                 .show();
     }
 
-    //-------   Deprecated ! use `convertBitmapThumbnail`, instead.
+    //-------   Deprecated ! use `convertBitmapThumbnail1x1`, instead.
 //    /**
 //     *   Bitmap smaller
 //     */
@@ -125,10 +125,17 @@ public class Routines  {
     /**
      *   Bitmap to thumbnail
      */
-    public static Bitmap convertBitmapThumbnail(Bitmap bitmap) {
+    public static Bitmap convertBitmapThumbnail1x1(Bitmap bitmap) {
         Bitmap b = null;
         if (bitmap != null)
             b =ThumbnailUtils.extractThumbnail(bitmap, 150, 150);
+        return b;
+    }
+
+    public static Bitmap convertBitmapThumbnail3x4(Bitmap bitmap) {
+        Bitmap b = null;
+        if (bitmap != null)
+            b =ThumbnailUtils.extractThumbnail(bitmap, 150, 200);
         return b;
     }
 

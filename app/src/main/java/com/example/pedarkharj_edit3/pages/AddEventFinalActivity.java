@@ -137,7 +137,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
 
                 bitmap = Routines.stringToBitmap(event.getBitmapStr());
 //                resizedBitmap = Routines.resizeBitmap(bitmap);
-                resizedBitmap = Routines.convertBitmapThumbnail(bitmap);
+                resizedBitmap = Routines.convertBitmapThumbnail1x1(bitmap);
                 eventPic.setImageBitmap(resizedBitmap);
             }
         }catch (Exception e){
@@ -208,7 +208,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
             if (CropImage.isReadExternalStoragePermissionsRequired(mContext, imageUri)){
                 uri = imageUri;
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},  0);
-            } else Routines.startCrop(mActivity, imageUri, 3, 4);
+            } else Routines.startCrop(mActivity, imageUri, 3,4);
         }
 
 
@@ -225,8 +225,9 @@ public class AddEventFinalActivity extends AppCompatActivity {
                         if (bitmap != null){
 //                            eventPic.setImageBitmap(bitmap);
                             //resizing image
-//                        resizedBitmap = Routines.resizeBitmap(bitmap);
-                            resizedBitmap = Routines.convertBitmapThumbnail(bitmap);
+//                            resizedBitmap = Routines.resizeBitmap(bitmap);
+//                            resizedBitmap = bitmap;
+                            resizedBitmap = Routines.convertBitmapThumbnail3x4(bitmap);
                             eventPic.setImageBitmap(resizedBitmap);
 //                        profPic.setImageBitmap(resizedBitmap);
                             newImg = true;

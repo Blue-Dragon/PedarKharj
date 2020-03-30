@@ -92,8 +92,8 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                     userDong = Integer.valueOf(tv.getText().toString());
 
                     plus.setOnClickListener(item -> {
-                        tv.setText(String.valueOf(++userDong));
-                        tvC2.setText(String.valueOf(++dongsNumber));
+                        tv.setText(Routines.getRoundFloatString(++userDong));
+                        tvC2.setText(Routines.getRoundFloatString(++dongsNumber));
                         doDongStuff(user, userDong, dongsNumber);
 //                    Log.i("fuck013", "id " +user.getId()+ ": " +userDong + "");
                     });
@@ -284,7 +284,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         //
         if (layoutMode == DONG_MODE)    {
             eachDongAmount = Routines.getRoundFloat(expense/allDongsNum);
-            tvR2.setText(String.valueOf(eachDongAmount));
+            tvR2.setText(Routines.getRoundFloatString(eachDongAmount));
         }
     }
 
