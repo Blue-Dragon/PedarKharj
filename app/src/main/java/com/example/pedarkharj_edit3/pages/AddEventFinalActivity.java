@@ -46,21 +46,21 @@ public class AddEventFinalActivity extends AppCompatActivity {
     Context mContext;
     Activity mActivity;
     ArrayList<Participant> mParticipants;
+    Event event;
     MyAdapter adapter;
     DatabaseHelper db;
+    boolean suddenly_stop;
+    int eventId;
+    private Uri uri;
 
     Bitmap bitmap;
     Bitmap resizedBitmap;
     boolean newImg, edit_mode;
     CircleImageView eventPic, changePic_bkg; //todo : change in ti rectangle
-
-    boolean suddenly_stop;
-    int eventId;
-    Event event;
     EditText ed;
     RecyclerView recyclerView;
     FloatingActionButton fab;
-    private Uri uri;
+    ImageView backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,18 +69,47 @@ public class AddEventFinalActivity extends AppCompatActivity {
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
+        inits();
+        onClicks();
+
+
+        if (edit_mode)
+            setEventInfos();
+
+        //    RecView
+        doRecyclerView();
+
+        //  Floating Btn
+        fab.setOnClickListener(view -> {
+            updateEvent();
+            suddenly_stop = false;
+        });
+
+
+        db.closeDB();
+    }
+
+
+
+
+
+    // ********************************  Methods  ******************************** //
+    private void inits() {
         mContext = this;
         mActivity = this;
-        db = new DatabaseHelper(mContext);
         newImg = false;
         edit_mode = false;
-
-        //back imageView btn
-        ImageView backBtn = findViewById(R.id.back_btn);
-        backBtn.setOnClickListener(item -> onBackPressed());
-
         suddenly_stop = true;
+        db = new DatabaseHelper(mContext);
+
+
+        backBtn = findViewById(R.id.back_btn);
+        changePic_bkg = findViewById(R.id.change_pic_bkg);
+        eventPic = findViewById(R.id.prof_pic);
         ed = findViewById(R.id.name_edt);
+        fab = this.findViewById(R.id.fab);
+        recyclerView = findViewById(R.id.rv);
+
         eventId = getIntent().getIntExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, 0);
         Log.d("fuck026", "eventId_received: "+ eventId);
         try {
@@ -89,45 +118,15 @@ public class AddEventFinalActivity extends AppCompatActivity {
             Log.e("fuck026", " "+ e);
         }
 
-//        //back imageView btn
-//        ImageView backBtn = findViewById(R.id.back_btn);
-//        backBtn.setOnClickListener(item -> finish());
-        changePic_bkg = findViewById(R.id.change_pic_bkg);
-        eventPic = findViewById(R.id.prof_pic);
-        eventPic.setOnClickListener(item -> changePic());
-        changePic_bkg.setOnClickListener(item -> changePic());
-        suddenly_stop = true;
-
-        //-----------------------------------------------------------------------------//
-
         edit_mode = getIntent().getBooleanExtra(Routines.EDIT_MODE, false);
-        if (edit_mode) {
-            setEventInfos();
-        }
 
-
-
-        //-------------------------     Floating Btn    --------------------------//
-        fab = this.findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-
-            updateEvent();
-            suddenly_stop = false;
-
-        });
-
-        //-------------------------     RecView    --------------------------//
-        recyclerView = findViewById(R.id.rv);
-        doRecyclerView();
-
-        //
-        db.closeDB();
     }
 
-
-
-
-    // ********************************  Methods  ******************************** //
+    private void onClicks() {
+        backBtn.setOnClickListener(item -> onBackPressed());
+        eventPic.setOnClickListener(item -> changePic());
+        changePic_bkg.setOnClickListener(item -> changePic());
+    }
 
     private void setEventInfos() {
         ed.setText(event.getEventName());
@@ -183,13 +182,14 @@ public class AddEventFinalActivity extends AppCompatActivity {
             mParticipants.add(db.getParticeById(i));
         }
 
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3, GridLayoutManager.HORIZONTAL, false);
+        int itemsInScreen = 6;
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, itemsInScreen, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //
         adapter = new MyAdapter(mContext, R.layout.sample_contact, mParticipants);
+        adapter.setItemsInScreen(itemsInScreen);
         recyclerView.setAdapter(adapter);
 
     }

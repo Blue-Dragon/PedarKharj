@@ -68,9 +68,9 @@ public class AddEventParticesActivity extends AppCompatActivity {
                 Participant participant = allContactsTo_participants.get(position);
 
                 //checking if already selected
-//                if (checkIfAlreadySelected(participant)){
-//                    removePartice(participant);
-//                }else
+                if (checkIfAlreadySelected(participant)){
+                    removePartice(participant);
+                }else
                     addPartice(participant);
 
                 Log.d("recOnClick", participant.getName());
@@ -214,7 +214,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
     private void removePartice(Participant participant) {
         selectedPartices.remove(participant);
-        db.deletePartic(participant);
+//        db.deletePartic(participant);
         selectedAdaptor.notifyDataSetChanged();
     }
 
@@ -230,6 +230,8 @@ public class AddEventParticesActivity extends AppCompatActivity {
         for (int i=0; i<selectedPartices.size(); i++){
             ids.add(i, (int) selectedPartices.get(i).getContact().getId());
         }
+        if (ids.size() == 0) return false;
+
         return ids.contains(participant.getId());
     }
 
