@@ -37,16 +37,9 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerInParent="true"
-                android:foregroundGravity="center"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
+                style="@style/toolbar_text_style"
                 android:text="@string/eventsHeader"
-                android:textColor="#868686"
-                android:textSize="24sp" />
+                />
 
         </RelativeLayout>
 

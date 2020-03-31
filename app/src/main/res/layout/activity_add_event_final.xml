@@ -13,7 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary">
+        style="@style/toolbar_style">
 
         <ImageView
             android:id="@+id/back_btn"
@@ -23,17 +23,32 @@
             android:layout_centerVertical="true"
             android:src="@drawable/back" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="206dp"
-            android:layout_height="43dp"
-            android:layout_marginTop="16dp"
-            android:foregroundGravity="center"
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            android:text="ساخت رویداد جدید"
-            android:textColor="#868686"
-            android:textSize="24dp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="left|center_vertical"
+            style="@style/toolbar_text_style">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:text="رویداد جدید"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="مشخصات رویداد"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="14sp"
+                />
+        </LinearLayout>
+
     </RelativeLayout>
 
 
@@ -112,7 +127,7 @@
             android:paddingBottom="5dp"
             tools:itemCount="4"
             tools:layoutManager="GridLayoutManager"
-            tools:listitem="@layout/recycler_view_item_2"/>
+            tools:listitem="@layout/sample_contact"/>
 
     </ScrollView>
 

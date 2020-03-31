@@ -40,10 +40,9 @@ public class EachExpenseDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail_each_expense);
         Toolbar toolbar = findViewById(R.id.m_toolbar);
-        ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
 
         inits();
-
         backBtn.setOnClickListener(item -> onBackPressed());
 
 
@@ -51,14 +50,12 @@ public class EachExpenseDetailActivity extends AppCompatActivity {
         Intent i = getIntent();
         expenseId = i.getIntExtra(Routines.SEND_EXPENSE_ID_INTENT, 0);
         if (expenseId > 0)
-            theExpense = db.getExpenseByExpenseId(expenseId); //todo: bug
+            theExpense = db.getExpenseByExpenseId(expenseId);
 
         if (theExpense !=null ){
             participantList = theExpense.getUserPartics();
             setRecyclerView();
 
-            //todo: bug
-            Toast.makeText(mContext, "exp id: "+expenseId+ "\n exp id: "+ theExpense.getId(), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -84,6 +81,7 @@ public class EachExpenseDetailActivity extends AppCompatActivity {
     private void inits() {
         mContext = this;
         mActivity = this;
+        db = new DatabaseHelper(mContext);
 
         recyclerView = findViewById(R.id.recycler_view);
         backBtn = findViewById(R.id.back_btn);

@@ -144,7 +144,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
         final String fullName = nameEdt.getText().toString().trim() + " " + familyEdt.getText().toString().trim();
 
             //first we will do the validations (name)
-            if (TextUtils.isEmpty(fullName)) {
+            if (TextUtils.isEmpty(nameEdt.getText().toString().trim()) && TextUtils.isEmpty(familyEdt.getText().toString().trim()) ) {
                 nameEdt.setError("لطفا نام را وارد کنید");
                 nameEdt.requestFocus();
                 return;

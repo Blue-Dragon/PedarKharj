@@ -46,8 +46,7 @@ public class ParticeResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partice_result);
         Toolbar toolbar = findViewById(R.id.m_toolbar);
-        ((AppCompatActivity) mActivity).setSupportActionBar(toolbar);
-
+        setSupportActionBar(toolbar);  //todo: bug
         inits();
         backBtn.setOnClickListener(item -> onBackPressed());
 
@@ -84,8 +83,8 @@ public class ParticeResultActivity extends AppCompatActivity {
 //            expenseList = db.getAllExpensesOfEvent(curEvent);
             // not all expenses in expenseList are the ones our partice has participated in.
             expenseList = HomeFragment.newExpenseList;
-
             toolbarTitle = findViewById(R.id.textView);
+            backBtn = findViewById(R.id.back_btn);
 
             //the rectangle above
             tvL1 = findViewById(R.id.tv_title_my_expense);

@@ -23,18 +23,33 @@
                 android:layout_marginStart="0dp"
                 android:src="@drawable/back" />
 
-            <TextView
-                android:id="@+id/textView"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_centerInParent="true"
-                android:foregroundGravity="center"
-                android:layout_marginRight="10dp"
-                android:gravity="center"
-                android:text="Add partices"
-                android:textColor="#868686"
-                android:textSize="24dp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                style="@style/toolbar_text_style">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="رویداد جدید"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="افزودن اعضا"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="14sp"
+                    />
+            </LinearLayout>
+
+
 
         </RelativeLayout>
 
@@ -95,7 +110,7 @@
         android:layout_height="wrap_content"
 
         android:layout_below="@id/rv_01"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="left|center_horizontal">
 
 
         <androidx.recyclerview.widget.RecyclerView

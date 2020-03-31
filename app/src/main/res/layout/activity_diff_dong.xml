@@ -25,17 +25,9 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="10dp"
-                android:layout_toRightOf="@+id/back_btn"
-                android:foregroundGravity="center"
-                android:gravity="center"
-                android:text="دنگ های متفاوت"
-                android:textColor="#868686"
-                android:textSize="16dp" />
+                style="@style/toolbar_text_style"
+                android:text="دونگ های متفاوت"
+                />
 
 
 
