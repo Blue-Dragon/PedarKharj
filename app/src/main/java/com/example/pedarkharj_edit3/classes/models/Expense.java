@@ -120,6 +120,11 @@ public class Expense {
         this.expenseId = expenseId;
     }
 
+    /**
+     * it gives unique `id` to each expense
+     * @param db (DatabaseHelper)
+     * @return expenseId (int)
+     */
     public int setExpenseIdByOrder(DatabaseHelper db){
         int lastExpenseId = db.getLastExpenseId();
         if (lastExpenseId < 1) this.expenseId = 1;

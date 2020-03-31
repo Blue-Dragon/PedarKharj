@@ -115,22 +115,19 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
-
-        scriptEngine = new ScriptEngineManager().getEngineByName("rhino");
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
 
-
+        scriptEngine = new ScriptEngineManager().getEngineByName("rhino");
         initializeViewVariables();
         setOnClickListeners();
         setOnTouchListener();
+
         //
         doRecyclerView(Routines.NOT_SELECT_ALL);
 
         // -----------   on participant click  -------------//
-        /*
-         * recView onClick
-         */
+         // recView onClick
         Log.e("recOnClick", "onClick");
         recyclerView.addOnItemTouchListener( new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
@@ -157,9 +154,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
             public void onLongClick(View view, int position) {}
         }));
 
-        /*
-         * CheckAll
-         */
+         // CheckAll
         aSwitch.setOnClickListener(view -> {
             if (aSwitch.isChecked()) {
                 doRecyclerView(Routines.SELECT_ALL);
@@ -176,11 +171,8 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                 curChildCount = 0;
             }
         });
-
-
-
         aSwitch.performClick();     //check all be def
-        // db
+
         db.closeDB();
     }
 
@@ -188,7 +180,6 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 
 
     /********************************************       Methods     ****************************************************/
-
 //    private void LOGPartices(List<Participant> allContactsTo_participants) {
 //        StringBuilder builder = new StringBuilder();
 //        builder.append("Partices' names:\n");
@@ -197,7 +188,6 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 //        }
 //        Log.d("Fuck010", builder.toString());
 //    }
-
     /*
      * setting diff dong, if set
      */
@@ -206,6 +196,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Routines.RESULT_OK) {
+
             if(resultCode == Activity.RESULT_OK){
                 float[] floatArrayExtra = data.getFloatArrayExtra(Routines.RESULT);
                 for (float f : floatArrayExtra){
@@ -217,8 +208,6 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 //            }
         }
     }
-
-
 
     private void saveExpense() {
         float f =  Float.valueOf( textViewInputNumbers.getText().toString());
@@ -250,43 +239,6 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 
 
     }
-
-    //CALCULATOR
-    // Writes numbers when calculatorAboveBox layout buttons clicked (method got used in XML layout)
-    public void onCalcClick(View view) {
-//        Button b = mActivity.findViewById(view.getId() ) ;
-//
-//        StringBuilder builder = new StringBuilder();
-//        if (Integer.valueOf(textViewInputNumbers.getText().toString()) > 0 ) builder.append(textViewInputNumbers.getText());
-//
-//         Not letting user to use '.' twice
-//        if (b.getId() == R.id.minus_btn || b.getId() == R.id.plus_btn ){
-//            if (pmCanUse) {
-//                pmCanUse = false;
-//                builder.append(b.getText());
-//            }
-//        }
-//            delete
-//        else if (b.getId() == R.id.bkSpace){
-//            char[] chars = textViewInputNumbers.getText().toString().toCharArray();
-//            int i = chars.length;
-//
-//            if (chars.length > 0 ){
-//                builder.delete(i-1, i);
-//
-//                chars = builder.toString().toCharArray();
-//                if ( chars.length < 1 ) builder.append(0);
-//            }
-//        }
-//         add number to textViewInputNumbers
-//        else {
-//            builder.append(b.getText());
-//        }
-//
-//
-//        textViewInputNumbers.setText(builder);
-    }
-
 
     /*
      * RecyclerView
@@ -324,7 +276,6 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         }
         return dateStringType;
     }
-
 
     //-------------------------------------------------------  CALCULATOR  ----------------------------------------------------------//
 
@@ -508,9 +459,11 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
             case R.id.minus_btn:
                 if (addOperand("-")) equalClicked = false;
                 break;
+
             case R.id.button_dot:
                 if (addDot()) equalClicked = false;
                 break;
+
             case R.id.bkSpace:
                 StringBuilder builder0 = new StringBuilder();
                 builder0.append(textViewInputNumbers.getText().toString());
@@ -530,7 +483,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                     calculate(s);
 
                 //Done Action
-                    //now we have a straig
+                    //now we have a string
                 else  {
                     //check price
                     if (Float.valueOf(s) <= 0){
@@ -543,9 +496,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                             Toast.makeText(mContext, "لطفا افراد شرکت کننده را انتخاب کنید.", Toast.LENGTH_SHORT).show();
                     }
 
-
                 }
-
                 break;
         }
     }
@@ -558,7 +509,6 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 //        Toast.makeText(mContext, ""+ s, Toast.LENGTH_SHORT).show();
         return  !string.contains("+") && !s.contains("-") && defineLastCharacter(string) != IS_DOT;
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -787,6 +737,16 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         return -1;
     }
 
+
+    /**
+     * saves Expense directly after getting debts from DiffDongActivity
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (expenseDebtsList != null && expenseDebtsList.size()> 0)
+                saveExpense();
+    }
 
     @Override
     public void onBackPressed() {
