@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,11 +73,13 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     Button buttonNumber8;
     Button buttonNumber9;
 
-    Button buttonBkSpace;
     Button buttonSubtraction;
     Button buttonAddition;
-    Button buttonDone;
     Button buttonDot;
+//    Button buttonBkSpace;
+//    Button buttonDone;
+    RelativeLayout buttonBkSpace;
+    RelativeLayout buttonDone;
 
     TextView textViewInputNumbers;
     ScriptEngine scriptEngine;
@@ -300,7 +303,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         buttonBkSpace = findViewById(R.id.bkSpace);
         buttonSubtraction = findViewById(R.id.minus_btn);
         buttonAddition = (Button) findViewById(R.id.plus_btn);
-        buttonDone = (Button) findViewById(R.id.done_btn);
+        buttonDone =  findViewById(R.id.done_btn);
         buttonDot = (Button) findViewById(R.id.button_dot);
 
         buttonNumber0 = (Button) findViewById(R.id.b0);

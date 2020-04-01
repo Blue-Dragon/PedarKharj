@@ -263,17 +263,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         recyclerView.setAdapter(adaptor);
     }
 
-    //todo: def event should be just one event and its name should make sense
     private void createDefEvent() {
         if (events.size() < 1) {
             /*
              * adding partices and an event
              */
-            lastSeenEventId = (int) createEvent("سفر شمال");
-            createEvent("سفر 2");
-            createEvent("سفر 3");
-            createEvent("سفر 4");
-            createEvent("سفر 5");
+            lastSeenEventId = (int) createEvent("رویداد پیشفرض");
 
             events = db.getAllEvents();
         }
@@ -284,7 +279,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         /*
          * adding partices and an event
          */
-        if (defContats == null || defContats.length < 1) {
+        List<Contact> contacts = db.getAllContacts();
+        if ( (defContats == null || defContats.length < 1) && contacts.size() <1) {
             creatingDefContacts();
         }
         return db.createNewEventWithPartices(new Event(eventName), defContats);
@@ -292,10 +288,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
     }
 
     private void creatingDefContacts() {
-        long contact_1 = db.createContact(new Contact("Hamed"));
-        long contact_2 = db.createContact(new Contact("Reza"));
-        long contact_3 = db.createContact(new Contact("Sadi"));
-        long contact_4 = db.createContact(new Contact("Abbas"));
+        long contact_1 = db.createContact(new Contact("من"));
+        long contact_2 = db.createContact(new Contact("مخاطب 1"));
+        long contact_3 = db.createContact(new Contact("مخاطب 2"));
+        long contact_4 = db.createContact(new Contact("مخاطب 3"));
 
         defContats = new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2), db.getContactById(contact_3), db.getContactById(contact_4)};
     }

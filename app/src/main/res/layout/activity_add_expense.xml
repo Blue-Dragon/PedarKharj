@@ -258,17 +258,32 @@
                     android:id="@+id/b0"
                     style="@style/calcAction"/>
 
-                <Button
-                    android:text=' del '
+
+                <RelativeLayout
                     android:fontFamily="@font/b_koodak"
                     android:id="@+id/bkSpace"
-                    style="@style/calcAction"/>
+                    android:gravity="center"
+                    style="@style/calcAction">
 
-                <Button
+                    <ImageView
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:src="@drawable/ic_backspace"/>
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/done_btn"
-                    android:text="Done"
+                    android:gravity="center"
                     style="@style/calcDoneBtn"
-                    android:onClick="onClick"/>
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/done"/>
+                </RelativeLayout>
+
+
             </LinearLayout>
         </LinearLayout>
 
