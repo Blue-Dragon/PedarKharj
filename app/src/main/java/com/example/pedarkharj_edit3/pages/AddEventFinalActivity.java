@@ -56,7 +56,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
     Bitmap bitmap;
     Bitmap resizedBitmap;
     boolean newImg, edit_mode;
-    CircleImageView eventPic, changePic_bkg; //todo : change in ti rectangle
+    CircleImageView changePic_bkg;
+    ImageView eventPic;
     EditText ed;
     RecyclerView recyclerView;
     FloatingActionButton fab;

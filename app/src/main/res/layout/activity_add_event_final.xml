@@ -56,11 +56,13 @@
     android:layout_height="0dp"
     android:layout_weight="7">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <com.github.siyamed.shapeimageview.mask.PorterShapeImageView
         android:id="@+id/prof_pic"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
         android:src="@drawable/bk1"
+        app:siShape="@drawable/shape_rounded_rectangle"
+
         app:civ_border_color="#9CCC65"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -107,8 +109,7 @@
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
-        android:layout_height="0.4dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="0.2dp"
         android:background="@color/cardview_dark_background"/>
 
     <RelativeLayout
@@ -116,31 +117,31 @@
         android:layout_height="0dp"
         android:layout_weight="3">
 
-    </RelativeLayout>
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="@color/bk1"
-        android:foregroundGravity="center_horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
+        <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:paddingBottom="5dp"
-            tools:itemCount="4"
-            tools:layoutManager="GridLayoutManager"
-            tools:listitem="@layout/sample_contact"/>
+            android:background="@color/bk1"
+            android:foregroundGravity="center_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-    </ScrollView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="5dp"
+                tools:itemCount="4"
+                tools:layoutManager="GridLayoutManager"
+                tools:listitem="@layout/sample_contact"/>
+
+        </ScrollView>
+    </RelativeLayout>
+
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
