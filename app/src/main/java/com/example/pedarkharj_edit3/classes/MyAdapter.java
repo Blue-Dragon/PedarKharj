@@ -47,6 +47,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
         return amountModeDong;
     }
     private Drawable drawable; //EventMng
+    private boolean isFloatingActionBar;
 
 
     //------------------------------      Constructors       ---------------------------------/
@@ -110,6 +111,10 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
         this.contactList = contactList;
     }
 
+    public void setIsFloatingActionBar(boolean isFloatingActionBar) {
+        this.isFloatingActionBar = isFloatingActionBar;
+    }
+
     //EventDetailActivity (ExpenseList)
     public void setExpenseList(List<Expense> expenseList) {
         this.expenseList = expenseList;
@@ -161,6 +166,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
             holder.setActivity(mActivity);
         if (mContext != null)
             holder.setContext(mContext);
+        holder.setIsFloatingActionBar(isFloatingActionBar);
         return holder;
     }
 
@@ -243,6 +249,8 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
             holder.setOnMyLongClickListener(position1 -> {
                 ContactsFragment.pressedContact = contactList.get(position1); //this is for the ContextMenu (edit/delete)
             });
+
+
 
             Contact contact;
             Log.i("positionCall", "contacts recyclerView Call");

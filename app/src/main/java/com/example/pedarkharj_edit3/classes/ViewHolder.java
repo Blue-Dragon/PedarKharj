@@ -2,6 +2,7 @@ package com.example.pedarkharj_edit3.classes;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.View;
 import android.widget.Button;
@@ -38,6 +39,8 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     EditText dongEtxtAmount;//mode_02 amount
     TextView dateTv, priceTitleTv;  // EventDetailed- ExpenseLists
     private LinearLayout bkGrndLayout; //Event recView
+
+    boolean isFloatingActionBar = false;
 
 
 
@@ -78,6 +81,10 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         this.mContext = mContext;
     }
 
+    public void setIsFloatingActionBar(boolean floatingActionBar) {
+        isFloatingActionBar = floatingActionBar;
+    }
+
     public void setActivity(Activity mActivity) {
         this.mActivity = mActivity;
     }
@@ -91,9 +98,14 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
 //        if (mActivity != null)
 //            mActivity.getMenuInflater().inflate(R.menu.menu_context_floating, menu);
 
-        menu.setHeaderTitle(ContactsFragment.pressedContact.getName());
-        menu.add(this.getAdapterPosition(), 100, 0, "ویرایش");
-        menu.add(this.getAdapterPosition(), 101, 1, "حذف");
+        //we only do this in ContactFragment recView, so :
+        if (isFloatingActionBar){
+            Log.d("longClick", "onLongClick: ");
+            menu.setHeaderTitle(ContactsFragment.pressedContact.getName());
+            menu.add(this.getAdapterPosition(), 100, 0, "ویرایش");
+            menu.add(this.getAdapterPosition(), 101, 1, "حذف");
+        }
+
     }
 
 
@@ -103,14 +115,17 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
 
 
     /**
-     * that's becaure we can't directly implement `onLongClickListener` in ViewHolder
+     * that's because we can't directly implement `onLongClickListener` in ViewHolder
      */
     public void setOnMyLongClickListener(MyLongClickListener myLongClickListener) {
         this.myLongClickListener = myLongClickListener;
     }
     @Override
     public boolean onLongClick(View v) {
-        this.myLongClickListener.onMyItemLongClickListener(getLayoutPosition());
+        if (this.myLongClickListener != null){
+            this.myLongClickListener.onMyItemLongClickListener(getLayoutPosition());
+        }
+
         return false;
     }
 }

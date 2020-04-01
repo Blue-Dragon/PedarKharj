@@ -8,6 +8,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -76,9 +77,10 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
                 //checking if already selected
                 if (checkIfAlreadySelected(participant)){
-                    removePartice(participant);
+                    removePartice(view, participant);
                 }else
-                    addPartice(participant);
+                    addPartice(view, participant);
+
 
                 Log.d("recOnClick", participant.getName());
             }
@@ -95,7 +97,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
             public void onClick(View view, int position) {
                 Participant participant = selectedPartices.get(position);
                 //remove partice from event
-                removePartice(participant);
+                removePartice(view, participant);
 //                setSelectedRecView(selectedPartices);
             }
 
@@ -219,16 +221,21 @@ public class AddEventParticesActivity extends AppCompatActivity {
     }
 
 
-    private void removePartice(Participant participant) {
+    private void removePartice(View view, Participant participant) {
         selectedPartices.remove(participant);
 //        db.deletePartic(participant);
         selectedAdaptor.notifyDataSetChanged();
+        //change color
+        view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.transparent_white));
     }
 
-    private void addPartice(Participant participant) {
+    private void addPartice(View view, Participant participant) {
         selectedPartices.add(participant);
         if (edit_mode) db.createParticipantUnderEvent(participant, existedEvent);
         selectedAdaptor.notifyDataSetChanged();
+        //change color
+        view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selected_green));
+
     }
 
     private boolean checkIfAlreadySelected(Participant participant) {

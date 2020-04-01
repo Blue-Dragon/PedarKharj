@@ -41,7 +41,7 @@
             android:paddingLeft="@dimen/s"
             android:paddingRight="@dimen/s"
             android:gravity="center_vertical"
-            android:background="#74000000">
+            android:background="#8D000000">
 
 
             <com.example.pedarkharj_edit3.classes.AutoResizeTextView

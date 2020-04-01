@@ -89,6 +89,7 @@
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="calcAccent">#ef6c00</color>
 
+    <color name="selected_green">#EEFCED</color>
     <color name="colorSelected">#A5388FD4</color>
     <color name="activity_bk_color">#FDFFFD</color>
     <color name="fab_bk_color">#4BC700</color>

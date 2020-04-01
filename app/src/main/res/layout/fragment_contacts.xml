@@ -88,6 +88,6 @@
         android:id="@+id/fab"
         style="@style/fab_style"
 
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@drawable/ic_person_add" />
 
 </RelativeLayout>
