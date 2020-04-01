@@ -9,8 +9,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -138,7 +136,8 @@
     <style name="activity_layout_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/activity_bk_color</item>
+        <item name="android:background">@color/bk4</item>
+
     </style>
 
     <style name="activity_layout_style_noAnim">
@@ -161,7 +160,7 @@
 
         <item name="android:tint">#FFFADC</item>
         <item name="backgroundTint">@color/colorTransparent</item>
-        <item name="android:backgroundTint">@color/colorAccentLight</item>
+        <item name="android:backgroundTint">@color/colorAccentDark</item>
     </style>
 
 

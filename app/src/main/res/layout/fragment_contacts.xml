@@ -3,7 +3,8 @@
     android:id="@+id/fragment_contacts"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/activity_layout_style">
+    style="@style/activity_layout_style"
+    android:background="@color/white">
 
 
     <androidx.appcompat.widget.Toolbar

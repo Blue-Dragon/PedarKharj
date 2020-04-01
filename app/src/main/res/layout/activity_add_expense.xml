@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/activity_layout_style"
-    tools:context=".pages.AddExpenseActivity">
+    tools:context=".pages.AddExpenseActivity"
+    android:background="@color/white">
 
-    <androidx.appcompat.widget.Toolbar
+
+<androidx.appcompat.widget.Toolbar
         android:id="@+id/m_toolbar"
         style="@style/toolbar_style">
 

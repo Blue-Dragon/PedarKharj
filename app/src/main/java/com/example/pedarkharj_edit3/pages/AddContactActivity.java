@@ -17,6 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -27,6 +29,8 @@ import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.models.Contact;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.Routines;
+import com.takusemba.spotlight.SimpleTarget;
+import com.takusemba.spotlight.Spotlight;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -242,11 +246,14 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
     }
 
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(mContext, MainActivity.class));
         finish();
     }
+
+
+
+
 }

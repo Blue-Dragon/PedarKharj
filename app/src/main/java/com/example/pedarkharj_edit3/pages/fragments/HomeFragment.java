@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,10 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 import com.example.pedarkharj_edit3.pages.EventDetailActivity;
 import com.example.pedarkharj_edit3.pages.ParticeResultActivity;
+import com.takusemba.spotlight.OnSpotlightEndedListener;
+import com.takusemba.spotlight.OnSpotlightStartedListener;
+import com.takusemba.spotlight.SimpleTarget;
+import com.takusemba.spotlight.Spotlight;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +78,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         doOnClicks();
         setCurEvent(); //and Setting default event and partices IF NOT EXIST
         initRectangleAbove(curEvent);  //doInits Rectangle
+
+
+//        showSpotlightIntro(view);
+
+
+
 
         // RecView
         setRecView(curEvent);
@@ -222,7 +234,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
 
 
     //-------------------------     RecyclerView    --------------------------//
-
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -236,7 +247,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 Toast.makeText(mContext, "Wrong item clicked!", Toast.LENGTH_SHORT).show();
         }
     }
-
 
     private void setRecView(Event curEvent) {
 
@@ -253,7 +263,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         recyclerView.setAdapter(adaptor);
     }
 
-    //todo: def event should be one and make sense
+    //todo: def event should be just one event and its name should make sense
     private void createDefEvent() {
         if (events.size() < 1) {
             /*
@@ -302,5 +312,44 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         }
     }
 
+//----------------------    Spotlight       ------------------------//
+//    private void showSpotlightIntro(View v) {
+//
+//        int[] location = new int[2];
+//        fab.getLocationOnScreen(location);
+//        int x = location[0];
+//        int y = location[1];
+//
+//
+//        SimpleTarget simpleTarget = new SimpleTarget.Builder(mActivity)
+////                .setPoint(fab, fab) // position of the Target. setPoint(Point point), setPoint(View view) will work too.
+//                .setPoint(x, y)
+//                .setRadius(80f) // radius of the Target
+//                .setTitle("the title") // title
+//                .setDescription("the description") // description
+//                .build();
+//
+//
+//
+//
+//        fab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override public void onGlobalLayout() {
+//                fab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//
+//                Spotlight.with(mActivity)
+//                        .setDuration(1) // duration of Spotlight emerging and disappearing in ms
+//                .setAnimation(new DecelerateInterpolator(2f)) // animation of Spotlight
+//                        .setTargets(simpleTarget) // set targes. see below for more info
+//                        // callback when Spotlight starts
+//                .setOnSpotlightStartedListener(() -> Toast.makeText(mContext, "spotlight is started", Toast.LENGTH_SHORT).show())
+//                        // callback when Spotlight ends
+//                .setOnSpotlightEndedListener(() ->{
+//                    Toast.makeText(mContext, "spotlight is ended", Toast.LENGTH_SHORT).show();
+//                })
+//                        .start(); // start Spotlight
+//            }
+//        });
+//
+//    }
 
 }

@@ -1,5 +1,6 @@
 package com.example.pedarkharj_edit3.pages;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -25,6 +28,8 @@ import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
+import com.takusemba.spotlight.SimpleTarget;
+import com.takusemba.spotlight.Spotlight;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +39,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
     List<Participant> allContactsTo_participants, selectedPartices;
     List<Integer> ids;
     Context mContext;
+    Activity mActivity = this;
     MyAdapter adaptor, selectedAdaptor;
     DatabaseHelper db;
     Event existedEvent;
@@ -53,6 +59,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
         inits();
         onClicks();
+//        showSpotlightIntro();
 
 
         //-----------     RecView    -----------//
@@ -242,5 +249,46 @@ public class AddEventParticesActivity extends AppCompatActivity {
 //        startActivity(new Intent(mContext, MainActivity.class));
         finish();
     }
+
+    //----------------------    Spotlight       ------------------------//
+//    private void showSpotlightIntro() {
+//
+//        int[] location = new int[2];
+//        fab.getLocationOnScreen(location);
+//        int x = location[0];
+//        int y = location[1];
+//
+//
+//        SimpleTarget simpleTarget = new SimpleTarget.Builder(mActivity)
+////                .setPoint(fab, fab) // position of the Target. setPoint(Point point), setPoint(View view) will work too.
+//                .setPoint(x, y)
+//                .setRadius(80f) // radius of the Target
+//                .setTitle("the title") // title
+//                .setDescription("the description") // description
+//                .build();
+//
+//
+//
+//
+//        fab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override public void onGlobalLayout() {
+//                fab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//
+//                Spotlight.with(mActivity)
+//                        .setDuration(1) // duration of Spotlight emerging and disappearing in ms
+//                        .setAnimation(new DecelerateInterpolator(2f)) // animation of Spotlight
+//                        .setTargets(simpleTarget) // set targes. see below for more info
+//                        // callback when Spotlight starts
+//                        .setOnSpotlightStartedListener(() -> Toast.makeText(mContext, "spotlight is started", Toast.LENGTH_SHORT).show())
+//                        // callback when Spotlight ends
+//                        .setOnSpotlightEndedListener(() ->{
+//                            Toast.makeText(mContext, "spotlight is ended", Toast.LENGTH_SHORT).show();
+//                        })
+//                        .start(); // start Spotlight
+//            }
+//        });
+//
+//    }
+
 
 }

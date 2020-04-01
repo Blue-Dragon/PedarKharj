@@ -1,34 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--    palate 000-->
     <!--
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#20000000</color>
     <color name="colorAccent">#D81B60</color>
     -->
 
-    <color name="colorPrimary">#3B7A01</color>
-    <color name="colorPrimaryLight">#6abf69</color>
-    <color name="colorPrimaryDark">#008D09</color>
-    <color name="colorPrimaryVeryLight">#A2DFA1</color>
-
+    <!--    palate 000.5-->
+    <!--    <color name="colorPrimary">#3B7A01</color>-->
+    <!--    <color name="colorPrimaryLight">#6abf69</color>-->
+    <!--    <color name="colorPrimaryDark">#008D09</color>-->
+    <!--    <color name="colorPrimaryVeryLight">#A2DFA1</color>-->
     <!--    <color name="colorAccent">#E64A19</color>-->
-<!--    <color name="colorAccent">#d81b60</color>-->
-<!--    <color name="colorAccentLight">#ff5c8d</color>-->
-<!--    <color name="colorAccentDark">#a00037</color>-->
-    <color name="colorAccentDark">#FFD600</color>
-    <color name="colorAccent">#ECC900</color>
-    <color name="colorAccentLight">#FFD600</color>
-    <color name="colorAccentVeryLight">#FFF19B</color>
+    <!--    <color name="colorAccent">#d81b60</color>-->
+    <!--    <color name="colorAccentLight">#ff5c8d</color>-->
+    <!--    <color name="colorAccentDark">#a00037</color>-->
+    <!--    <color name="colorAccentDark">#D81B60</color>-->
+    <!--    <color name="colorAccent">#F9A825</color>-->
+    <!--    <color name="colorAccentLight">#FDD835</color>-->
+    <!--    <color name="colorAccentVeryLight">#FFF19B</color>-->
+    <!--    <color name="colorAccent">#8e24aa</color>-->
+    <!--    <color name="colorAccentLight">#c158dc</color>-->
+    <!--    <color name="colorAccentVeryLight">#E7ADFF</color>-->
+    <!--    <color name="colorAccentDark">#5c007a</color>-->
 
-<!--    <color name="colorAccent">#8e24aa</color>-->
-<!--    <color name="colorAccentLight">#c158dc</color>-->
-<!--    <color name="colorAccentVeryLight">#E7ADFF</color>-->
-<!--    <color name="colorAccentDark">#5c007a</color>-->
+    <!--    palate 001-->
+<!--    <color name="colorAccentLight">#C4FF45</color>-->
+<!--    <color name="colorAccent">#B0E63E</color>-->
+<!--    <color name="colorAccentDark">#95C234</color>-->
+<!--    <color name="colorPrimary">#628022</color>-->
+<!--    <color name="colorPrimaryDark">#5A7520</color>-->
+
+    <!--    palate 002-->
+<!--    <color name="colorAccentLight">#9BFF92</color>-->
+<!--    <color name="colorAccent">#65F758</color>-->
+<!--    <color name="colorAccentDark">#3E63C2</color>-->
+<!--    <color name="colorPrimary">#2B7525</color>-->
+<!--    <color name="colorPrimaryDark">#308029</color>-->
+
+    <!--    palate 003-->
+<!--    <color name="colorAccentLight">#EDB3FF</color>-->
+<!--    <color name="colorAccent">#D759FF</color>-->
+<!--    <color name="colorAccentDark">#932DB3</color>-->
+<!--    <color name="colorPrimary">#C5FF59</color>-->
+<!--    <color name="colorPrimaryDark">#7DB31B</color>-->
+
+    <!--    palate 004-->
+<!--    <color name="colorAccentLight">#FEB3FF</color>-->
+<!--    <color name="colorAccent">#FD59FF</color>-->
+<!--    <color name="colorAccentDark">#B12DB3</color>-->
+<!--    <color name="colorPrimary">#99FF60</color>-->
+<!--    <color name="colorPrimaryDark">#52B31B</color>-->
+
+    <!--    palate 006-->
+<!--    <color name="colorAccentLight">#FEB3FF</color>-->
+<!--    <color name="colorAccent">#DB4FDD</color>-->
+<!--    <color name="colorAccentDark">#B12DB3</color>-->
+<!--    <color name="colorPrimary">#218B19</color>-->
+<!--    <color name="colorPrimaryDark">#2B7525</color>-->
+
+    <!--    palate 007-->
+    <color name="colorAccentLight">#75F2D00C</color>
+    <color name="colorAccent">#F2D00C</color>
+    <color name="colorAccentDark">#E8B10C</color>
+    <color name="colorPrimary">#218B19</color>
+    <color name="colorPrimaryDark">#2B7525</color>
+
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#ffffff</color>
     <color name="grayTextColor">#8C8C8C</color>
 
-    <color name="back_groung_lime">#4AB9BBB8</color>
+    <!--    backGroung 001-->
+    <color name="bk1">#FBFFDB</color>
+    <color name="bk2">#F8FFF9</color>
+    <color name="bk3">#EFFCED</color>
+    <color name="bk4">#FBFDEE</color>
+    <color name="bk5">#CDE9BA</color>
+
+    <color name="back_groung_lime">#DDFFDA</color>
     <color name="back_ground_lemon">#45FFFDE7</color>
     <color name="back_groung_dark">#4A8B8B8B</color>
 
