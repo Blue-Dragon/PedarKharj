@@ -9,4 +9,7 @@
     <string name="contactsBtn">مخاطبین</string>
     <string name="backBtnText">بازگشت</string>
     <string name="eventsHeader">مدیریت رویداد ها</string>
+    <string name="next">بعدی</string>
+    <string name="skip">رد کردن</string>
+    <string name="enter">ورود</string>
 </resources>
