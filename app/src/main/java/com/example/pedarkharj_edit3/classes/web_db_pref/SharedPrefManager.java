@@ -18,7 +18,9 @@ public class SharedPrefManager {
 
     private static final String SHARED_PREF_NAME = "defEvent";
     private static final String KEY_ID = "keyId";
-    private static final String KEY_NAME = "keyName";;
+    private static final String KEY_FiIRST_TIME = "keyFirstTome";
+    private static final String KEY_NAME = "keyName";
+
     private static SharedPrefManager mInstance;
     private static Context mContext;
     private static Class aClass;
@@ -39,7 +41,10 @@ public class SharedPrefManager {
     }
 
 
-    //this method will store the default event id in shared preferences
+    //------------------------   def event  --------------------------//
+    /**
+     * this method will store the default event id in shared preferences
+     */
     public void saveLastSeenEventId(int eventId) {
         sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -49,14 +54,51 @@ public class SharedPrefManager {
         }
     }
 
-    //this method will check whether user is already logged in or not
+    /**
+     *     this method will check whether user is already logged in or not
+     */
     public int getDefEventId() {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getInt(KEY_ID, 0) ;
     }
 
+    /**
+     *     this method will clear the defEvent
+     */
+    public void clearDerfEvent() {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(KEY_ID);
+        editor.apply();
+    }
 
-    //this method will clear the defEvent
+    //------------------------   first time run   --------------------------//
+    /**
+     * this method will store FirstTimeRun condition
+     */
+    public void isFirstTimeRun(boolean b) {
+        sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(KEY_FiIRST_TIME, b);
+            editor.apply();
+    }
+
+    /**
+     *     this method will check whether FirstTimeRun or not
+     */
+    public boolean getFirstTimeRun() {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(KEY_FiIRST_TIME, true) ;
+    }
+
+
+
+    //----------------------
+
+
+    /**
+     *     this method will clear sharedPref
+     */
     public void clearShrdPref() {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();

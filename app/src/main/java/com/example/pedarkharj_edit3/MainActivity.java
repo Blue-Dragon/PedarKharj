@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 
+import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
+import com.example.pedarkharj_edit3.pages.IntroActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity  {
     Fragment selectedFragment;
     EventsFragment eventsFragment;
     ContactsFragment contactsFragment;
+    boolean isFirstTime;
 
 
 
@@ -36,6 +39,11 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
 
 //        startActivity(new Intent(mContext, IntroSliderActivity.class));
+        isFirstTime = SharedPrefManager.getInstance(mContext).getFirstTimeRun();
+        if (isFirstTime){
+            startActivity(new Intent(mContext, IntroActivity.class));
+            SharedPrefManager.getInstance(mContext).isFirstTimeRun(false);
+        }
 
         //-------------------------     Fragments   -------------------------- //
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
