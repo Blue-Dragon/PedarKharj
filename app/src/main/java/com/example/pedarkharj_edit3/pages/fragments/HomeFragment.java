@@ -3,8 +3,14 @@ package com.example.pedarkharj_edit3.pages.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+
+import com.example.pedarkharj_edit3.pages.AddExpenseActivity;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
@@ -80,7 +86,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         initRectangleAbove(curEvent);  //doInits Rectangle
 
 
-//        showSpotlightIntro(view);
+//        showTabTargetView(view);
+        showTabTargetsSequences2(view);
 
 
 
@@ -347,5 +354,98 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
 //        });
 //
 //    }
+
+    //----------------------    First time tutorial (show case)    ----------------------
+
+    /**
+     * showCase for one item
+     */
+    public void showTabTargetView(View view) {
+
+        TapTargetView.showFor(mActivity,                 // `this` is an Activity
+                TapTarget.forView(fab, "This is a target", "We have the best targets, believe me")
+                        // All options below are optional
+                        .outerCircleColor(R.color.colorPrimaryDark)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(20)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(12)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.bk1)  // Specify the color of the description text
+//                        .textColor(R.color.blue)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(true)           // Specify whether the target is transparent (displays the content underneath)
+//                        .icon(getResources().getDrawable(R.drawable.logo))                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60).
+                        cancelable(true),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+//                        doSomething();
+//                        Toast.makeText(mContext, "Do something", Toast.LENGTH_SHORT).show();
+//                        showTabTargetsSequences2(view);
+
+                    }
+                });
+
+
+
+    }
+
+    /**
+     * showCase for multiple  items (a sequence of items)
+     */
+    public void showTabTargetsSequences2(View view) {
+// 1
+
+        new TapTargetSequence(mActivity)
+                // 2
+                .targets(
+                        TapTarget.forView(fab, "a", " desc")
+                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.85f).targetCircleColor(R.color.white)
+                                .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(true).cancelable(false)
+                                .tintTarget(true).transparentTarget(true).targetRadius(50)
+
+//                        TapTarget.forView(spinnerTv, "a", " desc")
+//                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.96f).targetCircleColor(R.color.white)
+//                                .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
+//                                .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(true).cancelable(false)
+//                                .tintTarget(true).transparentTarget(true).targetRadius(60)
+                )
+//                .continueOnCancel(true)
+
+
+                .listener(new TapTargetSequence.Listener() {
+                    @Override
+                    public void onSequenceFinish() {
+                        Toast.makeText(mContext, "Finish", Toast.LENGTH_SHORT).show();
+//                        mActivity.onBackPressed();
+//                        mActivity.startActivity(new Intent(mActivity, AddExpenseActivity.class));
+                            fab.performClick();
+
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+
+                    }
+                })
+
+                // 6
+                .start();
+
+    }
+
 
 }

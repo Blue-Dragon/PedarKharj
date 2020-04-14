@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -36,6 +38,8 @@ import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.PersianDate;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -126,6 +130,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         setOnClickListeners();
         setOnTouchListener();
 
+        showTabTargetsSequences2();
         //
         doRecyclerView(Routines.NOT_SELECT_ALL);
 
@@ -740,6 +745,52 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         return -1;
     }
 
+
+    /**
+     * showCase for multiple  items (a sequence of items)
+     */
+    public void showTabTargetsSequences2() {
+// 1
+
+        new TapTargetSequence(mActivity)
+                // 2
+                .targets(
+
+//                        TapTarget.forView(calculatorAboveBox, "a", " desc")
+//                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.96f).targetCircleColor(R.color.white)
+//                                .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
+//                                .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(true).cancelable(true)
+//                                .tintTarget(true).transparentTarget(true).targetRadius(60),
+
+                        TapTarget.forView(diffDong, "a", " desc")
+                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.96f).targetCircleColor(R.color.white)
+                                .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(true).cancelable(true)
+                                .tintTarget(true).transparentTarget(true).targetRadius(60)
+                )
+
+                .listener(new TapTargetSequence.Listener() {
+                    @Override
+                    public void onSequenceFinish() {
+                        Toast.makeText(mContext, "Finish", Toast.LENGTH_SHORT).show();
+//                        mActivity.onBackPressed();
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+
+                    }
+                })
+
+                // 6
+                .start();
+
+    }
 
     /**
      * saves Expense directly after getting debts from DiffDongActivity
