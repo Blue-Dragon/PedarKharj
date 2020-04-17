@@ -38,6 +38,7 @@ import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.PersianDate;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
+import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 
@@ -124,13 +125,21 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         setContentView(R.layout.activity_add_expense);
         Toolbar toolbar =  findViewById(R.id.m_toolbar);
         setSupportActionBar(toolbar);
-
+        //init
         scriptEngine = new ScriptEngineManager().getEngineByName("rhino");
-        initializeViewVariables();
+        inits();
         setOnClickListeners();
         setOnTouchListener();
 
-        showTabTargetsSequences2();
+        //Tutorial - TabTargetView
+        if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.FIRST_RUN ){
+            showTabTargetsSequences1();
+
+        } else if (SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.SECOND_RUN){
+            showTabTargetsSequences2();
+        }
+
+
         //
         doRecyclerView(Routines.NOT_SELECT_ALL);
 
@@ -287,7 +296,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 
     //-------------------------------------------------------  CALCULATOR  ----------------------------------------------------------//
 
-    private void initializeViewVariables(){
+    private void inits(){
         mContext = this;
         mActivity = this;
         allParticipants = new ArrayList<>();
@@ -749,31 +758,32 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     /**
      * showCase for multiple  items (a sequence of items)
      */
-    public void showTabTargetsSequences2() {
+    public void showTabTargetsSequences1() {
 // 1
 
         new TapTargetSequence(mActivity)
                 // 2
                 .targets(
 
-//                        TapTarget.forView(calculatorAboveBox, "a", " desc")
-//                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.96f).targetCircleColor(R.color.white)
-//                                .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
-//                                .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(true).cancelable(true)
-//                                .tintTarget(true).transparentTarget(true).targetRadius(60),
-
-                        TapTarget.forView(diffDong, "a", " desc")
-                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.96f).targetCircleColor(R.color.white)
+                        TapTarget.forView(recyclerView, "a", " desc")
+                                .outerCircleColor(R.color.colorAccent).outerCircleAlpha(0.86f).targetCircleColor(R.color.white)
                                 .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
                                 .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(true).cancelable(true)
-                                .tintTarget(true).transparentTarget(true).targetRadius(60)
+                                .tintTarget(false).transparentTarget(true).targetRadius(60),
+
+
+                        TapTarget.forView(calculatorAboveBox, "a", " desc")
+                                .outerCircleColor(R.color.black).outerCircleAlpha(0.5f).targetCircleColor(R.color.black)
+                                .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(false).cancelable(true)
+                                .tintTarget(false).transparentTarget(true).targetRadius(115)
                 )
 
                 .listener(new TapTargetSequence.Listener() {
                     @Override
                     public void onSequenceFinish() {
-                        Toast.makeText(mContext, "Finish", Toast.LENGTH_SHORT).show();
-//                        mActivity.onBackPressed();
+                        SharedPrefManager.getInstance(mActivity).setNextRunTurn(Routines.KEY_TURN_TIME_EXPENSE, Routines.SECOND_RUN);
+
                     }
 
                     @Override
@@ -791,6 +801,43 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                 .start();
 
     }
+
+    public void showTabTargetsSequences2() {
+// 1
+
+        new TapTargetSequence(mActivity)
+                // 2
+                .targets(
+
+                        TapTarget.forView(diffDong, "a", " desc")
+                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.96f).targetCircleColor(R.color.white)
+                                .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(true).cancelable(true)
+                                .tintTarget(true).transparentTarget(true).targetRadius(60)
+                )
+
+                .listener(new TapTargetSequence.Listener() {
+                    @Override
+                    public void onSequenceFinish() {
+                        SharedPrefManager.getInstance(mActivity).setNextRunTurn(Routines.KEY_TURN_TIME_EXPENSE, Routines.THIRD_RUN);
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+
+                    }
+                })
+
+                // 6
+                .start();
+
+    }
+
 
     /**
      * saves Expense directly after getting debts from DiffDongActivity

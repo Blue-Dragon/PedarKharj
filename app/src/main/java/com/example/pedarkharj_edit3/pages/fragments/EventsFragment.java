@@ -72,6 +72,8 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         backBtn.setOnClickListener(item -> mActivity.onBackPressed());
         setHasOptionsMenu(true); //for menu items in fragment (edit & delete)
 
+
+
         setRecView(); //show Events
         /*
          * recView onClick

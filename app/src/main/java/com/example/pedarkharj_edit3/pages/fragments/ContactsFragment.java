@@ -78,7 +78,7 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         // -------  recyclerView  -------//
         setRecView();
         Log.e("recOnClick", "onClick");
-        /**
+        /*
          *  onCLICK
          */
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
@@ -95,7 +95,7 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         }));
 
 
-        /**
+        /*
          *  SCROLLING
          */
 //        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

@@ -1,8 +1,9 @@
 package com.example.pedarkharj_edit3.classes.web_db_pref;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.example.pedarkharj_edit3.classes.Routines;
 
 public class SharedPrefManager {
 
@@ -18,8 +19,7 @@ public class SharedPrefManager {
 
     private static final String SHARED_PREF_NAME = "defEvent";
     private static final String KEY_ID = "keyId";
-    private static final String KEY_FiIRST_TIME = "keyFirstTome";
-    private static final String KEY_NAME = "keyName";
+    private static final String KEY_FIRST_TIME = "keyFirstTome";
 
     private static SharedPrefManager mInstance;
     private static Context mContext;
@@ -73,14 +73,18 @@ public class SharedPrefManager {
     }
 
     //------------------------   first time run   --------------------------//
+
+
+
+
     /**
      * this method will store FirstTimeRun condition
      */
     public void isFirstTimeRun(boolean b) {
         sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(KEY_FiIRST_TIME, b);
-            editor.apply();
+        editor.putBoolean(KEY_FIRST_TIME, b);
+        editor.apply();
     }
 
     /**
@@ -88,7 +92,21 @@ public class SharedPrefManager {
      */
     public boolean getFirstTimeRun() {
         SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(KEY_FiIRST_TIME, true) ;
+        return sharedPreferences.getBoolean(KEY_FIRST_TIME, true) ;
+    }
+
+    //----------------------
+    public void setNextRunTurn(String key_page, int timesRan) {
+        sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt(key_page, timesRan);
+            editor.apply();
+    }
+
+
+    public int getRunTurn(String key_page) {
+        SharedPreferences sharedPreferences = mContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(key_page, Routines.FIRST_RUN) ;
     }
 
 

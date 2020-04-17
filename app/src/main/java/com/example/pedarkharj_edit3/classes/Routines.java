@@ -63,9 +63,18 @@ public class Routines  {
     public final static short HOME = 0;
     public final static short EVENTS = 1;
     public final static short CONTACTS = 2;
-    //other stuff
+    // -------------  other stuff
     public static final String PARTICIPANT_INFO = "PARTICIPANT_INFO";
     public static final String EVENT_TEMP_NAME = "EVENT_TEMP";
+    //SharedPref
+    public static final String KEY_TURN_TIME_HOME = "KEY_TURN_TIME_HOME";
+    public static final String KEY_TURN_TIME_CONTACTS = "KEY_TURN_TIME_CONTACTS";
+    public static final String KEY_TURN_TIME_EVENTS = "KEY_TURN_TIME_EVENTS";
+    public static final String KEY_TURN_TIME_EXPENSE = "KEY_TURN_TIME_EXPENSE";
+    public static final String KEY_TURN_TIME_EXPENSE_DIFF = "KEY_TURN_TIME_EXPENSE_DIFF";
+    public static final int FIRST_RUN = 0;
+    public static final int SECOND_RUN = 1;
+    public static final int THIRD_RUN = 2;
     //Adaptor
     final static boolean AMOUNT_MODE = true;
     final static boolean DONG_MODE = false;

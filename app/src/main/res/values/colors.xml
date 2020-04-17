@@ -91,6 +91,7 @@
 
     <color name="selected_green">#EEFCED</color>
     <color name="colorSelected">#A5388FD4</color>
+    <color name="colorSelected2">#4F67E0</color>
     <color name="activity_bk_color">#FDFFFD</color>
     <color name="fab_bk_color">#4BC700</color>
     <color name="partice_result_recview_color">#45FFFDE7</color>

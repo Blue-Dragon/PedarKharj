@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import com.example.pedarkharj_edit3.pages.AddExpenseActivity;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
@@ -23,8 +22,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,10 +40,6 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 import com.example.pedarkharj_edit3.pages.EventDetailActivity;
 import com.example.pedarkharj_edit3.pages.ParticeResultActivity;
-import com.takusemba.spotlight.OnSpotlightEndedListener;
-import com.takusemba.spotlight.OnSpotlightStartedListener;
-import com.takusemba.spotlight.SimpleTarget;
-import com.takusemba.spotlight.Spotlight;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,12 +78,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         setCurEvent(); //and Setting default event and partices IF NOT EXIST
         initRectangleAbove(curEvent);  //doInits Rectangle
 
-
-//        showTabTargetView(view);
-        showTabTargetsSequences2(view);
-
-
-
+        //Tutorial
+        if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_HOME) == Routines.FIRST_RUN ){
+            //        showTabTargetView(view);
+            showTabTargetsSequences2(view);
+        }
 
         // RecView
         setRecView(curEvent);
@@ -155,6 +147,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
 //        createDrawer();
 
         //Close db
+
+
         db.closeDB();
         return view;
     }
@@ -388,7 +382,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                         super.onTargetClick(view);      // This call is optional
 //                        doSomething();
 //                        Toast.makeText(mContext, "Do something", Toast.LENGTH_SHORT).show();
-//                        showTabTargetsSequences2(view);
+//                        showTabTargetsSequences1(view);
 
                     }
                 });
@@ -407,7 +401,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 // 2
                 .targets(
                         TapTarget.forView(fab, "a", " desc")
-                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.85f).targetCircleColor(R.color.white)
+                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.96f).targetCircleColor(R.color.white)
                                 .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
                                 .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(true).cancelable(false)
                                 .tintTarget(true).transparentTarget(true).targetRadius(50)
@@ -427,7 +421,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                         Toast.makeText(mContext, "Finish", Toast.LENGTH_SHORT).show();
 //                        mActivity.onBackPressed();
 //                        mActivity.startActivity(new Intent(mActivity, AddExpenseActivity.class));
-                            fab.performClick();
+                        fab.performClick();
+                        SharedPrefManager.getInstance(mActivity).setNextRunTurn(Routines.KEY_TURN_TIME_HOME, Routines.SECOND_RUN);
 
                     }
 
