@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -86,7 +88,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
         //Tutorial - TabTargetView
         if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE_DIFF) == Routines.FIRST_RUN ){
-            showTabTargetsSequences1();
+            new Handler().postDelayed(this::showTabTargetsSequences1, 500);   // Delay 0.5 sec
         }
 
         // recView onClick
@@ -393,7 +395,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                                 .textTypeface(Typeface.SANS_SERIF)
                                 .dimColor(R.color.black)
                                 .drawShadow(true)
-                                .cancelable(true)
+                                .cancelable(false)
                                 .tintTarget(false)
                                 .transparentTarget(true)
                                 .targetRadius(60)
@@ -403,7 +405,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                 .listener(new TapTargetSequence.Listener() {
                     @Override
                     public void onSequenceFinish() {
-                        SharedPrefManager.getInstance(mActivity).setNextRunTurn(Routines.KEY_TURN_TIME_EXPENSE, Routines.SECOND_RUN);
+                        SharedPrefManager.getInstance(mActivity).setNextRunTurn(Routines.KEY_TURN_TIME_EXPENSE_DIFF, Routines.SECOND_RUN);
                     }
 
                     @Override

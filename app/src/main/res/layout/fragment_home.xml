@@ -74,7 +74,6 @@
                 android:id="@+id/rv_partice_expenses"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/ss"
                 android:paddingBottom="@dimen/ss"
                 tools:listitem="@layout/sample_participant" />
 

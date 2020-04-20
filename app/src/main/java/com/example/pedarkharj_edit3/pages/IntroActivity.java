@@ -57,13 +57,11 @@ public class IntroActivity extends AppCompatActivity {
         // make status bar transparent
         changeStatusBarColor();
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
-                if (viewPager.getCurrentItem() < adapter.getCount()) {
-                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
-                }
-
+        button.setOnClickListener(view -> {
+            if (viewPager.getCurrentItem() < adapter.getCount()) {
+                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
             }
+
         });
 
         /**

@@ -76,7 +76,8 @@
     <color name="bk1">#FBFFDB</color>
     <color name="bk2">#F8FFF9</color>
     <color name="bk3">#EFFCED</color>
-    <color name="bk4">#FBFDEE</color>
+<!--    <color name="bk4">#FBFDEE</color>-->
+    <color name="bk4">#f3fdf2</color>
     <color name="bk5">#CDE9BA</color>
 
     <color name="back_groung_lime">#DDFFDA</color>

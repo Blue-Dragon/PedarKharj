@@ -2,6 +2,7 @@ package com.example.pedarkharj_edit3.classes;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -28,6 +29,7 @@ import java.util.List;
 
 public class BuyerDialog extends Dialog {
 
+    private static Activity activity;
     BuyerDialog buyerDialog = this;
     private Activity mActivity;
     List<Participant> mParticipants;
@@ -41,18 +43,35 @@ public class BuyerDialog extends Dialog {
     TextView title;
 
 
+
+
     public BuyerDialog(Activity mActivity, Event event) {
         super(mActivity);
         this.mActivity = mActivity;
         this.event =event;
+        setContext(mActivity);
     }
 
     public BuyerDialog(Activity mActivity, Event event, int layoutId) {
         super(mActivity);
-        this.mActivity = mActivity;
         this.event =event;
         this.layoutId = layoutId;
+        this.mActivity = mActivity;
+        setContext(mActivity);
     }
+
+
+
+    //Default Constructor
+    public static void setContext(Activity activity1) {
+        activity = activity1;
+    }
+
+    public BuyerDialog() {
+        super(activity);
+    }
+
+    /******************************/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

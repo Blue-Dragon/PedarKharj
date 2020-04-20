@@ -82,9 +82,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
 
         //Tutorial
         if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_HOME) == Routines.FIRST_RUN ){
-            // Delay 1.5 sec
-            new Handler().postDelayed(() -> showTabTargetsSequences2(view), 1500);   //5 seconds
-//            showTabTargetsSequences2(view);
+            new Handler().postDelayed(() -> showTabTargetsSequences2(view), 1500);   // Delay 1.5 sec
         }
 
         // RecView
@@ -381,8 +379,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                         .tintTarget(true)                   // Whether to tint the target view's color
                         .transparentTarget(true)           // Specify whether the target is transparent (displays the content underneath)
 //                        .icon(getResources().getDrawable(R.drawable.logo))                     // Specify a custom drawable to draw as the target
-                        .targetRadius(60).
-                        cancelable(true),                  // Specify the target radius (in dp)
+                        .targetRadius(60), // Specify the target radius (in dp)
+
                 new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
                     @Override
                     public void onTargetClick(TapTargetView view) {

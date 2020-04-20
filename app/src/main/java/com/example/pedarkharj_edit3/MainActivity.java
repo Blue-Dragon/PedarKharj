@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity  {
             finish();
         }
 
-        //-------------------------     Fragments   -------------------------- //
+        //------------------------z-     Fragments   -------------------------- //
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 

@@ -169,7 +169,8 @@
         <item name="android:layout_height">48dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layoutDirection">ltr</item>
-        <item name="android:layout_marginBottom">@dimen/s_m</item>
+        <item name="android:layout_marginTop">@dimen/ss_s</item>
+        <item name="android:layout_marginBottom">@dimen/ss_s</item>
         <item name="android:layout_marginRight">@dimen/s_m</item>
         <item name="android:layout_marginLeft">@dimen/s_m</item>
 

@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -132,12 +134,12 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         setOnTouchListener();
 
         //Tutorial - TabTargetView
-//        if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.FIRST_RUN ){
-            showTabTargetsSequences1();
+        if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.FIRST_RUN ){
+            new Handler().postDelayed(this::showTabTargetsSequences1, 500);   // Delay 0.5 sec
 
-//        } else if (SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.SECOND_RUN){
-//            showTabTargetsSequences2();
-//        }
+        } else if (SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.SECOND_RUN){
+            new Handler().postDelayed(this::showTabTargetsSequences2, 500);   // Delay 0.5 sec
+        }
 
 
         //
@@ -776,7 +778,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                                 .textTypeface(Typeface.SANS_SERIF)
                                 .dimColor(R.color.black)
                                 .drawShadow(true)
-                                .cancelable(true)
+                                .cancelable(false)
                                 .tintTarget(false)
                                 .transparentTarget(true)
                                 .targetRadius(60),
@@ -793,7 +795,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                                 .textTypeface(Typeface.SANS_SERIF)
                                 .dimColor(R.color.black)
                                 .drawShadow(false).
-                                cancelable(true)
+                                cancelable(false)
                                 .tintTarget(false)
                                 .transparentTarget(true)
                                 .targetRadius(115)
@@ -841,7 +843,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                                 .dimColor(R.color.black)
                                 .targetRadius(60)
                                 .drawShadow(true)
-                                .cancelable(true)
+                                .cancelable(false)
                                 .tintTarget(true)
                                 .transparentTarget(true)
                 )

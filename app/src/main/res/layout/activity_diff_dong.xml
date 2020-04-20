@@ -74,7 +74,7 @@
                 android:id="@+id/diff_dong_recView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
+                android:paddingTop="1dp"
                 android:paddingBottom="56dp"
                 tools:listitem="@layout/sample_diff_dong__dong_mode" />
 
