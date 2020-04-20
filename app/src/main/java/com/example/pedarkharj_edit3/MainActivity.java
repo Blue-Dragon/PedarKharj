@@ -38,11 +38,11 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        startActivity(new Intent(mContext, IntroSliderActivity.class));
         isFirstTime = SharedPrefManager.getInstance(mContext).getFirstTimeRun();
         if (isFirstTime){
             startActivity(new Intent(mContext, IntroActivity.class));
             SharedPrefManager.getInstance(mContext).isFirstTimeRun(false);
+            finish();
         }
 
         //-------------------------     Fragments   -------------------------- //

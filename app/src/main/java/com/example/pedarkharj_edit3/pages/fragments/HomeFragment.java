@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,8 +82,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
 
         //Tutorial
         if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_HOME) == Routines.FIRST_RUN ){
-            //        showTabTargetView(view);
-            showTabTargetsSequences2(view);
+            // Delay 1.5 sec
+            new Handler().postDelayed(() -> showTabTargetsSequences2(view), 1500);   //5 seconds
+//            showTabTargetsSequences2(view);
         }
 
         // RecView

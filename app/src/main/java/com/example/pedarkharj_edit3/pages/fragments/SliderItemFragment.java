@@ -34,14 +34,19 @@ public class SliderItemFragment extends Fragment {
   @StringRes
   private static final int[] PAGE_IMAGE =
       new int[] {
-          R.drawable.ic_discover, R.drawable.ic_deals, R.drawable.ic_offers, R.drawable.ic_reward
+            R.drawable.ic_p1,
+            R.drawable.ic_p2,
+            R.drawable.ic_p3,
+            R.drawable.ic_p4
       };
 
   // prepare all background images arrays
   @StringRes
   private static final int[] BG_IMAGE = new int[] {
-      R.drawable.ic_bg_red, R.drawable.ic_bg_blue, R.drawable.ic_bg_green,
-      R.drawable.ic_bg_purple
+          R.drawable.ic_bg_green,
+          R.drawable.ic_bg_blue,
+          R.drawable.ic_bg_violet,
+          R.drawable.ic_bg_red
   };
 
   private int position;

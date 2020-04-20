@@ -26,23 +26,29 @@
       android:layout_height="wrap_content"
       android:layout_marginTop="64dp"
       android:text="Discover"
-      android:textColor="@color/colorWhite"
-      android:textSize="22sp"
+      android:textColor="@color/bk1"
+      android:textSize="24sp"
       android:textStyle="bold"
+      android:fontFamily="@font/b_koodak"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/imageView"
       />
+
   <TextView
       android:id="@+id/textView2"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="8dp"
+      android:layout_marginTop="@dimen/s_m"
+      android:gravity="center_horizontal"
+      android:lineSpacingExtra="5dp"
+      android:paddingLeft="@dimen/l"
+      android:paddingRight="@dimen/l"
       android:text="Look for things around you"
-      android:textColor="@color/colorWhite"
+      android:textColor="@color/bk1"
       android:textSize="18sp"
+      android:fontFamily="@font/b_nazanin"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/textView"
-      />
+      app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

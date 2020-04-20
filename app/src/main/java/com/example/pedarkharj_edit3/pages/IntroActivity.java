@@ -1,5 +1,7 @@
 package com.example.pedarkharj_edit3.pages;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,12 +13,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
+import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.SliderPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class IntroActivity extends AppCompatActivity {
 
+    private Activity mActivity = this;
     private ViewPager viewPager;
     private Button button;
     private SliderPagerAdapter adapter;
@@ -74,7 +79,13 @@ public class IntroActivity extends AppCompatActivity {
             @Override public void onPageSelected(int position) {
                 if (position == adapter.getCount() - 1) {
                     button.setText(R.string.get_started);
-                    button.setOnClickListener(item  -> finish()) ;
+                    button.setOnClickListener(item  ->{
+                        MainActivity.navPosition = Routines.HOME;
+                        finish();
+                        startActivity(new Intent(mActivity, MainActivity.class));
+//                        mActivity.overridePendingTransition(0, 0);
+
+                    });
                 } else {
                     button.setText(R.string.next);
                 }
