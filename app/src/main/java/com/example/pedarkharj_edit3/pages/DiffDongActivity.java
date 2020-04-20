@@ -3,8 +3,14 @@ package com.example.pedarkharj_edit3.pages;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
+import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -78,6 +84,11 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         onClicks();
 
 
+        //Tutorial - TabTargetView
+        if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE_DIFF) == Routines.FIRST_RUN ){
+            showTabTargetsSequences1();
+        }
+
         // recView onClick
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
@@ -138,7 +149,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                 else {
                     //in Amount Mode
                     editText.addTextChangedListener(new TextWatcher() {
-                        int cur;
+                        float cur;
 
                         @Override
                         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -151,7 +162,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                         @Override
                         public void afterTextChanged(Editable editable) {
 //                            int countedExpenses = 0;
-                            cur = !editable.toString().equals("") ? Integer.valueOf(editable.toString()) : 0 ;
+                            cur = !editable.toString().equals("") ? Float.valueOf(editable.toString()) : 0 ;
 
                             Log.i("fuck016",  "expense: " + expense);
 
@@ -358,6 +369,56 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
             float theRest = Routines.getRoundFloat(expense - countedExpenses);
             tvR2.setText(Routines.getRoundFloatString(theRest));
         }
+    }
+
+
+    /**
+     * first time tutorial (tapTarget)
+     */
+    public void showTabTargetsSequences1() {
+// 1
+
+        new TapTargetSequence(mActivity)
+                // 2
+                .targets(
+
+                        TapTarget.forView(spinner, getString(R.string.diffDongSpinner_title), getString(R.string.diffDongSpinner_description))
+                                .outerCircleColor(R.color.colorPrimaryDark)
+                                .outerCircleAlpha(Routines.tapAlpha)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(Routines.tapTitleSize)
+                                .titleTextColor(R.color.white)
+                                .descriptionTextSize(Routines.tapDescSize)
+                                .descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .dimColor(R.color.black)
+                                .drawShadow(true)
+                                .cancelable(true)
+                                .tintTarget(false)
+                                .transparentTarget(true)
+                                .targetRadius(60)
+
+                )
+
+                .listener(new TapTargetSequence.Listener() {
+                    @Override
+                    public void onSequenceFinish() {
+                        SharedPrefManager.getInstance(mActivity).setNextRunTurn(Routines.KEY_TURN_TIME_EXPENSE, Routines.SECOND_RUN);
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+                    }
+
+                })
+
+                // 6
+                .start();
+
     }
 
 }

@@ -86,7 +86,6 @@ public class BuyerDialog extends Dialog {
                     Participant participant = mParticipants.get(position);
                     Intent intent =  new Intent(mActivity, AddExpenseActivity.class);
                     intent.putExtra(Routines.PARTICIPANT_INFO, participant.getId());
-//                    mActivity.finish();
                     mActivity.startActivity(intent);
 //                mActivity.finish();
                 }

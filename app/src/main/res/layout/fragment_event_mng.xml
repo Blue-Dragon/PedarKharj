@@ -47,6 +47,7 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/m_toolbar"
@@ -81,9 +82,18 @@
         </RelativeLayout>
     </ScrollView>
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="95dp"
+        android:layout_height="139dp"
+        android:layout_alignTop="@id/scrollView"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="28dp" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         style="@style/fab_style"
         app:srcCompat="@drawable/ic_add_event_2" />
+
 
 </RelativeLayout>

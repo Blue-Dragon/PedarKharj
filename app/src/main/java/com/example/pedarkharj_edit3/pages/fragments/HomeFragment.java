@@ -224,6 +224,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
     private void showBuyerDialog(Event curEvent) {
         BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent);
         Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+
+        if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_HOME) == Routines.FIRST_RUN ){
+            buyerDialog.setCancelable(false);
+        }
         buyerDialog.show();
     }
 
@@ -400,11 +404,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         new TapTargetSequence(mActivity)
                 // 2
                 .targets(
-                        TapTarget.forView(fab, "a", " desc")
-                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.96f).targetCircleColor(R.color.white)
-                                .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
-                                .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(true).cancelable(false)
-                                .tintTarget(true).transparentTarget(true).targetRadius(50)
+                        TapTarget.forView(fab, getString(R.string.addExpenseFab_title), getString(R.string.addExpenseFab_description))
+                                .outerCircleColor(R.color.colorPrimaryDark)
+                                .outerCircleAlpha(Routines.tapAlpha)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(Routines.tapTitleSize)
+                                .titleTextColor(R.color.white)
+                                .descriptionTextSize(Routines.tapDescSize)
+                                .descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .dimColor(R.color.black)
+                                .drawShadow(true)
+                                .cancelable(false)
+                                .tintTarget(true)
+                                .transparentTarget(true)
+                                .targetRadius(50)
 
 //                        TapTarget.forView(spinnerTv, "a", " desc")
 //                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.96f).targetCircleColor(R.color.white)
@@ -418,7 +432,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 .listener(new TapTargetSequence.Listener() {
                     @Override
                     public void onSequenceFinish() {
-                        Toast.makeText(mContext, "Finish", Toast.LENGTH_SHORT).show();
 //                        mActivity.onBackPressed();
 //                        mActivity.startActivity(new Intent(mActivity, AddExpenseActivity.class));
                         fab.performClick();

@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.fragment.app.Fragment;
@@ -60,6 +64,7 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
     ImageView backBtn;
     Button getBtn;
     ProgressBar progressBar;
+    View view;
 
 
     @Nullable
@@ -74,6 +79,11 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         fab.setOnClickListener(view0 -> {
             startActivity(new Intent(getActivity(), AddContactActivity.class));
         });
+
+        //Tutorial - TabTargetView
+//        if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_CONTACTS) == Routines.FIRST_RUN ){
+            showTabTargetsSequences1();
+//        }
 
         // -------  recyclerView  -------//
         setRecView();
@@ -140,6 +150,7 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         recyclerView = mView.findViewById(R.id.recycler_view);
         getBtn = mView.findViewById(R.id.get);
         fab = mView.findViewById(R.id.fab);
+        view  = mView.findViewById(R.id.view);
 
         db = new DatabaseHelper(mContext);
 //        pressedContact = null;
@@ -345,6 +356,75 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
                    return super.onContextItemSelected(item);
 
         }
+
+    }
+
+
+    /**
+     * first time tutorial (tapTarget)
+     */
+    public void showTabTargetsSequences1() {
+// 1
+
+        new TapTargetSequence(mActivity)
+                // 2
+                .targets(
+
+                        TapTarget.forView(fab, getString(R.string.addContactFab_title), getString(R.string.addContact_description))
+                                .outerCircleColor(R.color.colorPrimaryDark)
+                                .outerCircleAlpha(Routines.tapAlpha)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(Routines.tapTitleSize)
+                                .titleTextColor(R.color.white)
+                                .descriptionTextSize(Routines.tapDescSize)
+                                .descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .dimColor(R.color.black).
+                                drawShadow(true)
+                                .cancelable(true)
+                                .tintTarget(false)
+                                .transparentTarget(true)
+                                .targetRadius(50),
+
+                        TapTarget.forView(view, getString(R.string.contactHold_title), getString(R.string.contactHold_description))
+                                .outerCircleColor(R.color.colorPrimaryDark)
+                                .outerCircleAlpha(Routines.tapAlpha)
+                                .targetCircleColor(R.color.black)
+                                .titleTextSize(Routines.tapTitleSize)
+                                .titleTextColor(R.color.white)
+                                .descriptionTextSize(Routines.tapDescSize)
+                                .descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .dimColor(R.color.black)
+                                .drawShadow(true)
+                                .cancelable(true)
+                                .tintTarget(false)
+                                .transparentTarget(true)
+                                .targetRadius(50)
+
+
+                )
+
+                .listener(new TapTargetSequence.Listener() {
+                    @Override
+                    public void onSequenceFinish() {
+                        SharedPrefManager.getInstance(mActivity).setNextRunTurn(Routines.KEY_TURN_TIME_EXPENSE, Routines.SECOND_RUN);
+
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+
+                    }
+                })
+
+                // 6
+                .start();
 
     }
 

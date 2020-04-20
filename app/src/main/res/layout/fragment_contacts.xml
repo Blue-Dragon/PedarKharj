@@ -57,6 +57,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/m_toolbar"
@@ -83,6 +84,14 @@
 
         </RelativeLayout>
     </ScrollView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="89dp"
+        android:layout_height="52dp"
+        android:layout_alignTop="@id/scrollView"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="4dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

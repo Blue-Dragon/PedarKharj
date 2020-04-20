@@ -132,12 +132,12 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         setOnTouchListener();
 
         //Tutorial - TabTargetView
-        if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.FIRST_RUN ){
+//        if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.FIRST_RUN ){
             showTabTargetsSequences1();
 
-        } else if (SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.SECOND_RUN){
-            showTabTargetsSequences2();
-        }
+//        } else if (SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.SECOND_RUN){
+//            showTabTargetsSequences2();
+//        }
 
 
         //
@@ -338,7 +338,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 //        BuyerBtnTxt.setText(buyer.getName());
         //
         if (particId != 0)  {
-            dongEText.setHint("خب... " +buyer.getName() + " چی خریده؟");
+            dongEText.setHint("خب! " +buyer.getName() + " چی خریده؟");
             //if buyer has no pic, put a default pic
 //            Bitmap defPic = Routines.resizeBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile) ) ;
             Bitmap defPic = Routines.convertBitmapThumbnail1x1(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile) ) ;
@@ -765,18 +765,38 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                 // 2
                 .targets(
 
-                        TapTarget.forView(recyclerView, "a", " desc")
-                                .outerCircleColor(R.color.colorAccent).outerCircleAlpha(0.86f).targetCircleColor(R.color.white)
-                                .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
-                                .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(true).cancelable(true)
-                                .tintTarget(false).transparentTarget(true).targetRadius(60),
+                        TapTarget.forView(recyclerView, getString(R.string.addExpenseRecView_title), getString(R.string.addExpenseRecView_description))
+                                .outerCircleColor(R.color.colorAccentDark)
+                                .outerCircleAlpha(Routines.tapAlpha)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(Routines.tapTitleSize)
+                                .titleTextColor(R.color.primaryTextColor)
+                                .descriptionTextSize(Routines.tapDescSize)
+                                .descriptionTextColor(R.color.primaryTextColor)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .dimColor(R.color.black)
+                                .drawShadow(true)
+                                .cancelable(true)
+                                .tintTarget(false)
+                                .transparentTarget(true)
+                                .targetRadius(60),
 
 
-                        TapTarget.forView(calculatorAboveBox, "a", " desc")
-                                .outerCircleColor(R.color.black).outerCircleAlpha(0.5f).targetCircleColor(R.color.black)
-                                .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
-                                .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(false).cancelable(true)
-                                .tintTarget(false).transparentTarget(true).targetRadius(115)
+                        TapTarget.forView(calculatorAboveBox, getString(R.string.addExpensePrice_title), getString(R.string.addExpensePrice_description))
+                                .outerCircleColor(R.color.colorPrimaryDark)
+                                .outerCircleAlpha(0.96f)
+                                .targetCircleColor(R.color.black)
+                                .titleTextSize(Routines.tapTitleSize)
+                                .titleTextColor(R.color.white)
+                                .descriptionTextSize(Routines.tapDescSize)
+                                .descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .dimColor(R.color.black)
+                                .drawShadow(false).
+                                cancelable(true)
+                                .tintTarget(false)
+                                .transparentTarget(true)
+                                .targetRadius(115)
                 )
 
                 .listener(new TapTargetSequence.Listener() {
@@ -809,11 +829,21 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                 // 2
                 .targets(
 
-                        TapTarget.forView(diffDong, "a", " desc")
-                                .outerCircleColor(R.color.colorPrimaryDark).outerCircleAlpha(0.96f).targetCircleColor(R.color.white)
-                                .titleTextSize(20).titleTextColor(R.color.white).descriptionTextSize(12).descriptionTextColor(R.color.bk1)
-                                .textTypeface(Typeface.SANS_SERIF).dimColor(R.color.black).drawShadow(true).cancelable(true)
-                                .tintTarget(true).transparentTarget(true).targetRadius(60)
+                        TapTarget.forView(diffDong, getString(R.string.diffDongFab_title), getString(R.string.diffDongFab_description))
+                                .outerCircleColor(R.color.colorPrimaryDark)
+                                .outerCircleAlpha(Routines.tapAlpha)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(Routines.tapTitleSize)
+                                .titleTextColor(R.color.white)
+                                .descriptionTextSize(Routines.tapDescSize)
+                                .descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .dimColor(R.color.black)
+                                .targetRadius(60)
+                                .drawShadow(true)
+                                .cancelable(true)
+                                .tintTarget(true)
+                                .transparentTarget(true)
                 )
 
                 .listener(new TapTargetSequence.Listener() {

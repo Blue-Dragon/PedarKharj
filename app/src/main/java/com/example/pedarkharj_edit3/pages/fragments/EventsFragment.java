@@ -3,9 +3,13 @@ package com.example.pedarkharj_edit3.pages.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
+
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.ContextCompat;
@@ -44,6 +48,8 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
     final public static int INTENT_CODE = 1;
     final public static String INTENT_MASSEGE = "NEW_NAME";
 
+    List<Event> mEvents;
+    List<Event> selectionList;
     Context mContext ;
     Activity mActivity ;
     MainActivity mainActivity = new MainActivity();
@@ -55,11 +61,9 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
     Toolbar toolbar;
     View mView;
     ImageView backBtn;
+    View view;
     //Action mode
     TextView counter_text_view, title;
-    List<Event> mEvents;
-    List<Event> selectionList;
-
     //    boolean is_select_one = false;
 
     @Nullable
@@ -72,6 +76,10 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         backBtn.setOnClickListener(item -> mActivity.onBackPressed());
         setHasOptionsMenu(true); //for menu items in fragment (edit & delete)
 
+        //Tutorial - TabTargetView
+//        if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EVENTS) == Routines.FIRST_RUN ){
+            showTabTargetsSequences1();
+//        }
 
 
         setRecView(); //show Events
@@ -110,7 +118,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         }));
 
         //-------------------------     Floating Btn    --------------------------//
-        fab = mView.findViewById(R.id.fab);
+
         fab.setOnClickListener(view0 -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             startActivity(new Intent(mContext, AddEventParticesActivity.class));
@@ -147,6 +155,8 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
 
         backBtn = mView.findViewById(R.id.back_btn);
         recyclerView = mView.findViewById(R.id.rv);
+        fab = mView.findViewById(R.id.fab);
+        view  = mView.findViewById(R.id.view);
     }
 
     //-------------------------     RecyclerView    --------------------------//
@@ -279,6 +289,75 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
 //        }
 //
 //    }
+
+    /**
+     * first time tutorial (tapTarget)
+     */
+    private void showTabTargetsSequences1() {
+// 1
+
+        new TapTargetSequence(mActivity)
+                // 2
+                .targets(
+
+                        TapTarget.forView(fab, getString(R.string.addEventFab_title), getString(R.string.addEventFab_description))
+                                .outerCircleColor(R.color.colorPrimaryDark)
+                                .outerCircleAlpha(Routines.tapAlpha)
+                                .targetCircleColor(R.color.white)
+                                .titleTextSize(Routines.tapTitleSize)
+                                .titleTextColor(R.color.white)
+                                .descriptionTextSize(Routines.tapDescSize)
+                                .descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .dimColor(R.color.black)
+                                .drawShadow(true)
+                                .cancelable(true)
+                                .tintTarget(false)
+                                .transparentTarget(true)
+                                .targetRadius(50),
+
+                        TapTarget.forView(view, getString(R.string.eventHold_title),  getString(R.string.eventHold_description) )
+                                .outerCircleColor(R.color.colorPrimaryDark)
+                                .outerCircleAlpha(Routines.tapAlpha)
+                                .targetCircleColor(R.color.black)
+                                .titleTextSize(Routines.tapTitleSize)
+                                .titleTextColor(R.color.white)
+                                .descriptionTextSize(Routines.tapDescSize)
+                                .descriptionTextColor(R.color.bk1)
+                                .textTypeface(Typeface.SANS_SERIF)
+                                .dimColor(R.color.black)
+                                .drawShadow(true)
+                                .cancelable(true)
+                                .tintTarget(false)
+                                .transparentTarget(true)
+                                .targetRadius(120)
+
+
+                )
+
+                .listener(new TapTargetSequence.Listener() {
+                    @Override
+                    public void onSequenceFinish() {
+                        SharedPrefManager.getInstance(mActivity).setNextRunTurn(Routines.KEY_TURN_TIME_EXPENSE, Routines.SECOND_RUN);
+
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+
+                    }
+                })
+
+                // 6
+                .start();
+
+    }
+
 
     @Override
     public void onMyBackPressed() {

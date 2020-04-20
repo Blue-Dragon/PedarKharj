@@ -13,14 +13,33 @@
     <string name="next">بعدی</string>
     <string name="skip">رد کردن</string>
     <string name="enter">ورود</string>
-    <string name="discover">Discover</string>
-    <string name="shop">Shop</string>
-    <string name="offers">Offers</string>
-    <string name="rewards">Rewards</string>
-    <string name="discover_text">Look for things around you</string>
-    <string name="shop_text"><![CDATA[Get the best deals & Coupons]]></string>
-    <string name="offers_text">Find great offers while you discover</string>
-    <string name="rewards_text"><![CDATA[Free recharge coupons & more]]></string>
+    <string name="discover">پدر خرج</string>
+    <string name="shop">حساب و کتاب آسان</string>
+    <string name="offers">رویداد مشخص کن</string>
+    <string name="rewards">خرج ها رو وارد کن</string>
+    <string name="discover_text">دیگه به مادر خرج نیازی نداریم!</string>
+    <string name="shop_text">دیگه فرقی نداره توی یک دورهمی یا سفر برای هر خرج کی میخواد حساب کنه. با پدرخرج به راحتی دونگ های همه مشخص میشه. </string>
+    <string name="offers_text">هر دورهمی یا رویدادی که خرج متفاوت با افراد متفاوت وجود داره رو ثبت کن.</string>
+    <string name="rewards_text">شما خرج رو بنویس... تقستیم دونگش با من!</string>
     <string name="get_started">شروع کنیم</string>
+
+    <string name="addExpenseFab_description">هر خرجی که برای خودت و بقیه انجام دادی رو ثبت کن.</string>
+    <string name="addExpenseFab_title">خرج جدید</string>
+    <string name="diffDongFab_title">دونگ های متفاوت</string>
+    <string name="diffDongFab_description">اگه خرج همه ی افراد مثل هم نیست از اینجا می تونید به صورت دستی تقسیم کنید.</string>
+    <string name="addEventFab_title">رویداد جدید</string>
+    <string name="addEventFab_description">ثبت یک دورهمی یا سفر جدید با افراد  متفاوت و خرج های جدید.</string>
+    <string name="diffDongSpinner_title">مقدار/  تعداد دونگ</string>
+    <string name="diffDongSpinner_description">تعداد دونگ: وقتی یک نفر از همون خرج تعداد بیشتری داشته \n\n مقدار دونگ: اگه یک نفر کلا خرج متفاوتی داشته</string>
+    <string name="addContactFab_title">مخاطب جدید</string>
+    <string name="addContact_description">افزودن مخاطب جدید</string>
+    <string name="contactHold_title">ویرایش/ حذف</string>
+    <string name="contactHold_description">اگه میخواین  یک مخاطب رو ویرایش یا حذف کنید کافیه انگشت رو روی اون نگه دارید</string>
+    <string name="eventHold_title">ویرایش/ حذف</string>
+    <string name="eventHold_description">اگه میخواین  یک رویداد رو ویرایش یا حذف کنید کافیه انگشت رو روی اون نگه دارید</string>
+    <string name="addExpenseRecView_title">شرکت کننده ها</string>
+    <string name="addExpenseRecView_description">اینجا افرادی که باید دونگ بدن رو مشخص می کنیم</string>
+    <string name="addExpensePrice_title">مشخصات خرج</string>
+    <string name="addExpensePrice_description">قیمت، عنوان خرج و زمان خرج رو از اینجا میتونید تعیین کنید</string>
 
 </resources>

@@ -63,9 +63,12 @@ public class Routines  {
     public final static short HOME = 0;
     public final static short EVENTS = 1;
     public final static short CONTACTS = 2;
-    // -------------  other stuff
+    // -----------------  other stuff  ------------------//
     public static final String PARTICIPANT_INFO = "PARTICIPANT_INFO";
     public static final String EVENT_TEMP_NAME = "EVENT_TEMP";
+    public static final int tapTitleSize = 20;
+    public static final int tapDescSize = 16;
+    public static final float tapAlpha = 0.96f;
     //SharedPref
     public static final String KEY_TURN_TIME_HOME = "KEY_TURN_TIME_HOME";
     public static final String KEY_TURN_TIME_CONTACTS = "KEY_TURN_TIME_CONTACTS";
