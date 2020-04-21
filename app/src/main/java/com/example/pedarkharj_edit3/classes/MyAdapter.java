@@ -23,6 +23,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,7 +35,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
     private List<Contact> contactList;
     private Context mContext;
     private Activity mActivity;
-    private  Participant selectedPartic;
+    private Participant selectedPartic;
     private Expense mExpense;
 
     private short selectMode = 3;
@@ -46,6 +47,8 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
     public boolean isAmountModeDong() {
         return amountModeDong;
     }
+    private boolean addEventParticeMode = false;
+
     private Drawable drawable; //EventMng
     private boolean isFloatingActionBar;
 
@@ -129,6 +132,10 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
     public void setExpense(Expense mExpense) {
         this.mExpense = mExpense;
     }
+    //addEventPartice
+    public void setIsAddEventParticeMode(boolean addEventParticeMode) {
+        this.addEventParticeMode = addEventParticeMode;
+    }
 
     /**
      * it handles the contact delete
@@ -198,7 +205,6 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
             db0.closeDB();
         }
-
 
 
         /*
@@ -311,7 +317,12 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
                 holder.resultTxt.setText(Routines.getRoundFloatString(debt));
             }
 
-
+            //addEventPartice
+            if (addEventParticeMode && Routines.particSelectedIds.size() > 0){
+//                if (Routines.particSelectedIds.contains((int) participant.getContact().getId()))
+                Log.d("Fuck", Routines.particSelectedIds.size() + "");
+//                holder.particRv.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selected_green));
+            }
 
             //addExpenseActivity_ amountMode
             if (defaultDongAmount > 0 && holder.dongEtxtAmount != null)
@@ -354,13 +365,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.base_layout:
-//                if (mContext != null)
-//                    Toast.makeText(mContext, " max CheckImg: " + maxCheckImg, Toast.LENGTH_SHORT).show();
-                break;
 
-        }
     }
 
 

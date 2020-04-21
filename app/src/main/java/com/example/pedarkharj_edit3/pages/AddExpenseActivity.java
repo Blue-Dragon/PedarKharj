@@ -505,7 +505,10 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                     //now we have a string
                 else  {
                     //check price
-                    if (Float.valueOf(s) <= 0){
+                    if (Float.valueOf(s) == 0){
+                        Toast.makeText(mContext, "قیمت باید بیشتر از صفر باشه!", Toast.LENGTH_SHORT).show();
+                    }
+                    else if (Float.valueOf(s) < 0){
                         Toast.makeText(mContext, "قیمت اشتباه!", Toast.LENGTH_SHORT).show();
                     }else {
                         //check participants

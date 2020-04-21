@@ -31,6 +31,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 
@@ -87,6 +88,7 @@ public class Routines  {
     //Not Final
     public static boolean is_in_action_mode;
     public static int counter, selectedItemId; //edit n' delete
+    public static List<Integer> particSelectedIds = new ArrayList<>();
 
 
     //    Context mContext;
@@ -347,5 +349,13 @@ public class Routines  {
         f =  Float.valueOf(format.format(f));
         s =  format.format(f);
         return s;
+    }
+
+    public static List<Event> deleteTempEvents(Activity mActivity, List<Event> events){
+        DatabaseHelper db = new DatabaseHelper(mActivity);
+        for (Event event : events){
+            if (event.getEventName().equals(Routines.EVENT_TEMP_NAME)) db.deleteEvent(event, true);
+        }
+        return db.getAllEvents();
     }
 }

@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -29,8 +27,6 @@ import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
-import com.takusemba.spotlight.SimpleTarget;
-import com.takusemba.spotlight.Spotlight;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,9 +58,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         onClicks();
 //        showSpotlightIntro();
 
-
         //-----------     RecView    -----------//
-
         setRecView(); //show contacts (allContactsTo_participants) and init selectedPartices
         setSelectedRecView(selectedPartices); //setting selectedPartice if we are in edit mode
 
@@ -76,12 +70,13 @@ public class AddEventParticesActivity extends AppCompatActivity {
                 Participant participant = allContactsTo_participants.get(position);
 
                 //checking if already selected
-                if (checkIfAlreadySelected(participant)){
+
+                if (ids.contains((int) participant.getContact().getId()) ){
                     removePartice(view, participant);
                 }else
                     addPartice(view, participant);
 
-
+                initSelectedParticeIds();
                 Log.d("recOnClick", participant.getName());
             }
 
@@ -113,13 +108,22 @@ public class AddEventParticesActivity extends AppCompatActivity {
             if (!edit_mode){
                 //get saved partices in tempEvent
                 Routines.addParticesToTempEvent(selectedPartices, db);
+            }else {
+
+                db.deleteAllParticeUnderEvent(existedEvent);
+
+                List<Participant> participants = db.getAllParticeUnderEvent(existedEvent);
+                for (Participant participant: participants){
+                    Log.d("eventParticipants", participant.getId()+ " / "+ participant.getContact().getId() + ": "+ participant.getName());
+                }
+                db.createAllParticesUnderEvent(selectedPartices, existedEvent);
             }
 
-            int[] ids = new int[selectedPartices.size()];
+            int[] myIds = new int[selectedPartices.size()];
             int i = 0;
             for (Participant participant: selectedPartices){
                 Log.d("Fuck06", "i: "+ i );
-                ids[i++] = participant.getId();
+                myIds[i++] = participant.getId();
             }
 
             if (selectedPartices.size() > 0){
@@ -131,7 +135,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
                     eventId = curEventId;
                     intent.putExtra(Routines.EDIT_MODE, Routines.EDIT_MODE_TRUE);
                 }
-                intent.putExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT, ids);
+                intent.putExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT, myIds);
                 intent.putExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, eventId);
                 startActivity(intent);
             }else {
@@ -139,7 +143,6 @@ public class AddEventParticesActivity extends AppCompatActivity {
             }
 //
         });
-
         //
         db.closeDB();
     }
@@ -162,6 +165,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         selectedPartices = new ArrayList<>();
         allContactsTo_participants = Routines.contactToPartic(contacts);
         ids = new ArrayList<>();
+        Routines.particSelectedIds = initSelectedParticeIds(); //init both `ids` and `Routines.particSelectedIds`
 
         /*
          * init selectedPartice if we are in edit mode
@@ -181,11 +185,11 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
     //-------------------------     RecyclerView    --------------------------//
     private void setRecView() {
-        /**
+        /*
          *  All contacts
          */
 
-        /**
+        /*
          * todo: set Contact instead of Partice... :
          * I'm forming Contacts as Participants, so I won't need to create another
          * adaptor or even edit that. change this shit later in order not to get fucked up!
@@ -215,6 +219,15 @@ public class AddEventParticesActivity extends AppCompatActivity {
         selected_recView.setLayoutManager(gridLayoutManager);
         //
         selectedAdaptor = new MyAdapter(mContext, R.layout.sample_contact, participants);
+
+        initSelectedParticeIds();
+        Log.d("Fuck0", ids.size() + "  ids");
+
+        if (edit_mode){
+            selectedAdaptor.setIsAddEventParticeMode(true);
+            Log.d("Fuck0", Routines.particSelectedIds.size() + "  screw u");
+
+        }
 //        recyclerView.smoothScrollToPosition( allContactsTo_participants.size() - 1 ); // focus on the End of the list
         selected_recView.setAdapter(selectedAdaptor);
 
@@ -226,7 +239,12 @@ public class AddEventParticesActivity extends AppCompatActivity {
 //        db.deletePartic(participant);
         selectedAdaptor.notifyDataSetChanged();
         //change color
+        removeColorSelected(view);
+    }
+
+    private void removeColorSelected(View view) {
         view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.transparent_white));
+
     }
 
     private void addPartice(View view, Participant participant) {
@@ -234,21 +252,38 @@ public class AddEventParticesActivity extends AppCompatActivity {
         if (edit_mode) db.createParticipantUnderEvent(participant, existedEvent);
         selectedAdaptor.notifyDataSetChanged();
         //change color
-        view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selected_green));
-
+        setColorSelected(view);
     }
 
-    private boolean checkIfAlreadySelected(Participant participant) {
+    private void setColorSelected(View view) {
+        view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selected_green));
+    }
+
+//    private boolean checkIfAlreadySelected(Participant participant) {
+//        //ids of all selected partices
+//        ids.clear();
+//        Routines.particSelectedIds.clear();
+//
+//        for (int i=0; i<selectedPartices.size(); i++){
+//            ids.add(i, (int) selectedPartices.get(i).getContact().getId());
+//            Routines.particSelectedIds.add(i, (int) selectedPartices.get(i).getContact().getId());
+//        }
+//        if (ids.size() == 0) return false;
+//
+//        return ids.contains((int) participant.getContact().getId());
+//    }
+
+    private List<Integer> initSelectedParticeIds() {
         //ids of all selected partices
         ids.clear();
+
         for (int i=0; i<selectedPartices.size(); i++){
             ids.add(i, (int) selectedPartices.get(i).getContact().getId());
         }
-        if (ids.size() == 0) return false;
 
-        return ids.contains(participant.getId());
+
+        return Routines.particSelectedIds = ids;
     }
-
 
     @Override
     public void onBackPressed() {
@@ -257,45 +292,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         finish();
     }
 
-    //----------------------    Spotlight       ------------------------//
-//    private void showSpotlightIntro() {
-//
-//        int[] location = new int[2];
-//        fab.getLocationOnScreen(location);
-//        int x = location[0];
-//        int y = location[1];
-//
-//
-//        SimpleTarget simpleTarget = new SimpleTarget.Builder(mActivity)
-////                .setPoint(fab, fab) // position of the Target. setPoint(Point point), setPoint(View view) will work too.
-//                .setPoint(x, y)
-//                .setRadius(80f) // radius of the Target
-//                .setTitle("the title") // title
-//                .setDescription("the description") // description
-//                .build();
-//
-//
-//
-//
-//        fab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override public void onGlobalLayout() {
-//                fab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//
-//                Spotlight.with(mActivity)
-//                        .setDuration(1) // duration of Spotlight emerging and disappearing in ms
-//                        .setAnimation(new DecelerateInterpolator(2f)) // animation of Spotlight
-//                        .setTargets(simpleTarget) // set targes. see below for more info
-//                        // callback when Spotlight starts
-//                        .setOnSpotlightStartedListener(() -> Toast.makeText(mContext, "spotlight is started", Toast.LENGTH_SHORT).show())
-//                        // callback when Spotlight ends
-//                        .setOnSpotlightEndedListener(() ->{
-//                            Toast.makeText(mContext, "spotlight is ended", Toast.LENGTH_SHORT).show();
-//                        })
-//                        .start(); // start Spotlight
-//            }
-//        });
-//
-//    }
+
 
 
 }

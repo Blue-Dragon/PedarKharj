@@ -163,7 +163,8 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
 
     //-------------------------     RecyclerView    --------------------------//
     private void setRecView() {
-        mEvents = db.getAllEvents();
+//        mEvents = db.getAllEvents();
+        mEvents = Routines.deleteTempEvents(mActivity, db.getAllEvents());
         Collections.reverse(mEvents);
 
         // Not letting TempEvents to be shown
@@ -242,26 +243,24 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         switch (item.getItemId()){
             case R.id.item_delete:
 
-                Toast.makeText(mContext, "Del", Toast.LENGTH_SHORT).show();
-
-                new AlertDialog.Builder(mContext)
-                        .setTitle("پاک کنم؟")
+//                Toast.makeText(mContext, "Del", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(mContext, R.style.AlertDialogDanger);
+                dialog.setTitle("پاک کنم؟")
                         .setMessage("این اطلاعات از دم نیست و نابود میشن هااا !")
-                        .setPositiveButton("پاک کن بره داداچ", (dialogInterface, i1) -> {
+                        .setPositiveButton("پاک کن بره داداش", (dialogInterface, i1) -> {
                             for (Event event : selectionList){
                                 db.deleteEvent(event, true);
 //                                Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
                                 if (event.getId() == HomeFragment.lastSeenEventId){
                                     SharedPrefManager.getInstance(mContext).clearDerfEvent();
-                                    Toast.makeText(mContext, "EventId : "+ event.getId() + "Deleted", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(mContext, "رویداد "+ event.getEventName() + " پاک شد", Toast.LENGTH_SHORT).show();
                                 }
                             }
-
                             restartPage(mActivity, Routines.EVENTS);
-
                         })
                         .setNegativeButton("نه، بی خیال!", (dialogInterface, i1) -> {})
                         .show();
+                        // -----------------------
                 break;
 
             case R.id.item_edit:

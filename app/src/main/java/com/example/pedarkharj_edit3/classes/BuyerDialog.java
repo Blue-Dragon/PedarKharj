@@ -130,19 +130,13 @@ public class BuyerDialog extends Dialog {
         int itemsInScreen = 4;
 
         if (layoutId > 0){
-            eventList = db.getAllEvents();
+            eventList = Routines.deleteTempEvents(mActivity, db.getAllEvents());
             Collections.reverse(eventList);
-
-            // Not letting TempEvents to be shown
-            List<Event> realEvents = new ArrayList<>();
-            for (Event event : eventList){
-                if (!event.getEventName().equals(Routines.EVENT_TEMP_NAME)) realEvents.add(event);
-            }
 
             itemsInScreen = 3;
             adapter = new MyAdapter(mActivity);
             adapter.setLayout(layoutId);
-            adapter.setEvents(realEvents);
+            adapter.setEvents(eventList);
         }else {
             //show partices of the Event
             mParticipants = db.getAllParticeUnderEvent(event);

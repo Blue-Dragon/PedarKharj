@@ -82,9 +82,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
 
         //Tutorial
         if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_HOME) == Routines.FIRST_RUN ){
-            new Handler().postDelayed(() -> showTabTargetsSequences2(view), 1500);   // Delay 1.5 sec
+            createDefEvent();
+            new Handler().postDelayed(() -> showTabTargetsSequences2(view), 1000);   // Delay 1 sec
         }
-
         // RecView
         setRecView(curEvent);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
@@ -113,13 +113,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 Log.d("recOnClick", participant.getResult());
             }
         }));
-
         // Floating Btn
         fab.setOnClickListener(view0 ->showBuyerDialog(curEvent));
-
         //MySpinner
         mySpinner.setOnClickListener(x -> showEventsDialog(curEvent));
-
         /*
          * TODO: hide the fucking fab while scrolling
          */
@@ -148,8 +145,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
 //        createDrawer();
 
         //Close db
-
-
         db.closeDB();
         return view;
     }
@@ -175,8 +170,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
             spinnerTv.setText(curEvent.getEventName());
         }
         else {
-            createDefEvent();
-            setCurEvent();
+            curEvent = null;
+//            createDefEvent();
+//            setCurEvent();
         }
     }
 
@@ -187,25 +183,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
 
     private void doInits(View view) {
         MainActivity.navPosition = Routines.HOME;
-
         mContext = getContext();
         mActivity = getActivity();
         MainActivity.navPosition = Routines.HOME;
-
         Toolbar toolbar = view.findViewById(R.id.m_toolbar);
         ((AppCompatActivity)mActivity).setSupportActionBar(toolbar);
-
         db = new DatabaseHelper(mContext);
-
-        events = db.getAllEvents(); //for spinner && def partices
+        /*
+            events (temps not mentioned
+         */
+        events = Routines.deleteTempEvents(mActivity, db.getAllEvents());
+//        events = db.getAllEvents(); //for spinner && def partices
         lastSeenEventId = SharedPrefManager.getInstance(mContext).getDefEventId();
         cardView = view.findViewById(R.id.details_card_layout);
         recyclerView = view.findViewById(R.id.rv_partice_expenses);
         mySpinner = view.findViewById(R.id.my_spinner);
         spinnerTv  = view.findViewById(R.id.spinner_tv);
-
         fab = view.findViewById(R.id.fab);
-
 
         //the rectangle above
         tvL1 = view.findViewById(R.id.tv_title_my_expense);
@@ -225,19 +219,23 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
     }
 
     private void showBuyerDialog(Event curEvent) {
-        BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent);
-        Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+        if (curEvent!= null){
+            BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent);
+            Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
 
-        if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_HOME) == Routines.FIRST_RUN ){
-            buyerDialog.setCancelable(false);
+            if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_HOME) == Routines.FIRST_RUN ){
+                buyerDialog.setCancelable(false);
+            }
+            buyerDialog.show();
         }
-        buyerDialog.show();
     }
 
     private void showEventsDialog(Event curEvent) {
-        BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent, R.layout.sample_event);
-        Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
-        buyerDialog.show();
+        if (curEvent != null){
+            BuyerDialog buyerDialog = new BuyerDialog(mActivity, curEvent, R.layout.sample_event);
+            Objects.requireNonNull(buyerDialog.getWindow()).setBackgroundDrawableResource(android.R.color.transparent);
+            buyerDialog.show();
+        }
     }
 
 
@@ -252,23 +250,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 break;
 
             default:
-                Toast.makeText(mContext, "Wrong item clicked!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "Wrong item clicked!", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void setRecView(Event curEvent) {
+        if (curEvent != null){
 
-        //show partices of the Event
-        mParticipants = db.getAllParticeUnderEvent(curEvent);
+            //show partices of the Event
+            mParticipants = db.getAllParticeUnderEvent(curEvent);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //
-        adaptor = new MyAdapter(mContext, R.layout.sample_participant, mParticipants);
-        recyclerView.setAdapter(adaptor);
+            //
+            adaptor = new MyAdapter(mContext, R.layout.sample_participant, mParticipants);
+            recyclerView.setAdapter(adaptor);
+        }
     }
 
     private void createDefEvent() {
@@ -305,58 +305,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
     }
 
     private void initRectangleAbove(Event event) {
-        List<Participant> participants = db.getAllParticeUnderEvent(event);
-        if (participants.size() > 0) {
-            float myExpenses = db.getParticTotalExpensePriceByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
-            float myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
+        if (curEvent != null){
+            List<Participant> participants = db.getAllParticeUnderEvent(event);
+            if (participants.size() > 0) {
+                float myExpenses = db.getParticTotalExpensePriceByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
+                float myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
 //            int allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
-            tvR2.setText(Routines.getRoundFloatString(myExpenses));
-            tvC2.setText(Routines.getRoundFloatString(myDebt));
-            tvL2.setText(Routines.getRoundFloatString(myExpenses - myDebt));
+                tvR2.setText(Routines.getRoundFloatString(myExpenses));
+                tvC2.setText(Routines.getRoundFloatString(myDebt));
+                tvL2.setText(Routines.getRoundFloatString(myExpenses - myDebt));
+            }
         }
+
     }
 
-//----------------------    Spotlight       ------------------------//
-//    private void showSpotlightIntro(View v) {
-//
-//        int[] location = new int[2];
-//        fab.getLocationOnScreen(location);
-//        int x = location[0];
-//        int y = location[1];
-//
-//
-//        SimpleTarget simpleTarget = new SimpleTarget.Builder(mActivity)
-////                .setPoint(fab, fab) // position of the Target. setPoint(Point point), setPoint(View view) will work too.
-//                .setPoint(x, y)
-//                .setRadius(80f) // radius of the Target
-//                .setTitle("the title") // title
-//                .setDescription("the description") // description
-//                .build();
-//
-//
-//
-//
-//        fab.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override public void onGlobalLayout() {
-//                fab.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//
-//                Spotlight.with(mActivity)
-//                        .setDuration(1) // duration of Spotlight emerging and disappearing in ms
-//                .setAnimation(new DecelerateInterpolator(2f)) // animation of Spotlight
-//                        .setTargets(simpleTarget) // set targes. see below for more info
-//                        // callback when Spotlight starts
-//                .setOnSpotlightStartedListener(() -> Toast.makeText(mContext, "spotlight is started", Toast.LENGTH_SHORT).show())
-//                        // callback when Spotlight ends
-//                .setOnSpotlightEndedListener(() ->{
-//                    Toast.makeText(mContext, "spotlight is ended", Toast.LENGTH_SHORT).show();
-//                })
-//                        .start(); // start Spotlight
-//            }
-//        });
-//
-//    }
-
-    //----------------------    First time tutorial (show case)    ----------------------
 
     /**
      * showCase for one item

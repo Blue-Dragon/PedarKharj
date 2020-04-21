@@ -160,7 +160,7 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
 
     private void doOnClicks() {
         getBtn.setOnClickListener(this);
-        backBtn.setOnClickListener(item -> Toast.makeText(mContext, "back", Toast.LENGTH_SHORT).show());
+//        backBtn.setOnClickListener(item -> Toast.makeText(mContext, "back", Toast.LENGTH_SHORT).show());
         setHasOptionsMenu(true); //for menu items in fragment (edit & delete)
     }
 

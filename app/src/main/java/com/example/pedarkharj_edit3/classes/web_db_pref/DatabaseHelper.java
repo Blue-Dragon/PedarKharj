@@ -722,9 +722,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public void deleteAllParticeUnderEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String selectQuery = "DELETE  * FROM " + TABLE_PARTICES + " WHERE " + KEY_EVENT_NAME + " = " + Routines.EVENT_TEMP_NAME;
+        String query = "DELETE  FROM " + TABLE_PARTICES + " WHERE " + KEY_EVENT_ID+ " = " + event.getId();
 
-        Log.e(LOG, selectQuery);
+        db.execSQL(query);
+
+        Log.e(LOG, query);
 
     }
 

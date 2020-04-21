@@ -173,7 +173,11 @@
         <item name="android:layout_marginBottom">@dimen/ss_s</item>
         <item name="android:layout_marginRight">@dimen/s_m</item>
         <item name="android:layout_marginLeft">@dimen/s_m</item>
+    </style>
 
+
+    <style name="AlertDialogDanger" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/colorAccentDark</item>
     </style>
 
 </resources>

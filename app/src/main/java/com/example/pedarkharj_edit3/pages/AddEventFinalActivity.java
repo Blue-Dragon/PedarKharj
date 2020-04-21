@@ -111,15 +111,20 @@ public class AddEventFinalActivity extends AppCompatActivity {
         fab = this.findViewById(R.id.fab);
         recyclerView = findViewById(R.id.rv);
 
+        edit_mode = getIntent().getBooleanExtra(Routines.EDIT_MODE, false);
+
         eventId = getIntent().getIntExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, 0);
         Log.d("fuck026", "eventId_received: "+ eventId);
         try {
             event = db.getEventById(eventId);
+//            if (event != null)
+//                db.deleteAllParticeUnderEvent(event); //delete all partice -> edit and replace with new ones
+
         }catch (Exception e){
             Log.e("fuck026", " "+ e);
         }
 
-        edit_mode = getIntent().getBooleanExtra(Routines.EDIT_MODE, false);
+
 
     }
 
@@ -135,7 +140,6 @@ public class AddEventFinalActivity extends AppCompatActivity {
         try {
             if ( event.getBitmapStr() != null ){
                 Log.i("fuck026", "BitmapStr not null: \n"+ event.getBitmapStr() );
-
                 bitmap = Routines.stringToBitmap(event.getBitmapStr());
 //                resizedBitmap = Routines.resizeBitmap(bitmap);
                 resizedBitmap = Routines.convertBitmapThumbnail1x1(bitmap);
@@ -143,7 +147,6 @@ public class AddEventFinalActivity extends AppCompatActivity {
             }
         }catch (Exception e){
             Log.e("fuck026",  e.toString());
-
         }
 
     }
