@@ -123,8 +123,8 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
 
         fab.setOnClickListener(view0 -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+//            mActivity.finish();
             startActivity(new Intent(mContext, AddEventParticesActivity.class));
-//            finish();
 //            showBuyerDialog();
         });
 

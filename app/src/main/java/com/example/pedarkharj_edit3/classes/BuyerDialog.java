@@ -105,8 +105,14 @@ public class BuyerDialog extends Dialog {
                     Participant participant = mParticipants.get(position);
                     Intent intent =  new Intent(mActivity, AddExpenseActivity.class);
                     intent.putExtra(Routines.PARTICIPANT_INFO, participant.getId());
+
+//                    mActivity.finish();
                     mActivity.startActivity(intent);
-//                mActivity.finish();
+                    // remember to put it after startActivity, if you put it to above, animation will not working
+                    // document say if we don't want animation we can put 0. However, if we put 0 instead of
+                    // R.anim.no_animation, the exist activity will become black when animate
+//                    mActivity.overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
+
                 }
 
             }

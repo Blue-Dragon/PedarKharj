@@ -884,10 +884,13 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-    MainActivity.navPosition =Routines.HOME;
-    finish();
-    startActivity(new Intent(mActivity, MainActivity.class));
-//    mActivity.overridePendingTransition(100, -100);
+//        finish();
+        MainActivity.navPosition =Routines.HOME;
+        startActivity(new Intent(mActivity, MainActivity.class));
+        MainActivity.navPosition = Routines.HOME;
+
+//        mActivity.overridePendingTransition(R.anim.slide_up,  R.anim.no_animation);
+
 
     }
 }

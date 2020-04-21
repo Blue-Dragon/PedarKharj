@@ -248,9 +248,9 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        startActivity(new Intent(mContext, MainActivity.class));
+//        super.onBackPressed();
         finish();
+        startActivity(new Intent(mContext, MainActivity.class));
     }
 
 

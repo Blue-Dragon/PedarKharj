@@ -126,8 +126,14 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     public void onBackPressed() {
         //if in Home page
-        if (navPosition == Routines.HOME )
-            finish();
+        if (navPosition == Routines.HOME ){
+            //Close app
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+//            finish();
+        }
 
         else  if (navPosition == Routines.EVENTS && Routines.is_in_action_mode) {
             eventsFragment = (EventsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);

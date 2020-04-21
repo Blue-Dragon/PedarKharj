@@ -186,6 +186,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
     }
 
     private void doInits(View view) {
+        MainActivity.navPosition = Routines.HOME;
+
         mContext = getContext();
         mActivity = getActivity();
         MainActivity.navPosition = Routines.HOME;
