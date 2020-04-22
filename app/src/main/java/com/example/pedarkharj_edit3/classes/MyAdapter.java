@@ -319,9 +319,10 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
             //addEventPartice
             if (addEventParticeMode && Routines.particSelectedIds.size() > 0){
-//                if (Routines.particSelectedIds.contains((int) participant.getContact().getId()))
-                Log.d("Fuck", Routines.particSelectedIds.size() + "");
-//                holder.particRv.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selected_green));
+                if (Routines.particSelectedIds.contains((int) participant.getContact().getId()) && holder.relativeLayout!=null){
+                    Log.d("Fuck", Routines.particSelectedIds.size() + "");
+                    holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selected_green));
+                }
             }
 
             //addExpenseActivity_ amountMode

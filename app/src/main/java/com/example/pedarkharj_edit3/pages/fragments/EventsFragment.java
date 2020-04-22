@@ -267,6 +267,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
                 Intent intent = new Intent(mContext, AddEventParticesActivity.class);
                 intent.putExtra(Routines.SEND_EVENT_ID_INTENT, Routines.selectedItemId);
                 startActivity(intent);
+                onMyBackPressed();
 //                finish();
                 break;
         }

@@ -260,7 +260,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         backBtn = findViewById(R.id.back_btn);
         fab = this.findViewById(R.id.fab);
 
-        //recyclerView
+        //recyclerView_horizental
         recyclerView = findViewById(R.id.diff_dong_recView);
         /*
          * Spinner

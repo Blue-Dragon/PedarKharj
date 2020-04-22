@@ -31,7 +31,7 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
     AppCompatImageView checkedImg;
     ImageView imageView;
     TextView nameTv, resultTxt, resultTxtGreen ;
-    RelativeLayout relativeLayout, particRv;
+    RelativeLayout relativeLayout;
     CardView cardView; //EventMng
     //diff dong
     Button plusBtn, minusBtn;
@@ -71,7 +71,6 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         priceTitleTv = itemView.findViewById(R.id.tv_price_title);
 
         relativeLayout = itemView.findViewById(R.id.fu);
-        particRv = itemView.findViewById(R.id.rv_layout);
 
         if (relativeLayout!=null){
             relativeLayout.setOnCreateContextMenuListener(this);
