@@ -14,7 +14,7 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
+
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
@@ -28,10 +28,8 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
 
@@ -88,7 +86,7 @@ public class Routines  {
     //Not Final
     public static boolean is_in_action_mode;
     public static int counter, selectedItemId; //edit n' delete
-    public static List<Integer> particSelectedIds = new ArrayList<>();
+    public static List<Integer> contactsSelectedIds = new ArrayList<>();
 
 
     //    Context mContext;
@@ -297,15 +295,18 @@ public class Routines  {
     }
 
     // add to db
-    public static List<Participant> addParticesToTempEvent (List<Participant> participants, DatabaseHelper db){
+    public static List<Participant> addParticesToTempEvent (List<Contact> contactList, DatabaseHelper db){
+        //create partice out of contacts
         //add partices to db
         //add an Event to these partices
-        long id = db.createEvent(new Event(EVENT_TEMP_NAME));
-        Event tempEvent = db.getEventById(id);
-        Log.d("Fuck06", id +  "");
-        db.createAllParticesUnderEvent(participants, tempEvent);
+        long eventId = db.createEvent(new Event(EVENT_TEMP_NAME));
+        Event tempEvent = db.getEventById(eventId);
+        Log.d("Fuck06", eventId +  "");
 
-        return participants;
+        db.createNewEventWithContacts(tempEvent, contactList);
+//        db.createAllParticesUnderEvent(participants, tempEvent);
+
+        return db.getAllParticeUnderEvent(tempEvent);
     }
 
     //

@@ -31,10 +31,13 @@ import com.example.pedarkharj_edit3.classes.Routines;
 import java.util.ArrayList;
 import java.util.List;
 
+//todo: needs partices to be contacts
+
 public class AddEventParticesActivity extends AppCompatActivity {
     List<Contact> contacts;
+    List<Contact> selectedContacts;
     List<Participant> allContactsTo_participants, selectedPartices;
-    List<Integer> ids;
+    List<Integer> selectedContactsIds;
     Context mContext;
     Activity mActivity = this;
     MyAdapter adaptor, selectedAdaptor;
@@ -59,26 +62,29 @@ public class AddEventParticesActivity extends AppCompatActivity {
 //        showSpotlightIntro();
 
         //-----------     RecView    -----------//
-        setRecView_horizental(true); //show contacts (allContactsTo_participants) and init selectedPartices
-        setSelectedRecView(selectedPartices); //setting selectedPartice if we are in edit mode
+        setRecView_horizental(true); //show contacts (allContactsTo_participants) and init selectedContacts
+        setSelectedRecView(); //setting selectedContacts if we are in edit mode
 
          // onClick
         Log.e("recOnClick", "onClick");
         recyclerView_horizental.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView_horizental, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Participant participant = allContactsTo_participants.get(position);
+//                Participant participant = allContactsTo_participants.get(position);
+                Contact contact = contacts.get(position);
                 //checking if already selected
                 initSelectedParticeIds();
 
-                if (ids.contains((int) participant.getContact().getId()) ){
-                    Log.d("fuck00", "before: "+ selectedPartices.size());
-                    removePartice(view, participant);
-                    Log.d("fuck00", "after: "+ selectedPartices.size());
+                if (selectedContactsIds.contains((int) contact.getId()) ){
+                    Log.d("fuck00", "before: "+ selectedContacts.size());
+                    removePartice(view, contact);
+                    Log.d("fuck00", "after: "+ selectedContacts.size());
                 }else
-                    addPartice(view, participant);
+                    addPartice(view, contact);
 
-                Log.d("recOnClick", participant.getName());
+                Log.d("recOnClick", contact.getName());
+                getSelectecPartice();
+
             }
 
             @Override
@@ -91,12 +97,15 @@ public class AddEventParticesActivity extends AppCompatActivity {
         selected_recView.addOnItemTouchListener(new RecyclerTouchListener(mContext, selected_recView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Participant participant = selectedPartices.get(position);
+//                Participant participant = selectedPartices.get(position);
+                Contact contact = selectedContacts.get(position);
                 //remove partice from event
-                removePartice(view, participant);
+                removePartice(view, contact);
                 setRecView_horizental(true);
 
 //                setSelectedRecView(selectedPartices);
+                getSelectecPartice();
+
             }
 
             @Override
@@ -107,12 +116,13 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
         //------------     Floating Btn    ------------//
         fab.setOnClickListener(view -> {
+//            if (edit_mode) db.createParticipantUnderEvent(participant, existedEvent);
 
+            //get saved partices in tempEvent
             if (!edit_mode){
-                //get saved partices in tempEvent
-                Routines.addParticesToTempEvent(selectedPartices, db);
-            }else {
+                selectedPartices = Routines.addParticesToTempEvent(selectedContacts, db);
 
+            }else if (existedEvent != null){
                 db.deleteAllParticeUnderEvent(existedEvent);
 
                 List<Participant> participants = db.getAllParticeUnderEvent(existedEvent);
@@ -120,6 +130,8 @@ public class AddEventParticesActivity extends AppCompatActivity {
                     Log.d("eventParticipants", participant.getId()+ " / "+ participant.getContact().getId() + ": "+ participant.getName());
                 }
                 db.createAllParticesUnderEvent(selectedPartices, existedEvent);
+                db.createNewEventWithContacts(existedEvent, selectedContacts);
+                selectedPartices = db.getAllParticeUnderEvent(existedEvent);
             }
 
             int[] myIds = new int[selectedPartices.size()];
@@ -166,9 +178,10 @@ public class AddEventParticesActivity extends AppCompatActivity {
         db = new DatabaseHelper(mContext);
         contacts = db.getAllContacts();
         selectedPartices = new ArrayList<>();
+        selectedContacts = new ArrayList<>();
         allContactsTo_participants = Routines.contactToPartic(contacts);
-        ids = new ArrayList<>();
-        Routines.particSelectedIds = initSelectedParticeIds(); //init both `ids` and `Routines.particSelectedIds`
+        selectedContactsIds = new ArrayList<>();
+        Routines.contactsSelectedIds = initSelectedParticeIds(); //init both `selectedContactsIds` and `Routines.contactsSelectedIds`
 
         /*
          * init selectedPartice if we are in edit mode
@@ -178,9 +191,19 @@ public class AddEventParticesActivity extends AppCompatActivity {
             edit_mode = true;
             existedEvent = db.getEventById(curEventId);
             selectedPartices = db.getAllParticeUnderEvent(curEventId);
+            selectedContacts = getContacts(selectedPartices);
         }
 
     }
+
+    private List<Contact> getContacts(List<Participant> selectedPartices) {
+        List<Contact> contactList = new ArrayList<>();
+        for (Participant participant: selectedPartices){
+            contactList.add(participant.getContact());
+        }
+        return contactList;
+    }
+
     private void onClicks() {
         backBtn.setOnClickListener(item -> onBackPressed());
 
@@ -205,14 +228,16 @@ public class AddEventParticesActivity extends AppCompatActivity {
         recyclerView_horizental.setLayoutManager(gridLayoutManager);
         recyclerView_horizental.setItemAnimator(new DefaultItemAnimator());
 
-        adaptor = new MyAdapter(mContext, R.layout.sample_conntacts_horizental,     allContactsTo_participants);
+        adaptor = new MyAdapter(mContext);
+        adaptor.setLayout(R.layout.sample_conntacts_horizental);
+        adaptor.setContactList(contacts);
         //
         initSelectedParticeIds();
-        Log.d("Fuck0", ids.size() + "  ids");
+        Log.d("Fuck0", selectedContactsIds.size() + "  selectedContactsIds");
 
         if (edit_mode || isAddEventParticeMode){
             adaptor.setIsAddEventParticeMode(true);
-            Log.d("Fuck0", Routines.particSelectedIds.size() + "  screw u");
+            Log.d("Fuck0", Routines.contactsSelectedIds.size() + "  screw u");
         }
         //
         recyclerView_horizental.setAdapter(adaptor);
@@ -222,23 +247,25 @@ public class AddEventParticesActivity extends AppCompatActivity {
     /**
      * setting selectedPartice if we are in edit mode
      */
-    private void setSelectedRecView(List<Participant> participants){
+    private void setSelectedRecView(){
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.HORIZONTAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         selected_recView.setLayoutManager(gridLayoutManager);
         //
-        selectedAdaptor = new MyAdapter(mContext, R.layout.sample_contact, participants);
 
+        selectedAdaptor = new MyAdapter(mContext);
+        selectedAdaptor.setLayout(R.layout.sample_contact);
+        selectedAdaptor.setContactList(selectedContacts);
 //        recyclerView_horizental.smoothScrollToPosition( allContactsTo_participants.size() - 1 ); // focus on the End of the list
         selected_recView.setAdapter(selectedAdaptor);
 
     }
 
 
-    private void removePartice(View view, Participant participant) {
+    private void removePartice(View view, Contact contact) {
 //        db.deletePartic(participant);
-        selectedPartices.remove(participant);
+        selectedContacts.remove(contact);
         removeColorSelected(view); //change color
         initSelectedParticeIds();
         selectedAdaptor.notifyDataSetChanged();
@@ -250,9 +277,9 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
     }
 
-    private void addPartice(View view, Participant participant) {
-        selectedPartices.add(participant);
-        if (edit_mode) db.createParticipantUnderEvent(participant, existedEvent);
+    private void addPartice(View view, Contact contact) {
+        selectedContacts.add(contact);
+//        if (edit_mode) db.createParticipantUnderEvent(participant, existedEvent);
         //change color
         setColorSelected(view);
         initSelectedParticeIds();
@@ -264,30 +291,29 @@ public class AddEventParticesActivity extends AppCompatActivity {
     }
 
 //    private boolean checkIfAlreadySelected(Participant participant) {
-//        //ids of all selected partices
-//        ids.clear();
-//        Routines.particSelectedIds.clear();
+//        //selectedContactsIds of all selected partices
+//        selectedContactsIds.clear();
+//        Routines.contactsSelectedIds.clear();
 //
 //        for (int i=0; i<selectedPartices.size(); i++){
-//            ids.add(i, (int) selectedPartices.get(i).getContact().getId());
-//            Routines.particSelectedIds.add(i, (int) selectedPartices.get(i).getContact().getId());
+//            selectedContactsIds.add(i, (int) selectedPartices.get(i).getContact().getId());
+//            Routines.contactsSelectedIds.add(i, (int) selectedPartices.get(i).getContact().getId());
 //        }
-//        if (ids.size() == 0) return false;
+//        if (selectedContactsIds.size() == 0) return false;
 //
-//        return ids.contains((int) participant.getContact().getId());
+//        return selectedContactsIds.contains((int) participant.getContact().getId());
 //    }
 
     private List<Integer> initSelectedParticeIds() {
-        //ids of all selected partices
-        ids.clear();
-        Routines.particSelectedIds.clear();
+        //selectedContactsIds of all selected partices
+        selectedContactsIds.clear();
+        Routines.contactsSelectedIds.clear();
 
-        for (int i=0; i<selectedPartices.size(); i++){
-            ids.add(i, (int) selectedPartices.get(i).getContact().getId());
+        for (int i=0; i<selectedContacts.size(); i++){
+            selectedContactsIds.add(i, (int) selectedContacts.get(i).getId());
         }
 
-
-        return Routines.particSelectedIds = ids;
+        return Routines.contactsSelectedIds = selectedContactsIds;
     }
 
     @Override
@@ -297,6 +323,15 @@ public class AddEventParticesActivity extends AppCompatActivity {
         finish();
     }
 
+    void getSelectecPartice(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("selected partices:\n");
+        for (Participant participant: selectedPartices){
+            builder.append(participant.getId()+" : "+ participant.getContact().getId()+" -> "+ participant.getName()+"\n");
+        }
+        builder.append("\n");
+        Log.d("selectedParticeIds", builder.toString());
+    }
 
 
 

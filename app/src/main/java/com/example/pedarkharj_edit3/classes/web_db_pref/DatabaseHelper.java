@@ -340,7 +340,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Creating new event with already existed Contacts
      */
-    public long createNewEventWithPartices(Event event, Contact[] contacts) {
+    public long createNewEventWithContacts(Event event, List<Contact> contacts) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -478,6 +478,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // updating TABLE_EVENTS table row (event name & Bmp)
         db.update(TABLE_EVENTS, values, KEY_ID + " = ?", new String[] { String.valueOf(event.getId()) });
     }
+
+
 
 
     /**

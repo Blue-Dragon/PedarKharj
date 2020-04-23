@@ -26,7 +26,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
@@ -52,7 +51,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
     public static List<Expense> newExpenseList;
     List<Participant> mParticipants;
     List<Event> events;
-    Contact[] defContats;
+    List<Contact> defContats;
     public static int lastSeenEventId;
     Context mContext ;
     Activity mActivity;
@@ -288,10 +287,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
          * adding partices and an event
          */
         List<Contact> contacts = db.getAllContacts();
-        if ( (defContats == null || defContats.length < 1) && contacts.size() <1) {
+        if ( (defContats == null || defContats.size() < 1) && contacts.size() <1) {
             creatingDefContacts();
         }
-        return db.createNewEventWithPartices(new Event(eventName), defContats);
+        return db.createNewEventWithContacts(new Event(eventName), defContats);
 
     }
 
@@ -301,7 +300,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         long contact_3 = db.createContact(new Contact("مخاطب 2"));
         long contact_4 = db.createContact(new Contact("مخاطب 3"));
 
-        defContats = new Contact[]{db.getContactById(contact_1), db.getContactById(contact_2), db.getContactById(contact_3), db.getContactById(contact_4)};
+        defContats = new ArrayList<>();
+        defContats.add(db.getContactById(contact_1));
+        defContats.add(db.getContactById(contact_2));
+        defContats.add(db.getContactById(contact_3));
+        defContats.add(db.getContactById(contact_4));
     }
 
     private void initRectangleAbove(Event event) {

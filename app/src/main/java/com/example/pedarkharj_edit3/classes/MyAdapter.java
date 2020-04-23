@@ -318,9 +318,9 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
             }
 
             //addEventPartice
-            if (addEventParticeMode && Routines.particSelectedIds.size() > 0){
-                if (Routines.particSelectedIds.contains((int) participant.getContact().getId()) && holder.relativeLayout!=null){
-                    Log.d("Fuck", Routines.particSelectedIds.size() + "");
+            if (addEventParticeMode && Routines.contactsSelectedIds.size() > 0){
+                if (Routines.contactsSelectedIds.contains((int) participant.getContact().getId()) && holder.relativeLayout!=null){
+                    Log.d("Fuck", Routines.contactsSelectedIds.size() + "");
                     holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selected_green));
                 }
             }
