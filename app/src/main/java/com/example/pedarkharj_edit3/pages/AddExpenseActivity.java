@@ -406,7 +406,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                 //Done Action
                 //now we have a straig
                 float price = Float.valueOf( textViewInputNumbers.getText().toString());
-                // expense users' selectedContactsIds
+                // expense users' selectedContactsIdsNew
                 int[] usersIds = new int[selectedListPartices.size()];
                 int j = 0;
                 for (Participant participant: selectedListPartices){

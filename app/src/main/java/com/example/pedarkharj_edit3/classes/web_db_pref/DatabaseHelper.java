@@ -362,6 +362,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     /**
+     *  Creating  Participant List in an existing Event
+     */
+    public List<Participant> createEventNewParticipants(Event event, List<Contact> contacts) {
+        List<Participant> participants = new ArrayList<>();
+       for (Contact contact : contacts){
+           participants.add(createEventNewPartice(event, contact));
+       }
+       return participants;
+    }
+
+
+    /**
      *  Creating a new Participant in an existing Event
      */
     public Participant createEventNewPartice(Event event, Contact contact) {
@@ -572,12 +584,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      *   adding new participants to an existing Event
      */
     public List<Participant> createAllParticesUnderEvent(List<Participant> participants, Event event) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         for (Participant participant : participants){
             participant.setEvent(event);
             createParticipantUnderEvent(participant);
         }
+
+        updateParticipants(participants);
 
         return participants;
     }
@@ -730,6 +742,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Log.e(LOG, query);
 
+    }
+
+    /**
+     * updating a participant
+     */
+    public void updateParticipants(List<Participant> participants){
+        for (Participant participant : participants){
+            updatePartice(participant);
+        }
     }
 
     /**

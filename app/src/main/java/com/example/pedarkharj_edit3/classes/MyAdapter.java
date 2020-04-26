@@ -94,7 +94,6 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
     public void setSelectMode(short selectMode){
         this.selectMode = selectMode;
     }
-
     public void setDefaultDongAmount(float defaultDongAmount) {
         this.defaultDongAmount = defaultDongAmount;
     }
@@ -108,12 +107,10 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
         this.mLayout = mLayout;
         this.amountModeDong = amountModeDong; //if true, mode 2- amount
     }
-
     //Contacts
     public void setContactList(List<Contact> contactList) {
         this.contactList = contactList;
     }
-
     public void setIsFloatingActionBar(boolean isFloatingActionBar) {
         this.isFloatingActionBar = isFloatingActionBar;
     }
@@ -285,6 +282,13 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
             if (drawable != null && holder.relativeLayout != null) holder.relativeLayout.setForeground(drawable); //onLongClick color changing
 
+            //addEventPartice Activity
+            if (addEventParticeMode && Routines.contactsSelectedIds.size() > 0){
+                if (Routines.contactsSelectedIds.contains((int) contact.getId()) && holder.relativeLayout!=null){
+                    Log.d("Fuck", Routines.contactsSelectedIds.size() + "");
+                    holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selected_green));
+                }
+            }
         }
 
 
@@ -317,13 +321,6 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
                 holder.resultTxt.setText(Routines.getRoundFloatString(debt));
             }
 
-            //addEventPartice
-            if (addEventParticeMode && Routines.contactsSelectedIds.size() > 0){
-                if (Routines.contactsSelectedIds.contains((int) participant.getContact().getId()) && holder.relativeLayout!=null){
-                    Log.d("Fuck", Routines.contactsSelectedIds.size() + "");
-                    holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selected_green));
-                }
-            }
 
             //addExpenseActivity_ amountMode
             if (defaultDongAmount > 0 && holder.dongEtxtAmount != null)
