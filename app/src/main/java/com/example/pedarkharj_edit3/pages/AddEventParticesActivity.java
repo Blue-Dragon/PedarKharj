@@ -6,6 +6,9 @@ import android.content.Intent;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -227,19 +230,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
     //-------------------------     RecyclerView    --------------------------//
     private void setRecView_horizental(boolean isAddEventParticeMode) {
-        /*
-         *  All contacts
-         */
 
-        /*
-         * todo: set Contact instead of Partice... :
-         * I'm forming Contacts as Participants, so I won't need to create another
-         * adaptor or even edit that. change this shit later in order not to get fucked up!
-         */
-//        contacts = db.getAllContacts();
-//        allContactsTo_participants = Routines.contactToPartic(contacts);
-
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false);
         recyclerView_horizental.setLayoutManager(gridLayoutManager);
         recyclerView_horizental.setItemAnimator(new DefaultItemAnimator());
@@ -247,6 +238,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         adaptor = new MyAdapter(mContext);
         adaptor.setLayout(R.layout.sample_conntacts_horizental);
         adaptor.setContactList(contacts);
+        adaptor.setExistedContacts(existedContacts);
         //
         initSelectedContactIds();
         Log.d("Fuck0", selectedContactsIdsNew.size() + "  selectedContactsIdsNew");
@@ -273,6 +265,8 @@ public class AddEventParticesActivity extends AppCompatActivity {
         selectedAdaptor = new MyAdapter(mContext);
         selectedAdaptor.setLayout(R.layout.sample_contact);
         selectedAdaptor.setContactList(selectedContactsNew);
+        selectedAdaptor.setExistedContacts(existedContacts);
+        selectedAdaptor.setIsAddEventParticeMode(true);
 //        recyclerView_horizental.smoothScrollToPosition( allContactsTo_participants.size() - 1 ); // focus on the End of the list
         selected_recView.setAdapter(selectedAdaptor);
 
@@ -280,16 +274,20 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
 
     private void removePartice(View view, Contact contact) {
-//        db.deletePartic(participant);
-        contact = findContactById(selectedContactsNew, contact.getId());
-        selectedContactsNew.remove(contact);
-        removeColorSelected(view); //change color
-        initSelectedContactIds();
-        selectedAdaptor.notifyDataSetChanged();
+        Contact contact1 = findContactById(existedContacts, contact.getId()); //check if it's already existed
+        if (contact1 == null){
+            //        db.deletePartic(participant);
+            contact = findContactById(selectedContactsNew, contact.getId());
+            selectedContactsNew.remove(contact);
+            removeColorSelected(view); //change color
+            initSelectedContactIds();
+            selectedAdaptor.notifyDataSetChanged();
 //        adaptor.notifyDataSetChanged();
+        }
     }
 
-    private Contact findContactById(List<Contact> selectedContacts, long id) {
+
+    public static Contact findContactById(List<Contact> selectedContacts, long id) {
         Contact contact = null;
         for (Contact contact1 : selectedContacts){
             if (contact1.getId() == id){

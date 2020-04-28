@@ -80,6 +80,7 @@
     <color name="bk4">#f3fdf2</color>
     <color name="bk5">#CDE9BA</color>
 
+
     <color name="back_groung_lime">#DDFFDA</color>
     <color name="back_ground_lemon">#45FFFDE7</color>
     <color name="back_groung_dark">#4A8B8B8B</color>
@@ -96,4 +97,8 @@
     <color name="activity_bk_color">#FDFFFD</color>
     <color name="fab_bk_color">#4BC700</color>
     <color name="partice_result_recview_color">#45FFFDE7</color>
+
+    <color name="grayScale">#838383</color>
+    <color name="liteGray">#48F1F1F1</color>
+
 </resources>

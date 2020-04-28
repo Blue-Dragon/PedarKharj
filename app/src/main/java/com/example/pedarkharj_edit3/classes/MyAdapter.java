@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.models.Contact;
@@ -17,6 +20,7 @@ import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Expense;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.pages.AddEventParticesActivity;
 import com.example.pedarkharj_edit3.pages.fragments.ContactsFragment;
 
 import java.util.List;
@@ -33,6 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
     private List<Event> events;
     private List<Expense> expenseList;
     private List<Contact> contactList;
+    private List<Contact> existedContacts;
     private Context mContext;
     private Activity mActivity;
     private Participant selectedPartic;
@@ -132,6 +137,9 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
     //addEventPartice
     public void setIsAddEventParticeMode(boolean addEventParticeMode) {
         this.addEventParticeMode = addEventParticeMode;
+    }
+    public void setExistedContacts(List<Contact> existedContacts) {
+        this.existedContacts = existedContacts;
     }
 
     /**
@@ -253,12 +261,9 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
                 ContactsFragment.pressedContact = contactList.get(position1); //this is for the ContextMenu (edit/delete)
             });
 
-
-
             Contact contact;
             Log.i("positionCall", "contacts recyclerView Call");
             contact = contactList.get(position);
-
 
             //get info later. no hurry bro !
             if (contact.getName() != null && holder.nameTv != null){
@@ -270,7 +275,6 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
                 aTask.execute(container);
             }
 
-
 //            if (contact.getBitmapStr() != null && holder.profImv != null){
 //                ContactAndHolder container = new ContactAndHolder();
 //                container.contact = contact;
@@ -279,16 +283,34 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 //                aTask.execute(container);
 ////                holder.profImv.setImageBitmap(Routines.stringToBitmap(contact.getBitmapStr()));
 //            }
-
             if (drawable != null && holder.relativeLayout != null) holder.relativeLayout.setForeground(drawable); //onLongClick color changing
 
+
             //addEventPartice Activity
-            if (addEventParticeMode && Routines.contactsSelectedIds.size() > 0){
-                if (Routines.contactsSelectedIds.contains((int) contact.getId()) && holder.relativeLayout!=null){
+            if (addEventParticeMode){
+
+                //add green color if selected
+                if ( Routines.contactsSelectedIds.size() > 0 && Routines.contactsSelectedIds.contains((int) contact.getId()) && holder.relativeLayout!=null){
                     Log.d("Fuck", Routines.contactsSelectedIds.size() + "");
                     holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selected_green));
                 }
+
+
+                Log.d("grayScale", existedContacts.size() + "");
+                //grayScale for edit mode already existed partices
+                if (existedContacts != null && existedContacts.size() > 0){
+                    Contact c1 = AddEventParticesActivity.findContactById(existedContacts, contact.getId());
+                    if (c1 != null){
+                        if (holder.profImv != null) {
+                            setGrayScale(holder.profImv);
+                        }
+                    if (holder.relativeLayout != null) holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.liteGray));
+
+                    }
+                }
+
             }
+
         }
 
 
@@ -340,7 +362,16 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
     }
 
-
+    private void setGrayScale(View view){
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0);
+        view.getBackground().setColorFilter(new ColorMatrixColorFilter(matrix));
+    }
+    private void setGrayScale(ImageView imageView){
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0.01f);
+        imageView.setColorFilter(new ColorMatrixColorFilter(matrix));
+    }
 
     @Override
     public int getItemCount() {
