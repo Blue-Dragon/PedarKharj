@@ -116,26 +116,24 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         fab.setOnClickListener(view0 ->showBuyerDialog(curEvent));
         //MySpinner
         mySpinner.setOnClickListener(x -> showEventsDialog(curEvent));
-        /*
-         * TODO: hide the fucking fab while scrolling
-         */
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (fab.getVisibility() != View.VISIBLE) fab.show();
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//
-//                while (dy == 0 && fab.getVisibility() == View.VISIBLE) fab.hide();
-//
-//
-//            }
-//        });
-        //
+
+
+        // fab hides on scroll
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                    fab.show();
+                else
+                    fab.hide();
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
 
 
 
@@ -161,7 +159,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
             }
             else curEvent = events.get(0);
 
-            Log.d("mID", "cur event id: "+ curEvent.getId());
+            Log.d("curEventID", "cur event id: "+ curEvent.getId());
 
 
             lastSeenEventId = curEvent.getId();
