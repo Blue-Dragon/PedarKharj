@@ -101,4 +101,7 @@
     <color name="grayScale">#838383</color>
     <color name="liteGray">#48F1F1F1</color>
 
+    <color name="green_plus">#2E7D32</color>
+    <color name="red_minus">#A52020</color>
+
 </resources>

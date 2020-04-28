@@ -76,6 +76,8 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
 
         init();
         doOnClicks();
+        // fab hides on scroll
+        Routines.hideFabOnScroll(fab, recyclerView);
 
         //Floating Btn
         fab.setOnClickListener(view0 -> {

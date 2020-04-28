@@ -78,6 +78,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         doOnClicks();
         setCurEvent(); //and Setting default event and partices IF NOT EXIST
         initRectangleAbove(curEvent);  //doInits Rectangle
+        // fab hides on scroll
+        Routines.hideFabOnScroll(fab, recyclerView);
 
         //Tutorial
         if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_HOME) == Routines.FIRST_RUN ){
@@ -118,22 +120,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         mySpinner.setOnClickListener(x -> showEventsDialog(curEvent));
 
 
-        // fab hides on scroll
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-            }
 
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE)
-                    fab.show();
-                else
-                    fab.hide();
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
 
 
 
@@ -145,6 +133,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         db.closeDB();
         return view;
     }
+
 
 
     /********************************************       Methods     ****************************************************/

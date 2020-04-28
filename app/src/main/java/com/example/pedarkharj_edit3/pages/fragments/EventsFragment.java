@@ -74,6 +74,9 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         mView = inflater.inflate(R.layout.fragment_event_mng, container, false);
         MainActivity.navPosition = Routines.EVENTS;
         init();
+        // fab hides on scroll
+        Routines.hideFabOnScroll(fab, recyclerView);
+
 
         backBtn.setOnClickListener(item -> mActivity.onBackPressed());
         setHasOptionsMenu(true); //for menu items in fragment (edit & delete)

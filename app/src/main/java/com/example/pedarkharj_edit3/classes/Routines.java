@@ -14,16 +14,20 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Base64;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
+import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.models.Contact;
 import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -358,5 +362,43 @@ public class Routines  {
             if (event.getEventName().equals(Routines.EVENT_TEMP_NAME)) db.deleteEvent(event, true);
         }
         return db.getAllEvents();
+    }
+
+
+    /**
+     *fab hides on scrolling
+     * @param fab
+     * @param recyclerView
+     */
+    public static void hideFabOnScroll(FloatingActionButton fab,  RecyclerView recyclerView) {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (recyclerView != null){
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE)
+                        fab.show();
+                    else
+                        fab.hide();
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+            }
+        });
+    }
+
+    public static void setTextColor (Context mcContext, TextView tv, String s){
+        if (s.contains("+"))
+            tv.setTextColor(mcContext.getResources().getColor(R.color.green_plus));
+        else if (s.contains("-"))
+            tv.setTextColor(mcContext.getResources().getColor(R.color.red_minus));
+        else
+            tv.setTextColor(mcContext.getResources().getColor(R.color.primaryTextColor));
+
+
     }
 }

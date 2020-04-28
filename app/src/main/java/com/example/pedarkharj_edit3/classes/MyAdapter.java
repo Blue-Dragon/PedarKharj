@@ -267,12 +267,16 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
             //get info later. no hurry bro !
             if (contact.getName() != null && holder.nameTv != null){
-//                holder.nameTv.setText(contact.getName());
-                ContactAndHolder container = new ContactAndHolder();
-                container.contact = contact;
-                container.holder = holder;
-                LoadImgATask aTask = new LoadImgATask();
-                aTask.execute(container);
+                holder.nameTv.setText(contact.getName());
+//                ContactAndHolder container = new ContactAndHolder();
+//                container.contact = contact;
+//                container.holder = holder;
+//                LoadImgATask aTask = new LoadImgATask();
+//                aTask.execute(container);
+            }
+            String bitmapString = contact.getBitmapStr();
+            if (bitmapString != null && bitmapString.length() > 0){
+                holder.profImv.setImageBitmap(Routines.stringToBitmap(bitmapString));
             }
 
 //            if (contact.getBitmapStr() != null && holder.profImv != null){
@@ -325,6 +329,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
             if (participant.getName() != null && holder.nameTv != null)
                 holder.nameTv.setText(participant.getName());
+
             if ( holder.profImv != null){
                 if (participant.getBitmapStr() != null)
                     holder.profImv.setImageBitmap(Routines.stringToBitmap(participant.getBitmapStr()));
@@ -333,8 +338,12 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
                     holder.profImv.setImageBitmap( Routines.convertBitmapThumbnail1x1(b));
                 }
             }
-            if (participant.getResult() != null && holder.resultTxt != null)
+
+            if (participant.getResult() != null && holder.resultTxt != null){
                 holder.resultTxt.setText(participant.getResult());
+                if (mContext != null)
+                    Routines.setTextColor(mContext, holder.resultTxt, participant.getResult());
+            }
 
             //EventDetailEachExpense Activity
             if (mExpense !=null && holder.resultTxt != null){
@@ -405,34 +414,34 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
         String name;
     }
 
-    class LoadImgATask extends AsyncTask<ContactAndHolder, Void, ContactAndHolder>{
-
-        @Override
-        protected ContactAndHolder doInBackground(ContactAndHolder... contactAndViews) {
-
-            ContactAndHolder contactAndView = contactAndViews[0];
-            String bitmapString = (contactAndView.contact.getBitmapStr());
-            if (bitmapString != null && bitmapString.length() > 0){
-                contactAndView.bitmap = Routines.stringToBitmap(bitmapString);
-            }
-            contactAndView.name = contactAndView.contact.getName();
-            return contactAndView;
-        }
-
-        @Override
-        protected void onPostExecute(ContactAndHolder contactAndView) {
-            if (contactAndView !=null) {
-                ViewHolder holder = contactAndView.holder;
-                Contact contact = contactAndView.contact;
-                Bitmap bitmap = contactAndView.bitmap;
-                String name = contactAndView.name;
-
-                holder.nameTv.setText(name);
-                if (bitmap != null && holder.profImv != null){
-                    holder.profImv.setImageBitmap(bitmap);
-                }
-            }
-            super.onPostExecute(contactAndView);
-        }
-    }
+//    class LoadImgATask extends AsyncTask<ContactAndHolder, Void, ContactAndHolder>{
+//
+//        @Override
+//        protected ContactAndHolder doInBackground(ContactAndHolder... contactAndViews) {
+//
+//            ContactAndHolder contactAndView = contactAndViews[0];
+//            String bitmapString = (contactAndView.contact.getBitmapStr());
+//            if (bitmapString != null && bitmapString.length() > 0){
+//                contactAndView.bitmap = Routines.stringToBitmap(bitmapString);
+//            }
+//            contactAndView.name = contactAndView.contact.getName();
+//            return contactAndView;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(ContactAndHolder contactAndView) {
+//            if (contactAndView !=null) {
+//                ViewHolder holder = contactAndView.holder;
+//                Contact contact = contactAndView.contact;
+//                Bitmap bitmap = contactAndView.bitmap;
+//                String name = contactAndView.name;
+//
+//                holder.nameTv.setText(name);
+//                if (bitmap != null && holder.profImv != null){
+//                    holder.profImv.setImageBitmap(bitmap);
+//                }
+//            }
+//            super.onPostExecute(contactAndView);
+//        }
+//    }
 }

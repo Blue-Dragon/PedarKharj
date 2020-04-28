@@ -75,6 +75,17 @@
         <include layout="@layout/sample_my_result"/>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="0dp">
+        <include layout="@layout/sample_each_expense_top"/>
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
