@@ -594,6 +594,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return participants;
     }
 
+
+    /**
+     * getting single Partice
+     * @param eventId
+     * @param contactId
+     * @return participant
+     */
+    public Participant getParticeByContactId(int eventId, int contactId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_PARTICES + " WHERE " + KEY_EVENT_ID + " = " + eventId + " AND " + KEY_CONTACT_ID
+                + " = " + contactId;
+        Log.e(LOG, selectQuery);
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+
+        Participant participant = new Participant();
+        participant.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        participant.setContact( this.getContactById(c.getInt(c.getColumnIndex(KEY_CONTACT_ID))) );
+        participant.setName(participant.getContact().getName());
+        participant.setEvent( this.getEventById(c.getInt(c.getColumnIndex(KEY_EVENT_ID)) ));
+        participant.setExpense((c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE))));
+        participant.setDebt(c.getFloat(c.getColumnIndex(KEY_PARTICE_DEBT)));
+        participant.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
+
+        return participant;
+    }
     /**
      * getting single Partice
      */
@@ -880,7 +909,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     /**
-     * getting all expenses of a partic (in a specific event)
+     * getting list of all expenses n an specific event
      */
     public List<Expense> getAllExpensesOfEvent(Event event) {
         List<Expense> expenseList = new ArrayList<>();
@@ -901,7 +930,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
 
-        Log.e("fuck021", "********************************************************* ");
+        Log.e("getAllExpensesOfEvent", "********************************************************* ");
 
         // getting each expense
         for (int expenseId : expenseIds) {

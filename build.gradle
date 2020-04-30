@@ -23,7 +23,6 @@ allprojects {
         //libs
         maven { url 'https://jitpack.io' } //RTL intro slider
 
-
     }
 }
 

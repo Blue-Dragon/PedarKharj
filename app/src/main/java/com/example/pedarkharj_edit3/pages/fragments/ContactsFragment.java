@@ -174,6 +174,7 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        contactList.remove(0);
 
         adaptor = new MyAdapter(mContext);
         adaptor.setActivity(mActivity);

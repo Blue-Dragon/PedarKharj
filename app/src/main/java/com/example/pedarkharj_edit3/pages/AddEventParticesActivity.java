@@ -193,6 +193,10 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
         db = new DatabaseHelper(mContext);
         contacts = db.getAllContacts();
+        //don't show `me` on contacts
+        Contact me = findContactById(contacts, 1);
+        if (me!=null) contacts.remove(me);
+
         selectedPartices = new ArrayList<>();
         selectedContactsNew = new ArrayList<>();
         allContactsTo_participants = Routines.contactToPartic(contacts);
@@ -208,7 +212,12 @@ public class AddEventParticesActivity extends AppCompatActivity {
             edit_mode = true;
             existedEvent = db.getEventById(curEventId);
             selectedPartices = db.getAllParticeUnderEvent(curEventId);
+
             existedContacts = getContacts(selectedPartices);
+            //don't show `me` on contacts
+            me = findContactById(selectedContactsNew, 1);
+            if (me!=null) selectedContactsNew.remove(me);
+
             selectedContactsNew = getContacts(selectedPartices); //then we delete common contacts in both lists
 
         }
@@ -234,6 +243,9 @@ public class AddEventParticesActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.VERTICAL, false);
         recyclerView_horizental.setLayoutManager(gridLayoutManager);
         recyclerView_horizental.setItemAnimator(new DefaultItemAnimator());
+//        //don't show `me` on contacts
+//        Contact me = findContactById(contacts, 1);
+//        contacts.remove(me);
 
         adaptor = new MyAdapter(mContext);
         adaptor.setLayout(R.layout.sample_conntacts_horizental);
@@ -287,10 +299,10 @@ public class AddEventParticesActivity extends AppCompatActivity {
     }
 
 
-    public static Contact findContactById(List<Contact> selectedContacts, long id) {
+    public static Contact findContactById(List<Contact> selectedContacts, long contactId) {
         Contact contact = null;
         for (Contact contact1 : selectedContacts){
-            if (contact1.getId() == id){
+            if (contact1.getId() == contactId){
                 contact = contact1;
                 break;
             }

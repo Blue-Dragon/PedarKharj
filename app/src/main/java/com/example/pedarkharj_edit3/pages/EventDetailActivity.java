@@ -126,9 +126,9 @@ public class EventDetailActivity extends AppCompatActivity  {
         tvR2.setTextColor(getResources().getColor(R.color.grayTextColor));
         tvL1.setTextColor(getResources().getColor(R.color.primaryTextColor));
         tvL2.setTextColor(getResources().getColor(R.color.primaryTextColor));
-        tvR1.setText("خرج های من");
-        tvC1.setText("دونگ های من");
-        tvL1.setText("حساب من");
+        tvR1.setText("تعداد خرج ها");
+        tvC1.setText("میانگین دونگ");
+        tvL1.setText("مجموع  خرج ها");
 
     }
 
@@ -166,12 +166,20 @@ public class EventDetailActivity extends AppCompatActivity  {
 //        tvL2.setText(String.valueOf(0));
         List<Participant> participants = db.getAllParticeUnderEvent(event);
         if (participants.size() > 0) {
-            float myExpenses = db.getParticTotalExpensePriceByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
-            float myDebt = db.getAllParticDebtsByParticeId(participants.get(0).getId()); //it is me. 1st partice of all
+            Participant participant = db.getParticeByContactId(event.getId(), 1);
+
+
+            int expensesCount = db.getAllExpensesOfEvent(event).size();
+            float eventExpense = db.getEventTotalExpensesByEventId(event.getId());
+            float aveDebt = eventExpense / participants.size();
+
+
 //            int allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
-            tvR2.setText(Routines.getRoundFloatString(myExpenses));
-            tvC2.setText(Routines.getRoundFloatString(myDebt));
-            tvL2.setText(Routines.getRoundFloatString(myExpenses - myDebt));
+            tvR2.setText(Routines.getRoundFloatString(expensesCount));
+            tvC2.setText(Routines.getRoundFloatString(aveDebt));
+            tvL2.setText(Routines.getRoundFloatString(eventExpense));
+//            Routines.setTextColor(mContext, tvL2, tvL2.getText().toString());
+
         }
     }
 

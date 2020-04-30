@@ -232,7 +232,7 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
             if (holder.dateTv != null)
                 holder.dateTv.setText(expense.getCreated_at());
             if (holder.priceTitleTv != null){
-                String expenseTitle = expense.getExpenseTitle().length()>0 ? expense.getExpenseTitle() : "بدون عنوان" ;
+                String expenseTitle = expense.getExpenseTitle().length()>0 ? expense.getExpenseTitle() : "خرج بی نام" ;
                 holder.priceTitleTv.setText(expenseTitle);
             }
 
