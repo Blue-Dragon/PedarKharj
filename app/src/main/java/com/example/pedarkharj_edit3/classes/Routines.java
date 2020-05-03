@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.icu.text.NumberFormat;
+import android.icu.util.ULocale;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.provider.ContactsContract;
@@ -32,9 +34,11 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class Routines  {
@@ -347,12 +351,21 @@ public class Routines  {
         return floatList;
     }
 
+    /**
+     * gives better decimal number with float
+     */
     public static String getRoundFloatString(float f) {
         String s;
 
         DecimalFormat format  = new DecimalFormat("#.##");
-        f =  Float.valueOf(format.format(f));
+        //change to En if it is Farsi
+//        enNum = new BigDecimal(f).toString();
+//        f = Float.valueOf(enNum);
+            //
+//        f =  Float.valueOf(format.format(f));
         s =  format.format(f);
+//        s = String.valueOf(f);
+//        Log.d("EnNum" , s + "");
         return s;
     }
 

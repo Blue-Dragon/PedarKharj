@@ -303,7 +303,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 float myExpenses = db.getParticTotalExpensePriceByParticeId(participant.getId());
                 float myDebt = db.getAllParticDebtsByParticeId(participant.getId());
 //            int allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
-                tvR2.setText(Routines.getRoundFloatString(myExpenses));
+                tvR2.setText( Routines.getRoundFloatString(myExpenses));
                 tvC2.setText(Routines.getRoundFloatString(myDebt));
                 tvL2.setText(Routines.getRoundFloatString(myExpenses - myDebt));
                 Routines.setTextColor(mContext, tvL2, tvL2.getText().toString());
