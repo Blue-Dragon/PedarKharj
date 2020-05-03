@@ -81,6 +81,7 @@ public class IntroActivity extends AppCompatActivity {
                         MainActivity.navPosition = Routines.HOME;
                         finish();
                         startActivity(new Intent(mActivity, MainActivity.class));
+                        mActivity.overridePendingTransition(R.anim.fade_in_right,  R.anim.fade_out);
 //                        mActivity.overridePendingTransition(0, 0);
 
                     });

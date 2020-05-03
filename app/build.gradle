@@ -8,7 +8,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 4
-        versionName "1.4.3 Beta"
+        versionName "1.4.4 Beta"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -51,5 +51,8 @@ dependencies {
 //    implementation 'com.github.alikhaleghi76:rtl-slider:1.0.6' //RTL intro slider
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.0' // tapView/ showCase/ spotLight OR any  mf name you wanna call this.
     implementation 'com.github.mancj:MaterialSearchBar:0.8.5' //Search Bar
+    //RTL viewPager
+    implementation 'androidx.viewpager:viewpager:1.0.0'
+    implementation 'com.duolingo.open:rtl-viewpager:2.0.0'
 
 }

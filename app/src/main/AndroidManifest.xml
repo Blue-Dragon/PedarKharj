@@ -18,7 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".pages.IntroActivity"></activity>
+
+        <activity android:name=".pages.IntroActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".pages.EachExpenseDetailActivity"
             android:screenOrientation="portrait"
