@@ -146,16 +146,18 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/m"
                         android:gravity="center"
+                        android:fontFamily="@font/b_yekan"
                         android:text="0"
                         android:textColor="#000"
-                        android:textSize="22sp"
-                        android:textStyle="bold" />
+                        android:textSize="22sp" />
 
                     <EditText
                         android:id="@+id/dong_Etxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/large_koodak"
+                        android:fontFamily="@font/b_yekan"
+                        android:textSize="14dp"
                         android:maxLines="1"
                         android:ems="500"
                         android:inputType="textPersonName"

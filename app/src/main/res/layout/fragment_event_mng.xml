@@ -24,7 +24,7 @@
                 android:contentDescription="@string/backBtnText"
                 android:src="@drawable/back" />
 
-            <TextView
+            <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                 android:id="@+id/tv_counter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 android:visibility="gone"
                 android:textSize="16sp" />
 
-            <TextView
+            <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                 android:id="@+id/textView"
                 style="@style/toolbar_text_style"
                 android:text="@string/eventsHeader"

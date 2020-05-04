@@ -16,9 +16,9 @@
       android:layout_height="0dp"
       android:layout_weight="40"
       android:gravity="center"
-      android:layout_marginTop="80dp"
-      android:layout_marginRight="80dp"
-      android:layout_marginLeft="80dp"
+      android:layout_marginTop="72dp"
+      android:layout_marginRight="72dp"
+      android:layout_marginLeft="72dp"
       >
 
     <ImageView
@@ -30,37 +30,37 @@
   </RelativeLayout>
 
 
-  <TextView
+  <com.example.pedarkharj_edit3.classes.AutoResizeTextView
       android:id="@+id/textView"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:layout_weight="4"
+      android:layout_weight="5"
       android:gravity="center"
-      android:fontFamily="@font/b_koodak"
+      android:fontFamily="@font/b_yekan_bold"
       android:text="Discover"
       android:textColor="@color/bk1"
-      android:textSize="24sp"
+      android:textSize="18sp"
       android:textStyle="bold" />
 
   <com.example.pedarkharj_edit3.classes.AutoResizeTextView
       android:id="@+id/textView2"
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:layout_weight="20"
+      android:layout_weight="10"
       android:gravity="center_horizontal"
       android:layout_marginTop="@dimen/s_m"
-      android:fontFamily="@font/b_koodak"
+      android:fontFamily="@font/b_yekan"
       android:lineSpacingExtra="5dp"
       android:paddingLeft="@dimen/l"
       android:paddingRight="@dimen/l"
+      android:textSize="14sp"
       android:text="Look for things around youLook for things around you"
-      android:textColor="@color/bk1"
-      android:textSize="18sp" />
+      android:textColor="@color/bk1" />
 
   <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="0dp"
-      android:layout_weight="10"
+      android:layout_weight="20"
     />
 
 

@@ -340,7 +340,9 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 //        BuyerBtnTxt.setText(buyer.getName());
         //
         if (particId != 0)  {
-            dongEText.setHint("خب! " +buyer.getName() + " چی خریده؟");
+            String s = buyer.getContact().getId() == 1 ? "خریدم؟" : "خریده؟";
+
+            dongEText.setHint("خب! " +buyer.getName() + " چی " + s);
             //if buyer has no pic, put a default pic
 //            Bitmap defPic = Routines.resizeBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile) ) ;
             Bitmap defPic = Routines.convertBitmapThumbnail1x1(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile) ) ;

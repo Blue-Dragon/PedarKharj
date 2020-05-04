@@ -20,7 +20,7 @@
         android:layout_centerInParent="true"
         android:gravity="center_horizontal">
 
-        <TextView
+        <com.example.pedarkharj_edit3.classes.AutoResizeTextView
             android:id="@+id/partic_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

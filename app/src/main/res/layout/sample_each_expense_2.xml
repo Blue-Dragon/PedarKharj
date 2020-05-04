@@ -20,7 +20,7 @@
         android:orientation="horizontal">
 
 
-        <TextView
+        <com.example.pedarkharj_edit3.classes.AutoResizeTextView
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
             card_view:layout_constraintLeft_toLeftOf="parent"
             card_view:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.example.pedarkharj_edit3.classes.AutoResizeTextView
             android:id="@+id/tv_price_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/tv_date" />
 
-        <TextView
+        <com.example.pedarkharj_edit3.classes.AutoResizeTextView
             android:id="@+id/result_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toBottomOf="@+id/view2" />
 
-        <TextView
+        <com.example.pedarkharj_edit3.classes.AutoResizeTextView
             android:id="@+id/result_txt_green"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

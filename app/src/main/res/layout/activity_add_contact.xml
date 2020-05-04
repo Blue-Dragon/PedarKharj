@@ -108,7 +108,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/family_edt">
 
-        <TextView
+        <com.example.pedarkharj_edit3.classes.AutoResizeTextView
             style="@style/medium_koodak"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -119,7 +119,7 @@
 
     </RelativeLayout>
 
-    <TextView
+    <com.example.pedarkharj_edit3.classes.AutoResizeTextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

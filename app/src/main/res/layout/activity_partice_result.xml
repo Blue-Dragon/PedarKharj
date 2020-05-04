@@ -26,8 +26,8 @@
                 android:layout_marginStart="0dp"
                 android:src="@drawable/back" />
 
-            <TextView
-                android:id="@+id/textView"
+            <com.example.pedarkharj_edit3.classes.AutoResizeTextView
+                android:id="@+id/com.example.pedarkharj_edit3.classes.AutoResizeTextView"
                 style="@style/toolbar_text_style"
                 android:text="خرج ها"
                 />

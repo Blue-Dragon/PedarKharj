@@ -23,7 +23,7 @@
                 android:layout_marginStart="0dp"
                 android:src="@drawable/back" />
 
-            <TextView
+            <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                 android:id="@+id/textView"
                 style="@style/toolbar_text_style"
                 android:text="دونگ های متفاوت"

@@ -24,8 +24,8 @@
                 android:layout_marginStart="0dp"
                 android:src="@drawable/back" />
 
-            <TextView
-                android:id="@+id/textView"
+            <com.example.pedarkharj_edit3.classes.AutoResizeTextView
+                android:id="@+id/com.example.pedarkharj_edit3.classes.AutoResizeTextView"
                 style="@style/toolbar_text_style"
                 android:text="خرج های شخص"
                 />
@@ -67,7 +67,7 @@
                     android:layout_marginBottom="@dimen/ss"
                     android:src="@drawable/profile" />
 
-                <TextView
+                <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                     android:id="@+id/partic_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
-                <TextView
+                <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                     android:id="@+id/expense_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -110,7 +110,7 @@
                 android:layout_gravity="center_horizontal">
 
 
-                <TextView
+                <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                     android:id="@+id/tv1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -123,7 +123,7 @@
                     android:text="4000 تومان"
                     android:textColor="#000000"
                     android:textSize="16sp" />
-                <TextView
+                <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                 android:id="@+id/tv3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -135,7 +135,7 @@
                 android:textColor="#000000"
                 android:textSize="16sp" />
 
-                <TextView
+                <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                     android:id="@+id/tv5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -148,7 +148,7 @@
                     android:text="شرکت کننده ها"
                     android:textColor="@color/gray"
                     android:textSize="16sp" />
-                <TextView
+                <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                     android:id="@+id/tv6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -159,7 +159,7 @@
                     android:layout_alignTop="@+id/tv5"
                     android:fontFamily="@font/b_koodak"
                     android:gravity="center"
-                    android:text="دونگ"
+                    android:text="دونگ ها"
                     android:textColor="@color/gray"
                     android:textSize="16sp" />
 

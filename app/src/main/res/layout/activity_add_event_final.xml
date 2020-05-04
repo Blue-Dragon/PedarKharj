@@ -30,7 +30,7 @@
             android:gravity="left|center_vertical"
             style="@style/toolbar_text_style">
 
-            <TextView
+            <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
                 android:text="رویداد جدید"
                 />
 
-            <TextView
+            <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="مشخصات رویداد"
