@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.TextView;
@@ -355,19 +356,16 @@ public class Routines  {
      * gives better decimal number with float
      */
     public static String getRoundFloatString(float f) {
-        String s;
+//        String s;
 
-        DecimalFormat format  = new DecimalFormat("#.##");
-        //change to En if it is Farsi
-//        enNum = new BigDecimal(f).toString();
-//        f = Float.valueOf(enNum);
-            //
-//        f =  Float.valueOf(format.format(f));
-        s =  format.format(f);
-//        s = String.valueOf(f);
-//        Log.d("EnNum" , s + "");
-        return s;
+        return  String.format (Locale.US, "%,.2f", f);
+
+//        DecimalFormat format  = new DecimalFormat("#.##");
+//        s =  format.format(f);
+//
+//        return s;
     }
+
 
     public static List<Event> deleteTempEvents(Activity mActivity, List<Event> events){
         DatabaseHelper db = new DatabaseHelper(mActivity);
@@ -411,7 +409,5 @@ public class Routines  {
             tv.setTextColor(mcContext.getResources().getColor(R.color.red_minus));
         else
             tv.setTextColor(mcContext.getResources().getColor(R.color.primaryTextColor));
-
-
     }
 }
