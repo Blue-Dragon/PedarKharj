@@ -1,6 +1,5 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:view="http://schemas.android.com/tools"
     android:id="@+id/card_layout_participant"
     style="@style/partic_card_style"
     card_view:cardCornerRadius="25dp">
@@ -11,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#45FFFDE7"
-        android:layout_marginLeft="@dimen/m"
-        android:layout_marginRight="@dimen/m"
+        android:layout_marginLeft="@dimen/s"
+        android:layout_marginRight="@dimen/s_m"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -57,7 +56,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/m">
+            android:layout_marginRight="@dimen/s">
 
             <Button
                 android:id="@+id/minus_btn"
@@ -81,12 +80,10 @@
                 android:layout_centerVertical="true"
                 android:gravity="center|bottom"
                 android:background="#FFFFFF"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="50dp"
                 android:ems="4"
                 android:inputType="number"
                 android:maxLines="1"
-                android:paddingBottom="6dp"
+                android:paddingBottom="4dp"
                 android:text="1" />
 
             <Button

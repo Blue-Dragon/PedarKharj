@@ -146,7 +146,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/m"
                         android:gravity="center"
-                        android:fontFamily="@font/b_yekan"
                         android:text="0"
                         android:textColor="#000"
                         android:textSize="22sp" />

@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#45FFFDE7"
-        android:layout_marginLeft="@dimen/m"
-        android:layout_marginRight="@dimen/m"
+        android:layout_marginLeft="@dimen/s"
+        android:layout_marginRight="@dimen/s"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
