@@ -25,7 +25,7 @@
                 android:src="@drawable/back" />
 
             <com.example.pedarkharj_edit3.classes.AutoResizeTextView
-                android:id="@+id/com.example.pedarkharj_edit3.classes.AutoResizeTextView"
+                android:id="@+id/textView"
                 style="@style/toolbar_text_style"
                 android:text="خرج های شخص"
                 />

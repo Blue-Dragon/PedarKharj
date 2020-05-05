@@ -24,7 +24,7 @@
             android:id="@+id/tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/m"
+            android:layout_marginLeft="@dimen/s"
             android:layout_marginTop="@dimen/ss"
             android:fontFamily="@font/b_koodak"
             android:gravity="center"
@@ -38,7 +38,7 @@
             android:id="@+id/tv_price_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/m"
+            android:layout_marginRight="@dimen/s"
             android:layout_marginTop="@dimen/ss"
             android:fontFamily="@font/b_koodak"
             android:gravity="center"
@@ -55,7 +55,7 @@
             android:layout_marginStart="7dp"
             android:fontFamily="@font/b_koodak"
             android:gravity="center"
-            android:text=""
+            android:text="mmd"
             android:textColor="#000000"
             android:textSize="16sp"
             card_view:layout_constraintBottom_toBottomOf="@+id/prof_pic"
@@ -79,23 +79,21 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginEnd="31dp"
             android:fontFamily="@font/b_koodak"
-            android:text=""
+            android:text="3500"
             android:textColor="#000000"
             android:textSize="20sp"
             card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintEnd_toEndOf="@+id/tv_price_title"
             card_view:layout_constraintTop_toBottomOf="@+id/view2" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/prof_pic"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="@dimen/m"
             android:src="@drawable/profile"
             card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintStart_toStartOf="@+id/tv_date"
             card_view:layout_constraintTop_toBottomOf="@+id/view2" />
 
 
