@@ -356,16 +356,33 @@ public class Routines  {
      * gives better decimal number with float
      */
     public static String getRoundFloatString(float f) {
-//        String s;
+        String result;
+        char[] chars;
+        int beginDot = 0;
+        StringBuilder decimalPart = new StringBuilder();
+        String intPart = String.valueOf((int)f);
 
-        return  String.format (Locale.US, "%,.2f", f);
+        result = String.format (Locale.US, "%,.2f", f);
 
-//        DecimalFormat format  = new DecimalFormat("#.##");
-//        s =  format.format(f);
-//
-//        return s;
+
+        chars = result.toCharArray();
+        for (int i=0; i<chars.length; i++){
+            if (chars[i] == '.' ){
+                beginDot = i;
+                break;
+            }
+        }
+        //checking if we have redundant 00
+        decimalPart.append(result.substring(beginDot));
+        for (int i=decimalPart.length()-1; i>=0; i-- ){
+            if (decimalPart.charAt(i) == '0' | decimalPart.charAt(i) == '.')
+                decimalPart.delete(i, decimalPart.length());
+            else break;
+        }
+
+        result = intPart + decimalPart;
+        return result;
     }
-
 
     public static List<Event> deleteTempEvents(Activity mActivity, List<Event> events){
         DatabaseHelper db = new DatabaseHelper(mActivity);
