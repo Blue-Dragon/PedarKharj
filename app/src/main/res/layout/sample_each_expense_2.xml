@@ -68,7 +68,7 @@
             card_view:layout_constraintStart_toStartOf="@+id/tv_date"
             card_view:layout_constraintTop_toBottomOf="@+id/view2" />
 
-        <TextView
+        <com.example.pedarkharj_edit3.classes.AutoResizeTextView
             android:id="@+id/partic_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -77,7 +77,6 @@
             android:gravity="center|left"
             android:text="mmd rexa"
             android:textSize="15sp"
-            android:maxLines="2"
             android:ellipsize="end"
             android:textColor="#000000"
             card_view:layout_constraintBottom_toBottomOf="@+id/prof_pic"
@@ -105,6 +104,7 @@
             android:fontFamily="@font/b_koodak"
             android:gravity="center"
             android:textSize="18sp"
+            android:maxLines="2"
             android:text="0"
             android:textColor="@color/green_plus"
             card_view:layout_constraintBottom_toBottomOf="parent"
@@ -131,6 +131,7 @@
             android:fontFamily="@font/b_koodak"
             android:textSize="18sp"
             android:gravity="center|right"
+            android:maxLines="2"
             android:text="0"
             android:textColor="@color/red_minus"
             card_view:layout_constraintBottom_toBottomOf="parent"

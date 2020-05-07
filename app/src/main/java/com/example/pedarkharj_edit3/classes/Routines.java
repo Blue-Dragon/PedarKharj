@@ -360,10 +360,10 @@ public class Routines  {
         char[] chars;
         int beginDot = 0;
         StringBuilder decimalPart = new StringBuilder();
-        String intPart = String.valueOf((int)f);
+        String intPart;
 
         result = String.format (Locale.US, "%,.2f", f);
-
+        intPart = String.format (Locale.US, "%,.0f", f);
 
         chars = result.toCharArray();
         for (int i=0; i<chars.length; i++){

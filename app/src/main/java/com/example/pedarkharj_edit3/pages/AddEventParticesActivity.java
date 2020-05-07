@@ -120,6 +120,10 @@ public class AddEventParticesActivity extends AppCompatActivity {
 //            if (edit_mode) db.createParticipantUnderEvent(participant, existedEvent);
 
             removeExistedParticeFromBefore();
+            //show `me` on selectedContactsNew
+            Contact me = findContactById(db.getAllContacts() , 1);
+            if (me!=null) selectedContactsNew.add(0, me);
+
             for (Contact contact: selectedContactsNew){
                 Log.d("selectedContactsNew", ""+ contact.getName());
             }

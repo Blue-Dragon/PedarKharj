@@ -135,9 +135,11 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 
         //Tutorial - TabTargetView
         if ( SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.FIRST_RUN ){
-            new Handler().postDelayed(this::showTabTargetsSequences1, 500);   // Delay 0.5 sec
+//            new Handler().postDelayed(this::showTabTargetsSequences1, 500);   // Delay 0.5 sec
+            SharedPrefManager.getInstance(mActivity).setNextRunTurn(Routines.KEY_TURN_TIME_EXPENSE, Routines.SECOND_RUN); //not show first time
 
-        } else if (SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.SECOND_RUN){
+        }
+        else if (SharedPrefManager.getInstance(mActivity).getRunTurn(Routines.KEY_TURN_TIME_EXPENSE) == Routines.SECOND_RUN){
             new Handler().postDelayed(this::showTabTargetsSequences2, 500);   // Delay 0.5 sec
         }
 
@@ -613,33 +615,36 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     {
         boolean done = false;
         int operationLength = textViewInputNumbers.getText().length();
-        if (operationLength > 0)
-        {
-            String lastCharacter = textViewInputNumbers.getText().charAt(operationLength - 1) + "";
-            int lastCharacterState = defineLastCharacter(lastCharacter);
+        if (operationLength < 9){
+            if (operationLength > 0)
+            {
+                String lastCharacter = textViewInputNumbers.getText().charAt(operationLength - 1) + "";
+                int lastCharacterState = defineLastCharacter(lastCharacter);
 
-            if (operationLength == 1 && lastCharacterState == IS_NUMBER && lastCharacter.equals("0"))
-            {
-                textViewInputNumbers.setText(number);
-                done = true;
-            } else if (lastCharacterState == IS_OPEN_PARENTHESIS)
-            {
-                textViewInputNumbers.setText(textViewInputNumbers.getText() + number);
-                done = true;
-            } else if (lastCharacterState == IS_CLOSE_PARENTHESIS || lastCharacter.equals("%"))
-            {
-                textViewInputNumbers.setText(textViewInputNumbers.getText() + "x" + number);
-                done = true;
-            } else if (lastCharacterState == IS_NUMBER || lastCharacterState == IS_OPERAND || lastCharacterState == IS_DOT)
+                if (operationLength == 1 && lastCharacterState == IS_NUMBER && lastCharacter.equals("0"))
+                {
+                    textViewInputNumbers.setText(number);
+                    done = true;
+                } else if (lastCharacterState == IS_OPEN_PARENTHESIS)
+                {
+                    textViewInputNumbers.setText(textViewInputNumbers.getText() + number);
+                    done = true;
+                } else if (lastCharacterState == IS_CLOSE_PARENTHESIS || lastCharacter.equals("%"))
+                {
+                    textViewInputNumbers.setText(textViewInputNumbers.getText() + "x" + number);
+                    done = true;
+                } else if (lastCharacterState == IS_NUMBER || lastCharacterState == IS_OPERAND || lastCharacterState == IS_DOT)
+                {
+                    textViewInputNumbers.setText(textViewInputNumbers.getText() + number);
+                    done = true;
+                }
+            } else
             {
                 textViewInputNumbers.setText(textViewInputNumbers.getText() + number);
                 done = true;
             }
-        } else
-        {
-            textViewInputNumbers.setText(textViewInputNumbers.getText() + number);
-            done = true;
         }
+
         return done;
     }
 
