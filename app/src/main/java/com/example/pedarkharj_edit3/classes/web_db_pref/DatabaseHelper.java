@@ -12,7 +12,6 @@ import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Expense;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.PersianDate;
-import com.example.pedarkharj_edit3.classes.Routines;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -802,7 +801,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_PARTICE_DEBT , participant.getDebt());
         values.put(KEY_CREATED_AT, persianDate.getFullDateNTime());
 
-
         return db.update(TABLE_PARTICES, values, KEY_ID + " = ?", new String[] { String.valueOf( participant.getId()) });
     }
 
@@ -887,9 +885,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     /**
-     * returns price of debt if the USER has participated in the EXPENSE.
+     * returns price of debt (of each expense) if the USER has participated in the EXPENSE.
      * and -1 if user is not.
-     * @param expenseId : the id of the expense you are using.
+     * @param expenseId : the id of the expense group you are using.
      * @param userId : the id of  the user you wanna know about.
      */
     public float getParticeDebt(float expenseId, float userId){
@@ -940,7 +938,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * getting s single expense BY the buyer partic (in a specific event)
+     * getting a single expense_group BY the Expense `expenseId` (finding expense is based on the Buyer)
      */
     public Expense getExpenseByExpenseId(int expenseId0) {
         Expense expense = new Expense();
@@ -968,25 +966,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     expense.setExpensePrice(price);
                     expense.setExpenseDebts(this.getAllDebtsByExpense(expenseId));
                     expense.setCreated_at(c.getString(c.getColumnIndex(KEY_CREATED_AT)));
-//            Log.e("fuck021", ": ");
-//            Log.e("fuck021", ": ");
-//
-//            Log.e("fuck021", "expenseId0: "+ expenseId0);
-//
-//            Log.e("fuck021", "id: "+c.getInt(c.getColumnIndex(KEY_ID)) );
-//            Log.e("fuck021", "setExpenseId: "+expenseId );
-//            Log.e("fuck021", "EventId "+c.getInt(c.getColumnIndex(KEY_EVENT_ID)) );
-//            Log.e("fuck021", "UserId "+c.getInt(c.getColumnIndex(KEY_USER_ID)) );
-//            Log.e("fuck021", "BuyerId "+ c.getInt(c.getColumnIndex(KEY_BUYER_ID)) );
-//            price = c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE));
-//            Log.e("fuck021",  price+" price > 0 ? : "+ (price > 0));
-//            Log.e("fuck021", "Debt: "+ c.getInt(c.getColumnIndex(KEY_EXPENSE_DEBT)) );
-//                }
+            Log.e("fuck021", ": ");
+            Log.e("fuck021", ": ");
+
+            Log.e("fuck021", "expenseId0: "+ expenseId0);
+
+            Log.e("fuck021", "id: "+c.getInt(c.getColumnIndex(KEY_ID)) );
+            Log.e("fuck021", "setExpenseId: "+expenseId );
+            Log.e("fuck021", "EventId "+c.getInt(c.getColumnIndex(KEY_EVENT_ID)) );
+            Log.e("fuck021", "UserId "+c.getInt(c.getColumnIndex(KEY_USER_ID)) );
+            Log.e("fuck021", "BuyerId "+ c.getInt(c.getColumnIndex(KEY_BUYER_ID)) );
+            price = c.getInt(c.getColumnIndex(KEY_EXPENSE_PRICE));
+            Log.e("fuck021",  price+" price > 0 ? : "+ (price > 0));
+            Log.e("fuck021", "Debt: "+ c.getInt(c.getColumnIndex(KEY_EXPENSE_DEBT)) );
 
         }
 
         return expense;
     }
+
 
     /**
      * getting everyone's debt as a list (in an Expense)
@@ -1072,7 +1070,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.rawQuery(selectQuery, null);
 
-
         if (c.moveToFirst()){
             do {
                 allExpenses += c.getFloat(c.getColumnIndex(KEY_PARTICE_EXPENSE));
@@ -1080,6 +1077,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return allExpenses;
     }
+
+    /**
+     * deleting an expense group
+     * @param  expenseId (`expenseId`, not `id` of an inner expense/debt)
+     */
+    public void deleteExpenseGroupByExpenseId(int expenseId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // now delete the Partic
+        db.delete(TABLE_EXPENSES, KEY_EXPENSE_ID + " = ?",
+                new String[] { String.valueOf(expenseId) });
+    }
+
 
     // ------------------------ other stuff ---------------------//
     /**

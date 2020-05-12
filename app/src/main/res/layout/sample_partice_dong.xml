@@ -2,14 +2,10 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:view="http://schemas.android.com/tools"
     android:id="@+id/base_layout"
-    android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:layout_marginBottom="@dimen/s"
-    android:layout_marginTop="@dimen/s"
-    android:layout_marginRight="@dimen/s_m"
-    android:layout_marginLeft="@dimen/s_m"
-    android:layoutDirection="ltr"
-    android:background="@color/back_ground_lemon"
+    style="@style/partic_card_style"
+    android:layout_marginTop="0dp"
+    android:layout_marginBottom="0dp"
+    android:layout_height="61dp"
     card_view:cardCornerRadius="25dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -38,7 +34,8 @@
     <View
         android:layout_width="64dp"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true" />
 
 
     <com.example.pedarkharj_edit3.classes.AutoResizeTextView
@@ -56,11 +53,10 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/prof_pic"
         android:layout_toRightOf="@id/prof_pic"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginTop="5dp"
+        android:layout_alignParentBottom="true"
         android:background="#E6E6E6"/>
 
 </RelativeLayout>

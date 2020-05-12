@@ -104,7 +104,11 @@ public class Participant  {
     public String getResult() {
         if (expense-debt > 0)
             return "+"+ (Routines.getRoundFloatString(expense-debt));
-        else  return Routines.getRoundFloatString(expense-debt);
+
+        else if (expense-debt < 0)
+            return Routines.getRoundFloatString(expense-debt);
+
+        return Routines.getRoundFloatString(expense-debt);
     }
 
 }

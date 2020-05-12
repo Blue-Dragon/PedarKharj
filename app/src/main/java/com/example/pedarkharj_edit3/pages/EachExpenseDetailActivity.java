@@ -3,6 +3,8 @@ package com.example.pedarkharj_edit3.pages;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -10,27 +12,48 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
+import com.example.pedarkharj_edit3.classes.MyCallBack;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
+import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Expense;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
+import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
+import com.example.pedarkharj_edit3.pages.fragments.HomeFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class EachExpenseDetailActivity extends AppCompatActivity {
+import static com.example.pedarkharj_edit3.classes.Routines.restartPage;
+
+/**
+ * Each Expense added in an Event has least one buyer.
+ * Each Expense (buyer) has a card that shows the expense price. (list shown at `EventDetailActivity` activity)
+ * -------------------
+ * This activity is called when you click on each card, so you can see the details (users, debts etc.) of that expense.
+ */
+public class EachExpenseDetailActivity extends AppCompatActivity implements View.OnClickListener {
+    public static MyCallBack myCallBack;
     List<Participant> participantList;
     Context mContext ;
     Activity mActivity;
     MyAdapter adaptor;
     Expense theExpense;
     DatabaseHelper db;
+    TextView dateTv, priceTv;
+    FloatingActionButton editFabBtn;
+    ImageView deleteBtn;
 
     RecyclerView recyclerView;
     ImageView backBtn;
@@ -43,19 +66,13 @@ public class EachExpenseDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         inits();
-        backBtn.setOnClickListener(item -> onBackPressed());
+        onClicks();
 
-
-        int expenseId;
-        Intent i = getIntent();
-        expenseId = i.getIntExtra(Routines.SEND_EXPENSE_ID_INTENT, 0);
-        if (expenseId > 0)
-            theExpense = db.getExpenseByExpenseId(expenseId);
 
         if (theExpense !=null ){
-            participantList = theExpense.getUserPartics();
-            setRecyclerView();
+            initExpenseStuff(theExpense);
 
+            setRecyclerView();
         }
 
 
@@ -76,30 +93,120 @@ public class EachExpenseDetailActivity extends AppCompatActivity {
 
 
 
-
     /********************************************       Methods     ****************************************************/
     private void inits() {
         mContext = this;
         mActivity = this;
         db = new DatabaseHelper(mContext);
-
         recyclerView = findViewById(R.id.recycler_view);
         backBtn = findViewById(R.id.back_btn);
+        dateTv = findViewById(R.id.tv_date);
+        priceTv = findViewById(R.id.tv_price);
+        deleteBtn = findViewById(R.id.delete_btn);
+        editFabBtn =  findViewById(R.id.fab);
+        //--------------------
+        int expenseId;
+        Intent i = getIntent();
+        expenseId = i.getIntExtra(Routines.SEND_EXPENSE_ID_INTENT, 0);
+        Log.d("theExpense", "received: "+ expenseId );
+        if (expenseId > 0){
+            theExpense = db.getExpenseByExpenseId(expenseId);
+            Log.d("theExpense", "expense.getId: "+ theExpense.getExpenseId() + "");
+            Log.d("theExpense",  ".");
+        }
+        myCallBack = MainActivity.myCallBack;
     }
 
+
+    private void onClicks() {
+        backBtn.setOnClickListener(item -> onBackPressed());
+        deleteBtn.setOnClickListener(this);
+        editFabBtn.setOnClickListener(this);
+    }
+
+
+
+
+    private void initExpenseStuff(Expense theExpense) {
+        participantList = theExpense.getUserPartics();
+        String price = Routines.getRoundFloatString(theExpense.getExpensePrice());
+        priceTv.setText(price + "  تومان");
+        dateTv.setText(theExpense.getCreated_at());
+
+    }
     //-------------------------     RecyclerView    --------------------------//
     private void setRecyclerView() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
         //
         adaptor = new MyAdapter(mContext);
         adaptor.setLayout(R.layout.sample_partice_dong);
         adaptor.setParticipants(participantList);
         adaptor.setExpense(theExpense);
         recyclerView.setAdapter(adaptor);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.delete_btn:
+                AlertDialog.Builder dialog = new AlertDialog.Builder(mContext, R.style.AlertDialogDanger);
+                dialog.setTitle("پاک کنم؟")
+                        .setMessage("این اطلاعات از دم نیست و نابود میشن هااا !")
+                        .setPositiveButton("پاک کن بره داداش", (dialogInterface, i1) -> {
+
+                            db.deleteExpenseGroupByExpenseId(theExpense.getExpenseId());
+                            //update partices' total debts
+                            updatePartice();
+
+                            onBackPressed();
+                        })
+
+                        .setNegativeButton("نه، بی خیال!", (dialogInterface, i1) -> {})
+                        .show();
+
+
+                break;
+
+            case R.id.fab:
+                //edit
+
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * update debt and expensePrice in partice table
+     */
+    private void updatePartice() {
+        float debt;
+        float expense;
+
+        for (Participant participant : participantList){
+            debt = db.getParticeDebt(theExpense.getExpenseId(), participant.getId());
+            float newDebt = Routines.getRoundFloat(participant.getDebt() - debt);
+            participant.setDebt(newDebt);
+
+            if (participant.getContact().getId() == theExpense.getBuyer().getContact().getId()){
+                expense = participant.getExpense() - theExpense.getExpensePrice();
+                participant.setExpense(Routines.getRoundFloat(expense));
+            }
+
+            db.updatePartice(participant);
+        }
+        db.updateParticipants(participantList);
+        myCallBack.refreshMainActivity(Routines.HOME); //reset and update Home
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(mActivity, EventDetailActivity.class));
+        finish();
     }
 
 }

@@ -9,8 +9,8 @@ import java.util.List;
 
 public class Expense {
     //vital
-    private int id;
-    private int expenseId;
+    private int id; //each expense OR debt
+    private int expenseId; //each expense group (expenses AND debts)
     private Event event;
     private Participant buyer;
     private List<Participant> userPartics;

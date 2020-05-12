@@ -153,10 +153,9 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:layout_gravity">bottom|end</item>
+        <item name="android:layout_gravity">bottom|right</item>
         <item name="android:layout_marginRight">@dimen/m</item>
         <item name="android:layout_marginBottom">@dimen/m</item>
-
         <item name="android:tint">#FFFADC</item>
         <item name="backgroundTint">@color/colorTransparent</item>
         <item name="android:backgroundTint">@color/colorAccentDark</item>

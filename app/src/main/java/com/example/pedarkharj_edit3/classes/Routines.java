@@ -71,6 +71,7 @@ public class Routines  {
     public final static short HOME = 0;
     public final static short EVENTS = 1;
     public final static short CONTACTS = 2;
+    public final static short OTHER_PAGE = -1;
     // -----------------  other stuff  ------------------//
     public static final String PARTICIPANT_INFO = "PARTICIPANT_INFO";
     public static final String EVENT_TEMP_NAME = "EVENT_TEMP";
@@ -327,7 +328,7 @@ public class Routines  {
     }
 
     public static void restartPage(Activity mActivity, short page) {
-        MainActivity.navPosition = page;
+        if (page != -1) MainActivity.navPosition = page;
 //        mActivity.recreate();
         mActivity.finish();
         mActivity.startActivity(mActivity.getIntent());
@@ -344,8 +345,17 @@ public class Routines  {
     }
 
 
+    /**
+     *  format #.## if no extra 0
+     * @param f
+     * @return
+     */
+//    public static float getRoundFloat(float f) {
+//        return f;
+//    }
     public static float getRoundFloat(float f) {
-        return f;
+        String s = String.format (Locale.US, "%.2f", f);
+        return Float.valueOf(s);
     }
 
     public static List<Float> getRoundFloatList(List<Float> floatList) {

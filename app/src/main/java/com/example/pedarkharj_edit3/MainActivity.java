@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 
+import com.example.pedarkharj_edit3.classes.MyCallBack;
 import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 import com.example.pedarkharj_edit3.pages.IntroActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -21,6 +22,7 @@ import com.example.pedarkharj_edit3.pages.fragments.EventsFragment;
 import com.example.pedarkharj_edit3.pages.fragments.HomeFragment;
 
 public class MainActivity extends AppCompatActivity  {
+    public static MyCallBack myCallBack;
 
     Context mContext = this;
     Activity mActivity = this;
@@ -69,7 +71,7 @@ public class MainActivity extends AppCompatActivity  {
 
         }
 
-
+        myCallBack = (pageId) -> Routines.restartPage(mActivity, pageId); //restart and update activity from other pages
     }
 
 

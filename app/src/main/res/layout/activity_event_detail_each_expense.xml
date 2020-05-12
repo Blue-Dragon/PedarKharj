@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/activity_layout_style"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".pages.EventDetailActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/m_toolbar"
         style="@style/toolbar_style">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -30,21 +29,31 @@
                 android:text="خرج های شخص"
                 />
 
+            <ImageView
+                android:id="@+id/delete_btn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/m"
+                android:src="@android:drawable/ic_menu_delete" />
+
+
         </RelativeLayout>
-
-
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/m_toolbar"
         android:layout_marginLeft="@dimen/m"
         android:layout_marginRight="@dimen/m"
         android:layout_marginTop="@dimen/m"
-        android:layout_marginBottom="@dimen/m"
+        android:layout_marginBottom="@dimen/ss_s"
         app:cardCornerRadius="15dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/s"
@@ -62,9 +71,9 @@
                     android:layout_height="60dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/s"
-                    android:layout_marginTop="@dimen/ss"
-                    android:layout_marginBottom="@dimen/ss"
+                    android:layout_marginLeft="@dimen/m_l"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="@dimen/s_m"
                     android:src="@drawable/profile" />
 
                 <com.example.pedarkharj_edit3.classes.AutoResizeTextView
@@ -79,7 +88,7 @@
                     android:gravity="center"
                     android:text="ممد"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
                 <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                     android:id="@+id/expense_price"
@@ -87,50 +96,55 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="12dp"
+                    android:layout_marginRight="@dimen/m_l"
                     android:layout_marginBottom="-2dp"
                     android:fontFamily="@font/b_koodak"
                     android:gravity="center"
                     android:text="گوجه"
                     android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
             </RelativeLayout>
+
             <ImageView
+                android:id="@+id/line_separator1"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="12dp"
+                android:layout_below="@+id/rl1"
                 android:background="#E6E6E6" />
 
             <RelativeLayout
                 android:id="@+id/rl2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/l"
-                android:layout_marginBottom="@dimen/s"
+                android:layout_marginTop="@dimen/m"
+                android:layout_marginBottom="@dimen/ss_s"
+                android:layout_below="@id/line_separator1"
                 android:layout_gravity="center_horizontal">
 
 
                 <com.example.pedarkharj_edit3.classes.AutoResizeTextView
-                    android:id="@+id/tv1"
+                    android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_alignBottom="@+id/tv3"
-                    android:layout_alignTop="@+id/tv3"
-                    android:layout_marginRight="@dimen/m"
+                    android:layout_alignBottom="@+id/tv_date"
+                    android:layout_alignTop="@+id/tv_date"
+                    android:layout_marginRight="@dimen/m_l"
                     android:fontFamily="@font/b_koodak"
-                    android:gravity="center"
+                    android:gravity="center|right"
                     android:text="4000 تومان"
                     android:textColor="#000000"
                     android:textSize="16sp" />
+
                 <com.example.pedarkharj_edit3.classes.AutoResizeTextView
-                android:id="@+id/tv3"
+                android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/m"
-                android:layout_marginTop="@dimen/m"
+                android:layout_marginLeft="@dimen/m_l"
+                android:layout_marginTop="@dimen/l"
                 android:fontFamily="@font/b_koodak"
-                android:gravity="center"
+                android:gravity="center|left"
                 android:text="98/11/11"
                 android:textColor="#000000"
                 android:textSize="16sp" />
@@ -139,40 +153,46 @@
                     android:id="@+id/tv5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv3"
-                    android:layout_marginLeft="@dimen/m"
+                    android:layout_below="@id/tv_date"
+                    android:layout_marginLeft="@dimen/m_l"
                     android:layout_marginTop="36dp"
                     android:layout_marginBottom="@dimen/s"
                     android:fontFamily="@font/b_koodak"
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:text="شرکت کننده ها"
                     android:textColor="@color/gray"
                     android:textSize="16sp" />
+
                 <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                     android:id="@+id/tv6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv1"
+                    android:layout_below="@id/tv_price"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/m"
+                    android:layout_marginRight="@dimen/m_l"
                     android:layout_alignBottom="@+id/tv5"
                     android:layout_alignTop="@+id/tv5"
                     android:fontFamily="@font/b_koodak"
-                    android:gravity="center"
+                    android:gravity="center|right"
                     android:text="دونگ ها"
                     android:textColor="@color/gray"
                     android:textSize="16sp" />
 
             </RelativeLayout>
+
             <ImageView
+                android:id="@+id/line_separator2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_below="@+id/rl2"
                 android:background="#E6E6E6" />
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/ss"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line_separator2"
+                android:layout_marginLeft="-2dp"
+                android:layout_marginRight="-8dp"
                 android:foregroundGravity="center_horizontal">
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -180,18 +200,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:paddingBottom="@dimen/m"
-                    tools:listitem="@layout/sample_participant" />
+                    android:paddingBottom="0dp"
+                    tools:listitem="@layout/sample_partice_dong"/>
 
 
             </ScrollView>
 
-        </LinearLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignRight="@id/line_separator1"
+                android:layout_alignBottom="@id/line_separator1"
+                android:layout_marginRight="@dimen/m"
+                android:layout_marginBottom="-26dp"
+                android:tint="@color/white"
+                app:srcCompat="@android:drawable/ic_menu_edit" />
+
+        </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
 
 
-
-
-
-
-</LinearLayout>
+</RelativeLayout>

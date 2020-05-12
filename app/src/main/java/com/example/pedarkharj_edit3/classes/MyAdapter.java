@@ -216,7 +216,8 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
          * EventDetailed- ExpenseLists
          */
         if (expenseList != null){
-            Log.i("positionCall", "ExpenseList recyclerView Call");
+            // each Partice detail
+            if (!isExpenseMode2 ) Log.i("positionCall", "eachPartice Expense detail  recyclerView Call");
             DatabaseHelper db0 = new DatabaseHelper(mContext);
 
             Expense expense = expenseList.get(position);
@@ -232,16 +233,18 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
             if (holder.dateTv != null)
                 holder.dateTv.setText(expense.getCreated_at());
             if (holder.priceTitleTv != null){
-                String expenseTitle = expense.getExpenseTitle().length()>0 ? expense.getExpenseTitle() : "خرج بی نام" ;
+                String expenseTitle = (expense.getExpenseTitle().length() > 0) ? expense.getExpenseTitle() : mContext.getString(R.string.untitleExpense);
                 holder.priceTitleTv.setText(expenseTitle);
             }
 
                 //if ExpenseMode2 (each person expenses)
             if (isExpenseMode2 && selectedPartic != null){
+                Log.i("positionCall", "eachPartice Account detail  recyclerView Call");
                 float debt = db0.getParticeDebt(expense.getExpenseId(), selectedPartic.getId());
 
                 if (holder.resultTxt != null) //Red/ debt
                     holder.resultTxt.setText(Routines.getRoundFloatString(debt));
+
                 if (holder.resultTxtGreen != null){ //Green/ expense
                     float expense0 = buyer.getId() == selectedPartic.getId() ? expense.getExpensePrice() : 0f;
                     holder.resultTxtGreen.setText(Routines.getRoundFloatString(expense0));
@@ -350,6 +353,12 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
                 DatabaseHelper db = new DatabaseHelper(mContext);
                 float debt = db.getParticeDebt(mExpense.getExpenseId(), participant.getId());
                 holder.resultTxt.setText(Routines.getRoundFloatString(debt));
+                holder.resultTxt.setTextColor(mContext.getResources().getColor(R.color.primaryTextColor));
+//                //update partices' total debts
+//                float newDebt = Routines.getRoundFloat(participant.getDebt() - debt);
+//                participant.setDebt(newDebt);
+//                if (participant.getContact().getId() == mExpense.getBuyer().getContact().getId())  participant.setExpense(participant.getExpense() - mExpense.getExpensePrice());
+//                db.updatePartice(participant);
             }
 
 

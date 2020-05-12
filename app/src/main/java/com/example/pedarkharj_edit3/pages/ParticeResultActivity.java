@@ -26,6 +26,10 @@ import com.example.pedarkharj_edit3.pages.fragments.HomeFragment;
 
 import java.util.List;
 
+/**
+ * This activity is called when you click on each Expense card (at Home Fragment),
+ * so you can see the details of your debts/ expenses.
+ */
 public class ParticeResultActivity extends AppCompatActivity {
     List<Expense> expenseList;
     Event curEvent;
@@ -120,7 +124,7 @@ public class ParticeResultActivity extends AppCompatActivity {
         adaptor.setLayout(R.layout.sample_each_expense_2);
 //        adaptor.setExpenseList(expenseList);
 
-        adaptor.setExpenseList(expenseList);
+        adaptor.setExpenseList(expenseList); //Only expenses that USER has participated in
         adaptor.setSelectedPartic(selectedPartic);
 
         adaptor.setExpenseMode2(true);

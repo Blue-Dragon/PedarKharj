@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
+import com.example.pedarkharj_edit3.classes.MyCallBack;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
@@ -52,6 +53,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
     List<Participant> mParticipants;
     List<Event> events;
     List<Contact> defContats;
+
     public static int lastSeenEventId;
     Context mContext ;
     Activity mActivity;
@@ -97,7 +99,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 // not all expenses in expenseList are the ones our partice has participated in.
                 newExpenseList = new ArrayList<>();
                 for (Expense expense : expenseList){
-                    float debt = db.getParticeDebt(expense.getExpenseId(), participant.getId());
+                    float debt = db.getParticeDebt(expense.getExpenseId(), participant.getId()); // returns -1 of not participated
                     if (debt > -1)
                         newExpenseList.add(expense);
                 }
@@ -202,6 +204,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         tvR1.setText("خرج من");
         tvC1.setText("دونگ من");
         tvL1.setText("حساب من");
+
     }
 
     private void showBuyerDialog(Event curEvent) {

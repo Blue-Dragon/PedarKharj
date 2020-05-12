@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -29,6 +31,10 @@ import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Each Expense added in an Event has least one buyer.
+ * Each Expense (buyer) has a card that shows the expense price. ==> (The list is shown at This activity)
+ */
 public class EventDetailActivity extends AppCompatActivity  {
     List<Expense> expenseList;
     List<Event> events;
@@ -65,11 +71,13 @@ public class EventDetailActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view, int position) {
                 Expense expense = expenseList.get(position);
+                Log.d("theExpense",  ".");
+                Log.d("theExpense", "sent: "+ expense.getExpenseId() + "");
 
                 Intent i = new Intent(mContext, EachExpenseDetailActivity.class);
-                i.putExtra(Routines.SEND_EXPENSE_ID_INTENT, expense.getId());
+                i.putExtra(Routines.SEND_EXPENSE_ID_INTENT, expense.getExpenseId());
                 startActivity(i);
-
+                finish();
             }
 
             @Override

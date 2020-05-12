@@ -41,5 +41,6 @@
     <string name="addExpenseRecView_description">اینجا افرادی که باید دونگ بدن رو مشخص می کنیم</string>
     <string name="addExpensePrice_title">مشخصات خرج</string>
     <string name="addExpensePrice_description">قیمت، عنوان خرج و زمان خرج رو از اینجا میتونید تعیین کنید</string>
+    <string name="untitleExpense">خرج بی نام</string>
 
 </resources>

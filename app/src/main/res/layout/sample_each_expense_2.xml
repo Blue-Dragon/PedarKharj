@@ -72,7 +72,7 @@
             android:id="@+id/partic_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:fontFamily="@font/b_koodak"
             android:gravity="center|left"
             android:text="mmd rexa"
