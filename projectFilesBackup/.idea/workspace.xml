@@ -1,0 +1,1449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config>
+        <device id="pixel_2_xl" />
+        <device id="wear_round" />
+        <device id="Nexus 7" />
+        <device id="Nexus 6P" />
+      </config>
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="621bcfc4-f1c7-4470-8b73-06fd1dcae76e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/BuyerDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/BuyerDialog.java" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/build/classes/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageViewManager">
+    <option name="myElementSize" value="103" />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3a_XL_API_26" />
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="edit3" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="462">
+              <caret line="140" column="12" lean-forward="true" selection-start-line="140" selection-start-column="12" selection-end-line="140" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/AddExpenseActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="887" column="13" lean-forward="true" selection-start-line="887" selection-start-column="13" selection-end-line="887" selection-end-column="13" />
+              <folding>
+                <element signature="e#4469#4576#1" />
+                <element signature="e#4693#4799#1" />
+                <element signature="class#5093:6277" />
+                <element signature="e#6338#6929#0" />
+                <element signature="e#6385#6728#1" />
+                <marker date="1587402668510" expanded="true" signature="2284:3783" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/BuyerDialog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="402">
+              <caret line="106" column="84" lean-forward="true" selection-start-line="106" selection-start-column="84" selection-end-line="106" selection-end-column="84" />
+              <folding>
+                <element signature="method#doRecyclerView#0;class#BuyerDialog#0" />
+                <element signature="method#goToSelectedEvent#0;class#BuyerDialog#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/fragments/EventsFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="259">
+              <caret line="364" column="16" selection-start-line="364" selection-start-column="16" selection-end-line="364" selection-end-column="16" />
+              <folding>
+                <element signature="method#onResume#0;class#EventsFragment#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+        <option value="resourceFile" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>new String[] { String.valueOf</find>
+      <find>Start</find>
+      <find>End</find>
+      <find>color</find>
+      <find>mar</find>
+      <find>ada</find>
+      <find>defDong</find>
+      <find>defaultDongAmount</find>
+      <find>intent</find>
+      <find>getflo</find>
+      <find>getRoundF</find>
+      <find>String.Valu</find>
+      <find>getRoundFloat</find>
+      <find>String.Value</find>
+      <find>NEW_EVENT_PARTIC_IDS_INTENT</find>
+      <find>androidx</find>
+      <find>back</find>
+      <find>String.valu</find>
+      <find>backBtn</find>
+      <find>getintent</find>
+      <find>RESULT</find>
+      <find>Routines.RESULT</find>
+      <find>change_pic_bkg</find>
+      <find>prof_pic</find>
+      <find>fab</find>
+      <find>light</find>
+      <find>acce</find>
+      <find>maint</find>
+      <find>toas</find>
+      <find>canc</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>.d</replace>
+      <replace>og.d</replace>
+      <replace>Left</replace>
+      <replace>Right</replace>
+      <replace>getRoundFloatString</replace>
+    </replaceStrings>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="E:\pedarKharj_key.jks" />
+    <option name="KEY_ALIAS" value="key0" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="c87cbd22-78a0-4c7f-b979-ec40093a1743" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/AddEventParticesActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/bkg_button_outline_filled.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable/bkg_button_done.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_event_detail_each_expense.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_event_detail.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_add_event_partices.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_add_contact.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_add_event_final.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/sample_my_result.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/EventDetailActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/models/Contact.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/web_db_pref/DatabaseHelper.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_intro_slider.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/IntroSliderActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/SliderPagerAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/SliderItemFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/web_db_pref/SharedPrefManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_contacts.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_event_mng.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/Routines.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable-v24/slider_selected_dot.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable-v24/ic_bg_yellow.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/drawable-v24/ic_bg_violet.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/fragments/SliderItemFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_intro.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/IntroActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/sample_event.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/sample_participant.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/sample_diff_dong__dong_mode.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/sample_diff_dong__cash_mode.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_diff_dong.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/DiffDongActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/fragments/ContactsFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/fragments/EventsFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/fragments/HomeFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_slider_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/sample_conntacts_horizental.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_add_expense.xml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/gradle.properties" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/BuyerDialog.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/AddExpenseActivity.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="696" />
+    <option name="y" value="-17" />
+    <option name="width" value="816" />
+    <option name="height" value="576" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <expand>
+            <path>
+              <item name="edit3" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="edit3" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="edit3" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="pedarkharj_edit3" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="edit3" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="pedarkharj_edit3" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="classes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="edit3" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="pedarkharj_edit3" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="edit3" type="1abcf292:AndroidViewProjectNode" />
+              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Non-Source Files'; set:Project Non-Source Files; class com.jetbrains.cidr.lang.search.scopes.ProjectSourcesScopeProvider$NonSourceFilesScope">
+          <expand>
+            <path>
+              <item name="edit3" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="E:\Blue-Dragon\Projects\edit3" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="edit3" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="E:\Blue-Dragon\Projects\edit3" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="edit3" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="E:\Blue-Dragon\Projects\edit3" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="edit3" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="E:\Blue-Dragon\Projects\edit3" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <subPane subId="Scope 'Project Source Files'; set:Project Source Files; class com.jetbrains.cidr.lang.search.scopes.ProjectSourcesScopeProvider$SourceFilesScope">
+          <expand>
+            <path>
+              <item name="edit3" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="E:\Blue-Dragon\Projects\edit3" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+            <path>
+              <item name="edit3" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="E:\Blue-Dragon\Projects\edit3" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="edit3" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="E:\Blue-Dragon\Projects\edit3" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="build" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="edit3" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="E:\Blue-Dragon\Projects\edit3" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="app" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="build" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="generated" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="edit3" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="edit3" type="58d84e3e:PackageViewProjectNode" />
+              <item name="app" type="616d4139:PackageViewModuleNode" />
+              <item name="com.example.pedarkharj_edit3" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="Pixel_3a_XL_API_26" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-04-17T05:38:31.465Z" />
+    <property name="ExportApk.ApkPath" value="E:\Blue-Dragon\Projects\edit3\app" />
+    <property name="ExportApk.BuildVariants" value="release" />
+    <property name="ExportApk.SignV1" value="true" />
+    <property name="ExportApk.SignV2" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="ScreenshotViewer.SavePath" value="E:/" />
+    <property name="extract.method.default.visibility" value="private" />
+    <property name="ignore.virus.scanning.warn.message" value="true" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/app/src/main/res/drawable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable-v24" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Java" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.pedarkharj_edit3" />
+    </key>
+    <key name="android.template.packageName">
+      <recent name="com.example.pedarkharj_edit3.pages" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Blue-Dragon\Projects\edit3\app\src\main\res\drawable-v24" />
+      <recent name="E:\Blue-Dragon\Projects\edit3\app\src\main\res\drawable" />
+      <recent name="E:\Blue-Dragon\Projects\edit3\app\src\main\res\layout" />
+      <recent name="E:\Blue-Dragon\Projects\edit3\app\src\main\java\com\example\pedarkharj_edit3\classes" />
+      <recent name="E:\Blue-Dragon\Projects\edit3\app\src\main\res\menu" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="?" />
+    </option>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Android App.app">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="app" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="mipmap-xxhdpi.* and 5 more" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TEST_OBJECT" value="pattern" />
+      <patterns>
+        <pattern testClass="mipmap-xxhdpi.*" />
+        <pattern testClass="mipmap-anydpi-v26.*" />
+        <pattern testClass="mipmap-mdpi.*" />
+        <pattern testClass="mipmap-hdpi.*" />
+        <pattern testClass="mipmap-xhdpi.*" />
+        <pattern testClass="mipmap-xxxhdpi.*" />
+      </patterns>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.mipmap-xxhdpi.* and 5 more" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="621bcfc4-f1c7-4470-8b73-06fd1dcae76e" name="Default Changelist" comment="" />
+      <created>1584254265079</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1584254265079</updated>
+    </task>
+    <task id="LOCAL-00006" summary="094.5">
+      <created>1584726332052</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1584726332052</updated>
+    </task>
+    <task id="LOCAL-00007" summary="095 - changed spinner of events to Dialog">
+      <created>1584769148083</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1584769148083</updated>
+    </task>
+    <task id="LOCAL-00008" summary="095.5 - back press BUG in ContactFrag">
+      <created>1584776450065</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1584776450065</updated>
+    </task>
+    <task id="LOCAL-00009" summary="095.6 - FUCK">
+      <created>1584784393112</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1584784393112</updated>
+    </task>
+    <task id="LOCAL-00010" summary="096 - fixed false loop in creating events">
+      <created>1584850505841</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1584850505841</updated>
+    </task>
+    <task id="LOCAL-00011" summary="097 - reading contacts method works">
+      <created>1584861687777</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1584861687777</updated>
+    </task>
+    <task id="LOCAL-00012" summary="097 - reading contacts method works">
+      <created>1584861859859</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1584861859859</updated>
+    </task>
+    <task id="LOCAL-00013" summary="098 - getting contact photo">
+      <created>1584942921471</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1584942921472</updated>
+    </task>
+    <task id="LOCAL-00014" summary="098.1 - getting contact photo permission">
+      <created>1584943711866</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1584943711866</updated>
+    </task>
+    <task id="LOCAL-00015" summary="099 - added dynamic image loading for contacts">
+      <created>1584952073038</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1584952073038</updated>
+    </task>
+    <task id="LOCAL-00016" summary="099.1 -">
+      <created>1584956980100</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1584956980100</updated>
+    </task>
+    <task id="LOCAL-00017" summary="099.2 - temp">
+      <created>1585041596738</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1585041596738</updated>
+    </task>
+    <task id="LOCAL-00018" summary="0100 - migrate to AndroidX">
+      <created>1585048146873</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1585048146873</updated>
+    </task>
+    <task id="LOCAL-00019" summary="0101 - Changed resizingBitmap method / getImage options method / added imageCrop">
+      <created>1585112644384</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1585112644384</updated>
+    </task>
+    <task id="LOCAL-00020" summary="0102 - added imgCrop to events">
+      <created>1585115112383</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1585115112383</updated>
+    </task>
+    <task id="LOCAL-00021" summary="0102.1 - fuck">
+      <created>1585124595488</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1585124595488</updated>
+    </task>
+    <task id="LOCAL-00022" summary="0103 - not showing TEMP_EVENTs / profPic setting enhanced">
+      <created>1585125074428</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1585125074428</updated>
+    </task>
+    <task id="LOCAL-00023" summary="0104 - auto resize textView">
+      <created>1585128499626</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1585128499626</updated>
+    </task>
+    <task id="LOCAL-00024" summary="0104.1 - event cardView size still sucks!">
+      <created>1585131677160</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1585131677160</updated>
+    </task>
+    <task id="LOCAL-00025" summary="0105 - delete Contact added">
+      <created>1585199919359</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1585199919359</updated>
+    </task>
+    <task id="LOCAL-00026" summary="105.1 - fu">
+      <created>1585207008279</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1585207008279</updated>
+    </task>
+    <task id="LOCAL-00027" summary="105.5 - transferred contextMenu to adapter">
+      <created>1585207645002</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1585207645002</updated>
+    </task>
+    <task id="LOCAL-00028" summary="106 - transferred ViewHolder out of the Adaptor">
+      <created>1585218874325</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1585218874325</updated>
+    </task>
+    <task id="LOCAL-00029" summary="107 - Added OnLongClickListener to ViewHolder / Contact Delete Option">
+      <created>1585224795962</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1585224795962</updated>
+    </task>
+    <task id="LOCAL-00030" summary="108 - added Contact Edit option / Fixed db updateContact() method">
+      <created>1585232321648</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1585232321648</updated>
+    </task>
+    <task id="LOCAL-00031" summary="109 - rectangles (result) are enhanced">
+      <created>1585287597749</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1585287597749</updated>
+    </task>
+    <task id="LOCAL-00032" summary="110 - fixed margins/ sized">
+      <created>1585297486647</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1585297486647</updated>
+    </task>
+    <task id="LOCAL-00033" summary="110.5 - color">
+      <created>1585311289983</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1585311289983</updated>
+    </task>
+    <task id="LOCAL-00034" summary="111 - changed money amount algorithm to Decimals">
+      <created>1585467407340</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1585467407340</updated>
+    </task>
+    <task id="LOCAL-00035" summary="112 -  Decimal algorithm enhanced">
+      <created>1585470696359</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1585470696359</updated>
+    </task>
+    <task id="LOCAL-00036" summary="113 - add each partic just once, but bug happened">
+      <created>1585473877347</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1585473877347</updated>
+    </task>
+    <task id="LOCAL-00037" summary="f u">
+      <created>1585475205197</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1585475205197</updated>
+    </task>
+    <task id="LOCAL-00038" summary="f u2">
+      <created>1585564117252</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1585564117252</updated>
+    </task>
+    <task id="LOCAL-00039" summary="114 - bug fixed/ eventFinal recView orientation updated">
+      <created>1585565781584</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1585565781584</updated>
+    </task>
+    <task id="LOCAL-00040" summary="115 - fixed Event cardView sizes  AND a bug in diffDong">
+      <created>1585570568128</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1585570568128</updated>
+    </task>
+    <task id="LOCAL-00041" summary="116 - onBackPressed is OK, but bug happened">
+      <created>1585580039103</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1585580039103</updated>
+    </task>
+    <task id="LOCAL-00042" summary="117 - Toolbars are ok">
+      <created>1585641970354</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1585641970354</updated>
+    </task>
+    <task id="LOCAL-00043" summary="118 - saves Expense directly after getting debts from DiffDongActivity">
+      <created>1585644841738</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1585644841738</updated>
+    </task>
+    <task id="LOCAL-00044" summary="119 - colors">
+      <created>1585743977029</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1585743977029</updated>
+    </task>
+    <task id="LOCAL-00045" summary="f u c">
+      <created>1585761516390</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1585761516390</updated>
+    </task>
+    <task id="LOCAL-00046" summary="122 - icons completed &amp;&amp; def event &amp; contact got enhanced">
+      <created>1585762632656</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1585762632656</updated>
+    </task>
+    <task id="LOCAL-00047" summary="dfasfg">
+      <created>1585826199576</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1585826199577</updated>
+    </task>
+    <task id="LOCAL-00048" summary="123.5 - ...">
+      <created>1586259423775</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1586259423775</updated>
+    </task>
+    <task id="LOCAL-00049" summary="123.6 - added Intro Slider">
+      <created>1586332260506</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1586332260506</updated>
+    </task>
+    <task id="LOCAL-00050" summary="124 - added tapTarget">
+      <created>1586850121184</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1586850121185</updated>
+    </task>
+    <task id="LOCAL-00051" summary="125 - added tapTarget runTurn in Shared pref">
+      <created>1587108924937</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1587108924938</updated>
+    </task>
+    <task id="LOCAL-00052" summary="126 - made first time Tutorial">
+      <created>1587370654589</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1587370654590</updated>
+    </task>
+    <task id="LOCAL-00053" summary="126.5 - made first time Tutorial">
+      <created>1587385684707</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1587385684707</updated>
+    </task>
+    <task id="LOCAL-00054" summary="127 - release 1.4_beta">
+      <created>1587401236361</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1587401236361</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="mipmap-xxhdpi___and_5_more - 2020.04.20 at 15h 05m 48s.xml">
+      <configuration name="mipmap-xxhdpi.* and 5 more" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="mipmap-xxhdpi___and_5_more - 2020.04.20 at 15h 07m 44s.xml">
+      <configuration name="mipmap-xxhdpi.* and 5 more" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="mipmap-xxhdpi___and_5_more - 2020.04.20 at 15h 09m 57s.xml">
+      <configuration name="mipmap-xxhdpi.* and 5 more" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="mipmap-xxhdpi___and_5_more - 2020.04.20 at 15h 10m 08s.xml">
+      <configuration name="mipmap-xxhdpi.* and 5 more" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="7" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49861112" visible="true" weight="0.20244215" />
+      <window_info id="Structure" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info id="Image Layers" order="4" />
+      <window_info id="Designer" order="5" />
+      <window_info id="Resources Explorer" order="6" />
+      <window_info id="Capture Tool" order="7" />
+      <window_info id="Build Variants" order="8" sideWeight="0.5013889" side_tool="true" weight="0.20244215" />
+      <window_info anchor="bottom" id="Messages" order="0" weight="0.32916668" />
+      <window_info anchor="bottom" id="Run" order="1" weight="0.26527777" />
+      <window_info anchor="bottom" id="Logcat" order="2" sideWeight="0.49807197" weight="0.7375" />
+      <window_info anchor="bottom" id="TODO" order="3" weight="0.32916668" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.32916668" />
+      <window_info anchor="bottom" id="Terminal" order="5" />
+      <window_info anchor="bottom" id="Event Log" order="6" sideWeight="0.50192803" side_tool="true" weight="0.38333333" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32916668" />
+      <window_info anchor="bottom" id="Build" order="8" weight="0.56805557" />
+      <window_info anchor="bottom" id="Android Profiler" order="9" />
+      <window_info anchor="bottom" id="Find" order="10" weight="0.32916668" />
+      <window_info anchor="right" id="Coverage" order="0" sideWeight="0.5013889" side_tool="true" weight="0.17609255" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Gradle" order="2" weight="0.32969153" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info anchor="right" id="Preview" order="4" sideWeight="0.49861112" weight="0.34640104" />
+      <window_info anchor="right" id="Palette&#9;" order="5" />
+      <window_info anchor="right" id="Assistant" order="6" weight="0.32969153" />
+      <window_info anchor="right" id="Codota" order="7" visible="true" weight="0.32969153" />
+      <window_info anchor="right" id="Device File Explorer" order="8" sideWeight="0.5013889" side_tool="true" weight="0.29820052" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="109 - rectangles (result) are enhanced" />
+    <MESSAGE value="110 - fixed margins/ sized" />
+    <MESSAGE value="110.5 - color" />
+    <MESSAGE value="111 - changed money amount algorithm to Decimals" />
+    <MESSAGE value="112 -  Decimal algorithm enhanced" />
+    <MESSAGE value="113 - add each partic just once, but bug happened" />
+    <MESSAGE value="f u" />
+    <MESSAGE value="f u2" />
+    <MESSAGE value="114 - bug fixed/ eventFinal recView orientation updated" />
+    <MESSAGE value="115 - Event cardView sizes fixed" />
+    <MESSAGE value="115 - fixed Event cardView sizes  AND a bug in diffDong" />
+    <MESSAGE value="116 - onBackPressed is OK, but bug happened" />
+    <MESSAGE value="117 - Toolbars are ok" />
+    <MESSAGE value="118 - saves Expense directly after getting debts from DiffDongActivity" />
+    <MESSAGE value="119 - colors" />
+    <MESSAGE value="f u c" />
+    <MESSAGE value="122 - icons completed &amp;&amp; def event &amp; contact got enhanced" />
+    <MESSAGE value="dfasfg" />
+    <MESSAGE value="123.5 - ..." />
+    <MESSAGE value="123.6 - added Intro Slider" />
+    <MESSAGE value="124 - added tapTarget" />
+    <MESSAGE value="125 - added tapTarget runTurn in Shared pref" />
+    <MESSAGE value="126 - made first time Tutorial" />
+    <MESSAGE value="126.5 - made first time Tutorial" />
+    <MESSAGE value="127 - release 1.4_beta" />
+    <option name="LAST_COMMIT_MESSAGE" value="127 - release 1.4_beta" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/fragments/ContactsFragment.java</url>
+          <line>96</line>
+          <properties />
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/web_db_pref/DatabaseHelper.java</url>
+          <line>291</line>
+          <properties />
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/web_db_pref/DatabaseHelper.java</url>
+          <line>298</line>
+          <properties />
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/ParticeResultActivity.java</url>
+          <line>132</line>
+          <properties />
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/MyAdapter.java</url>
+          <line>234</line>
+          <properties />
+          <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/Routines.java</url>
+          <line>277</line>
+          <properties />
+          <option name="timeStamp" value="88" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/AddEventFinalActivity.java</url>
+          <line>211</line>
+          <properties />
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/DiffDongActivity.java</url>
+          <line>219</line>
+          <properties />
+          <option name="timeStamp" value="99" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/DiffDongActivity.java</url>
+          <line>220</line>
+          <properties />
+          <option name="timeStamp" value="100" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/DiffDongActivity.java</url>
+          <line>221</line>
+          <properties />
+          <option name="timeStamp" value="101" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/DiffDongActivity.java</url>
+          <line>222</line>
+          <properties />
+          <option name="timeStamp" value="102" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/fragments/EventsFragment.java</url>
+          <line>254</line>
+          <properties />
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/AddExpenseActivity.java</url>
+          <line>769</line>
+          <properties />
+          <option name="timeStamp" value="116" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/AddExpenseActivity.java</url>
+          <line>786</line>
+          <properties />
+          <option name="timeStamp" value="117" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/AddExpenseActivity.java</url>
+          <line>228</line>
+          <properties class="com.example.pedarkharj_edit3.pages.AddExpenseActivity">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/edit3$mipmap_xxhdpi___and_5_more.ic" NAME="mipmap-xxhdpi.* and 5 more Coverage Results" MODIFIED="1587378940522" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/SliderPagerAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/Routines.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="321" selection-start-line="321" selection-end-line="322" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/AddEventFinalActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/EachExpenseDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-357">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/EventDetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-609">
+          <caret line="31" column="13" selection-start-line="31" selection-start-column="13" selection-end-line="31" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/ParticeResultActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/AddContactActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5c782c1cdf9030a1479568ab9cdf40c9/jetified-spotlight-1.0.1/res/values/values.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c803aa572a41a3605f6251f722021206/jetified-sundatepicker-2.1.2/res/values/values.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="49" column="18" selection-start-line="49" selection-start-column="18" selection-end-line="49" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e48a6023bfa752ecc1cf22582820fda8/materialish-progress-1.7/res/values/values.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="1" column="39" selection-start-line="1" selection-start-column="39" selection-end-line="1" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/fragments/SliderItemFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="34" column="29" selection-start-line="34" selection-start-column="29" selection-end-line="34" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_partice_result.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_intro.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="458">
+          <caret line="43" column="17" lean-forward="true" selection-start-line="43" selection-start-column="17" selection-end-line="43" selection-end-column="17" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_event_detail_each_expense.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_event_detail.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_diff_dong.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/dimens.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="30" lean-forward="true" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="172" column="60" selection-start-line="172" selection-start-column="60" selection-end-line="172" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/fragments/ContactsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="422" column="46" selection-start-line="422" selection-start-column="42" selection-end-line="422" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/fragments/HomeFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="381" column="43" selection-start-line="381" selection-start-column="43" selection-end-line="381" selection-end-column="43" />
+          <folding>
+            <element signature="e#15956#16479#0" expanded="true" />
+            <element signature="e#16478#16479#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/AddEventParticesActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/DiffDongActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="415" column="46" selection-start-line="415" selection-start-column="42" selection-end-line="415" selection-end-column="46" />
+          <folding>
+            <element signature="method#initRectangleAbove#0;class#DiffDongActivity#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/IntroActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="60" column="1" lean-forward="true" selection-start-line="60" selection-start-column="1" selection-end-line="60" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_buyer.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_contacts.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_slider_item.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="530">
+          <caret line="49" column="40" selection-start-line="49" selection-start-column="40" selection-end-line="49" selection-end-column="40" />
+          <folding>
+            <element signature="e#1565#1577#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="83" column="16" selection-start-line="83" selection-start-column="16" selection-end-line="83" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sample_contact.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sample_diff_dong__cash_mode.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sample_diff_dong__dong_mode.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sample_each_expense.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sample_each_expense_2.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sample_event.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="54" selection-start-line="2" selection-start-column="54" selection-end-line="2" selection-end-column="54" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sample_my_result.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sample_partice_dong.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="32" lean-forward="true" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+          <folding>
+            <element signature="e#326#336#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sample_participant.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/sample_conntacts_horizental.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_home.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_add_expense.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="60" column="36" selection-start-line="60" selection-start-column="36" selection-end-line="60" selection-end-column="36" />
+          <folding>
+            <element signature="e#7029#7811#0" />
+            <element signature="e#7825#8556#0" />
+            <element signature="e#8570#9303#0" />
+            <element signature="e#9317#10655#0" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/reports/lint-results-release-fatal.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-756" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/reports/lint-results-release-fatal.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../mSdk/sources/android-28/android/app/Dialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="147" column="11" selection-start-line="147" selection-start-column="11" selection-end-line="147" selection-end-column="11" />
+          <folding>
+            <element signature="e#5118#5119#0" expanded="true" />
+            <element signature="e#5156#5157#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/fragments/EventsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="364" column="16" selection-start-line="364" selection-start-column="16" selection-end-line="364" selection-end-column="16" />
+          <folding>
+            <element signature="method#onResume#0;class#EventsFragment#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="140" column="12" lean-forward="true" selection-start-line="140" selection-start-column="12" selection-end-line="140" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/classes/BuyerDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="106" column="84" lean-forward="true" selection-start-line="106" selection-start-column="84" selection-end-line="106" selection-end-column="84" />
+          <folding>
+            <element signature="method#doRecyclerView#0;class#BuyerDialog#0" />
+            <element signature="method#goToSelectedEvent#0;class#BuyerDialog#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/pedarkharj_edit3/pages/AddExpenseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="887" column="13" lean-forward="true" selection-start-line="887" selection-start-column="13" selection-end-line="887" selection-end-column="13" />
+          <folding>
+            <element signature="e#4469#4576#1" />
+            <element signature="e#4693#4799#1" />
+            <element signature="class#5093:6277" />
+            <element signature="e#6338#6929#0" />
+            <element signature="e#6385#6728#1" />
+            <marker date="1587402668510" expanded="true" signature="2284:3783" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
