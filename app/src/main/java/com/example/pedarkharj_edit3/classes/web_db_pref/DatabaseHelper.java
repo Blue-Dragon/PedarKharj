@@ -890,17 +890,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param expenseId : the id of the expense group you are using.
      * @param userId : the id of  the user you wanna know about.
      */
-    public float getParticeDebt(float expenseId, float userId){
+    public float getParticeDebt(int expenseId, int userId){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES +
                 " WHERE " + KEY_EXPENSE_ID + " = " + expenseId +
                 " AND " + KEY_USER_ID + " = "+ userId;
         Log.e(LOG, selectQuery);
+//        Log.d("updateParticeDebtQ", selectQuery);
+
 
         Cursor c = db.rawQuery(selectQuery, null);
         if (c.moveToFirst()){
             return c.getFloat(c.getColumnIndex(KEY_EXPENSE_DEBT));
+
         }else return -1;
     }
 

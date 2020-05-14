@@ -112,8 +112,8 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                     });
                     minus.setOnClickListener(item -> {
                         if (userDong > 1){
-                            tv.setText(String.valueOf(--userDong));
-                            tvC2.setText(String.valueOf(--dongsNumber));
+                            tv.setText(Routines.getRoundFloatString(--userDong));
+                            tvC2.setText(Routines.getRoundFloatString(--dongsNumber));
                             doDongStuff(user, userDong, dongsNumber);
 //                        Log.i("fuck013", "id " +user.getId()+ ": " +userDong + "");
 

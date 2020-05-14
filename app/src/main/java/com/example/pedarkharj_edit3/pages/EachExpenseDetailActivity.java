@@ -157,9 +157,9 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
                         .setMessage("این اطلاعات از دم نیست و نابود میشن هااا !")
                         .setPositiveButton("پاک کن بره داداش", (dialogInterface, i1) -> {
 
-                            db.deleteExpenseGroupByExpenseId(theExpense.getExpenseId());
                             //update partices' total debts
                             updatePartice();
+                            db.deleteExpenseGroupByExpenseId(theExpense.getExpenseId());
 
                             onBackPressed();
                         })
@@ -185,11 +185,15 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
     private void updatePartice() {
         float debt;
         float expense;
+        float newDebt;
 
         for (Participant participant : participantList){
             debt = db.getParticeDebt(theExpense.getExpenseId(), participant.getId());
-            float newDebt = Routines.getRoundFloat(participant.getDebt() - debt);
-            participant.setDebt(newDebt);
+
+            if (debt > -1){
+                newDebt = Routines.getRoundFloat(participant.getDebt() - debt);
+                participant.setDebt(newDebt);
+            }
 
             if (participant.getContact().getId() == theExpense.getBuyer().getContact().getId()){
                 expense = participant.getExpense() - theExpense.getExpensePrice();
@@ -200,6 +204,9 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
         }
         db.updateParticipants(participantList);
         myCallBack.refreshMainActivity(Routines.HOME); //reset and update Home
+
+        Log.d("updateParticeDebt", "_END_");
+
     }
 
 
