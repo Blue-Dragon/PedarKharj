@@ -309,9 +309,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 tvR2.setText( Routines.getRoundFloatString(myExpenses));
                 tvC2.setText(Routines.getRoundFloatString(myDebt));
 
-                tvL2.setText(Routines.getRoundFloatString(myExpenses - myDebt));
+                //
+                float result = myExpenses - myDebt;
+                String resultFloatString = Routines.getRoundFloatString(result);
 
+                if (result > 0) resultFloatString = "+"+resultFloatString;
+                tvL2.setText(resultFloatString);
                 Routines.setTextColor(mContext, tvL2, tvL2.getText().toString());
+
+                String resultTxt = result>=0 ? "طلب من" : "بدهی من" ;
+                tvL1.setText(resultTxt);
             }
         }
 

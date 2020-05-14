@@ -125,11 +125,11 @@ public class Expense {
      * @param db (DatabaseHelper)
      * @return expenseId (int)
      */
-    public int setExpenseIdByOrder(DatabaseHelper db){
-        int lastExpenseId = db.getLastExpenseId();
-        if (lastExpenseId < 1) this.expenseId = 1;
-        else this.expenseId = lastExpenseId + 1;
-
-        return expenseId;
-    }
+//    public int setExpenseIdByOrder(DatabaseHelper db){
+//        int lastExpenseId = db.getLastExpenseId();
+//        if (lastExpenseId < 1) this.expenseId = 1;
+//        else this.expenseId = lastExpenseId + 1;
+//
+//        return expenseId;
+//    }
 }

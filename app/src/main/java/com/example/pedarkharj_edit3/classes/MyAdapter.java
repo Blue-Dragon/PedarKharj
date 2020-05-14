@@ -354,11 +354,6 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
                 float debt = db.getParticeDebt(mExpense.getExpenseId(), participant.getId());
                 holder.resultTxt.setText(Routines.getRoundFloatString(debt));
                 holder.resultTxt.setTextColor(mContext.getResources().getColor(R.color.primaryTextColor));
-//                //update partices' total debts
-//                float newDebt = Routines.getRoundFloat(participant.getDebt() - debt);
-//                participant.setDebt(newDebt);
-//                if (participant.getContact().getId() == mExpense.getBuyer().getContact().getId())  participant.setExpense(participant.getExpense() - mExpense.getExpensePrice());
-//                db.updatePartice(participant);
             }
 
 

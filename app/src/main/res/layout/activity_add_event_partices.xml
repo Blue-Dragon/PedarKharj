@@ -72,16 +72,32 @@
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal">
 
+            <RelativeLayout
+                android:id="@+id/rl3"
+                android:layout_width="wrap_content"
+                android:layout_height="76dp"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:paddingBottom="2dp"
+                android:paddingTop="2dp"
+                android:layout_marginRight="-12dp"
+                android:layout_marginLeft="@dimen/s_m"
+                >
+
+                <include layout="@layout/sample_contact" />
+            </RelativeLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_01"
                 android:layout_width="match_parent"
                 android:layout_height="76dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_toRightOf="@id/rl3"
+                android:layout_gravity="center"
                 android:layout_marginTop="5dp"
+                android:paddingBottom="2dp"
                 android:paddingTop="2dp"
                 android:paddingLeft="@dimen/s_m"
-                android:paddingBottom="2dp"
                 tools:itemCount="4"
                 tools:layoutManager="GridLayoutManager"
                 tools:listitem="@layout/sample_contact"

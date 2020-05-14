@@ -20,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.R;
@@ -51,6 +52,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
     RecyclerView recyclerView_horizental, selected_recView;
     FloatingActionButton fab;
     ImageView backBtn;
+    RelativeLayout meRl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,7 +195,10 @@ public class AddEventParticesActivity extends AppCompatActivity {
         recyclerView_horizental = findViewById(R.id.rv);
         selected_recView = findViewById(R.id.rv_01);
         fab = this.findViewById(R.id.fab);
+        meRl = findViewById(R.id.rl3);
 
+        ImageView img = meRl.findViewById(R.id.prof_pic);
+        setGrayScale(img);
 
         db = new DatabaseHelper(mContext);
         contacts = db.getAllContacts();
@@ -216,6 +221,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
             edit_mode = true;
             existedEvent = db.getEventById(curEventId);
             selectedPartices = db.getAllParticeUnderEvent(curEventId);
+            meRl.setVisibility(View.GONE);
 
             existedContacts = getContacts(selectedPartices);
             //don't show `me` on contacts
@@ -223,7 +229,6 @@ public class AddEventParticesActivity extends AppCompatActivity {
             if (me!=null) selectedContactsNew.remove(me);
 
             selectedContactsNew = getContacts(selectedPartices); //then we delete common contacts in both lists
-
         }
 
     }
@@ -376,5 +381,10 @@ public class AddEventParticesActivity extends AppCompatActivity {
     }
 
 
+    private void setGrayScale(ImageView imageView){
+        ColorMatrix matrix = new ColorMatrix();
+        matrix.setSaturation(0.01f);
+        imageView.setColorFilter(new ColorMatrixColorFilter(matrix));
+    }
 
 }

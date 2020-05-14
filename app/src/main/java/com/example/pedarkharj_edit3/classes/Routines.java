@@ -391,6 +391,8 @@ public class Routines  {
         }
 
         result = intPart + decimalPart;
+//        if (f > 0)
+//            result = "+"+result;
         return result;
     }
 
@@ -430,6 +432,7 @@ public class Routines  {
     }
 
     public static void setTextColor (Context mcContext, TextView tv, String s){
+
         if (s.contains("+"))
             tv.setTextColor(mcContext.getResources().getColor(R.color.green_plus));
         else if (s.contains("-"))

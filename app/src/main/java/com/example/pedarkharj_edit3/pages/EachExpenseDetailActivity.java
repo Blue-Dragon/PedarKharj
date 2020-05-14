@@ -45,7 +45,7 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
     MyAdapter adaptor;
     Expense theExpense;
     DatabaseHelper db;
-    TextView dateTv, priceTv;
+    TextView dateTv, priceTv, particeNameTv, expenseTitleTv;
     FloatingActionButton editFabBtn;
     ImageView deleteBtn;
 
@@ -98,6 +98,9 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
         priceTv = findViewById(R.id.tv_price);
         deleteBtn = findViewById(R.id.delete_btn);
         editFabBtn =  findViewById(R.id.fab);
+        particeNameTv = findViewById(R.id.partic_name);
+        expenseTitleTv = findViewById(R.id.expense_title);
+
         //--------------------
         int expenseId;
         Intent i = getIntent();
@@ -126,6 +129,8 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
         String price = Routines.getRoundFloatString(theExpense.getExpensePrice());
         priceTv.setText(price + "  تومان");
         dateTv.setText(theExpense.getCreated_at());
+        expenseTitleTv.setText(theExpense.getExpenseTitle());
+        particeNameTv.setText(theExpense.getBuyer().getName());
 
     }
     //-------------------------     RecyclerView    --------------------------//

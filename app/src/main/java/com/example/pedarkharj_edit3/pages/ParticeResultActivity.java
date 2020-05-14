@@ -149,10 +149,19 @@ public class ParticeResultActivity extends AppCompatActivity {
         if (participants.size() > 0) {
             float mExpenses = db.getParticTotalExpensePriceByParticeId(selectedPartic.getId());
             float mDebt = db.getAllParticDebtsByParticeId(selectedPartic.getId());
-            float allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
+//            float allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
             tvR2.setText(Routines.getRoundFloatString(mExpenses));
             tvC2.setText(Routines.getRoundFloatString(mDebt));
-            tvL2.setText(Routines.getRoundFloatString(mExpenses - mDebt));
+
+            float result = mExpenses - mDebt;
+            String resultFloatString = Routines.getRoundFloatString(result);
+
+            if (result > 0) resultFloatString = "+"+resultFloatString;
+            tvL2.setText(resultFloatString);
+            Routines.setTextColor(mContext, tvL2, tvL2.getText().toString());
+
+            String resultTxt = result>=0 ? "طلب" : "بدهی" ;
+            tvL1.setText(resultTxt);
         }
     }
 

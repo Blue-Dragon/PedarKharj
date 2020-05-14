@@ -13,6 +13,7 @@ import com.example.pedarkharj_edit3.classes.models.Expense;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.PersianDate;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Event table create statement
     private static final String CREATE_TABLE_EVENT = "CREATE TABLE IF NOT EXISTS "
             + TABLE_EVENTS
-            + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
+            + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + KEY_EVENT_NAME + " TEXT,"
             + KEY_EVENT_BMP + " TEXT,"
             + KEY_CREATED_AT + " DATETIME" + ")";
@@ -85,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TABLE_PARTICES
             + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
             + KEY_EVENT_NAME + " TEXT," //todo: redundant! may cuase bugs
-            + KEY_EVENT_ID + " INTEGER,"
+            + KEY_EVENT_ID + " INTEGER ,"
             + KEY_PARTICE_NAME + " TEXT," //todo: redundant! may cuase bugs
             + KEY_CONTACT_ID + " INTEGER,"
             + KEY_PARTICE_EXPENSE + " REAL,"
@@ -97,7 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_EXPENSES = "CREATE TABLE IF NOT EXISTS "
             + TABLE_EXPENSES
             + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
-            + KEY_EXPENSE_ID + " INTEGER,"
+            + KEY_EXPENSE_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT,"
             + KEY_EVENT_ID + " INTEGER,"
             + KEY_BUYER_ID + " INTEGER,"
             + KEY_USER_ID + " INTEGER,"
@@ -890,7 +891,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param expenseId : the id of the expense group you are using.
      * @param userId : the id of  the user you wanna know about.
      */
-    public float getParticeDebt(int expenseId, int userId){
+    public float getParticeDebt( int expenseId, int userId){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES +
@@ -917,6 +918,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Integer> expenseIds = new ArrayList<>();
 
         String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_EVENT_ID + " = " + event.getId();
+        Log.e(LOG, selectQuery);
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c.moveToFirst()){
+            do {
+                //we get them each time, cuz we won't know if some ids have been deleted by then.
+                int newExpenseId = c.getInt(c.getColumnIndex(KEY_EXPENSE_ID));
+                if (!expenseIds.contains(newExpenseId))
+                    expenseIds.add(newExpenseId);
+            } while (c.moveToNext());
+        }
+
+        Log.e("getAllExpensesOfEvent", "********************************************************* ");
+
+        // getting each expense
+        for (int expenseId : expenseIds) {
+            expenseList.add( getExpenseByExpenseId(expenseId) );
+        }
+        return expenseList;
+    }
+    public List<Expense> getAllExpensesOfEvent(int eventId) {
+        List<Expense> expenseList = new ArrayList<>();
+        List<Integer> expenseIds = new ArrayList<>();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_EXPENSES + " WHERE " + KEY_EVENT_ID + " = " + eventId;
         Log.e(LOG, selectQuery);
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -1092,6 +1120,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // now delete the Partic
         db.delete(TABLE_EXPENSES, KEY_EXPENSE_ID + " = ?",
                 new String[] { String.valueOf(expenseId) });
+    }
+
+    /**
+     * deleting all expense groups under Event
+     */
+    public void deleteAllExpenseGroupsUnderEvent(int eventId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        List<Expense> expenseList = getAllExpensesOfEvent(eventId);
+        for (Expense expense : expenseList){
+            deleteExpenseGroupByExpenseId(expense.getExpenseId());
+        }
     }
 
 

@@ -251,7 +251,9 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
                 dialog.setTitle("پاک کنم؟")
                         .setMessage("این اطلاعات از دم نیست و نابود میشن هااا !")
                         .setPositiveButton("پاک کن بره داداش", (dialogInterface, i1) -> {
+
                             for (Event event : selectionList){
+                                db.deleteAllExpenseGroupsUnderEvent(event.getId());
                                 db.deleteEvent(event, true);
 //                                Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
                                 if (event.getId() == HomeFragment.lastSeenEventId){
@@ -259,6 +261,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
                                     Toast.makeText(mContext, "رویداد "+ event.getEventName() + " پاک شد", Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                             restartPage(mActivity, Routines.EVENTS);
                         })
                         .setNegativeButton("نه، بی خیال!", (dialogInterface, i1) -> {})
