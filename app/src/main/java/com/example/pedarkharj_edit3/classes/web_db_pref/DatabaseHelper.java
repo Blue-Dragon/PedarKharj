@@ -75,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Event table create statement
     private static final String CREATE_TABLE_EVENT = "CREATE TABLE IF NOT EXISTS "
             + TABLE_EVENTS
-            + "(" + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "(" + KEY_ID + " INTEGER PRIMARY KEY ,"
             + KEY_EVENT_NAME + " TEXT,"
             + KEY_EVENT_BMP + " TEXT,"
             + KEY_CREATED_AT + " DATETIME" + ")";
@@ -98,7 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_EXPENSES = "CREATE TABLE IF NOT EXISTS "
             + TABLE_EXPENSES
             + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
-            + KEY_EXPENSE_ID + " INTEGER  PRIMARY KEY AUTOINCREMENT,"
+            + KEY_EXPENSE_ID + " INTEGER,"
             + KEY_EVENT_ID + " INTEGER,"
             + KEY_BUYER_ID + " INTEGER,"
             + KEY_USER_ID + " INTEGER,"

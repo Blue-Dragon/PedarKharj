@@ -247,7 +247,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
             //we will need all users later, so we set debt = 0 fot non users here:
 
             expense = editMode ? sentExpense : new Expense();
-//            if (!editMode) expense.setExpenseIdByOrder(db);
+            if (!editMode) expense.setExpenseIdByOrder(db);
             expense.setEvent(curEvent);
             expense.setBuyer(buyer);
             expense.setUserPartics(selectedListPartices);
