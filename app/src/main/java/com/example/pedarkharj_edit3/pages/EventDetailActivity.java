@@ -194,6 +194,7 @@ public class EventDetailActivity extends AppCompatActivity  {
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-        finish();
+//        finish();
+    Routines.backToHome(mActivity);
     }
 }

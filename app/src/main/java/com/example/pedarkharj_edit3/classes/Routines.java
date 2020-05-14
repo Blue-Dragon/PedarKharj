@@ -437,4 +437,12 @@ public class Routines  {
         else
             tv.setTextColor(mcContext.getResources().getColor(R.color.primaryTextColor));
     }
+
+    public static void backToHome(Activity mActivity){
+        MainActivity.navPosition = Routines.HOME;
+        Intent intent = new Intent(mActivity, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        mActivity.startActivity(intent);
+    }
+
 }

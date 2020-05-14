@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -60,6 +62,14 @@ public class ParticeResultActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                Expense expense = expenseList.get(position);
+                Log.d("theExpense",  ".");
+                Log.d("theExpense", "sent: "+ expense.getExpenseId() + "");
+
+                Intent i = new Intent(mContext, EachExpenseDetailActivity.class);
+                i.putExtra(Routines.SEND_EXPENSE_ID_INTENT, expense.getExpenseId());
+                startActivity(i);
+                finish();
             }
 
             @Override
@@ -144,6 +154,11 @@ public class ParticeResultActivity extends AppCompatActivity {
             tvC2.setText(Routines.getRoundFloatString(myExpenses));
             tvR2.setText(Routines.getRoundFloatString(myExpenses - myDebt));
         }
+    }
 
+    @Override
+    public void onBackPressed() {
+//
+        Routines.backToHome(mActivity);
     }
 }
