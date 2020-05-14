@@ -75,7 +75,7 @@ public class EventDetailActivity extends AppCompatActivity  {
                 Log.d("theExpense", "sent: "+ expense.getExpenseId() + "");
 
                 Intent i = new Intent(mContext, EachExpenseDetailActivity.class);
-                i.putExtra(Routines.SEND_EXPENSE_ID_INTENT, expense.getExpenseId());
+                i.putExtra(Routines.SEND_EXPENSE_ExpenseID_INTENT, expense.getExpenseId());
                 startActivity(i);
                 finish();
             }

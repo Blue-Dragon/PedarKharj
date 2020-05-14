@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
@@ -25,17 +24,12 @@ import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.MyCallBack;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
 import com.example.pedarkharj_edit3.classes.Routines;
-import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Expense;
 import com.example.pedarkharj_edit3.classes.models.Participant;
 import com.example.pedarkharj_edit3.classes.web_db_pref.DatabaseHelper;
-import com.example.pedarkharj_edit3.classes.web_db_pref.SharedPrefManager;
-import com.example.pedarkharj_edit3.pages.fragments.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
-
-import static com.example.pedarkharj_edit3.classes.Routines.restartPage;
 
 /**
  * Each Expense added in an Event has least one buyer.
@@ -107,7 +101,7 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
         //--------------------
         int expenseId;
         Intent i = getIntent();
-        expenseId = i.getIntExtra(Routines.SEND_EXPENSE_ID_INTENT, 0);
+        expenseId = i.getIntExtra(Routines.SEND_EXPENSE_ExpenseID_INTENT, 0);
         Log.d("theExpense", "received: "+ expenseId );
         if (expenseId > 0){
             theExpense = db.getExpenseByExpenseId(expenseId);
@@ -172,8 +166,12 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
 
             case R.id.fab:
                 //edit
-
+                Intent i = new Intent(mActivity, AddExpenseActivity.class);
+                i.putExtra(Routines.SEND_EXPENSE_ExpenseID_INTENT, theExpense.getExpenseId());
+                startActivity(i);
+                finish();
                 break;
+
             default:
                 break;
         }

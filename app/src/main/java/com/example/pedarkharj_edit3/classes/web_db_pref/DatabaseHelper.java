@@ -1081,6 +1081,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allExpenses;
     }
 
+
     /**
      * deleting an expense group
      * @param  expenseId (`expenseId`, not `id` of an inner expense/debt)

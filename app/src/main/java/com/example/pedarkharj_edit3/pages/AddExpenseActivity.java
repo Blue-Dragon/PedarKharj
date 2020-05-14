@@ -115,9 +115,14 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     PersianDate todayDate;
     Switch aSwitch;
 
-    int particId;
+    int buyerId;
     Participant buyer;
     DatabaseHelper db;
+
+    //Edit Mode
+    private int sentExpenseId;
+    private boolean editMode = false;
+    private Expense sentExpense ;
 
 
     // -----------------------------       OnCreate        --------------------------------//
@@ -238,11 +243,11 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
 
         if (price > 0){
             String priceTitle = dongEText.getText().toString().trim();
-
+            Expense expense;
             //we will need all users later, so we set debt = 0 fot non users here:
 
-            Expense expense = new Expense();
-            expense.setExpenseIdByOrder(db);
+            expense = editMode ? sentExpense : new Expense();
+            if (!editMode) expense.setExpenseIdByOrder(db);
             expense.setEvent(curEvent);
             expense.setBuyer(buyer);
             expense.setUserPartics(selectedListPartices);
@@ -253,10 +258,15 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                 expense.setExpenseDebts(Routines.getRoundFloat(price/ selectedListPartices.size()));
             else expense.setExpenseDebts(Routines.getRoundFloatList(expenseDebtsList));  //diff dong mode
 
-            db.addExpense(expense);
+//            if (editMode)
+//                db.updateExpense(expense);
+//            else
+                db.addExpense(expense);
+
             startActivity(new Intent(mContext,  MainActivity.class));
             finish();
-        } else Toast.makeText(mContext, "لطفا هزینه خرج را وارد کنید", Toast.LENGTH_SHORT).show();
+        }
+        else Toast.makeText(mContext, "لطفا هزینه خرج را وارد کنید", Toast.LENGTH_SHORT).show();
 
 
     }
@@ -335,18 +345,27 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         buttonNumber8 = (Button) findViewById(R.id.b8);
         buttonNumber9 = (Button) findViewById(R.id.b9);
         //
+        //Edit Mode
+        sentExpenseId = getIntent().getIntExtra(Routines.SEND_EXPENSE_ExpenseID_INTENT, 0);
+        if (sentExpenseId > 0){
+            editMode = true;
+            sentExpense = db.getExpenseByExpenseId(sentExpenseId);
+            //
+            dongEText.setText(sentExpense.getExpenseTitle());
+            textViewInputNumbers.setText(Routines.getRoundFloatString(sentExpense.getExpensePrice()));
+        }
+
         dateBtn.setText(dateString(todayDate));
-        particId = getIntent().getIntExtra(Routines.PARTICIPANT_INFO, 0);
-        buyer = db.getParticeById(particId);
-        curEvent = buyer.getEvent();
-//        BuyerBtnTxt.setText(buyer.getName());
+        buyerId = editMode ? sentExpense.getBuyer().getId() : getIntent().getIntExtra(Routines.PARTICIPANT_INFO, 0);
+        buyer = editMode ? sentExpense.getBuyer() : db.getParticeById(buyerId) ;
+        curEvent = editMode ? sentExpense.getEvent() : buyer.getEvent();
+
         //
-        if (particId != 0)  {
+        if (buyerId != 0)  {
             String s = buyer.getContact().getId() == 1 ? "خریدم؟" : "خریده؟";
 
             dongEText.setHint("خب! " +buyer.getName() + " چی " + s);
             //if buyer has no pic, put a default pic
-//            Bitmap defPic = Routines.resizeBitmap(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile) ) ;
             Bitmap defPic = Routines.convertBitmapThumbnail1x1(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.profile) ) ;
             Bitmap bitmap = buyer.getBitmapStr() != null ? Routines.stringToBitmap(buyer.getBitmapStr() ) : defPic;
             circleImageView.setImageBitmap( bitmap );
@@ -517,7 +536,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                     }else {
                         //check participants
                         if (selectedListPartices.size() > 0)
-                            saveExpense();
+                                saveExpense();
                         else
                             Toast.makeText(mContext, "لطفا افراد شرکت کننده را انتخاب کنید.", Toast.LENGTH_SHORT).show();
                     }

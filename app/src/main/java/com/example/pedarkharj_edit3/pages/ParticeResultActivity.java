@@ -67,7 +67,7 @@ public class ParticeResultActivity extends AppCompatActivity {
                 Log.d("theExpense", "sent: "+ expense.getExpenseId() + "");
 
                 Intent i = new Intent(mContext, EachExpenseDetailActivity.class);
-                i.putExtra(Routines.SEND_EXPENSE_ID_INTENT, expense.getExpenseId());
+                i.putExtra(Routines.SEND_EXPENSE_ExpenseID_INTENT, expense.getExpenseId());
                 startActivity(i);
                 finish();
             }
@@ -147,12 +147,12 @@ public class ParticeResultActivity extends AppCompatActivity {
 //        tvL2.setText(String.valueOf(0));
         List<Participant> participants = db.getAllParticeUnderEvent(event);
         if (participants.size() > 0) {
-            float myExpenses = db.getParticTotalExpensePriceByParticeId(selectedPartic.getId());
-            float myDebt = db.getAllParticDebtsByParticeId(selectedPartic.getId());
+            float mExpenses = db.getParticTotalExpensePriceByParticeId(selectedPartic.getId());
+            float mDebt = db.getAllParticDebtsByParticeId(selectedPartic.getId());
             float allEventExpenses = db.getEventTotalExpensesByEventId(event.getId());
-            tvL2.setText(Routines.getRoundFloatString(allEventExpenses));
-            tvC2.setText(Routines.getRoundFloatString(myExpenses));
-            tvR2.setText(Routines.getRoundFloatString(myExpenses - myDebt));
+            tvR2.setText(Routines.getRoundFloatString(mExpenses));
+            tvC2.setText(Routines.getRoundFloatString(mDebt));
+            tvL2.setText(Routines.getRoundFloatString(mExpenses - mDebt));
         }
     }
 

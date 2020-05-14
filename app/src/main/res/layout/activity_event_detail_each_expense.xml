@@ -142,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/m_l"
-                android:layout_marginTop="@dimen/l"
+                android:layout_marginTop="@dimen/s"
                 android:fontFamily="@font/b_koodak"
                 android:gravity="center|left"
                 android:text="98/11/11"
@@ -215,6 +215,7 @@
                 android:layout_marginRight="@dimen/m"
                 android:layout_marginBottom="-26dp"
                 android:tint="@color/white"
+                android:visibility="gone"
                 app:srcCompat="@android:drawable/ic_menu_edit" />
 
         </RelativeLayout>
