@@ -375,21 +375,21 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
                 // 2
                 .targets(
 
-                        TapTarget.forView(fab, getString(R.string.addContactFab_title), getString(R.string.addContact_description))
-                                .outerCircleColor(R.color.colorPrimaryDark)
-                                .outerCircleAlpha(Routines.tapAlpha)
-                                .targetCircleColor(R.color.white)
-                                .titleTextSize(Routines.tapTitleSize)
-                                .titleTextColor(R.color.white)
-                                .descriptionTextSize(Routines.tapDescSize)
-                                .descriptionTextColor(R.color.bk1)
-                                .textTypeface(Typeface.SANS_SERIF)
-                                .dimColor(R.color.black).
-                                drawShadow(true)
-                                .cancelable(false)
-                                .tintTarget(false)
-                                .transparentTarget(true)
-                                .targetRadius(50),
+//                        TapTarget.forView(fab, getString(R.string.addContactFab_title), getString(R.string.addContact_description))
+//                                .outerCircleColor(R.color.colorPrimaryDark)
+//                                .outerCircleAlpha(Routines.tapAlpha)
+//                                .targetCircleColor(R.color.white)
+//                                .titleTextSize(Routines.tapTitleSize)
+//                                .titleTextColor(R.color.white)
+//                                .descriptionTextSize(Routines.tapDescSize)
+//                                .descriptionTextColor(R.color.bk1)
+//                                .textTypeface(Typeface.SANS_SERIF)
+//                                .dimColor(R.color.black).
+//                                drawShadow(true)
+//                                .cancelable(false)
+//                                .tintTarget(false)
+//                                .transparentTarget(true)
+//                                .targetRadius(50),
 
                         TapTarget.forView(view, getString(R.string.contactHold_title), getString(R.string.contactHold_description))
                                 .outerCircleColor(R.color.colorPrimaryDark)

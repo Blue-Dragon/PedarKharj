@@ -13,14 +13,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        style="@style/toolbar_style">
+        style="@style/toolbar_style"  >
 
         <ImageView
             android:id="@+id/back_btn"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/m"
-            android:layout_centerVertical="true"
+            style="@style/back_btn"
             android:src="@drawable/back" />
 
         <LinearLayout

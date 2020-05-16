@@ -9,7 +9,9 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/m_toolbar"
-        style="@style/toolbar_style">
+        style="@style/toolbar_style"
+        app:contentInsetStart="0dp"
+        app:contentInsetEnd="0dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -17,13 +19,8 @@
 
             <ImageView
                 android:id="@+id/back_btn"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="0dp"
-                android:src="@drawable/back"
-                android:contentDescription="@string/backBtnText" />
+                style="@style/back_btn"
+                android:src="@drawable/back" />
 
             <TextView
                 android:id="@+id/tv_counter"

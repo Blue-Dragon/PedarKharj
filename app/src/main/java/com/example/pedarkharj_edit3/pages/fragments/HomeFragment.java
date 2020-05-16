@@ -265,7 +265,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
             /*
              * adding partices and an event
              */
-            lastSeenEventId = (int) createEvent("رویداد پیشفرض");
+            lastSeenEventId = (int) createEvent("رویداد پیش فرض");
 
             events = db.getAllEvents();
         }

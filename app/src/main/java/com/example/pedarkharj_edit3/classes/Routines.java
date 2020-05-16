@@ -373,7 +373,7 @@ public class Routines  {
         String intPart;
 
         result = String.format (Locale.US, "%,.2f", f);
-        intPart = String.format (Locale.US, "%,.0f", f);
+        intPart = String.valueOf( (int) f);
 
         chars = result.toCharArray();
         for (int i=0; i<chars.length; i++){

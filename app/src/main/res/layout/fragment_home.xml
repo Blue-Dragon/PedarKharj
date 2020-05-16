@@ -10,7 +10,12 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/m_toolbar"
-        style="@style/toolbar_style">
+        style="@style/toolbar_style"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp"
+        >
 
         <RelativeLayout
             android:id="@+id/my_spinner"
@@ -35,6 +40,16 @@
                 android:gravity="center"
                 style="@style/medium_koodak"
                 android:text="سفر شمال"/>
+
+            <ImageView
+                android:id="@+id/upgrade_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="-4dp"
+                android:layout_marginRight="0dp"
+                app:srcCompat="@drawable/ic_upgrade" />
 
         </RelativeLayout>
 

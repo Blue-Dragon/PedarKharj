@@ -114,6 +114,11 @@
         <item name="android:elevation">2dp</item>
         <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="android:popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+
+        <item name="android:contentInsetLeft">0dp</item>
+        <item name="android:contentInsetRight">0dp</item>
+        <item name="android:contentInsetEnd">0dp</item>
+        <item name="android:contentInsetStart">0dp</item>
     </style>
     <!-- Toolbar innet textView -->
     <style name="toolbar_text_style">
@@ -128,9 +133,20 @@
         <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:fontFamily">@font/b_yekan_bold</item>
         <item name="android:textSize">18sp</item>
-
     </style>
 
+
+    <!-- back_btn -->
+    <style name="back_btn">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:paddingTop">@dimen/m</item>
+        <item name="android:paddingBottom">@dimen/m</item>
+        <item name="android:paddingLeft">@dimen/s_m</item>
+        <item name="android:paddingRight">@dimen/s</item>
+
+    </style>
     <!-- activity layout -->
     <style name="activity_layout_style">
         <item name="android:layout_width">match_parent</item>

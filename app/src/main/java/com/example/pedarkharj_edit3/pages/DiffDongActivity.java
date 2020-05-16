@@ -268,7 +268,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         spinner = findViewById(R.id.spinner);
         List<String> list = new ArrayList<String>();
         list.add("تعداد دنگ");
-        list.add("مقداد دنگ");
+        list.add("مقدار دنگ");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
