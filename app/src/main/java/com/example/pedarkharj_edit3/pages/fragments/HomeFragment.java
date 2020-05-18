@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.example.pedarkharj_edit3.classes.MyCallBack;
+import com.example.pedarkharj_edit3.pages.SupUsActivity;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -67,6 +69,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
     RelativeLayout mySpinner;
     TextView spinnerTv;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
+    ImageView upgrade_btn;
     //
 //    int sentEventId;
 
@@ -164,11 +167,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         }
     }
 
-    private void doOnClicks() {
-        cardView.setOnClickListener(this);
-        mySpinner.setOnClickListener(this);
-    }
-
     private void doInits(View view) {
         MainActivity.navPosition = Routines.HOME;
         mContext = getContext();
@@ -188,6 +186,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         mySpinner = view.findViewById(R.id.my_spinner);
         spinnerTv  = view.findViewById(R.id.spinner_tv);
         fab = view.findViewById(R.id.fab);
+        upgrade_btn = view.findViewById(R.id.upgrade_img);
 
         //the rectangle above
         tvL1 = view.findViewById(R.id.tv_title_my_expense);
@@ -205,6 +204,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         tvC1.setText("دونگ من");
         tvL1.setText("حساب من");
 
+    }
+
+    private void doOnClicks() {
+        cardView.setOnClickListener(this);
+        mySpinner.setOnClickListener(this);
+        upgrade_btn.setOnClickListener(this);
     }
 
     private void showBuyerDialog(Event curEvent) {
@@ -238,7 +243,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 startActivity(intent);
                 break;
 
+            case R.id.upgrade_img:
+                startActivity(new Intent(mActivity, SupUsActivity.class));
+                break;
+
             default:
+                break;
 //                Toast.makeText(mContext, "Wrong item clicked!", Toast.LENGTH_SHORT).show();
         }
     }

@@ -49,7 +49,8 @@ dependencies {
     implementation 'com.jaredrummler:material-spinner:1.3.1' //spinner
     implementation 'com.github.takusemba:spotlight:1.0.1' //spotlight (tutorial)
 //    implementation 'com.github.alikhaleghi76:rtl-slider:1.0.6' //RTL intro slider
-    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.0' // tapView/ showCase/ spotLight OR any  mf name you wanna call this.
+    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.13.0'
+    // tapView/ showCase/ spotLight OR any  mf name you wanna call this.
     implementation 'com.github.mancj:MaterialSearchBar:0.8.5' //Search Bar
     //RTL viewPager
     implementation 'androidx.viewpager:viewpager:1.0.0'

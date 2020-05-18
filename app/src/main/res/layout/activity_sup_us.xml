@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_contacts"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/activity_layout_style"
+    android:background="@color/white">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/m_toolbar"
+        style="@style/toolbar_style"
+        app:contentInsetStart="0dp"
+        app:contentInsetEnd="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/back_btn"
+                style="@style/back_btn"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/toolbar_text_style"
+                android:text="ارتقای برنامه"/>
+
+            <ImageView
+                android:id="@+id/rate_btn"
+                style="@style/back_btn"
+                android:paddingRight="12dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_like" />
+
+            <ImageView
+                android:id="@+id/pay_btn"
+                style="@style/back_btn"
+                android:paddingRight="0dp"
+                android:paddingLeft="8dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:layout_toLeftOf="@+id/rate_btn"
+                android:src="@drawable/ic_pay" />
+
+
+            <Button
+                android:id="@+id/get"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="get"
+                android:visibility="gone"
+                />
+
+        </RelativeLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/m_toolbar"
+        android:layout_marginTop="1dp"
+        android:foregroundGravity="center_horizontal"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_margin="@dimen/m"
+            android:fontFamily="@font/b_yekan"
+            android:textSize="16sp"
+            android:layout_gravity="center_horizontal"
+            android:text="">
+
+
+        </TextView>
+
+    </ScrollView>
+
+
+</RelativeLayout>
