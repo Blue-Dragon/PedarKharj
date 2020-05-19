@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="400dp"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.yugansh.tyagi.smileyrating.SmileyRatingView
+            android:id="@+id/smiley_view"
+            android:layout_width="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_height="250dp"
+            app:default_rating="4"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/smiley_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:text="تجربه ات رو امتیاز بده!"
+            android:fontFamily="@font/b_yekan"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/smiley_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="70dp"
+            android:numStars="4"
+            android:rating="4"
+            android:stepSize="1"
+            android:theme="@style/RatingBar" />
+
+        <EditText
+            android:id="@+id/review_box"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@id/rating_bar"
+            android:layout_margin="24dp"
+            android:background="@drawable/rounded_bg"
+            android:hint="Write your Review"
+            android:padding="12dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/review_box"
+            android:layout_margin="24dp"
+            android:text="Submit"
+            android:elevation="4dp"
+            android:background="@color/colorPrimary"/>
+    </RelativeLayout>
+
+</ScrollView>

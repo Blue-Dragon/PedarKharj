@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_contacts"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/activity_layout_style"
     android:background="@color/bk1"
     >
@@ -36,15 +35,17 @@
                 android:paddingTop="12dp"
                 android:paddingBottom="12dp"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/ic_like" />
+                android:src="@drawable/ic_like"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/mail_btn"
                 style="@style/back_btn"
-                android:paddingRight="0dp"
+                android:paddingRight="12dp"
                 android:paddingLeft="8dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="8dp"
+                android:layout_alignParentRight="true"
                 android:layout_toLeftOf="@+id/rate_btn"
                 android:src="@drawable/ic_mail" />
 
@@ -76,6 +77,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.yugansh.tyagi.smileyrating.SmileyRatingView
+                android:id="@+id/smiley_view0"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="-150dp"
+                app:default_rating="2"
+                app:mouth_color="@color/colorPrimary"
+                app:face_color="@color/colorPrimary"
+                />
+
             <TextView
                 android:id="@+id/tv"
                 android:layout_width="match_parent"
@@ -85,6 +96,7 @@
                 android:fontFamily="@font/b_yekan_bold"
                 android:textSize="22sp"
                 android:layout_gravity="center_horizontal"
+                android:layout_below="@id/smiley_view0"
                 android:text="">
             </TextView>
 
@@ -101,6 +113,7 @@
             </TextView>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cons_lt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv2"
@@ -132,20 +145,41 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="حمایت می کنم!"
-                    android:textSize="24sp"
                     android:fontFamily="@font/b_yekan"
+                    android:text="حمایت می کنم!"
                     android:textColor="@color/primaryTextColor"
+                    android:textSize="24sp"
+                    android:layout_marginRight="36dp"
                     app:layout_constraintBottom_toBottomOf="@+id/donate_bk_btn"
                     app:layout_constraintEnd_toEndOf="@+id/donate_bk_btn"
                     app:layout_constraintStart_toStartOf="@+id/donate_bk_btn"
-                    app:layout_constraintTop_toTopOf="@+id/donate_bk_btn" />
+                    app:layout_constraintTop_toTopOf="@+id/donate_bk_btn"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <com.yugansh.tyagi.smileyrating.SmileyRatingView
+                android:id="@+id/smiley_view"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_below="@id/cons_lt"
+                android:layout_marginTop="36dp"
+                app:default_rating="3"
+                />
 
-
-
+            <RatingBar
+                android:id="@+id/rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/smiley_view"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:numStars="4"
+                android:rating="4"
+                android:stepSize="1"
+                android:theme="@style/RatingBar"
+                android:visibility="gone"
+                />
 
 
         </RelativeLayout>

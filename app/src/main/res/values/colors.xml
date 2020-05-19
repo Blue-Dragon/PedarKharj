@@ -104,4 +104,7 @@
     <color name="green_plus">#2E7D32</color>
     <color name="red_minus">#A52020</color>
 
+    <!-- Rating Bar -->
+    <color name="rating_inactive">#929292</color>
+    <color name="rating_active">#f8b83b</color>
 </resources>
