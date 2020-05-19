@@ -79,6 +79,11 @@ public class AddEventParticesActivity extends AppCompatActivity {
                 //reInit selectedContactsNew
                 initSelectedContactIds();
 
+                //don't want to show `me`
+                Contact alreadyInMe = findContactById(selectedContactsNew , 1);
+                if (alreadyInMe!=null) selectedContactsNew.remove(alreadyInMe);
+                Contact alreadyInMe2 = findContactById(existedContacts , 1);
+                if (alreadyInMe2!=null) selectedContactsNew.remove(alreadyInMe2);
 
                 if (selectedContactsIdsNew.contains((int) contact.getId()) )
                     removePartice(view, contact);
@@ -124,7 +129,8 @@ public class AddEventParticesActivity extends AppCompatActivity {
             removeExistedParticeFromBefore();
             //show `me` on selectedContactsNew
             Contact me = findContactById(db.getAllContacts() , 1);
-            if (me!=null) selectedContactsNew.add(0, me);
+            Contact alreadyInMe = findContactById(selectedContactsNew , 1);
+            if (me!=null && alreadyInMe==null) selectedContactsNew.add(0, me);
 
             for (Contact contact: selectedContactsNew){
                 Log.d("selectedContactsNew", ""+ contact.getName());
@@ -281,7 +287,11 @@ public class AddEventParticesActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.HORIZONTAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         selected_recView.setLayoutManager(gridLayoutManager);
-        //
+//        //don't want to show `me`
+//        Contact alreadyInMe = findContactById(selectedContactsNew , 1);
+//        if (alreadyInMe!=null) selectedContactsNew.remove(alreadyInMe);
+//        Contact alreadyInMe2 = findContactById(existedContacts , 1);
+//        if (alreadyInMe2!=null) selectedContactsNew.remove(alreadyInMe2);
 
         selectedAdaptor = new MyAdapter(mContext);
         selectedAdaptor.setLayout(R.layout.sample_contact);
