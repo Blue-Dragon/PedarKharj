@@ -81,9 +81,11 @@ public class AddEventParticesActivity extends AppCompatActivity {
 
                 //don't want to show `me`
                 Contact alreadyInMe = findContactById(selectedContactsNew , 1);
-                if (alreadyInMe!=null) selectedContactsNew.remove(alreadyInMe);
                 Contact alreadyInMe2 = findContactById(existedContacts , 1);
-                if (alreadyInMe2!=null) selectedContactsNew.remove(alreadyInMe2);
+                if (!edit_mode){
+                    if (alreadyInMe!=null) selectedContactsNew.remove(alreadyInMe);
+                    if (alreadyInMe2!=null) selectedContactsNew.remove(alreadyInMe2);
+                }
 
                 if (selectedContactsIdsNew.contains((int) contact.getId()) )
                     removePartice(view, contact);
@@ -126,11 +128,12 @@ public class AddEventParticesActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
 //            if (edit_mode) db.createParticipantUnderEvent(participant, existedEvent);
 
-            removeExistedParticeFromBefore();
             //show `me` on selectedContactsNew
             Contact me = findContactById(db.getAllContacts() , 1);
-            Contact alreadyInMe = findContactById(selectedContactsNew , 1);
+            Contact alreadyInMe = findContactById(existedContacts , 1);
             if (me!=null && alreadyInMe==null) selectedContactsNew.add(0, me);
+
+            removeExistedParticeFromBefore();
 
             for (Contact contact: selectedContactsNew){
                 Log.d("selectedContactsNew", ""+ contact.getName());
@@ -142,23 +145,24 @@ public class AddEventParticesActivity extends AppCompatActivity {
                 selectedPartices = Routines.addParticesToTempEvent(selectedContactsNew, db);
 
             }else if (existedEvent != null){
-//                db.deleteAllParticeUnderEvent(existedEvent);
-
-//                List<Participant> participants = db.getAllParticeUnderEvent(existedEvent);
-//                for (Participant participant: participants){
-//                    Log.d("eventParticipants", participant.getId()+ " / "+ participant.getContact().getId() + ": "+ participant.getName());
-//                }
                 selectedPartices = db.createEventNewParticipants(existedEvent, selectedContactsNew); //save new added ones
-//                db.createAllParticesUnderEvent(selectedPartices, existedEvent);
-//                db.createNewEventWithContacts(existedEvent, selectedContactsNew);
                 selectedPartices = db.getAllParticeUnderEvent(existedEvent); // save all partices to pass to next slide
             }
 
+            //all partices
             int[] myIds = new int[selectedPartices.size()];
             int i = 0;
             for (Participant participant: selectedPartices){
                 Log.d("allParticesIds", "i: "+ i );
                 myIds[i++] = participant.getId();
+            }
+
+            //new partices' contacts
+            int[] existedIds = new int[existedContacts.size()];
+            i = 0;
+            for (Contact  c : existedContacts){
+                Log.d("existedContactsTest", c.getName());
+                existedIds[i++] = (int) c.getId();
             }
 
             if (selectedPartices.size() > 0){
@@ -170,9 +174,12 @@ public class AddEventParticesActivity extends AppCompatActivity {
                     eventId = curEventId;
                     intent.putExtra(Routines.EDIT_MODE, Routines.EDIT_MODE_TRUE);
                 }
+                intent.putExtra(Routines.EXISTED_PARTIC_CONTACT_IDS_INTENT, existedIds);
                 intent.putExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT, myIds);
                 intent.putExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, eventId);
                 startActivity(intent);
+                finish();
+
             }else {
                 Toast.makeText(mContext, "لطفا اعضا را انتخاب کنید", Toast.LENGTH_SHORT).show();
             }
@@ -210,7 +217,9 @@ public class AddEventParticesActivity extends AppCompatActivity {
         contacts = db.getAllContacts();
         //don't show `me` on contacts
         Contact me = findContactById(contacts, 1);
-        if (me!=null) contacts.remove(me);
+        if (!edit_mode){
+            if (me!=null) contacts.remove(me);
+        }
 
         selectedPartices = new ArrayList<>();
         selectedContactsNew = new ArrayList<>();
@@ -287,18 +296,13 @@ public class AddEventParticesActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 1, GridLayoutManager.HORIZONTAL, false);
         gridLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         selected_recView.setLayoutManager(gridLayoutManager);
-//        //don't want to show `me`
-//        Contact alreadyInMe = findContactById(selectedContactsNew , 1);
-//        if (alreadyInMe!=null) selectedContactsNew.remove(alreadyInMe);
-//        Contact alreadyInMe2 = findContactById(existedContacts , 1);
-//        if (alreadyInMe2!=null) selectedContactsNew.remove(alreadyInMe2);
+
 
         selectedAdaptor = new MyAdapter(mContext);
         selectedAdaptor.setLayout(R.layout.sample_contact);
         selectedAdaptor.setContactList(selectedContactsNew);
         selectedAdaptor.setExistedContacts(existedContacts);
         selectedAdaptor.setIsAddEventParticeMode(true);
-//        recyclerView_horizental.smoothScrollToPosition( allContactsTo_participants.size() - 1 ); // focus on the End of the list
         selected_recView.setAdapter(selectedAdaptor);
 
     }
@@ -347,24 +351,13 @@ public class AddEventParticesActivity extends AppCompatActivity {
         view.setBackgroundColor(ContextCompat.getColor(mContext, R.color.selected_green));
     }
 
-//    private boolean checkIfAlreadySelected(Participant participant) {
-//        //selectedContactsIdsNew of all selected partices
-//        selectedContactsIdsNew.clear();
-//        Routines.contactsSelectedIds.clear();
-//
-//        for (int i=0; i<selectedPartices.size(); i++){
-//            selectedContactsIdsNew.add(i, (int) selectedPartices.get(i).getContact().getId());
-//            Routines.contactsSelectedIds.add(i, (int) selectedPartices.get(i).getContact().getId());
-//        }
-//        if (selectedContactsIdsNew.size() == 0) return false;
-//
-//        return selectedContactsIdsNew.contains((int) participant.getContact().getId());
-//    }
+
 
     private List<Integer> initSelectedContactIds() {
         //selectedContactsIdsNew of all selected partices
         selectedContactsIdsNew.clear();
         Routines.contactsSelectedIds.clear();
+
 
         for (int i = 0; i< selectedContactsNew.size(); i++){
             selectedContactsIdsNew.add(i, (int) selectedContactsNew.get(i).getId());

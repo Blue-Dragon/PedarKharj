@@ -747,7 +747,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
+    /**
+     * Deleting a participant
+     */
+    public void deletePartic(int participantId) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        // now delete the Partic
+        db.delete(TABLE_PARTICES, KEY_ID + " = ?",
+                new String[] { String.valueOf(participantId) });
+    }
 
     /**
      * Deleting a participant

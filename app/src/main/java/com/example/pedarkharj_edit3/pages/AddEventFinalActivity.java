@@ -43,19 +43,21 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class AddEventFinalActivity extends AppCompatActivity {
+    ArrayList<Participant> mParticipants;
+    ArrayList<Integer> sentParticIds, sentExistedContacts;
+
     Context mContext;
     Activity mActivity;
-    ArrayList<Participant> mParticipants;
     Event event;
     MyAdapter adapter;
     DatabaseHelper db;
     boolean suddenly_stop;
+    boolean newImg, edit_mode;
     int eventId;
     private Uri uri;
 
     Bitmap bitmap;
     Bitmap resizedBitmap;
-    boolean newImg, edit_mode;
     CircleImageView changePic_bkg;
     ImageView eventPic;
     EditText ed;
@@ -103,7 +105,6 @@ public class AddEventFinalActivity extends AppCompatActivity {
         suddenly_stop = true;
         db = new DatabaseHelper(mContext);
 
-
         backBtn = findViewById(R.id.back_btn);
         changePic_bkg = findViewById(R.id.change_pic_bkg);
         eventPic = findViewById(R.id.prof_pic);
@@ -111,8 +112,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
         fab = this.findViewById(R.id.fab);
         recyclerView = findViewById(R.id.rv);
 
+        //---------------------------
         edit_mode = getIntent().getBooleanExtra(Routines.EDIT_MODE, false);
-
         eventId = getIntent().getIntExtra(Routines.NEW_EVENT_PARTIC_EVENT_ID_INTENT, 0);
         Log.d("fuck026", "eventId_received: "+ eventId);
         try {
@@ -122,6 +123,20 @@ public class AddEventFinalActivity extends AppCompatActivity {
 
         }catch (Exception e){
             Log.e("fuck026", " "+ e);
+        }
+
+        //all partices
+        int[] ids = getIntent().getIntArrayExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT);
+        sentParticIds = new ArrayList<>();
+        for (int t: ids){
+            sentParticIds.add(t);
+        }
+
+        //existed partices' contactIds
+        int[] existedIds = getIntent().getIntArrayExtra(Routines.EXISTED_PARTIC_CONTACT_IDS_INTENT);
+        sentExistedContacts = new ArrayList<>();
+        for (int t: existedIds){
+            sentParticIds.add(t);
         }
 
 
@@ -179,10 +194,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
     }
 
     private void doRecyclerView() {
-        int[] ids = getIntent().getIntArrayExtra(Routines.NEW_EVENT_PARTIC_IDS_INTENT);
-
-        mParticipants = new ArrayList<Participant>();
-        for (int i : ids){
+        mParticipants = new ArrayList<>();
+        for (int i : sentParticIds){
             mParticipants.add(db.getParticeById(i));
         }
 
@@ -276,23 +289,42 @@ public class AddEventFinalActivity extends AppCompatActivity {
     /**/
 
 
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        suddenlyStopedTask();
-//    }
-//
-//    @Override
-//    protected void onRestart() {
-//        super.onRestart();
-//        suddenlyStopedTask();
-//    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        suddenlyStopedTask();
+    }
 
-//    private void suddenlyStopedTask() {
-//        if (suddenly_stop) {
-//            if (edit_mode) updateEvent();
-//            else Routines.deleteTempEvent(mContext, eventId);
-//            Log.d("Fuck07", "onStop");
-//        }
-//    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        suddenlyStopedTask();
+    }
+
+    private void suddenlyStopedTask() {
+        if (suddenly_stop) {
+            if (edit_mode) {
+                for (int id: sentParticIds){
+                    Log.d("Modafaka", id+ "");
+                    Participant participant = db.getParticeById(id);
+                    if (!sentExistedContacts.contains((int) participant.getContact().getId())  )
+                    db.deletePartic(participant);
+                }
+
+            }
+            else Routines.deleteTempEvent(mContext, eventId);
+            Log.d("Fuck07", "onStop");
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        suddenly_stop = true;
+        suddenlyStopedTask();
+
+        MainActivity.navPosition = Routines.EVENTS;
+        startActivity(new Intent(mContext, MainActivity.class));
+        finish();
+    }
 }

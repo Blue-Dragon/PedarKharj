@@ -74,6 +74,7 @@
 
     <!--    backGroung 001-->
     <color name="bk1">#FBFFDB</color>
+    <color name="CUSTOM">#EDF3EF</color>
     <color name="bk2">#F8FFF9</color>
     <color name="bk3">#EFFCED</color>
 <!--    <color name="bk4">#FBFDEE</color>-->

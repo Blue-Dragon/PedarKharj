@@ -16,6 +16,8 @@
 
 
     <dimen name="fuck">80dp</dimen>
+    <dimen name="button_pressed_z_material">2dp</dimen>
+    <dimen name="button_elevation_material">3dp</dimen>
 
 
 </resources>

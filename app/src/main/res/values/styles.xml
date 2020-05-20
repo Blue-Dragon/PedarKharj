@@ -151,7 +151,7 @@
     <style name="activity_layout_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@color/bk4</item>
+        <item name="android:background">@color/bk1</item>
         <item name="android:layoutDirection">ltr</item>
     </style>
 

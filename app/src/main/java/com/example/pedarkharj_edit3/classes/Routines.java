@@ -45,6 +45,7 @@ import java.util.Locale;
 public class Routines  {
     //Intent extras
     public static final String NEW_EVENT_PARTIC_IDS_INTENT = "NEW_EVENT_PARTIC_IDS_INTENT";
+    public static final String EXISTED_PARTIC_CONTACT_IDS_INTENT = "EXISTED_PARTIC_CONTACT_IDS_INTENT";
     public static final String NEW_EVENT_PARTIC_EVENT_ID_INTENT = "NEW_EVENT_PARTIC_EVENT_ID_INTENT";
     public static final String SEND_EVENT_ID_INTENT = "SEND_EVENT_ID_INTENT";
     public static final String SEND_CONTACT_ID_INTENT = "SEND_CONTACT_ID_INTENT";

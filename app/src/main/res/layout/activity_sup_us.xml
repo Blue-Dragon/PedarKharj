@@ -49,6 +49,18 @@
                 android:layout_toLeftOf="@+id/rate_btn"
                 android:src="@drawable/ic_mail" />
 
+            <TextView
+                android:id="@+id/mail_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/b_yekan"
+                android:gravity="center"
+                android:textColor="@color/grayTextColor"
+                android:layout_toLeftOf="@id/mail_btn"
+                android:layout_marginRight="0dp"
+                android:text="ایمیل به ما"/>
+
 
             <Button
                 android:id="@+id/get"
@@ -83,9 +95,8 @@
                 android:layout_height="300dp"
                 android:layout_marginTop="-150dp"
                 app:default_rating="2"
-                app:mouth_color="@color/colorAccent"
                 app:face_color="@color/colorAccent"
-                />
+                app:mouth_color="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/tv"
@@ -97,7 +108,11 @@
                 android:textSize="22sp"
                 android:layout_gravity="center_horizontal"
                 android:layout_below="@id/smiley_view0"
-                android:text="">
+                android:text=""
+                android:gravity="right"
+                android:textColor="#000"
+                >
+
             </TextView>
 
             <TextView
@@ -109,27 +124,27 @@
                 android:textSize="18sp"
                 android:layout_gravity="center_horizontal"
                 android:layout_below="@id/tv"
+                android:gravity="right"
                 android:text="">
             </TextView>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <RelativeLayout
                 android:id="@+id/cons_lt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv2"
+                android:layout_marginBottom="@dimen/s"
                 android:layout_marginTop="@dimen/l">
 
                 <ImageView
-                    android:id="@+id/donate_bk_btn"
+                    android:id="@+id/donate_backkgroung_btn"
                     android:layout_width="match_parent"
                     android:layout_height="72dp"
                     android:background="@drawable/bkg_button_donate"
                     android:layout_marginRight="40dp"
                     android:layout_marginLeft="40dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_marginTop="@dimen/s"
+                    android:layout_marginBottom="@dimen/s"/>
 
                 <ImageView
                     android:id="@+id/donate_pic_btn"
@@ -138,9 +153,8 @@
                     android:background="@drawable/ic_pay"
                     android:layout_marginTop="0.5dp"
                     android:layout_marginBottom="0.5dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/donate_bk_btn"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_centerVertical="true"
+                    android:layout_alignRight="@id/donate_backkgroung_btn"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -149,13 +163,12 @@
                     android:text="حمایت می کنم!"
                     android:textColor="@color/primaryTextColor"
                     android:textSize="24sp"
+                    android:layout_toLeftOf="@+id/donate_pic_btn"
                     android:layout_marginRight="36dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/donate_bk_btn"
-                    app:layout_constraintEnd_toEndOf="@+id/donate_bk_btn"
-                    app:layout_constraintStart_toStartOf="@+id/donate_bk_btn"
-                    app:layout_constraintTop_toTopOf="@+id/donate_bk_btn"/>
+                    android:elevation="2dp"
+                    android:layout_centerVertical="true"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
 
             <com.yugansh.tyagi.smileyrating.SmileyRatingView
                 android:id="@+id/smiley_view"
@@ -164,6 +177,7 @@
                 android:layout_below="@id/cons_lt"
                 android:layout_marginTop="36dp"
                 app:default_rating="3"
+                android:visibility="gone"
                 />
 
             <RatingBar

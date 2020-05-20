@@ -10,21 +10,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.R;
-import com.example.pedarkharj_edit3.classes.RatingDialog;
 import com.yugansh.tyagi.smileyrating.SmileyRatingView;
 
 public class SupUsActivity extends AppCompatActivity implements View.OnClickListener {
     Activity mActivity = this;
     Context mContext = this;
-    TextView tv, tv2;
+    TextView tv, tv2, mailTv;
     ImageView rateBtn, mailBtn, backBtn;
     ImageView donateBkBtn, donatePicBtn;
+    RelativeLayout relativeLayout;
     String payUri;
     SmileyRatingView smileyRatingView;
     RatingBar ratingBar;
@@ -48,10 +49,12 @@ public class SupUsActivity extends AppCompatActivity implements View.OnClickList
         rateBtn = findViewById(R.id.rate_btn);
         mailBtn = findViewById(R.id.mail_btn);
         donatePicBtn = findViewById(R.id.donate_pic_btn);
-        donateBkBtn = findViewById(R.id.donate_bk_btn);
+        donateBkBtn = findViewById(R.id.donate_backkgroung_btn);
         backBtn = findViewById(R.id.back_btn);
         smileyRatingView = findViewById(R.id.smiley_view);
         ratingBar = findViewById(R.id.rating_bar);
+        relativeLayout = findViewById(R.id.cons_lt);
+        mailTv = findViewById(R.id.mail_tv);
 
         payUri = "https://www.hamibash.com/hamedganjeali";
         if (!payUri.startsWith("http://") && !payUri.startsWith("https://"))
@@ -73,11 +76,13 @@ public class SupUsActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void onClicks() {
-        donateBkBtn.setOnClickListener(this);
-        donatePicBtn.setOnClickListener(this);
+//        donateBkBtn.setOnClickListener(this);
+//        donatePicBtn.setOnClickListener(this);
         rateBtn.setOnClickListener(this);
         mailBtn.setOnClickListener(this);
         backBtn.setOnClickListener(this);
+        relativeLayout.setOnClickListener(this);
+        mailTv.setOnClickListener(this);
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -99,9 +104,12 @@ public class SupUsActivity extends AppCompatActivity implements View.OnClickList
 //                new RatingDialog(mActivity).show();
                 break;
 
+            case R.id.mail_tv:
             case R.id.mail_btn:
                 Intent i = new Intent(Intent.ACTION_SEND);
+                i.setData(Uri.parse("mailto:"));
                 i.setType("message/rfc822");
+//                i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_EMAIL  , new String[]{getString(R.string.my_email)});
                 i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject));
                 i.putExtra(Intent.EXTRA_TEXT   , getString(R.string.email_body));
@@ -113,8 +121,10 @@ public class SupUsActivity extends AppCompatActivity implements View.OnClickList
                 }
                 break;
 
-            case R.id.donate_bk_btn:
-            case R.id.donate_pic_btn:
+//            case R.id.donate_backkgroung_btn:
+//            case R.id.donate_pic_btn:
+            case R.id.cons_lt:
+
                 try {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(payUri));
                     startActivity(browserIntent);
