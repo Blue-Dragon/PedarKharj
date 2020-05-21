@@ -56,12 +56,12 @@
 
         <RelativeLayout
             android:id="@+id/rl_my_result"
-            android:layout_width="100dp"
+            android:layout_width="116dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
-            android:gravity="center">
+            android:gravity="center|right">
 
             <com.example.pedarkharj_edit3.classes.AutoResizeTextView
                 android:id="@+id/toman"

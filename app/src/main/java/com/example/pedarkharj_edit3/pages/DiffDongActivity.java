@@ -1,5 +1,6 @@
 package com.example.pedarkharj_edit3.pages;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -93,6 +95,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
 
         // recView onClick
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(mContext, recyclerView, new RecyclerTouchListener.ClickListener() {
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public void onClick(View view, int position) {
                 Participant user = usersList.get(position);
@@ -150,10 +153,28 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                 }
                 else {
                     //in Amount Mode
+
+                    Log.d("edittextFocus", ".............................");
+
+                    editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                           Log.d("edittextFocus", editText.getText().toString());
+                        }
+                    });
+
+                    //WARNING: does not override performOnClick()
+                    //it prevents double_tap selection && sends the cursor to the last position
+                    editText.setOnTouchListener((v, event) -> {
+                        editText.onTouchEvent(event);
+                        editText.setSelection(editText.getText().length());
+                        return true;
+                    });
+
+
                     editText.addTextChangedListener(new TextWatcher() {
                         float cur;
                         String already = editText.getText().toString();
-
 
 
                         @Override
@@ -293,6 +314,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         list.add("مقدار دونگ");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spinner.setAdapter(dataAdapter);
     }
 
@@ -444,5 +466,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                 .start();
 
     }
+
+
 
 }

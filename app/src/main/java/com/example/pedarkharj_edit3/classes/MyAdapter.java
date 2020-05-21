@@ -357,9 +357,11 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
             }
 
 
-            //addExpenseActivity_ amountMode
-            if (defaultDongAmount > 0 && holder.dongEtxtAmount != null)
+            //  //addExpenseActivity_ amountMode
+            //DiffDongActivity_ amountMode
+            if (defaultDongAmount > 0 && holder.dongEtxtAmount != null){
                 holder.dongEtxtAmount.setText(Routines.getRoundFloatString(defaultDongAmount));
+            }
 
             /*
              * AddExpenseActivity_ selecting users
