@@ -6,12 +6,15 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.util.Log;
 import android.view.View;
@@ -45,10 +48,11 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
     MyAdapter adaptor;
     Expense theExpense;
     DatabaseHelper db;
+
     TextView dateTv, priceTv, particeNameTv, expenseTitleTv;
     FloatingActionButton editFabBtn;
     ImageView deleteBtn;
-
+    CircleImageView profPic;
     RecyclerView recyclerView;
     ImageView backBtn;
 
@@ -64,8 +68,6 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
 
 
         if (theExpense !=null ){
-            initExpenseStuff(theExpense);
-
             setRecyclerView();
         }
 
@@ -100,6 +102,7 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
         editFabBtn =  findViewById(R.id.fab);
         particeNameTv = findViewById(R.id.partic_name);
         expenseTitleTv = findViewById(R.id.expense_title);
+        profPic = findViewById(R.id.prof_pic);
 
         //--------------------
         int expenseId;
@@ -110,9 +113,15 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
             theExpense = db.getExpenseByExpenseId(expenseId);
             Log.d("theExpense", "expense.getId: "+ theExpense.getExpenseId() + "");
             Log.d("theExpense",  ".");
+
         }
         myCallBack = MainActivity.myCallBack;
-    }
+
+        if (theExpense !=null ) {
+            initExpenseStuff(theExpense);
+        }
+
+        }
 
 
     private void onClicks() {
@@ -132,6 +141,12 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
         expenseTitleTv.setText(theExpense.getExpenseTitle());
         particeNameTv.setText(theExpense.getBuyer().getName());
 
+        Participant buyer = theExpense.getBuyer();
+        if (buyer.getBitmapStr() != null && buyer.getBitmapStr().length()>0){
+            Bitmap bitmap = Routines.stringToBitmap(buyer.getBitmapStr());
+            Log.d("buyerProfPic",  buyer.getBitmapStr());
+            profPic.setImageBitmap(bitmap);
+        }
     }
     //-------------------------     RecyclerView    --------------------------//
     private void setRecyclerView() {

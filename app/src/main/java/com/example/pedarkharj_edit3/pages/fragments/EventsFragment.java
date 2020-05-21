@@ -258,7 +258,7 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
 //                                Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
                                 if (event.getId() == HomeFragment.lastSeenEventId){
                                     SharedPrefManager.getInstance(mContext).clearDerfEvent();
-                                    Toast.makeText(mContext, "رویداد "+ event.getEventName() + " پاک شد", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(mContext, "رویداد "+  "پاک شد", Toast.LENGTH_SHORT).show();
                                 }
                             }
 

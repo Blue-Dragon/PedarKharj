@@ -152,27 +152,49 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                     //in Amount Mode
                     editText.addTextChangedListener(new TextWatcher() {
                         float cur;
+                        String already = editText.getText().toString();
+
+
 
                         @Override
                         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            already = editText.getText().toString();
+                            Log.i("fuck016",  "................................................ " );
+
+                            Log.i("fuck016",  "BEFORE: " );
+                            Log.i("fuck016",  "already: " + already);
+                            Log.i("fuck016",  "cur: : " + cur);
+
                         }
 
                         @Override
                         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                            already = editText.getText().toString();
+                            Log.i("fuck016",  "ON: " );
+                            Log.i("fuck016",  "already: " + already);
+                            Log.i("fuck016",  "cur: : " + cur);
                         }
 
                         @Override
                         public void afterTextChanged(Editable editable) {
+                            already = editText.getText().toString();
+                            Log.i("fuck016",  "AFTER: " );
+                            Log.i("fuck016",  "already: " + already);
+                            Log.i("fuck016",  "cur: : " + cur);
 //                            int countedExpenses = 0;
-                            cur = !editable.toString().equals("") ? Float.valueOf(editable.toString()) : 0 ;
+                            cur = editable.toString().equals("") ? 0 : Float.valueOf(editable.toString()) ;
 
                             Log.i("fuck016",  "expense: " + expense);
 
                             doDongStuff(user, cur, dongsNumber);
                             countedExpenses = reGetCountedExpenses();
-                            tvR2.setText(String.valueOf(expense - countedExpenses));
+                            tvR2.setText(Routines.getRoundFloatString(expense - countedExpenses));
                             Log.i("fuck016",  "remaining: " + (expense - countedExpenses) );
 
+
+                            Log.i("fuck016",  "END: " );
+                            Log.i("fuck016",  "already: " + already);
+                            Log.i("fuck016",  "cur: : " + cur);
                         }
                     });
                 }
@@ -267,8 +289,8 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
          */
         spinner = findViewById(R.id.spinner);
         List<String> list = new ArrayList<String>();
-        list.add("تعداد دنگ");
-        list.add("مقدار دنگ");
+        list.add("تعداد دونگ");
+        list.add("مقدار دونگ");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(dataAdapter);
@@ -331,7 +353,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         dongsNumber = usersIds.length;
         eachDongAmount = expense/dongsNumber;
 
-        if (selectedIten.equals("تعداد دنگ")){
+        if (selectedIten.equals("تعداد دونگ")){
             tvC2.setText(String.valueOf(dongsNumber));
             defDongAmount = 1;
             layoutMode = DONG_MODE;
@@ -357,14 +379,14 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         tvL2.setText(Routines.getRoundFloatString(expense));
 
         if (layoutMode == DONG_MODE){
-            tvC1.setText("تعداد دنگ ها");
+            tvC1.setText("تعداد دونگ ها");
             tvC2.setText(String.valueOf( dongsNumber));
 
-            tvR1.setText("قیمت هر دنگ");
+            tvR1.setText("قیمت هر دونگ");
             tvR2.setText(Routines.getRoundFloatString(eachDongAmount));
 
         }else {
-            tvC1.setText("قیمت هر دنگ");
+            tvC1.setText("میانگین هر دونگ");
             tvC2.setText(Routines.getRoundFloatString(eachDongAmount));
 
             tvR1.setText("هزینه باقی مانده");

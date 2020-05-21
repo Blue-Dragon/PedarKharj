@@ -158,7 +158,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
                 Log.i("fuck026", "BitmapStr not null: \n"+ event.getBitmapStr() );
                 bitmap = Routines.stringToBitmap(event.getBitmapStr());
 //                resizedBitmap = Routines.resizeBitmap(bitmap);
-                resizedBitmap = Routines.convertBitmapThumbnail1x1(bitmap);
+                resizedBitmap = Routines.convertBitmapThumbnail3x4(bitmap);
                 eventPic.setImageBitmap(resizedBitmap);
             }
         }catch (Exception e){
