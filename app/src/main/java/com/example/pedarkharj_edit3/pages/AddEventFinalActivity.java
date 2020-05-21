@@ -36,6 +36,7 @@ import com.example.pedarkharj_edit3.classes.Routines;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -43,8 +44,8 @@ import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 
 public class AddEventFinalActivity extends AppCompatActivity {
-    ArrayList<Participant> mParticipants;
-    ArrayList<Integer> sentParticIds, sentExistedContacts;
+    List<Participant> mParticipants;
+    List<Integer> sentParticIds, sentExistedContacts;
 
     Context mContext;
     Activity mActivity;
@@ -136,7 +137,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
         int[] existedIds = getIntent().getIntArrayExtra(Routines.EXISTED_PARTIC_CONTACT_IDS_INTENT);
         sentExistedContacts = new ArrayList<>();
         for (int t: existedIds){
-            sentParticIds.add(t);
+            sentExistedContacts.add(t);
         }
 
 
@@ -194,10 +195,11 @@ public class AddEventFinalActivity extends AppCompatActivity {
     }
 
     private void doRecyclerView() {
-        mParticipants = new ArrayList<>();
-        for (int i : sentParticIds){
-            mParticipants.add(db.getParticeById(i));
-        }
+//        mParticipants = new ArrayList<>();
+//        for (int i : sentParticIds){
+//            mParticipants.add(db.getParticeById(i));
+//        }
+        mParticipants = db.getAllParticeUnderEvent(event);
 
         int itemsInScreen = 6;
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, itemsInScreen, GridLayoutManager.VERTICAL, false);
@@ -304,11 +306,19 @@ public class AddEventFinalActivity extends AppCompatActivity {
     private void suddenlyStopedTask() {
         if (suddenly_stop) {
             if (edit_mode) {
+                Log.d("Modafaka",  ".........");
+
+                //Deleting new unsaved partices
                 for (int id: sentParticIds){
                     Log.d("Modafaka", id+ "");
-                    Participant participant = db.getParticeById(id);
+                    try { Participant participant = db.getParticeById(id);
                     if (!sentExistedContacts.contains((int) participant.getContact().getId())  )
-                    db.deletePartic(participant);
+
+                       db.deletePartic(participant);
+                   }catch (Exception e){
+                       Log.e("Modafaka", e+ "");
+
+                   }
                 }
 
             }
