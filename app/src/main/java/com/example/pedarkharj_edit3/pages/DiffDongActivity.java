@@ -240,8 +240,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                 return;
             }
 
-            float dongAmountUnit = Float.valueOf(tvR2.getText().toString().trim());
-            dongAmountUnit = Routines.getRoundFloat(dongAmountUnit);
+            float dongAmountUnit = Routines.getRoundFloat(tvR2.getText().toString().trim());
             float[] expenseDongs = new float[usersList.size()];
 
             int i = 0;

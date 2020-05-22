@@ -358,6 +358,16 @@ public class Routines  {
         String s = String.format (Locale.US, "%.2f", f);
         return Float.valueOf(s);
     }
+    public static float getRoundFloat(String floatString) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(floatString);
+        for (int i=builder.length()-1; i>=0; i-- ) {
+            if (builder.charAt(i) == ',') {
+                builder.delete(i, i + 1);
+            }
+        }
+        return Float.valueOf(builder.toString());
+    }
 
     public static List<Float> getRoundFloatList(List<Float> floatList) {
         return floatList;
@@ -371,6 +381,7 @@ public class Routines  {
         StringBuilder builder = new StringBuilder();
 
         result = String.format (Locale.US, "%,.2f", f);
+//        result = String.format (Locale.US, "%.2f", f);
         builder.append(result);
 
         //checking if we have redundant 00
