@@ -93,7 +93,7 @@
                 android:id="@+id/smiley_view0"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_marginTop="-150dp"
+                android:layout_marginTop="-175dp"
                 app:default_rating="2"
                 app:face_color="@color/colorAccent"
                 app:mouth_color="@color/colorAccent" />
@@ -164,7 +164,7 @@
                     android:textColor="@color/primaryTextColor"
                     android:textSize="24sp"
                     android:layout_toLeftOf="@+id/donate_pic_btn"
-                    android:layout_marginRight="36dp"
+                    android:layout_marginRight="28dp"
                     android:elevation="2dp"
                     android:layout_centerVertical="true"/>
 

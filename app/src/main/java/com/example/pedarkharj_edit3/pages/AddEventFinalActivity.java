@@ -322,7 +322,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
                 }
 
             }
-            else Routines.deleteTempEvent(mContext, eventId);
+            else
+//                Routines.deleteTempEvent(mContext, eventId);
             Log.d("Fuck07", "onStop");
         }
     }
