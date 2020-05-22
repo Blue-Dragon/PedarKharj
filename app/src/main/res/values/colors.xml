@@ -73,7 +73,10 @@
     <color name="grayTextColor">#8C8C8C</color>
 
     <!--    backGroung 001-->
-    <color name="bk1">#FBFFDB</color>
+    <color name="bk11">#FBFFDB</color>
+    <color name="bk12">#F6FFF5</color>
+    <color name="bk1">#F8FDF7</color>
+
     <color name="CUSTOM">#EDF3EF</color>
     <color name="bk2">#F8FFF9</color>
     <color name="bk3">#EFFCED</color>

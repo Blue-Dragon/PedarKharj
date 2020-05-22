@@ -3,7 +3,7 @@
     android:id="@+id/fragment_contacts"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/activity_layout_style"
-    android:background="@color/bk1"
+    android:background="@color/bk11"
     >
 
 

@@ -28,12 +28,15 @@
                 android:id="@+id/textView"
                 style="@style/toolbar_text_style"
                 android:text="خرج های رویداد"
+                android:paddingRight="40dp"
                 />
 
             <RelativeLayout
                 android:id="@+id/my_spinner"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_toRightOf="@id/textView"
+                android:paddingLeft="@dimen/l"
                 android:layout_alignParentRight="true">
 
                 <ImageView

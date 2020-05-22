@@ -368,33 +368,25 @@ public class Routines  {
      */
     public static String getRoundFloatString(float f) {
         String result;
-        char[] chars;
-        int beginDot = 0;
-        StringBuilder decimalPart = new StringBuilder();
-        String intPart;
+        StringBuilder builder = new StringBuilder();
 
         result = String.format (Locale.US, "%,.2f", f);
-        intPart = String.valueOf( (int) f);
+        builder.append(result);
 
-        chars = result.toCharArray();
-        for (int i=0; i<chars.length; i++){
-            if (chars[i] == '.' ){
-                beginDot = i;
-                break;
-            }
-        }
         //checking if we have redundant 00
-        decimalPart.append(result.substring(beginDot));
-        for (int i=decimalPart.length()-1; i>=0; i-- ){
-            if (decimalPart.charAt(i) == '0' | decimalPart.charAt(i) == '.')
-                decimalPart.delete(i, decimalPart.length());
-            else break;
+        for (int i=builder.length()-1; i>=0; i-- ){
+            if (builder.charAt(i) == '.'){
+                builder.delete(i, builder.length());
+                break;
+
+            }else if (builder.charAt(i) == '0' ){
+                builder.delete(i, builder.length());
+                builder.delete(i, builder.length());
+            }else break;
+
         }
 
-        result = intPart + decimalPart;
-//        if (f > 0)
-//            result = "+"+result;
-        return result;
+        return builder.toString();
     }
 
     public static List<Event> deleteTempEvents(Activity mActivity, List<Event> events){
