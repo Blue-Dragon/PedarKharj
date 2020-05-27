@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import com.example.pedarkharj_edit3.classes.MyCallBack;
-import com.example.pedarkharj_edit3.pages.SupUsActivity;
+import com.example.pedarkharj_edit3.pages.InfoActivity;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
@@ -70,6 +70,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
     TextView spinnerTv;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
     ImageView upgrade_btn;
+
+    ImageView mailBtn;
+    TextView mailTv;
     //
 //    int sentEventId;
 
@@ -186,7 +189,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         mySpinner = view.findViewById(R.id.my_spinner);
         spinnerTv  = view.findViewById(R.id.spinner_tv);
         fab = view.findViewById(R.id.fab);
-        upgrade_btn = view.findViewById(R.id.upgrade_img);
+//        upgrade_btn = view.findViewById(R.id.mail_btn);
 
         //the rectangle above
         tvL1 = view.findViewById(R.id.tv_title_my_expense);
@@ -196,6 +199,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         tvR1 = view.findViewById(R.id.tv_title_my_result);
         tvR2 = view.findViewById(R.id.tv_my_result);
 
+        //
+        mailBtn =view.findViewById(R.id.mail_btn);
+        mailTv = view.findViewById(R.id.mail_tv);
+
+
         tvR1.setTextColor(getResources().getColor(R.color.grayTextColor));
         tvR2.setTextColor(getResources().getColor(R.color.grayTextColor));
         tvL1.setTextColor(getResources().getColor(R.color.primaryTextColor));
@@ -204,12 +212,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
         tvC1.setText("دونگ من");
         tvL1.setText("حساب من");
 
+
     }
 
     private void doOnClicks() {
         cardView.setOnClickListener(this);
         mySpinner.setOnClickListener(this);
-        upgrade_btn.setOnClickListener(this);
+//        upgrade_btn.setOnClickListener(this);
+        mailBtn.setOnClickListener(this);
+        mailTv.setOnClickListener(this);
     }
 
     private void showBuyerDialog(Event curEvent) {
@@ -243,8 +254,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 startActivity(intent);
                 break;
 
-            case R.id.upgrade_img:
-                startActivity(new Intent(mActivity, SupUsActivity.class));
+//            case R.id.upgrade_btn:
+//                startActivity(new Intent(mActivity, InfoActivity.class));
+//                break;
+
+            case R.id.mail_tv:
+            case R.id.mail_btn:
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setData(Uri.parse("mailto:"));
+                i.setType("message/rfc822");
+//                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_EMAIL  , new String[]{getString(R.string.my_email)});
+                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.email_subject));
+                i.putExtra(Intent.EXTRA_TEXT   , getString(R.string.email_body));
+                try {
+                    startActivity(Intent.createChooser(i, "ارسال با ..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+//                    Toast.makeText(mContext, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+                    ex.printStackTrace();
+                }
                 break;
 
             default:

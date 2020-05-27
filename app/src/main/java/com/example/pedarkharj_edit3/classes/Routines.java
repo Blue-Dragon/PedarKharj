@@ -214,50 +214,50 @@ public class Routines  {
     /**
      * Transfers all contacts of device to the app
      */
-    public static void getContact(Context mContext) {
-        int i = 0;
-//        StringBuilder builder = new StringBuilder();
-
-        DatabaseHelper db = new DatabaseHelper(mContext);
-        ContentResolver cr = mContext.getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-
-        if (cur != null && cur.getCount() > 0) {
-
-
-            while (cur.moveToNext() ) {
-                Bitmap bitmap = null;
-                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-//                builder.append(name + "\n");
-
-                ///---------   get photo   --------
-                Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(id));
-                Uri photoUri = Uri.withAppendedPath(contactUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
-                Cursor cursor = mContext.getContentResolver().query(photoUri,
-                        new String[]{ContactsContract.Contacts.Photo.PHOTO}, null, null, null);
-
-                if (cursor != null && cursor.moveToFirst()) {
-                    byte[] data = cursor.getBlob(0);
-                    if (data != null) {
-                        bitmap = byteArrayToBitmap(data);
-//                        builder.append(bitmapToString(bitmap) + "\n\n");
-//                    new ByteArrayInputStream(data);
-                    }
-                    cursor.close();
-                }
-                ///-----------------
-
-                db.createContact(new Contact(name, bitmapToString(bitmap)));
-                i++;
-            }
-
-
-//            Log.d("img_string", builder.toString());
-            cur.close();
-            db.closeDB();
-        }
-    }
+//    public static void getContact(Context mContext) {
+//        int i = 0;
+////        StringBuilder builder = new StringBuilder();
+//
+//        DatabaseHelper db = new DatabaseHelper(mContext);
+//        ContentResolver cr = mContext.getContentResolver();
+//        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+//
+//        if (cur != null && cur.getCount() > 0) {
+//
+//
+//            while (cur.moveToNext() ) {
+//                Bitmap bitmap = null;
+//                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+//                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+////                builder.append(name + "\n");
+//
+//                ///---------   get photo   --------
+//                Uri contactUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.valueOf(id));
+//                Uri photoUri = Uri.withAppendedPath(contactUri, ContactsContract.Contacts.Photo.CONTENT_DIRECTORY);
+//                Cursor cursor = mContext.getContentResolver().query(photoUri,
+//                        new String[]{ContactsContract.Contacts.Photo.PHOTO}, null, null, null);
+//
+//                if (cursor != null && cursor.moveToFirst()) {
+//                    byte[] data = cursor.getBlob(0);
+//                    if (data != null) {
+//                        bitmap = byteArrayToBitmap(data);
+////                        builder.append(bitmapToString(bitmap) + "\n\n");
+////                    new ByteArrayInputStream(data);
+//                    }
+//                    cursor.close();
+//                }
+//                ///-----------------
+//
+//                db.createContact(new Contact(name, bitmapToString(bitmap)));
+//                i++;
+//            }
+//
+//
+////            Log.d("img_string", builder.toString());
+//            cur.close();
+//            db.closeDB();
+//        }
+//    }
 
     public static void deleteContect(Activity mActivity, Contact pressedContact) {
         DatabaseHelper db = new DatabaseHelper(mActivity);

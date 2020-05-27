@@ -188,24 +188,24 @@ public class ContactsFragment extends Fragment implements IContacts, IEditBar, V
 
     @Override
     public void onClick(View view) {
-        int permission = ContextCompat.checkSelfPermission(mContext, READ_CONTACTS);
-
-        if (Build.VERSION.SDK_INT >= 23 && permission != PackageManager.PERMISSION_GRANTED) {
-//            // Should we show an explanation?
-//            if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, READ_CONTACTS))
-//                Toast.makeText(mActivity, "Camera Permission is required for this app to run", Toast.LENGTH_SHORT).show();
-            Routines.requestPermissions(mActivity, new String[]{READ_CONTACTS}, Routines.PER_CODE_CAMERA_READexSTG);
-        }
-        else
-            readSystemContacts();
+//        int permission = ContextCompat.checkSelfPermission(mContext, READ_CONTACTS);
+//
+//        if (Build.VERSION.SDK_INT >= 23 && permission != PackageManager.PERMISSION_GRANTED) {
+////            // Should we show an explanation?
+////            if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, READ_CONTACTS))
+////                Toast.makeText(mActivity, "Camera Permission is required for this app to run", Toast.LENGTH_SHORT).show();
+//            Routines.requestPermissions(mActivity, new String[]{READ_CONTACTS}, Routines.PER_CODE_CAMERA_READexSTG);
+//        }
+//        else
+//            readSystemContacts();
     }
 
     @Override
     public void readSystemContacts() {
-
-        Routines.getContact(mContext);
-        adaptor.notifyDataSetChanged();
-        mActivity.recreate();
+//
+//        Routines.getContact(mContext);
+//        adaptor.notifyDataSetChanged();
+//        mActivity.recreate();
     }
 
 //    public void readContacts(){
