@@ -351,13 +351,12 @@ public class Routines  {
      * @param f
      * @return
      */
-//    public static float getRoundFloat(float f) {
-//        return f;
-//    }
     public static float getRoundFloat(float f) {
         String s = String.format (Locale.US, "%.2f", f);
         return Float.valueOf(s);
     }
+
+
     public static float getRoundFloat(String floatString) {
         StringBuilder builder = new StringBuilder();
         builder.append(floatString);

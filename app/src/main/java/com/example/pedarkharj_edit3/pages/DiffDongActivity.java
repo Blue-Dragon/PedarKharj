@@ -203,7 +203,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
                             Log.i("fuck016",  "already: " + already);
                             Log.i("fuck016",  "cur: : " + cur);
 //                            int countedExpenses = 0;
-                            cur = editable.toString().equals("") ? 0 : Float.valueOf(editable.toString()) ;
+                            cur = editable.toString().equals("") ? 0 : Routines.getRoundFloat(editable.toString()) ;
 
                             Log.i("fuck016",  "expense: " + expense);
 
