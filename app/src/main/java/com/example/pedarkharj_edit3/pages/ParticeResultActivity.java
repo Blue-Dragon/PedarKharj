@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
 import com.example.pedarkharj_edit3.classes.RecyclerTouchListener;
-import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.models.Event;
 import com.example.pedarkharj_edit3.classes.models.Expense;
 import com.example.pedarkharj_edit3.classes.models.Participant;

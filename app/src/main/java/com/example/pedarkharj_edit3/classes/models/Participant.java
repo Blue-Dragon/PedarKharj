@@ -1,7 +1,5 @@
 package com.example.pedarkharj_edit3.classes.models;
 
-import com.example.pedarkharj_edit3.classes.Routines;
-
 public class Participant  {
     //vital
     private int id;

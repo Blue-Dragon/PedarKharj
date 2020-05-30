@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
 import com.example.pedarkharj_edit3.classes.MyAdapter;
-import com.example.pedarkharj_edit3.classes.Routines;
 
 public interface IEditBar {
 

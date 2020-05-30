@@ -15,7 +15,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.pedarkharj_edit3.MainActivity;
 import com.example.pedarkharj_edit3.R;
-import com.example.pedarkharj_edit3.classes.Routines;
 import com.example.pedarkharj_edit3.classes.SliderPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 

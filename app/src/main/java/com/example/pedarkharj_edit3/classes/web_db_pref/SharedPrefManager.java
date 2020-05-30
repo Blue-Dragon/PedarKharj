@@ -3,8 +3,6 @@ package com.example.pedarkharj_edit3.classes.web_db_pref;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.pedarkharj_edit3.classes.Routines;
-
 public class SharedPrefManager {
 
     /**
