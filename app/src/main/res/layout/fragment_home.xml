@@ -59,6 +59,7 @@
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/b_yekan"
                 android:gravity="center"
+                android:paddingTop="1dp"
                 android:textColor="@color/grayTextColor"
                 android:layout_toRightOf="@id/mail_btn"
                 android:layout_marginRight="0dp"

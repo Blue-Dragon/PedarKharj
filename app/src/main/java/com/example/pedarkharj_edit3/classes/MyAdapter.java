@@ -6,8 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -185,6 +185,19 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
+        Typeface tf = null;
+        if (mContext !=null) tf = Routines.getTypeFaceKoodak(mContext);
+        else if (mActivity != null) tf = Routines.getTypeFaceKoodak(mActivity);
+
+        if (tf !=null){
+            if ( holder.nameTv != null)                holder.nameTv.setTypeface(tf);
+            if ( holder.resultTxt != null)             holder.resultTxt.setTypeface(tf);
+            if ( holder.resultTxtGreen != null)    holder.resultTxtGreen.setTypeface(tf);
+            if ( holder.dateTv != null)                 holder.dateTv.setTypeface(tf);
+            if ( holder.priceTitleTv != null)         holder.priceTitleTv.setTypeface(tf);
+            if ( holder.dongEtxt != null)              holder.dongEtxt.setTypeface(tf);
+            if ( holder.dongEtxtAmount != null)   holder.dongEtxtAmount.setTypeface(tf);
+        }
 
         /*
          * EventFragment
@@ -195,7 +208,9 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
             DatabaseHelper db0 = new DatabaseHelper(mContext);
             int particNumber = db0.getAllParticeUnderEvent(event).size();
 
-            if (event.getEventName() !=null && holder.nameTv != null)      holder.nameTv.setText(event.getEventName());
+            if (event.getEventName() !=null && holder.nameTv != null)     {
+                holder.nameTv.setText(event.getEventName());
+            }
             /* pic */ if ( event.getBitmapStr() != null  && holder.imageView != null)
                 holder.imageView.setImageBitmap(Routines.stringToBitmap(event.getBitmapStr()));
 
@@ -203,7 +218,9 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
 //                Drawable drawable = new BitmapDrawable(mContext.getResources(), Routines.stringToBitmap(event.getBitmapStr()) );
 //                holder.bkGrndLayout.setBackground(drawable);
 //            }
-            if (particNumber > 0 && holder.resultTxt != null)      holder.resultTxt.setText(particNumber + " عضو");
+            if (particNumber > 0 && holder.resultTxt != null){
+                holder.resultTxt.setText(particNumber + " عضو");
+            }
             else Log.e("E002",  particNumber + "" );
 
             if (drawable != null && holder.cardView != null) holder.cardView.setForeground(drawable); //onLongClick color changing
@@ -223,15 +240,18 @@ public class MyAdapter extends RecyclerView.Adapter<ViewHolder> implements View.
             Expense expense = expenseList.get(position);
             Participant buyer = expense.getBuyer();
 
-            if (buyer.getName() != null && holder.nameTv != null)
+            if (buyer.getName() != null && holder.nameTv != null){
                 holder.nameTv.setText(buyer.getName());
+            }
             if (buyer.getBitmapStr() != null && holder.profImv != null)
                 holder.profImv.setImageBitmap(Routines.stringToBitmap(buyer.getBitmapStr()));
 
-            if (holder.resultTxt != null)
+            if (holder.resultTxt != null){
                 holder.resultTxt.setText(Routines.getRoundFloatString(expense.getExpensePrice()) );
-            if (holder.dateTv != null)
+            }
+            if (holder.dateTv != null){
                 holder.dateTv.setText(expense.getCreated_at());
+            }
             if (holder.priceTitleTv != null){
                 String expenseTitle = (expense.getExpenseTitle().length() > 0) ? expense.getExpenseTitle() : mContext.getString(R.string.untitleExpense);
                 holder.priceTitleTv.setText(expenseTitle);

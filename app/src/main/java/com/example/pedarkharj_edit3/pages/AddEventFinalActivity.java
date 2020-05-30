@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -24,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.MainActivity;
@@ -65,6 +67,7 @@ public class AddEventFinalActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     FloatingActionButton fab;
     ImageView backBtn;
+    TextView tvSub;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +115,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
         ed = findViewById(R.id.name_edt);
         fab = this.findViewById(R.id.fab);
         recyclerView = findViewById(R.id.rv);
+        tvSub = findViewById(R.id.tv_sub);
+
 
         //---------------------------
         edit_mode = getIntent().getBooleanExtra(Routines.EDIT_MODE, false);
@@ -140,8 +145,8 @@ public class AddEventFinalActivity extends AppCompatActivity {
             sentExistedContacts.add(t);
         }
 
-
-
+        Typeface tf = Routines.getTypeFaceYakan(mContext);
+        tvSub.setTypeface(tf);
     }
 
     private void onClicks() {

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -119,6 +121,10 @@ public class ParticeResultActivity extends AppCompatActivity {
         }
 
         recyclerView = findViewById(R.id.recycler_view);
+
+        Typeface tf0 = Routines.getTypeFaceYakanB(mActivity);
+        toolbarTitle.setTypeface(tf0);
+
     }
 
     /********************************************       Methods     ****************************************************/
@@ -163,6 +169,14 @@ public class ParticeResultActivity extends AppCompatActivity {
             String resultTxt = result>=0 ? "طلب" : "بدهی" ;
             tvL1.setText(resultTxt);
         }
+
+        Typeface tf = Routines.getTypeFaceKoodak(mContext);
+        tvR1.setTypeface(tf);
+        tvR2.setTypeface(tf);
+        tvL1.setTypeface(tf);
+        tvL2.setTypeface(tf);
+        tvC1.setTypeface(tf);
+        tvC2.setTypeface(tf);
     }
 
     @Override

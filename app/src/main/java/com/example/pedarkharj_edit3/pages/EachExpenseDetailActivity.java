@@ -8,6 +8,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -49,7 +50,7 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
     Expense theExpense;
     DatabaseHelper db;
 
-    TextView dateTv, priceTv, particeNameTv, expenseTitleTv;
+    TextView dateTv, priceTv, particeNameTv, expenseTitleTv, title;
     FloatingActionButton editFabBtn;
     ImageView deleteBtn;
     CircleImageView profPic;
@@ -103,6 +104,7 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
         particeNameTv = findViewById(R.id.partic_name);
         expenseTitleTv = findViewById(R.id.expense_title);
         profPic = findViewById(R.id.prof_pic);
+        title = findViewById(R.id.textView);
 
         //--------------------
         int expenseId;
@@ -121,7 +123,16 @@ public class EachExpenseDetailActivity extends AppCompatActivity implements View
             initExpenseStuff(theExpense);
         }
 
-        }
+        Typeface tf = Routines.getTypeFaceKoodak(mActivity);
+        priceTv.setTypeface(tf);
+        dateTv.setTypeface(tf);
+        expenseTitleTv.setTypeface(tf);
+        particeNameTv.setTypeface(tf);
+
+        Typeface tf0 = Routines.getTypeFaceYakanB(mActivity);
+        title.setTypeface(tf0);
+
+    }
 
 
     private void onClicks() {

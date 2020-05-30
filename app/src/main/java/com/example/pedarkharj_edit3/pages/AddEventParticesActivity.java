@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pedarkharj_edit3.R;
@@ -53,6 +55,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
     FloatingActionButton fab;
     ImageView backBtn;
     RelativeLayout meRl;
+    TextView tvSub;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,6 +212,7 @@ public class AddEventParticesActivity extends AppCompatActivity {
         selected_recView = findViewById(R.id.rv_01);
         fab = this.findViewById(R.id.fab);
         meRl = findViewById(R.id.rl3);
+        tvSub = findViewById(R.id.tv_sub);
 
         ImageView img = meRl.findViewById(R.id.prof_pic);
         setGrayScale(img);
@@ -246,6 +250,8 @@ public class AddEventParticesActivity extends AppCompatActivity {
             selectedContactsNew = getContacts(selectedPartices); //then we delete common contacts in both lists
         }
 
+        Typeface tf = Routines.getTypeFaceYakan(mContext);
+        tvSub.setTypeface(tf);
     }
 
     private List<Contact> getContacts(List<Participant> selectedPartices) {

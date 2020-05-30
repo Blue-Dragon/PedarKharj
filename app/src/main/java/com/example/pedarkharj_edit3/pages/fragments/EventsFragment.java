@@ -162,6 +162,9 @@ public class EventsFragment extends Fragment implements IOnBackPressed, IEditBar
         recyclerView = mView.findViewById(R.id.rv);
         fab = mView.findViewById(R.id.fab);
         view  = mView.findViewById(R.id.view);
+
+        Typeface tf = Routines.getTypeFaceYakanB(mContext);
+        title.setTypeface(tf);
     }
 
     //-------------------------     RecyclerView    --------------------------//

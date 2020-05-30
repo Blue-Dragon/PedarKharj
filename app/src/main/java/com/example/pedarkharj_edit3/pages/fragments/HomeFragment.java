@@ -8,13 +8,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import com.example.pedarkharj_edit3.pages.InfoActivity;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -362,6 +360,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener, IEdi
                 tvL1.setText(resultTxt);
             }
         }
+
+//        Typeface tf = Typeface.createFromAsset(mActivity.getAssets(), "b_koodak.ttf");
+        Typeface tf = Routines.getTypeFaceKoodak(mContext);
+        tvR1.setTypeface(tf);
+        tvR2.setTypeface(tf);
+        tvL1.setTypeface(tf);
+        tvL2.setTypeface(tf);
+        tvC1.setTypeface(tf);
+        tvC2.setTypeface(tf);
+
+        Typeface tf0 = Routines.getTypeFaceYakan(mContext);
+        mailTv.setTypeface(tf0);
+
+        Typeface tf1 = Routines.getTypeFaceYakanB(mContext);
+        spinnerTv.setTypeface(tf1);
 
     }
 

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.icu.text.NumberFormat;
 import android.icu.util.ULocale;
 import android.media.ThumbnailUtils;
@@ -16,6 +17,7 @@ import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
@@ -110,6 +112,16 @@ public class Routines  {
 
 
     /********************************************       Methods     ****************************************************/
+
+    public static Typeface getTypeFaceKoodak(Context mContext){
+        return ResourcesCompat.getFont(mContext, R.font.b_koodak);
+    }
+    public static Typeface getTypeFaceYakanB(Context mContext){
+        return ResourcesCompat.getFont(mContext, R.font.b_yekan_bold);
+    }
+    public static Typeface getTypeFaceYakan(Context mContext){
+        return ResourcesCompat.getFont(mContext, R.font.b_yekan);
+    }
 
     // ----------------------    Photo Stuff   ------------------------- //
     //get pic options

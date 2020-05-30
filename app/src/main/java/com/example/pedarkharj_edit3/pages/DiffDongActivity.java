@@ -23,7 +23,6 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -73,7 +72,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
     FloatingActionButton fab;
     Spinner spinner;
     // the rectangle above
-    TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2;
+    TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2, title;
     ImageView backBtn;
 
 
@@ -285,6 +284,8 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         usersIds = getIntent().getIntArrayExtra(Routines.SEND_USERS_INTENT);
         dongsNumber = usersIds.length;
         eachDongAmount = Routines.getRoundFloat(expense/dongsNumber);
+        title = findViewById(R.id. textView);
+
 
         //the rectangle above
         tvR1 = findViewById(R.id. tv_title_my_expense);
@@ -313,8 +314,14 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
         list.add("مقدار دونگ");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner.setAdapter(dataAdapter);
+
+
+//        Typeface tf10= Routines.getTypeFaceYakanB(mActivity);
+//        spinner.setTypeface(tf0);
+
+        Typeface tf1 = Routines.getTypeFaceYakanB(mActivity);
+        title.setTypeface(tf1);
     }
 
     private void onClicks() {
@@ -380,7 +387,7 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
             layoutMode = DONG_MODE;
             doRecyclerView(DONG_MODE);
         }else{
-            defDongAmount = eachDongAmount; //change diffDong to cash
+            defDongAmount = eachDongAmount; //change diffDongBtn to cash
             layoutMode = CASH_MODE;
             doRecyclerView(CASH_MODE);
 
@@ -414,6 +421,15 @@ public class DiffDongActivity extends AppCompatActivity implements AdapterView.O
             float theRest = Routines.getRoundFloat(expense - countedExpenses);
             tvR2.setText(Routines.getRoundFloatString(theRest));
         }
+
+        Typeface tf = Routines.getTypeFaceKoodak(mContext);
+        tvR1.setTypeface(tf);
+        tvR2.setTypeface(tf);
+        tvL1.setTypeface(tf);
+        tvL2.setTypeface(tf);
+        tvC1.setTypeface(tf);
+        tvC2.setTypeface(tf);
+
     }
 
 

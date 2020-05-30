@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -81,7 +82,11 @@ public class BuyerDialog extends Dialog {
 
         db = new DatabaseHelper(mActivity);
         recyclerView = findViewById(R.id.chooseBuyer_RecView);
+
         title = findViewById(R.id.dialog_title);
+        Typeface tf = Routines.getTypeFaceYakanB(mActivity);
+        title.setTypeface(tf);
+
         doRecyclerView();
 
         if (layoutId > 0)

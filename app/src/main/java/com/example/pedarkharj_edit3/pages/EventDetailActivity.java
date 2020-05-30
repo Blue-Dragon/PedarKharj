@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -47,7 +49,7 @@ public class EventDetailActivity extends AppCompatActivity  {
     DatabaseHelper db;
     //
     RelativeLayout mySpinner;
-    TextView spinnerTv;
+    TextView spinnerTv, title;
     RecyclerView recyclerView;
     TextView tvR1, tvR2, tvC1, tvC2, tvL1, tvL2; //The rectangle above
     ImageView  backBtn;
@@ -120,6 +122,7 @@ public class EventDetailActivity extends AppCompatActivity  {
         recyclerView = findViewById(R.id.recycler_view);
         mySpinner = findViewById(R.id.my_spinner);
         spinnerTv  = findViewById(R.id.spinner_tv);
+        title  = findViewById(R.id.textView);
 
         //the rectangle above
         tvL1 = findViewById(R.id.tv_title_my_expense);
@@ -138,6 +141,11 @@ public class EventDetailActivity extends AppCompatActivity  {
         tvC1.setText("میانگین دونگ");
         tvL1.setText("مجموع  خرج ها");
 
+        Typeface tf = Routines.getTypeFaceYakanB(mActivity);
+        title.setTypeface(tf);
+        spinnerTv.setTypeface(tf);
+
+//        Typeface tf0 = Routines.getTypeFaceYakan(mActivity);
     }
 
     private void onClicks() {
@@ -174,7 +182,7 @@ public class EventDetailActivity extends AppCompatActivity  {
 //        tvL2.setText(String.valueOf(0));
         List<Participant> participants = db.getAllParticeUnderEvent(event);
         if (participants.size() > 0) {
-            Participant participant = db.getParticeByContactId(event.getId(), 1);
+//            Participant participant = db.getParticeByContactId(event.getId(), 1);
 
 
             int expensesCount = db.getAllExpensesOfEvent(event).size();
@@ -189,6 +197,14 @@ public class EventDetailActivity extends AppCompatActivity  {
 //            Routines.setTextColor(mContext, tvL2, tvL2.getText().toString());
 
         }
+
+        Typeface tf = Routines.getTypeFaceKoodak(mContext);
+        tvR1.setTypeface(tf);
+        tvR2.setTypeface(tf);
+        tvL1.setTypeface(tf);
+        tvL2.setTypeface(tf);
+        tvC1.setTypeface(tf);
+        tvC2.setTypeface(tf);
     }
 
     @Override

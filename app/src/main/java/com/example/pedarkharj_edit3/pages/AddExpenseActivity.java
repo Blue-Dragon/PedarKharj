@@ -107,7 +107,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
     RecyclerView recyclerView;
     Context mContext;
     Activity mActivity;
-    Button dateBtn, diffDong, doneBtn;
+    Button dateBtn, diffDongBtn, doneBtn;
 
     CircleImageView circleImageView;
     EditText dongEText;
@@ -324,7 +324,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
         circleImageView = findViewById(R.id.selected_contact);
         aSwitch = findViewById(R.id.switch1);
         dateBtn = findViewById(R.id.date_btn);
-        diffDong = findViewById(R.id.custom_dong_btn);
+        diffDongBtn = findViewById(R.id.custom_dong_btn);
         calculatorAboveBox = findViewById(R.id.calculator);
         textViewInputNumbers = findViewById(R.id.price_txt);
 
@@ -370,13 +370,20 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
             Bitmap bitmap = buyer.getBitmapStr() != null ? Routines.stringToBitmap(buyer.getBitmapStr() ) : defPic;
             circleImageView.setImageBitmap( bitmap );
         }
+
+        Typeface tf = Routines.getTypeFaceYakanB(mActivity);
+        aSwitch.setTypeface(tf);
+
+        Typeface tf0 = Routines.getTypeFaceYakan(mActivity);
+        diffDongBtn.setTypeface(tf0);
+
     }
 
     private void setOnClickListeners(){
         calculatorAboveBox.setOnClickListener(this);
         circleImageView.setOnClickListener(this);
         dateBtn.setOnClickListener(this);
-        diffDong.setOnClickListener(this);
+        diffDongBtn.setOnClickListener(this);
 
         buttonNumber0.setOnClickListener(this);
         buttonNumber1.setOnClickListener(this);
@@ -860,7 +867,7 @@ public class AddExpenseActivity extends AppCompatActivity  implements View.OnCli
                 // 2
                 .targets(
 
-                        TapTarget.forView(diffDong, getString(R.string.diffDongFab_title), getString(R.string.diffDongFab_description))
+                        TapTarget.forView(diffDongBtn, getString(R.string.diffDongFab_title), getString(R.string.diffDongFab_description))
                                 .outerCircleColor(R.color.colorPrimaryDark)
                                 .outerCircleAlpha(Routines.tapAlpha)
                                 .targetCircleColor(R.color.white)
